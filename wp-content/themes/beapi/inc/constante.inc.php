@@ -19,10 +19,12 @@ define( 'POST_TYPE_OFFRE', 'offre' );
 define( 'POST_TYPE_PAGE', 'page' );
 
 //taxonomies
-define( 'TAXONOMOMY_TYPE_CONTRAT', 'type_contrat' );
-define( 'TAXONOMOMY_ENTREPRISE', 'tax_entreprise' );
+define( 'TAXONOMY_TYPE_CONTRAT', 'type_contrat' );
+define( 'TAXONOMY_ENTREPRISE', 'tax_entreprise' );
 define( 'TAXONOMY_REGION', 'tax_region' );
 define( 'TAXONOMY_REFERENCE_METIER', 'ref_metier' );
+define( 'TAXONOMY_ANNEE_EXPERIENCE', 'annee_experience' );
+define( 'TAXONOMY_CRITICITE', 'criticite' );
 
 //user role
 define ('USER_PROFILE_MEMBRE', 'subscriber');

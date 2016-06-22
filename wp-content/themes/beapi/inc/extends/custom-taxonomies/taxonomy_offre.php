@@ -20,7 +20,7 @@ function beapi_init_typeactus()
 		'show_admin_column' => true,
 		'query_var'         => true,
 	);
-	register_taxonomy( TAXONOMY_TYPE_ACTUS, POST_TYPE_OFFRE, $args );
+	register_taxonomy( TAXONOMY_ENTREPRISE, POST_TYPE_OFFRE, $args );
 
 	//regions
 	$labels = get_custom_taxonomy_labels( "Région", "Régions", 1 );
@@ -65,6 +65,17 @@ function beapi_init_typeactus()
 		'query_var'         => true,
 	);
 	register_taxonomy( TAXONOMY_TYPE_CONTRAT, POST_TYPE_OFFRE, $args );
+
+	//Criticité
+	$labels = get_custom_taxonomy_labels( "Criticité", "Criticité", 1 );
+	$args = array(
+		'hierarchical'      => true,
+		'labels'            => $labels,
+		'show_ui'           => true,
+		'show_admin_column' => true,
+		'query_var'         => true,
+	);
+	register_taxonomy( TAXONOMY_CRITICITE, POST_TYPE_OFFRE, $args );
 
 
 }
