@@ -3,7 +3,7 @@
 /**
  * Favicons Hook
  */
-function telmarh_favicon_hook() { ?>
+function bldr_favicon_hook() { ?>
 	
 <?php if ( get_theme_mod('site_favicon') ) : ?>
 	<link rel="shortcut icon" href="<?php echo esc_url(get_theme_mod('site_favicon')); ?>" />
@@ -27,4 +27,4 @@ function telmarh_favicon_hook() { ?>
 	
 <?php } 
 
-add_action('wp_head','telmarh_favicon_hook');
+add_action('wp_head','bldr_favicon_hook');

@@ -4,31 +4,31 @@
  *
  * Eventually, some of the functionality here could be replaced by core features.
  *
- * @package telmarh
+ * @package BLDR
  */
 
-if ( ! function_exists( 'telmarh_the_posts_navigation' ) ) :
+if ( ! function_exists( 'bldr_the_posts_navigation' ) ) :
 /**
  * Display navigation to next/previous set of posts when applicable.
  *
  * @todo Remove this function when WordPress 4.3 is released.
  */
-function telmarh_the_posts_navigation() {
+function bldr_the_posts_navigation() {
 	// Don't print empty markup if there's only one page.
 	if ( $GLOBALS['wp_query']->max_num_pages < 2 ) {
 		return;
 	}
 	?>
 	<nav class="navigation posts-navigation" role="navigation">
-		<h2 class="screen-reader-text"><?php _e( 'Posts navigation', 'telmarh' ); ?></h2>
+		<h2 class="screen-reader-text"><?php _e( 'Posts navigation', 'bldr' ); ?></h2>
 		<div class="nav-links">
 
 			<?php if ( get_next_posts_link() ) : ?>
-			<div class="nav-previous"><?php next_posts_link( __( 'Older posts', 'telmarh' ) ); ?></div>
+			<div class="nav-previous"><?php next_posts_link( __( 'Older posts', 'bldr' ) ); ?></div>
 			<?php endif; ?>
 
 			<?php if ( get_previous_posts_link() ) : ?>
-			<div class="nav-next"><?php previous_posts_link( __( 'Newer posts', 'telmarh' ) ); ?></div>
+			<div class="nav-next"><?php previous_posts_link( __( 'Newer posts', 'bldr' ) ); ?></div> 
 			<?php endif; ?>
 
 		</div><!-- .nav-links -->
@@ -37,13 +37,13 @@ function telmarh_the_posts_navigation() {
 }
 endif;
 
-if ( ! function_exists( 'telmarh_the_post_navigation' ) ) :
+if ( ! function_exists( 'bldr_the_post_navigation' ) ) :
 /**
  * Display navigation to next/previous post when applicable.
  *
  * @todo Remove this function when WordPress 4.3 is released.
  */
-function telmarh_the_post_navigation() {
+function bldr_the_post_navigation() {
 	// Don't print empty markup if there's nowhere to navigate.
 	$previous = ( is_attachment() ) ? get_post( get_post()->post_parent ) : get_adjacent_post( false, '', true );
 	$next     = get_adjacent_post( false, '', false );
@@ -53,7 +53,7 @@ function telmarh_the_post_navigation() {
 	}
 	?>
 	<nav class="navigation post-navigation" role="navigation">
-		<h2 class="screen-reader-text"><?php _e( 'Post navigation', 'telmarh' ); ?></h2>
+		<h2 class="screen-reader-text"><?php _e( 'Post navigation', 'bldr' ); ?></h2>
 		<div class="nav-links">
 			<?php
 				previous_post_link( '<div class="nav-previous">%link</div>', '%title' );
@@ -65,11 +65,11 @@ function telmarh_the_post_navigation() {
 }
 endif;
 
-if ( ! function_exists( 'telmarh_posted_on' ) ) :
+if ( ! function_exists( 'bldr_posted_on' ) ) :
 /**
  * Prints HTML with meta information for the current post-date/time and author.
  */
-function telmarh_posted_on() {
+function bldr_posted_on() {
 	$time_string = '<time class="entry-date published updated" datetime="%1$s">%2$s</time>';
 	if ( get_the_time( 'U' ) !== get_the_modified_time( 'U' ) ) {
 		$time_string = '<time class="entry-date published" datetime="%1$s">%2$s</time><time class="updated" datetime="%3$s">%4$s</time>';
@@ -83,12 +83,12 @@ function telmarh_posted_on() {
 	);
 
 	$posted_on = sprintf(
-		_x( 'Posted on %s', 'post date', 'telmarh' ),
+		_x( 'Posted on %s', 'post date', 'bldr' ),
 		'<a href="' . esc_url( get_permalink() ) . '" rel="bookmark">' . $time_string . '</a>'
 	);
 
 	$byline = sprintf(
-		_x( 'by %s', 'post author', 'telmarh' ),
+		_x( 'by %s', 'post author', 'bldr' ),
 		'<span class="author vcard"><a class="url fn n" href="' . esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ) . '">' . esc_html( get_the_author() ) . '</a></span>'
 	);
 
@@ -97,37 +97,37 @@ function telmarh_posted_on() {
 }
 endif;
 
-if ( ! function_exists( 'telmarh_entry_footer' ) ) :
+if ( ! function_exists( 'bldr_entry_footer' ) ) :
 /**
  * Prints HTML with meta information for the categories, tags and comments.
  */
-function telmarh_entry_footer() {
+function bldr_entry_footer() {
 	// Hide category and tag text for pages.
 	if ( 'post' == get_post_type() ) {
 		/* translators: used between list items, there is a space after the comma */
-		$categories_list = get_the_category_list( __( ', ', 'telmarh' ) );
-		if ( $categories_list && telmarh_categorized_blog() ) {
-			printf( '<span class="cat-links">' . __( 'Posted in %1$s', 'telmarh' ) . '</span>', $categories_list );
+		$categories_list = get_the_category_list( __( ', ', 'bldr' ) );
+		if ( $categories_list && bldr_categorized_blog() ) {
+			printf( '<span class="cat-links">' . __( 'Posted in %1$s', 'bldr' ) . '</span>', $categories_list );
 		}
 
 		/* translators: used between list items, there is a space after the comma */
-		$tags_list = get_the_tag_list( '', __( ', ', 'telmarh' ) );
+		$tags_list = get_the_tag_list( '', __( ', ', 'bldr' ) );
 		if ( $tags_list ) {
-			printf( '<span class="tags-links">' . __( 'Tagged %1$s', 'telmarh' ) . '</span>', $tags_list );
+			printf( '<span class="tags-links">' . __( 'Tagged %1$s', 'bldr' ) . '</span>', $tags_list );
 		}
 	}
 
 	if ( ! is_single() && ! post_password_required() && ( comments_open() || get_comments_number() ) ) {
 		echo '<span class="comments-link">';
-		comments_popup_link( __( 'Leave a comment', 'telmarh' ), __( '1 Comment', 'telmarh' ), __( '% Comments', 'telmarh' ) );
+		comments_popup_link( __( 'Leave a comment', 'bldr' ), __( '1 Comment', 'bldr' ), __( '% Comments', 'bldr' ) );
 		echo '</span>';
 	}
 
-	edit_post_link( __( 'Edit', 'telmarh' ), '<span class="edit-link">', '</span>' );
+	edit_post_link( __( 'Edit', 'bldr' ), '<span class="edit-link">', '</span>' );
 }
 endif;
 
-if ( ! function_exists( 'telmarh_the_archive_title' ) ) :
+if ( ! function_exists( 'bldr_the_archive_title' ) ) :
 /**
  * Shim for `the_archive_title()`.
  *
@@ -138,47 +138,47 @@ if ( ! function_exists( 'telmarh_the_archive_title' ) ) :
  * @param string $before Optional. Content to prepend to the title. Default empty.
  * @param string $after  Optional. Content to append to the title. Default empty.
  */
-function telmarh_the_archive_title( $before = '', $after = '' ) {
+function bldr_the_archive_title( $before = '', $after = '' ) {
 	if ( is_category() ) {
-		$title = sprintf( __( 'Category: %s', 'telmarh' ), single_cat_title( '', false ) );
+		$title = sprintf( __( 'Category: %s', 'bldr' ), single_cat_title( '', false ) );
 	} elseif ( is_tag() ) {
-		$title = sprintf( __( 'Tag: %s', 'telmarh' ), single_tag_title( '', false ) );
+		$title = sprintf( __( 'Tag: %s', 'bldr' ), single_tag_title( '', false ) );
 	} elseif ( is_author() ) {
-		$title = sprintf( __( 'Author: %s', 'telmarh' ), '<span class="vcard">' . get_the_author() . '</span>' );
+		$title = sprintf( __( 'Author: %s', 'bldr' ), '<span class="vcard">' . get_the_author() . '</span>' );
 	} elseif ( is_year() ) {
-		$title = sprintf( __( 'Year: %s', 'telmarh' ), get_the_date( _x( 'Y', 'yearly archives date format', 'telmarh' ) ) );
+		$title = sprintf( __( 'Year: %s', 'bldr' ), get_the_date( _x( 'Y', 'yearly archives date format', 'bldr' ) ) );
 	} elseif ( is_month() ) {
-		$title = sprintf( __( 'Month: %s', 'telmarh' ), get_the_date( _x( 'F Y', 'monthly archives date format', 'telmarh' ) ) );
+		$title = sprintf( __( 'Month: %s', 'bldr' ), get_the_date( _x( 'F Y', 'monthly archives date format', 'bldr' ) ) );
 	} elseif ( is_day() ) {
-		$title = sprintf( __( 'Day: %s', 'telmarh' ), get_the_date( _x( 'F j, Y', 'daily archives date format', 'telmarh' ) ) );
+		$title = sprintf( __( 'Day: %s', 'bldr' ), get_the_date( _x( 'F j, Y', 'daily archives date format', 'bldr' ) ) );
 	} elseif ( is_tax( 'post_format' ) ) {
 		if ( is_tax( 'post_format', 'post-format-aside' ) ) {
-			$title = _x( 'Asides', 'post format archive title', 'telmarh' );
+			$title = _x( 'Asides', 'post format archive title', 'bldr' );
 		} elseif ( is_tax( 'post_format', 'post-format-gallery' ) ) {
-			$title = _x( 'Galleries', 'post format archive title', 'telmarh' );
+			$title = _x( 'Galleries', 'post format archive title', 'bldr' );
 		} elseif ( is_tax( 'post_format', 'post-format-image' ) ) {
-			$title = _x( 'Images', 'post format archive title', 'telmarh' );
+			$title = _x( 'Images', 'post format archive title', 'bldr' );
 		} elseif ( is_tax( 'post_format', 'post-format-video' ) ) {
-			$title = _x( 'Videos', 'post format archive title', 'telmarh' );
+			$title = _x( 'Videos', 'post format archive title', 'bldr' );
 		} elseif ( is_tax( 'post_format', 'post-format-quote' ) ) {
-			$title = _x( 'Quotes', 'post format archive title', 'telmarh' );
+			$title = _x( 'Quotes', 'post format archive title', 'bldr' );
 		} elseif ( is_tax( 'post_format', 'post-format-link' ) ) {
-			$title = _x( 'Links', 'post format archive title', 'telmarh' );
+			$title = _x( 'Links', 'post format archive title', 'bldr' );
 		} elseif ( is_tax( 'post_format', 'post-format-status' ) ) {
-			$title = _x( 'Statuses', 'post format archive title', 'telmarh' );
+			$title = _x( 'Statuses', 'post format archive title', 'bldr' );
 		} elseif ( is_tax( 'post_format', 'post-format-audio' ) ) {
-			$title = _x( 'Audio', 'post format archive title', 'telmarh' );
+			$title = _x( 'Audio', 'post format archive title', 'bldr' );
 		} elseif ( is_tax( 'post_format', 'post-format-chat' ) ) {
-			$title = _x( 'Chats', 'post format archive title', 'telmarh' );
+			$title = _x( 'Chats', 'post format archive title', 'bldr' );
 		}
 	} elseif ( is_post_type_archive() ) {
-		$title = sprintf( __( 'Archives: %s', 'telmarh' ), post_type_archive_title( '', false ) );
+		$title = sprintf( __( 'Archives: %s', 'bldr' ), post_type_archive_title( '', false ) );
 	} elseif ( is_tax() ) {
 		$tax = get_taxonomy( get_queried_object()->taxonomy );
 		/* translators: 1: Taxonomy singular name, 2: Current taxonomy term */
-		$title = sprintf( __( '%1$s: %2$s', 'telmarh' ), $tax->labels->singular_name, single_term_title( '', false ) );
+		$title = sprintf( __( '%1$s: %2$s', 'bldr' ), $tax->labels->singular_name, single_term_title( '', false ) );
 	} else {
-		$title = __( 'Archives', 'telmarh' );
+		$title = __( 'Archives', 'bldr' );
 	}
 
 	/**
@@ -194,7 +194,7 @@ function telmarh_the_archive_title( $before = '', $after = '' ) {
 }
 endif;
 
-if ( ! function_exists( 'telmarh_the_archive_description' ) ) :
+if ( ! function_exists( 'bldr_the_archive_description' ) ) :
 /**
  * Shim for `the_archive_description()`.
  *
@@ -205,7 +205,7 @@ if ( ! function_exists( 'telmarh_the_archive_description' ) ) :
  * @param string $before Optional. Content to prepend to the description. Default empty.
  * @param string $after  Optional. Content to append to the description. Default empty.
  */
-function telmarh_the_archive_description( $before = '', $after = '' ) {
+function bldr_the_archive_description( $before = '', $after = '' ) {
 	$description = apply_filters( 'get_the_archive_description', term_description() );
 
 	if ( ! empty( $description ) ) {
@@ -226,8 +226,8 @@ endif;
  *
  * @return bool
  */
-function telmarh_categorized_blog() {
-	if ( false === ( $all_the_cool_cats = get_transient( 'telmarh_categories' ) ) ) {
+function bldr_categorized_blog() {
+	if ( false === ( $all_the_cool_cats = get_transient( 'bldr_categories' ) ) ) {
 		// Create an array of all the categories that are attached to posts.
 		$all_the_cool_cats = get_categories( array(
 			'fields'     => 'ids',
@@ -240,27 +240,27 @@ function telmarh_categorized_blog() {
 		// Count the number of categories that are attached to the posts.
 		$all_the_cool_cats = count( $all_the_cool_cats );
 
-		set_transient( 'telmarh_categories', $all_the_cool_cats );
+		set_transient( 'bldr_categories', $all_the_cool_cats );
 	}
 
 	if ( $all_the_cool_cats > 1 ) {
-		// This blog has more than 1 category so telmarh_categorized_blog should return true.
+		// This blog has more than 1 category so bldr_categorized_blog should return true.
 		return true;
 	} else {
-		// This blog has only 1 category so telmarh_categorized_blog should return false.
+		// This blog has only 1 category so bldr_categorized_blog should return false.
 		return false;
 	}
 }
 
 /**
- * Flush out the transients used in telmarh_categorized_blog.
+ * Flush out the transients used in bldr_categorized_blog.
  */
-function telmarh_category_transient_flusher() {
+function bldr_category_transient_flusher() {
 	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
 		return;
 	}
 	// Like, beat it. Dig?
-	delete_transient( 'telmarh_categories' );
+	delete_transient( 'bldr_categories' );
 }
-add_action( 'edit_category', 'telmarh_category_transient_flusher' );
-add_action( 'save_post',     'telmarh_category_transient_flusher' );
+add_action( 'edit_category', 'bldr_category_transient_flusher' );
+add_action( 'save_post',     'bldr_category_transient_flusher' );

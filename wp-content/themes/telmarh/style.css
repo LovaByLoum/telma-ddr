@@ -1,11 +1,79 @@
 /*
-Theme Name: Telma RH
-Author: Netapsys
-Author URI: http://netapsys.fr
-Description: Thème sur mesure pour le site Telma RH
-Version: 1.0
-Tags: Full width, responsive, animation,
+Theme Name: telmarh
+Theme URI: https://modernthemes.net/wordpress-themes/telmarh/
+Author: ModernThemes
+Author URI: https://modernthemes.net/
+Description: A multipurpose WordPress theme which uses Site Origin's page builder plugin to help craft your pages with ease and precision. Insert our pre-made home page layout and populate with your own content for a powerful website that is easy to manage. telmarh was created to be a limitless solution to WordPress web designers. Use telmarh to run a powerful, efficient, and beautiful website to fit your needs. Below are just a few examples of telmarh in action. There are infinite possibilities for telmarh, so download today and start creating. Check out the demo at https://modernthemes.net/theme-demos/?theme=telmarh and Documentation available at http://modernthemes.net/documentation/telmarh-documentation
+Version: 1.2.3
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: telmarh
+Tags: light, blue, red, yellow, green, purple, orange, black, one-column, two-columns, three-columns, left-sidebar, right-sidebar, fluid-layout, responsive-layout, theme-options, translation-ready, custom-colors, featured-images, post-formats, rtl-language-support, full-width-template
+
+telmarh, Copyright 2015 ModernThemes
+telmarh is distributed under the terms of the GNU GPL
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+This theme, like WordPress, is licensed under the GPL.
+Use it to make something cool, have fun, and share what you've learned with others.
+
+telmarh is built with Underscores http://underscores.me/, (C) 2012-2014 Automattic, Inc.
+
+telmarh incorporates code from Moesia, Copyright 2014 aThemes
+Moesia is distributed under the terms of the GNU GPL
+
+telmarh bundles the following third-party resources:
+
+Simple Grid by ThisisDallas Copyright (C) 2013 Dallas Bass
+Simple Grid is licensed under the MIT License.
+http://thisisdallas.github.io/Simple-Grid/
+
+Font Awesome by Dave Gandy
+Font Awesome is licensed under the following: (Font: SIL OFL 1.1, CSS: MIT License)
+http://fortawesome.github.io/Font-Awesome/
+
+Animate-plus.js by Telmo Marques Copyright (c) 2014
+Animate-plus.js is licensed under the MIT License.
+https://github.com/telmomarques/animate-plus.js
+
+slick.js by Ken Wheeler Copyright (c) 2014
+slick.js is licensed under the MIT License.
+https://github.com/kenwheeler/slick 
+
+Parallax.js by PixelCog Inc. (c) 2015 PixelCog Inc.
+Parallax.js is distributed under the The MIT License (MIT).
+https://github.com/pixelcog/parallax.js
+
+The HTML5 Shiv by aFarkas Copyright (c) 2014 Alexander Farkas (aFarkas).
+The HTML5 Shiv is licensed under the terms of the GNU GPLv2 
+https://github.com/aFarkas/html5shiv 
+
+jPushMenu by takien 
+jPushMenu is distributed under the The MIT License (MIT).
+https://github.com/takien/jPushMenu
+
+Use Child Theme by FacetWP Copyright (c) 2016 Matt Gibbs (mgibbs189).
+https://github.com/FacetWP/use-child-theme/
+
+Headesive.js by Mark Goodyear Copyright (c) 2014
+Headesive.js is licensed under the MIT License.
+https://github.com/markgoodyear/headhesive.js/tree/master
+
+telmarh.jpg provided as a free stock image from unsplash.com
+Image link: https://download.unsplash.com/photo-1418479631014-8cbf89db3431
+All Unpslash photos licensed under Creative Commons Zero
+
+Normalizing styles have been helped along thanks to the fine work of
+Nicolas Gallagher and Jonathan Neal http://necolas.github.com/normalize.css/
 */
 
 /*--------------------------------------------------------------
@@ -1982,126 +2050,17 @@ body {
 	}
 	
 }
-/***********************
- * Essential Structure *
- ***********************/
-.flexsearch--wrapper {
-	height: auto;
-	width: auto;
-	max-width: 100%;
-	overflow: hidden;
-	background: transparent;
-	margin: 0;
-	position: static;
-}
-
-.flexsearch--form {
-	overflow: hidden;
-	position: relative;
-}
-
-.flexsearch--input-wrapper {
-	padding: 0 66px 0 0; /* Right padding for submit button width */
-	overflow: hidden;
-}
-
-.flexsearch--input {
-  width: 100%;
-}
-
-/***********************
- * Configurable Styles *
- ***********************/
-.flexsearch {
-  padding: 0 25px 0 200px; /* Padding for other horizontal elements */
-}
-
-.flexsearch--input {
-  -webkit-box-sizing: content-box;
-	-moz-box-sizing: content-box;
-	box-sizing: content-box;
- 	height: 60px;
-  padding: 0 46px 0 10px;
-	border-color: #888;
-  border-radius: 35px; /* (height/2) + border-width */
-  border-style: solid;
-	border-width: 5px;
-  margin-top: 15px;
-  color: #333;
-  font-family: 'Helvetica', sans-serif;
-	font-size: 26px;
-	-webkit-appearance: none;
-	-moz-appearance: none;
-}
-
-.flexsearch--submit {
-  position: absolute;
-	right: 0;
-	top: 0;
-	display: block;
-	width: 60px;
-	height: 60px;
-  padding: 0;
-  border: none;
-	margin-top: 20px; /* margin-top + border-width */
-  margin-right: 5px; /* border-width */
-	background: transparent;
-  color: #888;
-  font-family: 'Helvetica', sans-serif;
-  font-size: 40px;
-  line-height: 60px;
-}
-
-.flexsearch--input:focus {
-  outline: none;
-  border-color: #333;
-}
-
-.flexsearch--input:focus.flexsearch--submit {
- 	color: #333;
-}
-
-.flexsearch--submit:hover {
-  color: #333;
-  cursor: pointer;
-}
-
-::-webkit-input-placeholder {
-	color: #888;
-}
-
-input:-moz-placeholder {
-  color: #888
-}
-.widget_search a.submit_link{
+aside.homepage input.offre{
     width: 70%;
-    border: 1px solid;
-    border-color: #039BE5;
-    -webkit-border-radius: 71px;
-    background: #039BE5;
-    box-shadow: none;
-    color: #FFF;
-    font-size: 19px;
-    line-height: 1;
-    padding: 1em 2em;
-    text-shadow: none;
-    text-transform: none;
-    font-weight: 600;
-    letter-spacing: 0.2em;
-    -webkit-appearance: button;
-    cursor: pointer;
-    font-family: 'Source Sans Pro',Helvetica Neue,Helvetica,arial,sans-serif;
 }
 
-.widget_search .separator{
-    display: inline-block;
-    margin: 15px;
+aside.homepage form{
     text-align: center;
-    width: 100%;
-    font-size: 4em;
-    margin: 0;
 }
-.widget_search .link_formation{
-    width: 100%;
+aside.homepage p.separator, aside.homepage p.link_formation {
+    margin-top: 2em;
     text-align: center;
+}
+aside.homepage p.separator span{
+    font-size: 2em;
 }

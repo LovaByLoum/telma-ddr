@@ -26,9 +26,14 @@ get_header(); ?>
 	<section>
 	    <div class="grid grid-pad">
 	        <div class="col-1-1">
-		        <aside class="widget_search">
-                    <input class="search-field" placeholder="Recherche offre ..." value="" name="offre" type="search" style="width: 70%;margin: 0 auto;padding: 8px;font-size: 1.6em;" title="Recherche offre">
-                    <input class="" value="Search" type="submit">
+		        <aside class="widget widget_search homepage">
+			        <form role="search" method="get" class="search-form" action="<?php echo get_permalink( $postOffes->ID );?>" autocomplete="off">
+	                    <label>
+	                    <span class="screen-reader-text">Search for:</span>
+	                    <input class="search-field offre" placeholder="Recherche offre …" value="" name="sof" type="search">
+	                    </label>
+	                    <input class="search-submit" value="Search" type="submit">
+                    </form>
 			        <p class="separator">
 				        <span>ou</span>
 			        </p>

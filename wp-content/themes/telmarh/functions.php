@@ -14,16 +14,6 @@ require_once_files_in( get_template_directory() . '/inc/classes/posttype' );
 require_once_files_in( get_template_directory() . '/inc/classes/taxonomy' );
 require_once_files_in( get_template_directory() . '/inc/classes/user' );
 
-if (is_admin()){
-  require_once( get_template_directory() . '/admin-functions.php' );
-
-  /*** Theme Option ***/
-  if ( is_dir( get_template_directory() . '/theme-options' ) ){
-    require get_template_directory() . '/theme-options/theme-options.php';
-  }
-}
-global $telmarh_options;
-$telmarh_options = get_option( 'telmarh_theme_options' );
 
 /**
  * Set the content width based on the theme's design and stylesheet.
@@ -42,15 +32,24 @@ if ( ! function_exists( 'telmarh_setup' ) ) :
  */
 function telmarh_setup() {
 
-    require_once_files_in( get_template_directory() . '/inc/extends/custom-role' );
+	/*
+	 * Make theme available for translation.
+	 * Translations can be filed in the /languages/ directory.
+	 * If you're building a theme based on telmarh, use a find and replace
+	 * to change 'telmarh' to the name of your theme in all the template files
+	 */
+	load_theme_textdomain( 'telmarh', get_template_directory() . '/languages' );
 
-	/* Make telmarh available for translation.
-	 * Translations can be added to the /languages/ directory.
+	// Add default posts and comments RSS feed links to head.
+	add_theme_support( 'automatic-feed-links' );
+
+	/*
+	 * Let WordPress manage the document title.
 	 * By adding theme support, we declare that this theme does not use a
 	 * hard-coded <title> tag in the document head, and expect WordPress to
 	 * provide it for us.
 	 */
-	load_theme_textdomain( 'telmarh', get_template_directory() . '/languages' );
+	add_theme_support( 'title-tag' );
 
 	/*
 	 * Enable support for Post Thumbnails on posts and pages.
@@ -97,6 +96,74 @@ add_action( 'after_setup_theme', 'telmarh_setup' );
  *
  * @link http://codex.wordpress.org/Function_Reference/register_sidebar
  */
+function telmarh_widgets_init() {
+	register_sidebar( array(
+		'name'          => __( 'Sidebar', 'telmarh' ),
+		'id'            => 'sidebar-1',
+		'description'   => '',
+		'before_widget' => '<aside id="%1$s" class="widget %2$s">',
+		'after_widget'  => '</aside>',
+		'before_title'  => '<h1 class="widget-title">',
+		'after_title'   => '</h1>',
+	) );
+	
+	register_sidebar( array(
+		'name'          => __( 'Footer 1', 'telmarh' ),
+		'id'            => 'footer-1',
+		'description'   => __( 'Populate your first Footer area', 'telmarh' ),
+		'before_widget' => '<aside id="%1$s" class="widget %2$s">',
+		'after_widget'  => '</aside>',
+		'before_title'  => '<h1 class="widget-title">',
+		'after_title'   => '</h1>',
+	) );
+	
+	register_sidebar( array(
+		'name'          => __( 'Footer 2', 'telmarh' ),
+		'id'            => 'footer-2',
+		'description'   => __( 'Populate your second Footer area', 'telmarh' ),
+		'before_widget' => '<aside id="%1$s" class="widget %2$s">',
+		'after_widget'  => '</aside>',
+		'before_title'  => '<h1 class="widget-title">',
+		'after_title'   => '</h1>',
+	) );
+	
+	register_sidebar( array(
+		'name'          => __( 'Footer 3', 'telmarh' ),
+		'id'            => 'footer-3',
+		'description'   => __( 'Populate your third Footer area', 'telmarh' ),
+		'before_widget' => '<aside id="%1$s" class="widget %2$s">',
+		'after_widget'  => '</aside>',
+		'before_title'  => '<h1 class="widget-title">',
+		'after_title'   => '</h1>',
+	) );
+	
+	register_sidebar( array(
+		'name'          => __( 'Footer 4', 'telmarh' ),
+		'id'            => 'footer-4',
+		'description'   => __( 'Populate your fourth Footer area', 'telmarh' ),
+		'before_widget' => '<aside id="%1$s" class="widget %2$s">',
+		'after_widget'  => '</aside>',
+		'before_title'  => '<h1 class="widget-title">',
+		'after_title'   => '</h1>',
+	) );
+	
+	//Register the sidebar widgets   
+	register_widget( 'telmarh_Video_Widget' ); 
+	register_widget( 'telmarh_Contact_Info' );
+	
+	//Register the post type widgets
+	if ( function_exists('siteorigin_panels_activate') ) {
+		register_widget( 'telmarh_clients' );
+		register_widget( 'telmarh_testimonials' );
+		register_widget( 'telmarh_projects' ); 
+		register_widget( 'telmarh_services' );
+		register_widget( 'telmarh_home_news' );
+		register_widget( 'telmarh_action' );
+		register_widget( 'telmarh_columns' );
+	}
+	
+}
+add_action( 'widgets_init', 'telmarh_widgets_init' );
 
 /**
  * Enqueue scripts and styles.
@@ -215,6 +282,11 @@ require get_template_directory() . '/inc/telmarh-favicon.php';
  */
 require get_template_directory() . '/inc/jetpack.php';
 
+/**
+ * Include additional custom admin panel features. 
+ */
+require get_template_directory() . '/panel/functions-admin.php';
+require get_template_directory() . '/panel/telmarh-admin_page.php'; 
 
 /**
  * Google Fonts  

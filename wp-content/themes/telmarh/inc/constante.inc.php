@@ -33,3 +33,9 @@ define ('USER_PROFILE_ADMIN', 'administrator');
 //offre
 define ( 'INCREMENTATION_OFFRE', 'incrementation_offre' );
 define ( 'REFERENCE_OFFRE', 'reference_offre' );
+
+//field ACF
+define ( "FIELD_DOMAINE_METIER", "domaine_de_metier_offre" );
+define ( "FIELD_MISSIONS_PRINCIPALE", "missions_principales_offre" );
+define ( "FIELD_RESPONSABILITE", "responsabilites_offre" );
+define ( "FIELD_QUALITE_REQUISE", "qualites_requises_offre" );

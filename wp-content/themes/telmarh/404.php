@@ -4,8 +4,7 @@
  *
  * @package telmarh
  */
-global $post;
-mp($post);
+
 get_header(); ?>
 
 	<div class="grid grid-pad">

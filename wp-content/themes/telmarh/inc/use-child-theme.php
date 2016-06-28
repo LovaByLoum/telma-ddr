@@ -77,8 +77,8 @@ if ( ! class_exists( 'Use_Child_Theme' ) ) {
 
         <div class="notice notice-error uct-notice is-dismissible">
             <p>
-                <?php printf( esc_html__( 'Please use a %s child theme to make changes', 'telmarh' ), $this->theme->get( 'Name' ) ); ?>
-                <a class="uct-activate" href="javascript:;"><?php esc_html_e( 'Activate now', 'telmarh' ); ?></a>
+                <?php printf( esc_html__( 'Please use a %s child theme to make changes', 'bldr' ), $this->theme->get( 'Name' ) ); ?>
+                <a class="uct-activate" href="javascript:;"><?php esc_html_e( 'Activate now', 'bldr' ); ?></a>
             </p>
         </div>
 <?php
@@ -125,7 +125,7 @@ if ( ! class_exists( 'Use_Child_Theme' ) ) {
                 update_option( 'theme_mods_' . $this->child_slug, $parent_settings );
             }
 
-            wp_die( esc_html__( 'All done!', 'telmarh' ) );
+            wp_die( esc_html__( 'All done!', 'bldr' ) );
         }
 
 
@@ -146,7 +146,7 @@ if ( ! class_exists( 'Use_Child_Theme' ) ) {
                 }
             }
             else {
-                wp_die( esc_html__( 'Error: theme folder not writable', 'telmarh' ) );
+                wp_die( esc_html__( 'Error: theme folder not writable', 'bldr' ) );
             }
         }
 

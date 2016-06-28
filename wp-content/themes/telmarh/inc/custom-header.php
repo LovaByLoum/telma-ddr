@@ -12,37 +12,37 @@
 	<?php endif; // End header image check. ?>
 
  *
- * @package telmarh
+ * @package BLDR
  */
 
 /**
  * Set up the WordPress core custom header feature.
  *
- * @uses telmarh_header_style()
- * @uses telmarh_admin_header_style()
- * @uses telmarh_admin_header_image()
+ * @uses bldr_header_style()
+ * @uses bldr_admin_header_style()
+ * @uses bldr_admin_header_image()
  */
-function telmarh_custom_header_setup() {
-	add_theme_support( 'custom-header', apply_filters( 'telmarh_custom_header_args', array(
+function bldr_custom_header_setup() {
+	add_theme_support( 'custom-header', apply_filters( 'bldr_custom_header_args', array(
 		'default-image'          => '',
 		'default-text-color'     => '000000',
 		'width'                  => 1000,
 		'height'                 => 250,
 		'flex-height'            => true,
-		'wp-head-callback'       => 'telmarh_header_style',
-		'admin-head-callback'    => 'telmarh_admin_header_style',
-		'admin-preview-callback' => 'telmarh_admin_header_image',
+		'wp-head-callback'       => 'bldr_header_style',
+		'admin-head-callback'    => 'bldr_admin_header_style',
+		'admin-preview-callback' => 'bldr_admin_header_image',
 	) ) );
 }
-add_action( 'after_setup_theme', 'telmarh_custom_header_setup' );
+add_action( 'after_setup_theme', 'bldr_custom_header_setup' );
 
-if ( ! function_exists( 'telmarh_header_style' ) ) :
+if ( ! function_exists( 'bldr_header_style' ) ) :
 /**
  * Styles the header image and text displayed on the blog
  *
- * @see telmarh_custom_header_setup().
+ * @see bldr_custom_header_setup().
  */
-function telmarh_header_style() {
+function bldr_header_style() {
 	$header_text_color = get_header_textcolor();
 
 	// If no custom options for text are set, let's bail
@@ -75,15 +75,15 @@ function telmarh_header_style() {
 	</style>
 	<?php
 }
-endif; // telmarh_header_style
+endif; // bldr_header_style
 
-if ( ! function_exists( 'telmarh_admin_header_style' ) ) :
+if ( ! function_exists( 'bldr_admin_header_style' ) ) :
 /**
  * Styles the header image displayed on the Appearance > Header admin panel.
  *
- * @see telmarh_custom_header_setup().
+ * @see bldr_custom_header_setup().
  */
-function telmarh_admin_header_style() {
+function bldr_admin_header_style() {
 ?>
 	<style type="text/css">
 		.appearance_page_custom-header #headimg {
@@ -103,15 +103,15 @@ function telmarh_admin_header_style() {
 	</style>
 <?php
 }
-endif; // telmarh_admin_header_style
+endif; // bldr_admin_header_style
 
-if ( ! function_exists( 'telmarh_admin_header_image' ) ) :
+if ( ! function_exists( 'bldr_admin_header_image' ) ) :
 /**
  * Custom header image markup displayed on the Appearance > Header admin panel.
  *
- * @see telmarh_custom_header_setup().
+ * @see bldr_custom_header_setup().
  */
-function telmarh_admin_header_image() {
+function bldr_admin_header_image() {
 	$style = sprintf( ' style="color:#%s;"', get_header_textcolor() );
 ?>
 	<div id="headimg">
@@ -123,4 +123,4 @@ function telmarh_admin_header_image() {
 	</div>
 <?php
 }
-endif; // telmarh_admin_header_image
+endif; // bldr_admin_header_image

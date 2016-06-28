@@ -3,7 +3,7 @@
 
 //Google Fonts 
 
-function telmarh_custom_styles($custom) {
+function bldr_custom_styles($custom) { 
 
 
 	//Fonts 
@@ -32,8 +32,8 @@ function telmarh_custom_styles($custom) {
 
 	//Output all the styles
 
-	wp_add_inline_style( 'telmarh-style', $custom );
+	wp_add_inline_style( 'bldr-style', $custom );	
 
 }
 
-add_action( 'wp_enqueue_scripts', 'telmarh_custom_styles' );
+add_action( 'wp_enqueue_scripts', 'bldr_custom_styles' ); 
