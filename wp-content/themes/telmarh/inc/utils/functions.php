@@ -315,3 +315,11 @@ function wp_decrypt_text($str){
   return $str;
 }
 
+add_action( "save_post", "telmarh_save_post" );
+function telmarh_save_post( $post_id ){
+	// If this is just a revision, don't send the email.
+	if ( wp_is_post_revision( $post_id ) )
+		return;
+
+}
+

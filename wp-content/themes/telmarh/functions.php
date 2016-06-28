@@ -43,8 +43,6 @@ if ( ! function_exists( 'telmarh_setup' ) ) :
 function telmarh_setup() {
 
     require_once_files_in( get_template_directory() . '/inc/extends/custom-role' );
-    require_once_files_in( get_template_directory() . '/inc/extends/custom-types' );
-    require_once_files_in( get_template_directory() . '/inc/extends/custom-taxonomies' );
 
 	/* Make telmarh available for translation.
 	 * Translations can be added to the /languages/ directory.
