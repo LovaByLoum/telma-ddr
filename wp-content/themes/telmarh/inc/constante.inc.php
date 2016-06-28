@@ -15,7 +15,6 @@
 
 //post types
 define( 'POST_TYPE_ARTICLE', 'article' );
-define( 'POST_TYPE_OFFRE', 'offre' );
 define( 'POST_TYPE_PAGE', 'page' );
 
 //taxonomies
@@ -30,3 +29,7 @@ define( 'TAXONOMY_CRITICITE', 'criticite' );
 define ('USER_PROFILE_MEMBRE', 'subscriber');
 define ('USER_PROFILE_WEBMASTER', 'webmaster');
 define ('USER_PROFILE_ADMIN', 'administrator');
+
+//offre
+define ( 'INCREMENTATION_OFFRE', 'incrementation_offre' );
+define ( 'REFERENCE_OFFRE', 'reference_offre' );

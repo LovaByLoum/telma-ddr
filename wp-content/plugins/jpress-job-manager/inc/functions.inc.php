@@ -169,7 +169,7 @@ function jpress_jm_register_post_types_tax(){
             register_taxonomy( JM_TAXONOMIE_ANNEE_EXPERIENCE, array( JM_POSTTYPE_OFFRE ), $args );
         }
 
-        //add taxonomy Année d'experience
+        //add taxonomy competences requises
         if ( jpress_jm_is_in_options( JM_TAXONOMIE_COMPETENCE_REQUISES, 'tax' ) ){
             $labels_tax_doc = jpress_jm_get_custom_tax_labels("compétence requise", "compétences requises", 0);
             $args = array(
@@ -187,6 +187,26 @@ function jpress_jm_register_post_types_tax(){
                 'rewrite'           => array( 'slug' => JM_TAXONOMIE_COMPETENCE_REQUISES ),
             );
             register_taxonomy( JM_TAXONOMIE_COMPETENCE_REQUISES, array( JM_POSTTYPE_OFFRE ), $args );
+        }
+
+        //add taxonomy criticité
+        if ( jpress_jm_is_in_options( JM_TAXONOMIE_CRITICITE, 'tax' ) ){
+            $labels_tax_doc = jpress_jm_get_custom_tax_labels("criticité", "criticités", 0);
+            $args = array(
+                'hierarchical'      => true,
+                'labels'            => $labels_tax_doc,
+                'show_ui'           => true,
+                'show_admin_column' => true,
+                'query_var'         => true,
+                'capabilities'      => array(
+                    'manage_terms' => 'manage_term_' . JM_POSTTYPE_OFFRE,
+                    'edit_terms'   => 'manage_term_' . JM_POSTTYPE_OFFRE,
+                    'delete_terms' => 'manage_term_' . JM_POSTTYPE_OFFRE,
+                    'assign_terms' => 'manage_term_' . JM_POSTTYPE_OFFRE,
+                ),
+                'rewrite'           => array( 'slug' => JM_TAXONOMIE_CRITICITE ),
+            );
+            register_taxonomy( JM_TAXONOMIE_CRITICITE, array( JM_POSTTYPE_OFFRE ), $args );
         }
     }
 

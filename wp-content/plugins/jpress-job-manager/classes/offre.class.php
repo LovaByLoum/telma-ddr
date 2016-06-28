@@ -39,7 +39,7 @@ class JM_Offre {
 
         if ($p->post_type == JM_POSTTYPE_OFFRE) {
             $element = new stdClass();
-
+	        $options = get_option( JM_OPTIONS );
             //champs basiques
             $element->id            = $p->ID;
             $element->titre         = $p->post_title;
@@ -58,11 +58,12 @@ class JM_Offre {
             $element->societe_associe = get_post_meta( $p->ID, JM_META_SOCIETE_OFFRE_RELATION, true );
 
             //term associé
-            $element->localisation      = wp_get_post_terms($p->ID, JM_TAXONOMIE_LOCALISATION);
-            $element->service           = wp_get_post_terms($p->ID, JM_TAXONOMIE_DEPARTEMENT);
-            $element->type_contrat      = wp_get_post_terms($p->ID, JM_TAXONOMIE_TYPE_CONTRAT);
-            $element->categorie         = wp_get_post_terms($p->ID, JM_TAXONOMIE_CATEGORIE);
-	        $element->annnee_experience   = wp_get_post_terms($p->ID, JM_TAXONOMIE_ANNEE_EXPERIENCE);
+	        if ( isset( $options['tax'] ) && !empty( $options['tax'] ) ) {
+		        foreach ( $options['tax'] as $option ) {
+			        $element->{$option} = wp_get_post_terms( $p->ID, $option );
+		        }
+	        }
+
 
             //stocker dans le tableau statique
             self::$_elements[$pid] = $element;

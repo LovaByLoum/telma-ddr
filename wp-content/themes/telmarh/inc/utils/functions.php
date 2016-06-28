@@ -320,6 +320,27 @@ function telmarh_save_post( $post_id ){
 	// If this is just a revision, don't send the email.
 	if ( wp_is_post_revision( $post_id ) )
 		return;
+	$post_type = get_post_type( $post_id );
+	if ( $post_type == JM_POSTTYPE_OFFRE ) {
+		$dernierIncremente  = get_option( INCREMENTATION_OFFRE, 1 );
+		$codeReferenceOld   = get_post_meta( $post_id, REFERENCE_OFFRE, true );
+		$offre              = JM_Offre::getById( $post_id );
+		$societe            = ( isset( $offre->societe_associe ) && !empty( $offre->societe_associe ) ) ? JM_Societe::getById( $offre->societe_associe ) : "";
+		$societeName        = ( !empty( $societe ) && isset( $societe->slug ) && !empty( $societe->slug ) ) ? mb_strtoupper( $societe->slug ) : "TELMA";
+		$departement        = ( isset( $offre->departement ) && !empty( $offre->departement ) ) ? $offre->departement[0] : "";
+		$departementName    = ( !empty( $departement ) && isset( $departement->slug ) && !empty( $departement->slug ) ) ? mb_strtoupper( $departement->slug ) : "RH";
+		$dateNow            =  date( "Ym" );
 
+		if ( !empty( $codeReferenceOld ) ){
+			$element = explode( "/", $codeReferenceOld );
+			$societeNameNew         = ( $societeName != $element[0] ) ? $societeName : $element[0];
+			$departementNameNew     = ( $departementName != $element[1] ) ? $departementName : $element[1];
+			update_post_meta( $post_id, REFERENCE_OFFRE, $societeNameNew . "/" . $departementNameNew . "/" . $element[2] );
+		} else {
+			$incrementation         = ( $dernierIncremente == 1 ) ?  1 : intval( $dernierIncremente ) + 1;
+			$codeReferenceNew       = $societeName . "/" . $departementName . "/" . $dateNow . "_" . $incrementation;
+			add_post_meta( $post_id, REFERENCE_OFFRE, $codeReferenceNew );
+		}
+	}
 }
 

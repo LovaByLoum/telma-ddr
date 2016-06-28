@@ -15,6 +15,7 @@ define ( 'JM_TAXONOMIE_CATEGORIE', 'categorie-offre' );
 define ( 'JM_TAXONOMIE_DOMAINE', 'domaine-activite' );
 define ( 'JM_TAXONOMIE_ANNEE_EXPERIENCE', 'annee-experience' );
 define ( 'JM_TAXONOMIE_COMPETENCE_REQUISES', 'competences-requise' );
+define ( 'JM_TAXONOMIE_CRITICITE', 'criticite' );
 
 //role
 define ( 'JM_ROLE_RESPONSABLE_RH' , 'responsable_rh');

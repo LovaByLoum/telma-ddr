@@ -87,6 +87,12 @@ $options = get_option( JM_OPTIONS );
                              Compétences requises
                          </label>
                      </fieldset>
+                     <fieldset>
+                         <label for="<?php echo JM_TAXONOMIE_CRITICITE;?>">
+                             <input name="tax[]" type="checkbox" id="<?php echo JM_TAXONOMIE_CRITICITE;?>" value="<?php echo JM_TAXONOMIE_CRITICITE;?>" <?php if( jpress_jm_is_in_options( JM_TAXONOMIE_CRITICITE, 'tax' ) ) :?>checked<?php endif;?>>
+                             Criticité
+                         </label>
+                     </fieldset>
                  </td>
              </tr>
 
