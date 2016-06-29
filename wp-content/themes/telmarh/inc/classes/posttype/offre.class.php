@@ -179,6 +179,24 @@ class COffre
 
 	public static function renderItemCallback( $pid ){
 		$offre = JM_Offre::getById( $pid );
+        $elementOffre = COffre::getById( $pid );
+        $html = '
+            <header class="entry-header">
+                <h1 class="entry-title">' . $offre->titre . '</h1>
+            </header><!-- .entry-header -->
+
+            <div class="entry-content">
+                ' . apply_filters( "the_content", $offre->description ) . '
+            </div><!-- .entry-content -->
+
+            <footer class="entry-footer">
+                <span class="comments-link">
+                <a href="' . get_permalink( $offre->id ) . '" title="Lire la suite">Lire la suite</a>
+                </span>
+            </footer><!-- .entry-footer -->
+        ';
+
+        return $html;
 
 	}
 

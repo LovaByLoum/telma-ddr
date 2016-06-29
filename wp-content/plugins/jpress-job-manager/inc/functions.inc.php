@@ -12,7 +12,7 @@ function jpress_jm_register_post_types_tax(){
     //::::::::::::::::::::::::::::societe::::::::::::::::::::::::::::::::::::::::::::::::::::::
     if ( jpress_jm_is_in_options( JM_POSTTYPE_SOCIETE, 'types' ) ){
         //post type societe
-        $labels = jpress_jm_get_custom_post_type_labels('société', 'sociétés', 0);
+        $labels = jpress_jm_get_custom_post_type_labels('Entreprise', 'Entreprises', 0);
         $data = array(
             'capability_type'      => JM_POSTTYPE_SOCIETE,
             'supports'             => array( 'title' , 'editor' , 'excerpt', 'thumbnail' ),

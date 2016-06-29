@@ -2,33 +2,33 @@
 /**
  * Dynamic styles for the Page Builder rows
  *
- * @package bldr
+ * @package telmarh
  */
 ?>
 <?php
 
-function bldr_panels_row_style_fields($fields) {
+function telmarh_panels_row_style_fields($fields) {
 
 	$fields['color'] = array(
-		'name' => __('Color', 'bldr'),
+		'name' => __('Color', 'telmarh'),
 		'type' => 'color',
 	);	
 
 	$fields['background'] = array(
-		'name' => __('Background Color', 'bldr'),
+		'name' => __('Background Color', 'telmarh'),
 		'type' => 'color',
 	);
 	
 	$fields['background_image'] = array(
-		'name' => __('Background Image URL (Call-to-Action Widget only)', 'bldr'),
+		'name' => __('Background Image URL (Call-to-Action Widget only)', 'telmarh'),
 		'type' => 'url',
 	);
 
 	return $fields;
 }
-add_filter('siteorigin_panels_row_style_fields', 'bldr_panels_row_style_fields'); 
+add_filter('siteorigin_panels_row_style_fields', 'telmarh_panels_row_style_fields');
 
-function bldr_panels_panels_row_style_attributes($attr, $style) {
+function telmarh_panels_panels_row_style_attributes($attr, $style) {
 	$attr['style'] = '';
 
 	if(!empty($style['background'])) $attr['style'] .= 'background-color: '.$style['background'].'; ';
@@ -38,4 +38,4 @@ function bldr_panels_panels_row_style_attributes($attr, $style) {
 	if(empty($attr['style'])) unset($attr['style']); 
 	return $attr;
 }
-add_filter('siteorigin_panels_row_style_attributes', 'bldr_panels_panels_row_style_attributes', 10, 2);
+add_filter('siteorigin_panels_row_style_attributes', 'telmarh_panels_panels_row_style_attributes', 10, 2);

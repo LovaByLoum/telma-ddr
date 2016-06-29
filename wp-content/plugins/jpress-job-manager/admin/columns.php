@@ -28,7 +28,7 @@ function jpress_jm_manage_offre_columns($columns){
     }
 
     if ( jpress_jm_is_in_options( JM_POSTTYPE_SOCIETE, 'types' ) ){
-        $columns['societe'] = 'Société rattachée';
+        $columns['societe'] = 'Entreprise rattachée';
     }
 
     $columns['nbr_candidature'] = 'Nombre de candidatures';
@@ -124,7 +124,7 @@ function jpress_jm_manage_users_columns( $columns ){
 
     $rh_by_soc = jpress_jm_is_in_options( 'rh_by_soc', 'settings' );
     if ( $rh_by_soc ){
-        $columns['societe'] = 'RH Société';
+        $columns['societe'] = 'RH Entreprise';
     }
 
     return $columns;

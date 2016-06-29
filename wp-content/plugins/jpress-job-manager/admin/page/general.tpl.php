@@ -26,7 +26,7 @@ $options = get_option( JM_OPTIONS );
                      <fieldset>
                          <label for="<?php echo JM_POSTTYPE_SOCIETE;?>">
                              <input name="types[]" type="checkbox" id="<?php echo JM_POSTTYPE_SOCIETE;?>" value="<?php echo JM_POSTTYPE_SOCIETE;?>" <?php if( jpress_jm_is_in_options( JM_POSTTYPE_SOCIETE, 'types' ) ) :?>checked<?php endif;?>>
-                             Société
+                             Entreprise
                          </label>
                      </fieldset>
                  </td>
@@ -115,17 +115,17 @@ $options = get_option( JM_OPTIONS );
                  </th>
                  <td colspan="2">
                      <input name="settings[profil_rh]" type="checkbox" id="profil_rh" value="1" <?php if( jpress_jm_is_in_options( 'profil_rh', 'settings' ) ) :?>checked<?php endif;?>>
-                     <br><i>Ce profil ne gerera que les entités de Job Manager (société, offre, candidature). Vous pouvez personnaliser ses droits dans l'onglet "Droits et Utilisateurs".</i>
+                     <br><i>Ce profil ne gerera que les entités de Job Manager (Entreprise, offre, candidature). Vous pouvez personnaliser ses droits dans l'onglet "Droits et Utilisateurs".</i>
                  </td>
              </tr>
 
              <tr>
                  <th scope="row">
-                     <label for="rh_by_soc">Attacher le compte du responsable RH à une société</label>
+                     <label for="rh_by_soc">Attacher le compte du responsable RH à une Entreprise</label>
                  </th>
                  <td colspan="2">
                      <input name="settings[rh_by_soc]" type="checkbox" id="rh_by_soc" value="1" <?php if( jpress_jm_is_in_options( 'rh_by_soc', 'settings' ) ) :?>checked<?php endif;?>>
-                     <br><i>L'utilisateur n'aura accès qu'aux offres et candidatures associés à la société définie dans son profil d'utilisateur et recevra une notification que pour les candidatures aux offres qui lui concernent.</i>
+                     <br><i>L'utilisateur n'aura accès qu'aux offres et candidatures associés à la Entreprise définie dans son profil d'utilisateur et recevra une notification que pour les candidatures aux offres qui lui concernent.</i>
                  </td>
              </tr>
 
@@ -165,7 +165,7 @@ $options = get_option( JM_OPTIONS );
 
              <tr>
                  <th scope="row">
-                     <label for="societe_notification">Envoyer un mail à la société rattaché à l'offre</label>
+                     <label for="societe_notification">Envoyer un mail à la Entreprise rattaché à l'offre</label>
                  </th>
                  <td colspan="2">
                      <input name="settings[societe_notification]" type="checkbox" id="societe_notification" value="1" <?php if( jpress_jm_is_in_options( 'societe_notification', 'settings' ) ) :?>checked<?php endif;?>>

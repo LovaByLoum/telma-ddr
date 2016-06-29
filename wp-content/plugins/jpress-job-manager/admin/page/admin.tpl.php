@@ -14,7 +14,7 @@
 
             <a href="?page=jpress-job-manager&amp;tab=general" class="nav-tab <?php echo $active_tab == 'general' ? 'nav-tab-active' : ''; ?>">Configuration générale</a>
 
-            <a href="?page=jpress-job-manager&amp;tab=societe" class="nav-tab <?php echo $active_tab == 'societe' ? 'nav-tab-active' : ''; ?>">Sociétés</a>
+            <a href="?page=jpress-job-manager&amp;tab=societe" class="nav-tab <?php echo $active_tab == 'societe' ? 'nav-tab-active' : ''; ?>">Entreprises</a>
 
             <a href="?page=jpress-job-manager&amp;tab=offre" class="nav-tab <?php echo $active_tab == 'offre' ? 'nav-tab-active' : ''; ?>">Offres</a>
 

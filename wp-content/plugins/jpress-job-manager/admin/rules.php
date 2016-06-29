@@ -20,7 +20,7 @@ function jpress_jm_profile_personal_options($profile){
                 $value_selected = get_user_meta( $profile->ID, JM_META_USER_SOCIETE_FILTER_ID, true);?>
                 <tr>
                     <th scope="row">
-                        <label>Votre compte peut gérer les offres rattachés à la société : </label>
+                        <label>Votre compte peut gérer les offres rattachés à la Entreprise : </label>
                     </th>
                     <td>
                         <?php if( in_array( $current_user->roles[0], array( 'administrator' ) ) ):
@@ -215,7 +215,7 @@ function jpress_jm_filter_content_rh(){
                     $the_societe_id =  apply_filters( 'jpress_jm_post_id_filter', get_user_meta( $current_user->ID, JM_META_USER_SOCIETE_FILTER_ID, true), JM_POSTTYPE_SOCIETE );
                     $soc = JM_Societe::getById($the_societe_id);
                     if ( $the_societe_id != $pst->ID ){
-                        wp_die( 'Alors, on triche ? Votre compte vous permet uniquement de modifier les offres rattachées à la société ' . $soc->titre );
+                        wp_die( 'Alors, on triche ? Votre compte vous permet uniquement de modifier les offres rattachées à la Entreprise ' . $soc->titre );
                     }
                 }
                 break;
@@ -225,7 +225,7 @@ function jpress_jm_filter_content_rh(){
                     $soc = JM_Societe::getById($the_societe_id);
                     $offre = JM_Offre::getById( $pst->ID );
                     if ( $the_societe_id != $offre->societe_associe ){
-                        wp_die( 'Alors, on triche ? Votre compte vous permet uniquement de modifier les offres rattachées à la société ' . $soc->titre );
+                        wp_die( 'Alors, on triche ? Votre compte vous permet uniquement de modifier les offres rattachées à la Entreprise ' . $soc->titre );
                     }
                 }
                 if ( $rh_by_tax ){
@@ -259,7 +259,7 @@ function jpress_jm_filter_content_rh(){
                     $offre = JM_Offre::getById( $candidature->offre_associe );
                     $societe = JM_Societe::getById($offre->societe_associe);
                     if ( $offre->societe_associe != $the_societe_id ){
-                        wp_die( 'Alors, on triche ? Votre compte vous permet uniquement de modifier les candidatures aux offres rattachées à la société ' . $societe->titre );
+                        wp_die( 'Alors, on triche ? Votre compte vous permet uniquement de modifier les candidatures aux offres rattachées à la Entreprise ' . $societe->titre );
                     }
                 }
                 if ( $rh_by_tax ){

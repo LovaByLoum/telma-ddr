@@ -39,7 +39,7 @@ get_header(); ?>
 			        </p>
 
 			        <p class="link_formation">
-				        <a href="<?php echo get_permalink( $postOffes->ID );?>" class="submit_link" title="Accéder directement aux offres">Accéder directement aux offres</a>
+				        <a href="<?php echo get_permalink( $postOffes->ID );?>" class="submit_link button--wapasha button--round-l" title="Accéder directement aux offres"><span>Accéder directement aux offres</span></a>
 			        </p>
 
 		        </aside>

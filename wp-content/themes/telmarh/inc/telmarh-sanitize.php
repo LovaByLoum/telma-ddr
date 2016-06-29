@@ -1,8 +1,8 @@
 <?php
 /**
- * BLDR Pro Theme Customizer 
+ * telmarh Pro Theme Customizer
  *
- * @package bldr
+ * @package telmarh
  */
 
 
@@ -14,7 +14,7 @@
  *
  * @since 1.7
  */
-function bldr_sanitize_hex_color( $color ) {
+function telmarh_sanitize_hex_color( $color ) {
 	if ( '#ea474b' === $color ) 
 		return '';
 
@@ -30,7 +30,7 @@ function bldr_sanitize_hex_color( $color ) {
  *
  * @since 1.7 
  */
-function bldr_sanitize_index_content( $content ) {
+function telmarh_sanitize_index_content( $content ) {
 	if ( 'option2' == $content ) {
 		return 'option2';
 	} else {
@@ -39,7 +39,7 @@ function bldr_sanitize_index_content( $content ) {
 }
 
 //Checkboxes
-function bldr_sanitize_checkbox( $input ) {
+function telmarh_sanitize_checkbox( $input ) {
 	if ( $input == 1 ) {
 		return 1;
 	} else {
@@ -48,19 +48,19 @@ function bldr_sanitize_checkbox( $input ) {
 }
 
 //Integers
-function bldr_sanitize_int( $input ) {
+function telmarh_sanitize_int( $input ) {
     if( is_numeric( $input ) ) {
         return intval( $input );
     }
 }
 
 //Text
-function bldr_sanitize_text( $input ) {
+function telmarh_sanitize_text( $input ) {
     return wp_kses_post( force_balance_tags( $input ) );
 }
 
 //Sanitizes Fonts 
-function bldr_sanitize_fonts( $input ) {  
+function telmarh_sanitize_fonts( $input ) {
     $valid = array(
 			'Source Sans Pro:400,700,400italic,700italic' => 'Source Sans Pro',
 			'Open Sans:400italic,700italic,400,700' => 'Open Sans',
@@ -102,6 +102,6 @@ function bldr_sanitize_fonts( $input ) {
 }
 
 //No sanitize - empty function for options that do not require sanitization -> to bypass the Theme Check plugin
-function bldr_no_sanitize( $input ) {
+function telmarh_no_sanitize( $input ) {
 } 
 

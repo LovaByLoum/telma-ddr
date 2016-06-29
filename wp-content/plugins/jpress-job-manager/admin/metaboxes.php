@@ -51,10 +51,10 @@ function jpress_jm_offre_relations($post){
         <tbody>
             <tr>
                 <th scope="row">
-                    <label>Société rattaché</label>
+                    <label>Entreprise rattaché</label>
                 </th>
                 <td>
-                    <select name="<?php echo JM_META_SOCIETE_OFFRE_RELATION;?>" data-placeholder="Séléctionner une société" class="chosen-select" tabindex="2">
+                    <select name="<?php echo JM_META_SOCIETE_OFFRE_RELATION;?>" data-placeholder="Séléctionner une Entreprise" class="chosen-select" tabindex="2">
                         <option value=""></option>
                         <?php foreach ( $societes as $soc):?>
                             <option value="<?php echo $soc->id;?>" <?php if ( $offre->societe_associe ==  $soc->id ): ?>selected<?php endif;?>><?php echo $soc->titre;?></option>
@@ -140,7 +140,7 @@ function jpress_jm_candidature_relations($post){
 //metabox societe
 add_action('add_meta_boxes','jpress_jm_init_metabox_societe');
 function jpress_jm_init_metabox_societe(){
-    add_meta_box('societe_fields', 'Informations société', 'jpress_jm_societe_fields', JM_POSTTYPE_SOCIETE, 'normal');
+    add_meta_box('societe_fields', 'Informations Entreprise', 'jpress_jm_societe_fields', JM_POSTTYPE_SOCIETE, 'normal');
 
 }
 function jpress_jm_societe_fields($post){
