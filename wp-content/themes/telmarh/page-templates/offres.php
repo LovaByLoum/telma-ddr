@@ -9,20 +9,21 @@
  * @author : Netapsys
  */
 global $post;
-$anneeExperience = get_terms( array( 'taxonomy' => JM_TAXONOMIE_ANNEE_EXPERIENCE,'hide_empty' => false ) );
-$typeContrat = get_terms( array( 'taxonomy' => JM_TAXONOMIE_TYPE_CONTRAT,'hide_empty' => false ) );
+$anneeExperiences = get_terms( JM_TAXONOMIE_ANNEE_EXPERIENCE, array( 'hide_empty' => false ) );
+$typeContrat = get_terms( JM_TAXONOMIE_TYPE_CONTRAT, array( 'hide_empty' => false ) );
+$localisation = get_terms( JM_TAXONOMIE_LOCALISATION,array( 'hide_empty' => false ) );
+$entreprises  = JM_Societe::getBy();
 get_header(); ?>
 	<section>
 	    <div class="grid grid-pad">
 	        <div class="col-1-1">
 		        <aside class="widget widget_search homepage">
-			        <form role="search" method="get" class="search-form" action="<?php echo get_permalink( $postOffes->ID );?>" autocomplete="off">
-	                    <label>
-	                    <span class="screen-reader-text">Search for:</span>
-	                    <input class="search-field offre" placeholder="Recherche offre …" value="" name="sof" type="search">
-	                    </label>
-	                    <input class="search-submit" value="Search" type="submit">
-	                </form>
+                    <label>
+                    <span class="screen-reader-text">Search for:</span>
+                    <input class="search-field offre recherche" data-filter="recherche" placeholder="Recherche offre …" value="" name="sof" type="text">
+                    </label>
+                    <input class="search-submit" value="Search" type="submit">
+
 		        </aside>
 	        </div><!-- col-1-1 -->
 	    </div><!-- grid -->
@@ -62,7 +63,7 @@ get_header(); ?>
                                             //set list or table view
                                             $object->setListView('div');
                                             //number of item on first load
-                                            $object->setItemPerPage(2);
+                                            $object->setItemPerPage(3);
                                             //container class
                                             $object->setContainerClasses('wrapper');
                                             //item classes
@@ -74,8 +75,12 @@ get_header(); ?>
                                             //add class to retrieve sorting element
                                             $object->addSorting('product-sort-date');
                                             //add class to retrieve filter element
-                                            $object->addFilter('product-filtre-category');
-                                            $object->configPagination(array('first_text'=>"<<", 'last_text'=>">>"));
+                                            $object->addFilter('recherche');
+                                            $object->addFilter('entreprise');
+                                            $object->addFilter(JM_TAXONOMIE_ANNEE_EXPERIENCE);
+                                            $object->addFilter(JM_TAXONOMIE_TYPE_CONTRAT);
+                                            $object->addFilter(JM_TAXONOMIE_LOCALISATION);
+                                            $object->configPagination(array('first_text'=>"<<", 'last_text'=>">>", "always_show" => false));
 
                                             //display pagination loading box
                                             $object->displayItems();
@@ -103,19 +108,84 @@ get_header(); ?>
             </div><!-- col-9-12 -->
             <div class="col-3-12">
                 <div class="widget-area">
+	                <aside class="widget">
+		                <div class="control-group">
+							<h4>Triée par :</h4>
+			                <div class="select">
+				                <select>
+									<option value="date">Date de publication</option>
+									<option value="date-offre">Date d’expiration de l’offre</option>
+									<option value="criticite-order">Criticité : urgente, normal</option>
+                                </select>
+				                <div class="select__arrow"></div>
+			                </div>
+		                </div>
+	                </aside>
                     <aside class="widget">
-                        <label>Annnée d'experience</label>
-                        <select name="data">
-                            <option>Sélectionnez</option>
-                            <option>option1</option>
-                            <option>option2</option>
-                            <option>option3</option>
-                            <option>option4</option>
-                        </select>
+	                    <div class="control-group">
+		                    <h4>Entreprise</h4>
+	                            <?php if ( !empty( $entreprises ) && count( $entreprises ) > 0 ):
+		                                foreach ( $entreprises as $entreprise ):  ?>
+			                                <label class="control control--checkbox"><?php echo $entreprise->titre;?>
+                                                <input type="checkbox" name="entreprise" value="<?php echo $entreprise->id;?>" data-filter="entreprise" class="entreprise">
+                                                <div class="control__indicator"></div>
+                                            </label>
+								<?php   endforeach;
+	                                endif;?>
+	                    </div>
                     </aside>
-                    <aside class="widget">
-                        <input type="checkbox" name="entreprise" value="0" checked>
-                        <label for="data">Tous</label>
+	                <aside class="widget">
+                        <div class="control-group">
+	                        <h4>Région</h4>
+                        <?php if ( !empty( $localisation ) && count( $localisation ) > 0 ):
+	                            foreach ( $localisation as $term ):?>
+		                        <label class="control control--checkbox"><?php echo $term->name;?>
+			                        <input type="checkbox" value="<?php echo $term->term_id;?>" name="<?php echo JM_TAXONOMIE_LOCALISATION?>" data-filter="<?php echo JM_TAXONOMIE_LOCALISATION?>" class="<?php echo JM_TAXONOMIE_LOCALISATION?>">
+			                        <div class="control__indicator"></div>
+		                        </label>
+                        <?php   endforeach;
+                            endif;?>
+                        </div>
+                    </aside>
+	                <aside class="widget">
+		                <div class="control-group">
+                            <h4>Annnée d'experience</h4>
+
+                            <?php if ( !empty( $anneeExperiences ) && count( $anneeExperiences ) > 0 ):
+                                    foreach ( $anneeExperiences as $term ):?>
+                                        <label class="control control--checkbox"><?php echo $term->name;?>
+                                            <input type="checkbox" value="<?php echo $term->term_id;?>" name="<?php echo JM_TAXONOMIE_ANNEE_EXPERIENCE?>" data-filter="<?php echo JM_TAXONOMIE_ANNEE_EXPERIENCE?>" class="<?php echo JM_TAXONOMIE_ANNEE_EXPERIENCE?>">
+                                            <div class="control__indicator"></div>
+                                        </label>
+                            <?php   endforeach;
+                                endif;?>
+                        </div>
+                    </aside>
+	                <aside class="widget">
+		                <div class="control-group">
+	                        <h4>Type de contrat</h4>
+	                        <?php if ( !empty( $typeContrat ) && count( $typeContrat ) > 0 ):
+	                                foreach ( $typeContrat as $term ):?>
+		                                <label class="control control--checkbox"><?php echo $term->name;?>
+                                            <input type="checkbox" value="<?php echo $term->term_id;?>" name="<?php echo JM_TAXONOMIE_TYPE_CONTRAT?>" data-filter="<?php echo JM_TAXONOMIE_TYPE_CONTRAT?>" class="<?php echo JM_TAXONOMIE_TYPE_CONTRAT?>">
+                                            <div class="control__indicator"></div>
+                                        </label>
+							<?php   endforeach;
+	                            endif;?>
+		                </div>
+                    </aside>
+	                <aside class="widget">
+		                <div class="control-group">
+	                        <h4>Type de contrat</h4>
+	                        <?php if ( !empty( $typeContrat ) && count( $typeContrat ) > 0 ):
+	                                foreach ( $typeContrat as $term ):?>
+		                                <label class="control control--checkbox"><?php echo $term->name;?>
+                                            <input type="checkbox" value="<?php echo $term->term_id;?>" name="<?php echo JM_TAXONOMIE_TYPE_CONTRAT?>" data-filter="<?php echo JM_TAXONOMIE_TYPE_CONTRAT?>" class="<?php echo JM_TAXONOMIE_TYPE_CONTRAT?>">
+                                            <div class="control__indicator"></div>
+                                        </label>
+							<?php   endforeach;
+	                            endif;?>
+		                </div>
                     </aside>
                 </div>
             </div>

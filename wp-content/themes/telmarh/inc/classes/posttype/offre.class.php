@@ -158,13 +158,22 @@ class COffre
 			'orderby'     => 'date',
 			'fields'      => 'ids',
 		);
+		$args['meta_query'] = array();
+		if ( isset( $filters['entreprise'] ) ) {
+			$args['meta_query'][] =
+		        array(
+		          'key'     => JM_META_SOCIETE_OFFRE_RELATION,
+		          'value'   => $filters['entreprise'],
+		          'compare' => 'IN',
+		         );
+		}
 		if ( !empty( $filters ) ) {
 			foreach ( $filters as $filter => $filterby ) {
-				if ( $filterby > 0 ) {
+				if ( $filterby > 0 && $filter != "entreprise" ) {
 					$args['tax_query'][] = array(
 						'taxonomy'         => $filter,
 						'field'            => 'id',
-						'terms'            => array( intval( $filterby ) ),
+						'terms'            => $filterby,
 						'operator'         => 'IN',
 						'include_children' => true
 					);
@@ -172,6 +181,9 @@ class COffre
 			}
 			$args['tax_query']['relation'] = 'AND';
 		}
+		if ( !empty( $filters["recherche"] ) ) {
+	      $args['s'] = $filters["recherche"];
+	    }
 		$posts = query_posts($args);
 		global $wp_query;
 		return array('posts' => $posts, 'count'=> $wp_query->found_posts);
@@ -191,7 +203,7 @@ class COffre
 
             <footer class="entry-footer">
                 <span class="comments-link">
-                <a href="' . get_permalink( $offre->id ) . '" title="Lire la suite">Lire la suite</a>
+                <a href="' . get_permalink( $offre->id ) . '" title="Lire la suite" class"">Lire la suite</a>
                 </span>
             </footer><!-- .entry-footer -->
         ';

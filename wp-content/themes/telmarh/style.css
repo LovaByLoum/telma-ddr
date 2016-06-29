@@ -2064,31 +2064,31 @@ aside.homepage p.separator, aside.homepage p.link_formation {
 aside.homepage p.separator span{
     font-size: 2em;
 }
-aside.homepage a.submit_link {
+aside.homepage a.submit_link, a.submit_link {
     display: inline-block;
     min-width: 70%;
     max-width: 100px;
     padding: 0.5em 1em;
     border: none;
-    color: #fff;
+    color: #FFDD00;
     vertical-align: middle;
     position: relative;
     z-index: 1;
     -webkit-backface-visibility: hidden;
     -moz-osx-font-smoothing: grayscale;
 }
-aside.homepage a.submit_link:focus{
+aside.homepage a.submit_link:focus, a.submit_link:focus{
     outline: none;
 }
 .submit_link.button--wapasha {
-    background-color: #ff921e;
-    color: #fff;
+    background-color: #006633;
+    color: #FFDD00;
 	/*-webkit-transition: background-color 0.3s, color 0.3s;*/
 	/*transition: background-color 0.3s, color 0.3s;*/
 }
 .button--wapasha.button--inverted {
-	background: #ff921e;
-	color: #fff;
+	background: #006633;
+	color: #FFDD00;
 }
 .button--wapasha::before {
 	content: '';
@@ -2097,7 +2097,7 @@ aside.homepage a.submit_link:focus{
 	left: 0;
 	width: 100%;
 	height: 100%;
-	border: 2px solid #ff921e;
+	border: 2px solid #006633;
 	z-index: -1;
 	border-radius: inherit;
 	opacity: 0;
@@ -2109,11 +2109,11 @@ aside.homepage a.submit_link:focus{
 	transition-timing-function: cubic-bezier(0.75, 0, 0.125, 1);
 }
 .button--wapasha.button--inverted::before {
-	border-color: #ff921e;
+	border-color: #006633;
 }
 .submit_link.button--wapasha:hover {
-	background-color: #fff;
-	color: #ff921e;
+	background-color: #FFDD00;
+	color: #006633;
 }
 .button--wapasha.button--inverted:hover {
 	background-color: #37474f;

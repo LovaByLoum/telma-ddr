@@ -621,116 +621,121 @@ class WP_Pagination_Loading{
 			}
 			if(!empty($filter_classes)){	
 				$script.=
-				"//filtering button
-				jQuery(\"{$filter_classes}\").each(function($){
-					if(jQuery(this).get(0).tagName.toLowerCase() == 'select'){
-						jQuery(this).change(function($){
-              if(WPPL_BUTTON_LOCKED==true) return false;
-              WPPL_BUTTON_LOCKED = true;
-
-              jQuery(\"{$filter_classes}\").each(function($){
-                if(jQuery(this).prop('tagName') == 'SELECT'){
-                  _filter = jQuery(this).data('filter');
-                  _filterby = jQuery(this).val();
-                }else{
-                  _filter = jQuery(this).data('filter');
-                  _name = jQuery(this).attr('name');
-                  var _val = [];
-                  jQuery('input[name='+_name+']:checked').each(function(){
-                      _val.push(jQuery(this).val());
-                  })
-                   _filterby = _val;
-                }
-                {$this->clean_js_id}_FILTERS[_filter] = _filterby;
-              });
-
-              {$this->clean_js_id}_onload();
-              ".apply_filters('ajax_loading_'.$this->clean_id,'')."
-              jQuery.ajax({
-                url: '". admin_url('admin-ajax.php')."',
-                data: {
-                  'action':'wppl_pagination_action',
-                  'object': {$this->clean_js_id}_OBJECT,
-                  'limit': {$this->clean_js_id}_LIMIT,
-                  'offset': 0,
-                  'order': {$this->clean_js_id}_ORDER,
-                  'orderby': {$this->clean_js_id}_ORDERBY,
-                  'filters': {$this->clean_js_id}_FILTERS
-                },
-                dataType:'json',
-                success:function(data) {
-                  jQuery(\"#wppl_item_container_{$this->id}\").html(data.items);
-                  WPPL_BUTTON_LOCKED = false;
-                  {$this->clean_js_id}_success(data);
-                  ".apply_filters('ajax_success_' . $this->clean_id, '')."
-                }
-              });
-            })
-					}else if(jQuery(this).get(0).tagName.toLowerCase() == 'input'){
-             jQuery(this).change(function($){
-                if(WPPL_BUTTON_LOCKED==true) return false;
-                WPPL_BUTTON_LOCKED = true;
-                _filter = jQuery(this).data('filter');
-                _name = jQuery(this).attr('name');
-                var _val = [];
-                jQuery('input[name='+_name+']:checked').each(function(){
-                    _val.push(jQuery(this).val());
-                })
-                _filterby = _val;
-                {$this->clean_js_id}_FILTERS[_filter] = _filterby;
-                {$this->clean_js_id}_onload();
-                ".apply_filters('ajax_loading_'.$this->clean_id,'')."
-                jQuery.ajax({
-                  url: '". admin_url('admin-ajax.php')."',
-                  data: {
-                    'action':'wppl_pagination_action',
-                    'object': {$this->clean_js_id}_OBJECT,
-                    'limit': {$this->clean_js_id}_LIMIT,
-                    'offset': 0,
-                    'order': {$this->clean_js_id}_ORDER,
-                    'orderby': {$this->clean_js_id}_ORDERBY,
-                    'filters': {$this->clean_js_id}_FILTERS
-                  },
-                  dataType:'json',
-                  success:function(data) {
-                    jQuery(\"#wppl_item_container_{$this->id}\").html(data.items);
-                    WPPL_BUTTON_LOCKED = false;
-                    {$this->clean_js_id}_success(data);
-                    ".apply_filters('ajax_success_' . $this->clean_id, '')."
-                  }
-                });
-              })
-					}else{
-						jQuery(this).click(function($){
+					"//filtering button
+					jQuery(\"{$filter_classes}\").each(function($){
+						if(jQuery(this).get(0).tagName.toLowerCase() == 'select'){
+							jQuery(this).change(function($){
 							if(WPPL_BUTTON_LOCKED==true) return false;
 							WPPL_BUTTON_LOCKED = true;
-							_filter = jQuery(this).data('filter');
-							_filterby = jQuery(this).data('filterby');
-							{$this->clean_js_id}_FILTERS[_filter] = _filterby;
-							{$this->clean_js_id}_onload();
-							".apply_filters('ajax_loading_'.$this->clean_id,'')."
-							jQuery.ajax({
-						        url: '". admin_url('admin-ajax.php')."',
-						        data: {
-						          'action':'wppl_pagination_action',
-						          'object': {$this->clean_js_id}_OBJECT,
-						          'limit': {$this->clean_js_id}_LIMIT,
-						          'offset': 0,
-						          'order': {$this->clean_js_id}_ORDER,
-						          'orderby': {$this->clean_js_id}_ORDERBY,
-						          'filters': {$this->clean_js_id}_FILTERS
-						        },
-						        dataType:'json',
-						        success:function(data) {
-						        	jQuery(\"#wppl_item_container_{$this->id}\").html(data.items);
-						        	WPPL_BUTTON_LOCKED = false;
-						        	{$this->clean_js_id}_success(data);
-						        	".apply_filters('ajax_success_' . $this->clean_id, '')."
-						        }
-					      	});
-						})
-		        	}
-	        	})";
+
+							jQuery(\"{$filter_classes}\").each(function($){
+								if(jQuery(this).prop('tagName') == 'SELECT'){
+								  _filter = jQuery(this).data('filter');
+								  _filterby = jQuery(this).val();
+								}else{
+								  _filter = jQuery(this).data('filter');
+								  _name = jQuery(this).attr('name');
+								  var _val = [];
+								  jQuery('input[name='+_name+']:checked').each(function(){
+									  _val.push(jQuery(this).val());
+								  })
+								   _filterby = _val;
+								}
+								{$this->clean_js_id}_FILTERS[_filter] = _filterby;
+								});
+
+								{$this->clean_js_id}_onload();
+								" . apply_filters('ajax_loading_' . $this->clean_id, '') . "
+								jQuery.ajax({
+								url: '" . admin_url('admin-ajax.php') . "',
+								data: {
+								  'action':'wppl_pagination_action',
+								  'object': {$this->clean_js_id}_OBJECT,
+								  'limit': {$this->clean_js_id}_LIMIT,
+								  'offset': 0,
+								  'order': {$this->clean_js_id}_ORDER,
+								  'orderby': {$this->clean_js_id}_ORDERBY,
+								  'filters': {$this->clean_js_id}_FILTERS
+								},
+								dataType:'json',
+								success:function(data) {
+								  jQuery(\"#wppl_item_container_{$this->id}\").html(data.items);
+								  WPPL_BUTTON_LOCKED = false;
+								  {$this->clean_js_id}_success(data);
+								  " . apply_filters('ajax_success_' . $this->clean_id, '') . "
+								}
+								});
+							})
+						}else if(jQuery(this).get(0).tagName.toLowerCase() == 'input'){
+							 jQuery(this).change(function($){
+								if(WPPL_BUTTON_LOCKED==true) return false;
+								WPPL_BUTTON_LOCKED = true;
+								_filter = jQuery(this).data('filter');
+								_name = jQuery(this).attr('name');
+								if ( jQuery(this).attr('type') == 'text' || jQuery(this).attr('type') == 'hidden'  ){
+									var _val;
+									_val = jQuery(this).val();
+								}else{
+									var _val = [];
+									jQuery('input[name='+_name+']:checked').each(function(){
+										_val.push(jQuery(this).val());
+									})
+								}
+								_filterby = _val;
+								{$this->clean_js_id}_FILTERS[_filter] = _filterby;
+								{$this->clean_js_id}_onload();
+								" . apply_filters('ajax_loading_' . $this->clean_id, '') . "
+								jQuery.ajax({
+								  url: '" . admin_url('admin-ajax.php') . "',
+								  data: {
+									'action':'wppl_pagination_action',
+									'object': {$this->clean_js_id}_OBJECT,
+									'limit': {$this->clean_js_id}_LIMIT,
+									'offset': 0,
+									'order': {$this->clean_js_id}_ORDER,
+									'orderby': {$this->clean_js_id}_ORDERBY,
+									'filters': {$this->clean_js_id}_FILTERS
+								  },
+								  dataType:'json',
+								  success:function(data) {
+									jQuery(\"#wppl_item_container_{$this->id}\").html(data.items);
+									WPPL_BUTTON_LOCKED = false;
+									{$this->clean_js_id}_success(data);
+									" . apply_filters('ajax_success_' . $this->clean_id, '') . "
+								  }
+								});
+							  })
+						}else{
+							jQuery(this).click(function($){
+								if(WPPL_BUTTON_LOCKED==true) return false;
+								WPPL_BUTTON_LOCKED = true;
+								_filter = jQuery(this).data('filter');
+								_filterby = jQuery(this).data('filterby');
+								{$this->clean_js_id}_FILTERS[_filter] = _filterby;
+								{$this->clean_js_id}_onload();
+								" . apply_filters('ajax_loading_' . $this->clean_id, '') . "
+								jQuery.ajax({
+							        url: '" . admin_url('admin-ajax.php') . "',
+							        data: {
+							          'action':'wppl_pagination_action',
+							          'object': {$this->clean_js_id}_OBJECT,
+							          'limit': {$this->clean_js_id}_LIMIT,
+							          'offset': 0,
+							          'order': {$this->clean_js_id}_ORDER,
+							          'orderby': {$this->clean_js_id}_ORDERBY,
+							          'filters': {$this->clean_js_id}_FILTERS
+							        },
+							        dataType:'json',
+							        success:function(data) {
+							        	jQuery(\"#wppl_item_container_{$this->id}\").html(data.items);
+							        	WPPL_BUTTON_LOCKED = false;
+							        	{$this->clean_js_id}_success(data);
+							        	" . apply_filters('ajax_success_' . $this->clean_id, '') . "
+							        }
+						      	});
+							})
+			        	}
+		        	})";
 			}
 			
 		$script.=	

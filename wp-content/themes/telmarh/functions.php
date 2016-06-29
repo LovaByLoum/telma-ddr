@@ -174,6 +174,8 @@ function telmarh_scripts() {
 	wp_enqueue_style( 'telmarh-slick', get_template_directory_uri() . '/css/slick.css' );
 
 	wp_enqueue_style( 'telmarh-animate', get_template_directory_uri() . '/css/animate.css' );
+
+	wp_enqueue_style( 'telmarh-select', get_template_directory_uri() . '/css/style-checkbok_select.css' );
 	
 	wp_enqueue_style( 'telmarh-menu', get_template_directory_uri() . '/css/jPushMenu.css' ); 
 	
