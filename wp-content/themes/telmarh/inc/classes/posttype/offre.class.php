@@ -169,7 +169,7 @@ class COffre
 		}
 		if ( !empty( $filters ) ) {
 			foreach ( $filters as $filter => $filterby ) {
-				if ( $filterby > 0 && $filter != "entreprise" ) {
+				if ( $filterby > 0 && !in_array( $filter,array("entreprise", "recherche") ) ) {
 					$args['tax_query'][] = array(
 						'taxonomy'         => $filter,
 						'field'            => 'id',
@@ -190,22 +190,29 @@ class COffre
 	}
 
 	public static function renderItemCallback( $pid ){
+		$html = "";
 		$offre = JM_Offre::getById( $pid );
         $elementOffre = COffre::getById( $pid );
-        $html = '
-            <header class="entry-header">
-                <h1 class="entry-title">' . $offre->titre . '</h1>
-            </header><!-- .entry-header -->
-
-            <div class="entry-content">
-                ' . apply_filters( "the_content", $offre->description ) . '
-            </div><!-- .entry-content -->
-
-            <footer class="entry-footer">
-                <span class="comments-link">
-                <a href="' . get_permalink( $offre->id ) . '" title="Lire la suite" class"">Lire la suite</a>
-                </span>
-            </footer><!-- .entry-footer -->
+		$isUrgent = ( isset( $offre->criticite ) && !empty( $offre->criticite ) && $offre->criticite[0]->slug != "normale" ) ? true : false;
+		$reference = get_post_meta( $pid, REFERENCE_OFFRE, true );
+        $html .= '
+			<article class="list-offres">
+	            <div class="entry-content testimonial">
+	            	<header class="entry-header">
+	                    <h2 class="entry-title">' . $offre->titre . '</h2>
+	                </header><!-- .entry-header -->
+	                ' . apply_filters( "the_content", $offre->description );
+		if ( $isUrgent ){
+			$html .= '        <div class="newFormation">' . $offre->criticite[0]->name . '</div>';
+		}
+		$html .= '
+	            <footer class="entry-footer">
+                    <span class="comments-link">
+                    <a href="' . get_permalink( $offre->id ) . '" title="En savoir plus" class="submit_link button--wapasha button--round-l">En savoir plus</a>
+                    </span>
+                </footer><!-- .entry-footer -->
+	            </div><!-- .entry-content -->
+            </article>
         ';
 
         return $html;

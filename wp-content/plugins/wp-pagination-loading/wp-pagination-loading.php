@@ -584,7 +584,7 @@ class WP_Pagination_Loading{
 			if(!empty($sorting_classes)){	
 				$script.=
 				"//sorting button
-				jQuery(\"{$sorting_classes}\").click(function(){
+				jQuery(\"{$sorting_classes}\").each(function(){
 					if(WPPL_BUTTON_LOCKED==true) return false;
 					WPPL_BUTTON_LOCKED = true;
 					{$this->clean_js_id}_ORDER = jQuery(this).data('order');

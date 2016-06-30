@@ -36,4 +36,23 @@ jQuery( function( $ ){
 		$('.toggle-menu').jPushMenu();
 	});
 });
+//accordion
+if (jQuery('.content-accordion').length > 0) {
+    jQuery('.widget-area .widget').each ( function (index) {
+        jQuery('.head-accordion', this).click (function() {
+            jQuery(this).toggleClass ('open');
+            jQuery('.content-accordion', jQuery('.widget-area .widget').eq(index) ).slideToggle ('900');
+			return false;
+		});
+	});
+}
+jQuery(".entreprise, .localisation, .annee-experience, .type-contrat, .criticite").change(function(){
+    _this = jQuery(this);
+    if ( _this.is(":checked") ){
+        _this.parent("label").addClass("checked");
+    } else {
+        _this.parent("label").removeClass("checked");
+    }
+})
+
  
