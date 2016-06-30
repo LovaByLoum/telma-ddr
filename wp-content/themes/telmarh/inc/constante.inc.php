@@ -34,8 +34,26 @@ define ('USER_PROFILE_ADMIN', 'administrator');
 define ( 'INCREMENTATION_OFFRE', 'incrementation_offre' );
 define ( 'REFERENCE_OFFRE', 'reference_offre' );
 
-//field ACF
+//field ACF offres
 define ( "FIELD_DOMAINE_METIER", "domaine_de_metier_offre" );
 define ( "FIELD_MISSIONS_PRINCIPALE", "missions_principales_offre" );
 define ( "FIELD_RESPONSABILITE", "responsabilites_offre" );
 define ( "FIELD_QUALITE_REQUISE", "qualites_requises_offre" );
+
+//field ACF homepage
+define ( "TITRE_BLOC_SERVICE", "titre_bloc_service" );
+define ( "LINK_BOUTON_BLOC_SERVICE", "lien_du_bouton_bloc_service" );
+define ( "TEXT_BOUTON_BLOC_SERVICE", "titre_bouton_bloc_service" );
+define ( "ELEMENTS_BLOC_SERVICE", "elements_bloc_service" );
+define ( "FONT_ELEMENTS_BLOC_SERVICE", "font_element_service" );
+define ( "TITRE_ELEMENTS_BLOC_SERVICE", "titre_element_service" );
+define ( "DESC_ELEMENTS_BLOC_SERVICE", "description_element_service" );
+
+//field ACF slide
+define ( "TITRE_BLOC_PARTENAIRE", "titre_partenaire" );
+define ( "LISTES_PARTENAIRE", "bloc_partenaires" );
+define ( "IMAGE_PARTENAIRE", "image_partenaire" );
+define ( "LINK_PARTENAIRE", "lien_partenaire" );
+
+
+

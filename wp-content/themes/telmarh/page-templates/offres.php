@@ -49,7 +49,7 @@ get_header(); ?>
 	                            <aside class="widget widget_search homepage"style="text-align: center;">
                                     <label>
                                     <span class="screen-reader-text">Search for:</span>
-                                    <input class="search-field offre recherche" data-filter="recherche" placeholder="Recherche offre …" value="<?php echo $recherche;?>" name="sof" type="text">
+                                    <input class="search-field offre recherche" data-filter="recherche" placeholder="Rechercher une offre …" value="<?php echo $recherche;?>" name="sof" type="text">
                                     </label>
                                     <input class="search-submit" value="Search" type="submit">
                                 </aside>
