@@ -54,6 +54,15 @@ define ( "TITRE_BLOC_PARTENAIRE", "titre_partenaire" );
 define ( "LISTES_PARTENAIRE", "bloc_partenaires" );
 define ( "IMAGE_PARTENAIRE", "image_partenaire" );
 define ( "LINK_PARTENAIRE", "lien_partenaire" );
+define ( "NAME_PARTENAIRE", "nom_partenaire" );
+
+//field ACF Testimoniale
+define ( "TITRE_TESTIMONIAL", "titre_testimonial" );
+define ( "ELEMENT_TESTIMONIAL", "testimoniales" );
+define ( "IMAGE_TESTIMONIAL", "image_testimonial" );
+define ( "DESCRIPTION_TESTIMONIAL", "description_testimonial" );
+define ( "AUTEUR_TESTIMONIAL", "auteur_testimonial" );
+define ( "PROFESSION_TESTIMONIAL", "profession_testimonial" );
 
 
 

@@ -2064,9 +2064,9 @@ aside.homepage p.separator, aside.homepage p.link_formation {
 aside.homepage p.separator span{
     font-size: 2em;
 }
-aside.homepage a.submit_link, a.submit_link {
+#home-hero .telmarh-hero-content-container a.submit_link, a.submit_link, .button {
     display: inline-block;
-    min-width: 70%;
+    min-width: 260px;
     max-width: 100px;
     padding: 0.5em 1em;
     border: none;
@@ -2077,10 +2077,10 @@ aside.homepage a.submit_link, a.submit_link {
     -webkit-backface-visibility: hidden;
     -moz-osx-font-smoothing: grayscale;
 }
-aside.homepage a.submit_link:focus, a.submit_link:focus{
+#home-hero .telmarh-hero-content-container a.submit_link:focus, a.submit_link:focus, .button:focus{
     outline: none;
 }
-.submit_link.button--wapasha {
+.submit_link.button--wapasha,.button.button--wapasha {
     background-color: #28b1ff;
     color: #fff;
 	/*-webkit-transition: background-color 0.3s, color 0.3s;*/
@@ -2113,7 +2113,7 @@ aside.homepage a.submit_link:focus, a.submit_link:focus{
 }
 .submit_link.button--wapasha:hover {
 	background-color: #fff;
-	color: #28b1ff;
+	color: #28b1ff!important;
 }
 .button--wapasha.button--inverted:hover {
 	background-color: #37474f;
@@ -2195,4 +2195,10 @@ body.page-template-offres #page .site-content  .content-accordion .control.check
 }
 body.page-template-offres #page .site-content  .content-accordion .control{
     color:#ccc;
+}
+#pl-636 .panel-grid:nth-child(even){
+    background: #f5f5f5;
+}
+#pl-636 .panel-grid:nth-child(odd){
+    background: #ffffff;
 }

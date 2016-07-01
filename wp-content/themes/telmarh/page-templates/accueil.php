@@ -10,13 +10,16 @@
  */
 global $post;
 $description = ( isset( $post->texte_descriptif_hp ) && !empty( $post->texte_descriptif_hp ) ) ? $post->texte_descriptif_hp : "";
+list( $image ) = ( isset( $post->image_background_hp ) && !empty( $post->image_background_hp ) ) ? wp_get_attachment_image_src( $post->image_background_hp, "full" ) : array();
+$imageBackground = ( isset( $image ) && !empty( $image ) ) ? $image : get_template_directory_uri() . '/images/design/bldr.jpg';
 $blocService = CPage::getAllElementServiceHp( $post->ID );
 $blocPartenaires = CPage::getAllpartnerHp( $post->ID );
+$blocTestimonial = CPage::getAllElementTestimonialHp( $post->ID );
 $postOffes = ( is_object( wp_get_post_by_template( "offres.php" ) ) ) ?  wp_get_post_by_template( "offres.php" ) : $post;
 get_header('home'); ?>
      <section id="home-hero">
 
-     	<div class="telmarh-hero-bg" style="background-image: url('<?php echo get_template_directory_uri()?>/images/design/bldr.jpg');"></div>
+     	<div class="telmarh-hero-bg" style="background-image: url('<?php echo $imageBackground;?>');"></div>
 
         <div class="telmarh-hero-content-container">
             <div class="telmarh-hero-content">
@@ -36,13 +39,13 @@ get_header('home'); ?>
                 </p>
 	            </aside>
 
-                <a href="<?php echo get_permalink( $postOffes->ID );?>" class="featured-link">
-                    <span class="animate-plus animate-init" data-animations="fadeInUp" data-animation-delay="1.5s">
-                        <button>
-	                        Accéder directement aux offres
-                        </button>
-                    </span>
-                </a>
+	            <p class="animate-plus animate-init link_formation" data-animations="fadeInUp" data-animation-delay="1.5s">
+                    <a href="<?php echo get_permalink( $postOffes->ID );?>" class="submit_link button--wapasha button--round-l">
+	                    <span>
+		                    Accéder directement aux offres
+                        </span>
+                    </a>
+                </p>
 	            <h2 class="animate-plus animate-init" data-animations="fadeIn" data-animation-delay="1s">
                     <?php echo apply_filters("the_content", $post->post_content)?>
                 </h2>
@@ -102,8 +105,8 @@ get_header('home'); ?>
 													<!--elements-->
 													<?php if ( isset( $blocService['lien'] ) && !empty( $blocService['lien'] ) ):?>
 													<a href="<?php echo $blocService['lien'];?>"
-													   class="telmarh-home-widget">
-														<button><?php echo $blocService['text_bouton'];?></button>
+													   class="submit_link button--wapasha button--round-l">
+														<?php echo $blocService['text_bouton'];?>
 													</a>
 													<?php endif;?>
 												</section>
@@ -135,7 +138,7 @@ get_header('home'); ?>
 																		<?php foreach ( $blocPartenaires['element'] as $slider ):?>
 																		<div>
 																			<?php if ( isset( $slider->imageUrl ) && !empty( $slider->imageUrl ) ):?>
-																				<a href="<?php echo $slider->link;?>">
+																				<a href="<?php echo $slider->link;?>" title="<?php echo $slider->name;?>">
 																			<div class="client-container">
 																					<img
 																					src="<?php echo $slider->imageUrl;?>"
@@ -158,6 +161,57 @@ get_header('home'); ?>
 													<?php endif;?>
 												</section>
 											</div>
+										</div>
+									</div>
+									<?php endif;?>
+									<?php if ( !empty( $blocTestimonial ) && count( $blocTestimonial ) > 0 ):?>
+									<div class="panel-grid" id="pg-636-5">
+										<div class="panel-grid-cell" id="pgc-636-5-0">
+											<section id="home-testimonials" class="testimonials">
+												<?php if ( isset( $blocTestimonial['titre'] ) && !empty( $blocTestimonial['titre'] ) ):?>
+												<div class="grid grid-pad">
+													<div class="col-1-1">
+														<h3 class="widget-title">
+															<?php echo $blocTestimonial['titre'];?>
+														</h3>
+													</div>
+												</div>
+												<?php endif;?>
+												<?php if ( isset( $blocTestimonial['element'] ) && !empty( $blocTestimonial['element'] ) ):?>
+												<div class="grid grid-pad overflow">
+													<?php foreach ( $blocTestimonial['element'] as $data ):?>
+													<div class="col-1-3 tri-clear">
+														<div class="testimonial">
+															<?php if ( isset( $data->imageUrl ) && !empty( $data->imageUrl )  ):?>
+															<img
+																src="<?php echo $data->imageUrl;?>"
+																class="testimonial-img wp-post-image"
+															    <?php if ( isset( $data->imageTronque ) && !empty( $data->imageTronque ) ):?>
+															    width="<?php echo $data->imageTronque[0];?>"
+															    height="<?php echo $data->imageTronque[1];?>"
+															    style="<?php echo $data->imageTronque[2];?>"
+																<?php  endif;?>
+																>
+															<?php endif;?>
+															<?php if ( isset( $data->desc ) && !empty( $data->desc ) ):?>
+																<p>
+																	<?php echo $data->desc;?>
+																</p>
+															<?php endif;?>
+															<?php if ( isset( $data->auteur ) && !empty( $data->auteur ) ):?>
+																<h3><?php echo $data->auteur;?></h3>
+															<?php endif;?>
+															<?php if ( isset( $data->profession ) && !empty( $data->profession ) ):?>
+																<h4><?php echo $data->profession;?></h4>
+															<?php endif;?>
+														</div>
+													</div>
+													<?php endforeach;?>
+												</div>
+												<?php endif;?>
+											</section>
+
+
 										</div>
 									</div>
 									<?php endif;?>

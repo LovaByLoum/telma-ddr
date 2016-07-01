@@ -9,12 +9,6 @@
 ?>
 
 	</div><!-- #content -->
-    
-    <?php if( get_theme_mod( 'active_footer_social' ) == '') : ?> 
-        
-        <?php get_template_part( 'content', 'social' ); // Social Icons ?>
-        	
-	<?php endif; ?>
 
 	<footer id="colophon" class="site-footer" role="contentinfo">
     	<div class="grid grid-pad">
