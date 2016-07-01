@@ -64,5 +64,7 @@ define ( "DESCRIPTION_TESTIMONIAL", "description_testimonial" );
 define ( "AUTEUR_TESTIMONIAL", "auteur_testimonial" );
 define ( "PROFESSION_TESTIMONIAL", "profession_testimonial" );
 
+define ( "ID_TAXONOMIE_CRITICITE_URGENT", 38 );
+
 
 

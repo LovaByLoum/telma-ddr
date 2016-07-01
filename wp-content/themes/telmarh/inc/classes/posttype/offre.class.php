@@ -219,6 +219,34 @@ class COffre
 
 	}
 
+	public static function getOffreUrgent(){
+		$data = array();
+		$offres = JM_Offre::getBy( array( 'taxonomy' => JM_TAXONOMIE_CRITICITE, 'id' => ID_TAXONOMIE_CRITICITE_URGENT, null, 3 ) );
+		if ( !empty( $offres ) && count( $offres ) > 0 ){
+			foreach ( $offres as $offre ){
+				$elt = new stdClass();
+				$elt->titre         = $offre->titre;
+				$elt->id            = $offre->id;
+				$elt->desc          = $offre->extrait;
+				$typeContrat        = "";
+				$nameEntreprise     = "";
+				if (  isset( $offre->{JM_TAXONOMIE_TYPE_CONTRAT} ) && !empty( $offre->{JM_TAXONOMIE_TYPE_CONTRAT} ) ){
+					$typeContrat = $offre->{JM_TAXONOMIE_TYPE_CONTRAT}[0]->name;
+				}
+
+				if ( isset( $offre->societe_associe ) && !empty( $offre->societe_associe ) ){
+					$entreprise = JM_Societe::getById( $offre->societe_associe );
+					$nameEntreprise     = $entreprise->titre;
+				}
+				$elt->type_contrat      = $typeContrat;
+				$elt->nameEntreprise    = $nameEntreprise;
+				$data[] = $elt;
+			}
+		}
+
+		return $data;
+	}
+
 
 	//set you custom function
 

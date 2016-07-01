@@ -2051,7 +2051,7 @@ body {
 	
 }
 aside.homepage input.offre{
-    width: 70%;
+    width: 40%;
 }
 
 aside.homepage form{
@@ -2064,9 +2064,9 @@ aside.homepage p.separator, aside.homepage p.link_formation {
 aside.homepage p.separator span{
     font-size: 2em;
 }
-#home-hero .telmarh-hero-content-container a.submit_link, a.submit_link, .button {
+#home-hero .telmarh-hero-content-container a.submit_link, a.submit_link {
     display: inline-block;
-    min-width: 260px;
+    min-width: 290px;
     max-width: 100px;
     padding: 0.5em 1em;
     border: none;
@@ -2076,11 +2076,12 @@ aside.homepage p.separator span{
     z-index: 1;
     -webkit-backface-visibility: hidden;
     -moz-osx-font-smoothing: grayscale;
+    text-transform: uppercase;
 }
-#home-hero .telmarh-hero-content-container a.submit_link:focus, a.submit_link:focus, .button:focus{
+#home-hero .telmarh-hero-content-container a.submit_link:focus, a.submit_link:focus{
     outline: none;
 }
-.submit_link.button--wapasha,.button.button--wapasha {
+.submit_link.button--wapasha {
     background-color: #28b1ff;
     color: #fff;
 	/*-webkit-transition: background-color 0.3s, color 0.3s;*/

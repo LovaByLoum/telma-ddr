@@ -16,6 +16,7 @@ $blocService = CPage::getAllElementServiceHp( $post->ID );
 $blocPartenaires = CPage::getAllpartnerHp( $post->ID );
 $blocTestimonial = CPage::getAllElementTestimonialHp( $post->ID );
 $postOffes = ( is_object( wp_get_post_by_template( "offres.php" ) ) ) ?  wp_get_post_by_template( "offres.php" ) : $post;
+$offresUrgent = COffre::getOffreUrgent();
 get_header('home'); ?>
      <section id="home-hero">
 
@@ -211,6 +212,49 @@ get_header('home'); ?>
 												<?php endif;?>
 											</section>
 
+
+										</div>
+									</div>
+									<?php endif;?>
+									<?php if ( !empty( $offresUrgent ) && count( $offresUrgent ) > 0 ):?>
+									<div class="panel-grid" id="pg-636-7">
+										<div class="panel-grid-cell" id="pgc-636-7-0">
+											<section id="home-news" class="home-news-area">
+
+												<div class="grid grid-pad">
+													<div class="col-1-1">
+														<h3 class="widget-title">Les dernières offres urgentes</h3>
+													</div>
+													<!-- col-1-1 -->
+												</div>
+												<!-- grid -->
+
+												<div class="grid grid-pad">
+													<?php foreach( $offresUrgent as $offre ):?>
+													<div class="col-1-3 tri-clear">
+														<h5><strong><?php echo $offre->titre;?></strong></h5>
+
+														<p>
+															<?php echo $offre->desc;?>
+														</p>
+														<?php if ( isset( $offre->nameEntreprise ) && !empty( $offre->nameEntreprise ) ):?>
+															<p><strong>Entreprise : </strong><em><?php echo $offre->nameEntreprise;?></em></p>
+														<?php endif;?>
+
+														<?php if ( isset( $offre->type_contrat ) && !empty( $offre->type_contrat ) ):?>
+															<p><strong>Type de cotrat  : </strong><em><?php echo $offre->type_contrat;?></em></p>
+														<?php endif;?>
+														<a href="javascript:;" class="submit_link button--wapasha button--round-l">
+															Postuler
+														</a>
+													</div>
+													<!-- col-1-3 -->
+													<?php endforeach;?>
+												</div>
+												<!-- grid -->
+
+
+											</section>
 
 										</div>
 									</div>
