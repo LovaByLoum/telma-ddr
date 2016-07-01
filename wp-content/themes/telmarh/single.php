@@ -4,7 +4,6 @@
  *
  * @package telmarh
  */
-
 get_header(); ?>
 
 <section id="page-entry-content">

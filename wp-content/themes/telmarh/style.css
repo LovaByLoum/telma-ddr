@@ -2243,3 +2243,7 @@ body.page-template-offres #page .site-content  .content-accordion .control{
     text-transform: uppercase;
     text-decoration: underline;
 }
+.single-offer .col-9-12 .status-publish .testimonial img{
+    float: left;
+    margin : 0 19px 0 0 ;
+}
