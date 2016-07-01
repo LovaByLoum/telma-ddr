@@ -14,8 +14,17 @@
  * @package WordPress
  */
 
-$host = $_SERVER['HTTP_HOST'];
-$appPath = dirname (__FILE__) . DIRECTORY_SEPARATOR;
-define("SERVERCONFIG", $host);
-define ("BASEPATH", dirname (__FILE__));
-require_once( $appPath . 'wp-config' . DIRECTORY_SEPARATOR . SERVERCONFIG . DIRECTORY_SEPARATOR .  "wp-config.php" );
+$appPath = dirname( __FILE__ ) . '/';
+switch ( dirname( __FILE__ ) ) {
+	case( '/var/www/html' ):
+		define( "SERVERCONFIG", 'recette' );
+		break;
+	case( '/home/users/europcar/srcs' ):
+		define( "SERVERCONFIG", 'prod' );
+		break;
+	default :  //Machines de l'équipe projets
+		define( "SERVERCONFIG", 'localhost' );
+//Les fichiers correspondants n'existe pas sur le serveur de dev, il convient de les créer sur la machine concernée en faisant un copier coller des fichiers "dev"
+}
+define ( "BASEPATH", dirname( __FILE__ ) );
+require_once( $appPath . 'wp-config/' . SERVERCONFIG . "/wp-config.php" );
