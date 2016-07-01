@@ -63,7 +63,7 @@ get_header(); ?>
                                             //set list or table view
                                             $object->setListView('div');
                                             //number of item on first load
-                                            $object->setItemPerPage(6);
+                                            $object->setItemPerPage(8);
                                             //container class
                                             $object->setContainerClasses('wrapper');
                                             //item classes
@@ -82,7 +82,7 @@ get_header(); ?>
                                             $object->addFilter(JM_TAXONOMIE_ANNEE_EXPERIENCE);
                                             $object->addFilter(JM_TAXONOMIE_TYPE_CONTRAT);
                                             $object->addFilter(JM_TAXONOMIE_LOCALISATION);
-                                            $object->configPagination(array('first_text'=>"<<", 'last_text'=>">>", "always_show" => false));
+                                            $object->configPagination(array('prev_text'=>"Page précédente", 'next_text'=>"Page suivante", "always_show" => false, "dotleft_text" => "&nbsp;", "dotright_text"=> "&nbsp;", "last_text" => "", "first_text" => "", "num_pages" => 7 ));
 
                                             //display pagination loading box
                                             $object->displayItems();
@@ -90,17 +90,12 @@ get_header(); ?>
 	                                            $object->setOnLoadFilter( array( 'recherche' => $recherche ) );
                                             }
                                             //display the pagination loading button
-                                            $object->displayPaginationLoadButton();
-
-                                            //hook class item
-                                            // $class = class name element
-                                            //$key = position element
-                                            //apply_filters('wppl_item_class_' . $this->clean_id,$class,$key);
-
-                                            //Filtre type select ajout data-filter="<nom-filtre>" et class
-                                            //Filtre input radio/checkbox ajout data-filter="<nom-filtre>" et class
-
                                             ?>
+                                            <nav class="pagination-bloc hidden-xs hidden-sm">
+                                            <?php
+                                            $object->displayPaginationLoadButton();
+											?>
+                                            </nav>
                                             </div>
                                             <!--liste offre-->
                                         </div>
@@ -199,6 +194,11 @@ get_header(); ?>
                                     endif;?>
 			                </div>
 		                </div>
+                    </aside>
+	                <aside class="widget">
+		                <p class="reset">
+			                <a href="<?php echo get_permalink( $post->ID );?>" title="Réinitialiser" class="submit_link button--wapasha button--round-l">Réinitialiser</a>
+		                </p>
                     </aside>
                 </div>
             </div>

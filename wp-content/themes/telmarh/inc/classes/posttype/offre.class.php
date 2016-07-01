@@ -200,8 +200,12 @@ class COffre
 	            <div class="entry-content testimonial">
 	            	<header class="entry-header">
 	                    <h2 class="entry-title">' . $offre->titre . '</h2>
+	                    <div class="entry-meta">
+	                            	<span class="meta-block"><i class="fa fa-eye"></i>Publié le ' .self::dateLongueText( $offre->date ) . '</span>
+	                                <span class="meta-block"><i class="fa fa-suitcase"></i>' . $elementOffre->domaine_metier  .'</span>
+                        </div>
 	                </header><!-- .entry-header -->
-	                ' . apply_filters( "the_content", $offre->description );
+	                ' . apply_filters( "the_content", $offre->extrait );
 		if ( $isUrgent ){
 			$html .= '        <div class="newFormation">' . $offre->criticite[0]->name . '</div>';
 		}
@@ -246,6 +250,24 @@ class COffre
 
 		return $data;
 	}
+	/**
+	     * pour le format date mois années
+	     * @param $date
+	     * @return string
+	     */
+	    public static function dateLongueText($date){
+	        setlocale (LC_TIME, 'fr_FR','fra');
+	        //Définit le décalage horaire par défaut de toutes les fonctions date/heure
+	        date_default_timezone_set("Europe/Paris");
+	        //Definit l'encodage interne
+	        mb_internal_encoding("UTF-8");
+	        if($date == date('Ymd')){
+	            return 'Aujourd\'hui';
+	        }else{
+	            $strDate = mb_convert_encoding('%d %B %Y', 'ISO-8859-9', 'UTF-8');
+	            return ucwords(iconv("ISO-8859-9", "UTF-8", strftime($strDate, strtotime($date))));
+	        }
+	    }
 
 
 	//set you custom function

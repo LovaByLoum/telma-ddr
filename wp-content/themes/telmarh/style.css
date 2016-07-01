@@ -2203,3 +2203,43 @@ body.page-template-offres #page .site-content  .content-accordion .control{
 #pl-636 .panel-grid:nth-child(odd){
     background: #ffffff;
 }
+#wppl_item_container_offre-pagination-box .list-offres .entry-footer .comments-link a.submit_link {
+    min-width: 130px;
+}
+.widget-area .widget .reset .submit_link{
+    min-width: 130px;
+}
+.widget-area .widget .reset{
+    text-align: center;
+}
+#wppl-pagination-button-box-offre_pagination_box .pagination-bloc{
+    margin-bottom: 25px;
+    text-align: right;
+}
+.pagination-bloc a:hover, .pagination-bloc a.active {
+    border-color: #28b1ff;
+    color: #28b1ff;
+}
+.pagination-bloc{
+    margin-top: 20px;
+}
+.pagination-bloc a {
+    border: 2px solid #cdcdcd;
+    border-radius: 50%;
+    color: #cdcdcd;
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    line-height: 30px;
+    margin: 0 6px;
+    text-align: center;
+}
+.pagination-bloc a.prev, .pagination-bloc a.next {
+    border: none;
+    border-radius: 0;
+    color: #28b1ff;
+    margin-right: 0;
+    width: auto;
+    text-transform: uppercase;
+    text-decoration: underline;
+}

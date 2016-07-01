@@ -53,6 +53,27 @@ jQuery( function( $ ){
         } else {
             _this.parent("label").removeClass("checked");
         }
+        if ( jQuery( window ).width() < 867 ){
+            jQuery("html, body").animate({
+                scrollTop : jQuery( "#pl-64").offset().top
+            }, 1000);
+        } else {
+            jQuery("html, body").animate({
+                scrollTop : jQuery( "#content").offset().top
+            }, 1000);
+        }
+    });
+
+    jQuery(".pagination-button-offre_pagination_box").live( 'click',function(){
+        if ( jQuery( window ).width() < 867 ){
+            jQuery("html, body").animate({
+                scrollTop : jQuery( "#pl-64").offset().top
+            }, 1000);
+        } else {
+            jQuery("html, body").animate({
+                scrollTop : jQuery( "#content").offset().top
+            }, 1000);
+        }
     });
 
     if (  jQuery('.slick-track').length > 0 ){
@@ -94,4 +115,17 @@ jQuery( function( $ ){
         });
     }
 
+    jQuery(window).on('resize', function(){
+          var win = jQuery(this); //this = window
+          if (win.height() < 867) {
+              jQuery(".page-template-offres .listing-offer .grid .col-3-12").insertBefore(".page-template-offres .listing-offer .grid .col-9-12");
+          }
+          if (win.width() >= 867) {
+              jQuery(".page-template-offres .listing-offer .grid .col-9-12").insertBefore(".page-template-offres .listing-offer .grid .col-3-12");
+          }
+    });
+
+    if ( jQuery(window).width() < 867 ) {
+        jQuery(".page-template-offres .listing-offer .grid .col-3-12").insertBefore(".page-template-offres .listing-offer .grid .col-9-12");
+    }
 });
