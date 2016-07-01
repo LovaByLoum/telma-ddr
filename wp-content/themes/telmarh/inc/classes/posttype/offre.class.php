@@ -155,10 +155,13 @@ class COffre
 			'posts_per_page' => $limit,
 			'paged' => $paged,
 			'order'       => 'DESC',
-			'orderby'     => 'date',
+			'orderby'     => ( isset( $filters['order-criteria'] ) && !empty( $filters['order-criteria'] ) && $filters['order-criteria'] != "date"  ) ? "meta_value_num" : "date",
 			'fields'      => 'ids',
 		);
 		$args['meta_query'] = array();
+		if ( isset( $filters['order-criteria'] ) && !empty( $filters['order-criteria'] ) && $filters['order-criteria'] != "date" ){
+			$args['meta_key'] = $filters['order-criteria'];
+		}
 		if ( isset( $filters['entreprise'] ) ) {
 			$args['meta_query'][] =
 		        array(
@@ -169,7 +172,7 @@ class COffre
 		}
 		if ( !empty( $filters ) ) {
 			foreach ( $filters as $filter => $filterby ) {
-				if ( $filterby > 0 && !in_array( $filter,array("entreprise", "recherche") ) ) {
+				if ( $filterby > 0 && !in_array( $filter,array("entreprise", "recherche","order-criteria" ) ) ) {
 					$args['tax_query'][] = array(
 						'taxonomy'         => $filter,
 						'field'            => 'id',

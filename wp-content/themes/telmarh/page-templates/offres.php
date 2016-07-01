@@ -114,7 +114,7 @@ get_header(); ?>
 			                <div class="select">
 				                <select class="order-criteria" data-filter="order-criteria">
 									<option value="date">Date de publication</option>
-									<option value="date-offre">Date d’expiration de l’offre</option>
+									<option value="expire">Date d’expiration de l’offre</option>
                                 </select>
 				                <div class="select__arrow"></div>
 			                </div>
