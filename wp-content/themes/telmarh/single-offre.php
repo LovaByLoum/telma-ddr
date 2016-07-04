@@ -9,6 +9,7 @@ $offre = JM_Offre::getById( $post->ID );
 $offreElment = COffre::getById( $post->ID );
 $idEntreprise = ( isset( $offre->societe_associe ) && !empty( $offre->societe_associe ) ) ? $offre->societe_associe : "";
 $society = ( intval( $idEntreprise ) > 0 ) ? JM_Societe::getById( $idEntreprise ) : "";
+$postOffes = ( is_object( wp_get_post_by_template( "offres.php" ) ) ) ?  wp_get_post_by_template( "offres.php" ) : $post;
 $competenceRequis = COffre::getCompetenceRequis( $post->ID );
 get_header(); ?>
 	<section id="page-entry-content" class="single-offer">
@@ -104,12 +105,12 @@ get_header(); ?>
 		                            <p class="animate-plus animate-init link_formation" data-animations="fadeInUp" data-animation-delay="1.5s">
                                         <a href="<?php echo get_permalink( $postOffes->ID );?>" class="submit_link button--wapasha button--round-l">
                                             <span>
-                                                Accéder directement aux offres
+                                                Postuler a cet offre
                                             </span>
                                         </a>
                                         <a href="<?php echo get_permalink( $postOffes->ID );?>" class="submit_link button--wapasha button--round-l">
                                             <span>
-                                                Accéder directement aux offres
+                                                Rétour aux offres
                                             </span>
                                         </a>
                                     </p>
