@@ -344,3 +344,44 @@ function telmarh_save_post( $post_id ){
 	}
 }
 
+add_filter( "wp_nav_menu_items", "telmarh_add_menu_items", 10, 2 );
+function telmarh_add_menu_items( $items, $args ){
+	if ( isset( $args->theme_location ) && $args->theme_location == "primary" ){
+		$items .= '<li class="menu-item">';
+		if ( is_user_logged_in() ){
+			$items .='<a href="javascript:;" title="Se déconnecté" id="login_user"><i class="fa fa-user-md"></i>&nbsp;Se déconnecté</a>';
+		} else {
+			$items .='<a href="javascript:;" title="Se Connecté" id="login_user"><i class="fa fa-user-secret"></i>&nbsp;Se Connecté</a>';
+		}
+		if (wp_is_mobile()){
+			$items .= "mobile ono";
+		}
+
+
+		$items .='</li>';
+
+	}
+	return $items ;
+}
+
+add_action("login_enqueue_scripts", "telmarh_login_enqueue_script");
+function telmarh_login_enqueue_script()
+{
+	$logo_image = get_theme_mod( 'telmarh_logo_page' );
+	$style = '<style type="text/css">
+	        #login h1 a, .login h1 a {
+	            background-image: url(' . esc_url( $logo_image ) . ');
+	            padding-bottom: 30px;
+	        }
+	    </style>';
+	echo $style;
+}
+function telmarh_login_logo_url() {
+    return home_url();
+}
+add_filter( 'login_headerurl', 'telmarh_login_logo_url' );
+function telmarh_login_logo_url_title() {
+    return esc_attr( get_bloginfo( 'name', 'display' ) );
+}
+add_filter( 'login_headertitle', 'telmarh_login_logo_url_title' );
+

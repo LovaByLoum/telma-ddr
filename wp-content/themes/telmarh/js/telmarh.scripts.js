@@ -128,4 +128,21 @@ jQuery( function( $ ){
     if ( jQuery(window).width() < 867 ) {
         jQuery(".page-template-offres .listing-offer .grid .col-3-12").insertBefore(".page-template-offres .listing-offer .grid .col-9-12");
     }
+
+    jQuery(".menu-item #login_user").on("click", function(){
+        jQuery("#login-user").slideToggle();
+
+    });
+
+    //jQuery("body").on("click", function(e){
+    //    if ( jQuery("#login-user").is(":visible") ){
+    //    if (e.target.id != "login-user"){
+    //
+    //            jQuery("#login-user").hide();
+    //        }
+    //
+    //    }
+    //});
+
+
 });

@@ -7,7 +7,7 @@ Author: Johary Ranarimanana
 Description: Met en place un captcha pour le formulaire de login
  */
 
-add_action( 'login_form', 'loc_login_display' );
+//add_action( 'login_form', 'loc_login_display' );
 function loc_login_display(){
   if( strpos(dirname(__FILE__), 'mu-plugins') ){
     $captcha_url = site_url() . '/wp-content/mu-plugins/captcha_source/captcha_code_file.php';
@@ -24,7 +24,7 @@ function loc_login_display(){
   <?php
 }
 
-add_action( 'authenticate', 'loc_login_check', 21, 1 );
+//add_action( 'authenticate', 'loc_login_check', 21, 1 );
 function loc_login_check( $user ) {
   @session_start();
   if ( isset($_POST['wp-submit']) ){

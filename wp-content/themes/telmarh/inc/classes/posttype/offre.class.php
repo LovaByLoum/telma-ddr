@@ -202,7 +202,7 @@ class COffre
 			<article class="list-offres">
 	            <div class="entry-content testimonial">
 	            	<header class="entry-header">
-	                    <h2 class="entry-title">' . $offre->titre . '</h2>
+	                    <h2 class="entry-title"><a href="' . get_permalink( $offre->id ) . '" title="' . $offre->titre . '"> ' . $offre->titre . '</a></h2>
 	                    <div class="entry-meta">
 	                            	<span class="meta-block"><i class="fa fa-eye"></i>Publié le ' .self::dateLongueText( $offre->date ) . '</span>
 	                                <span class="meta-block"><i class="fa fa-suitcase"></i>' . $elementOffre->domaine_metier  .'</span>

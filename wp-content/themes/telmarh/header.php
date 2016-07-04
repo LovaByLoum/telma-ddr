@@ -73,5 +73,28 @@
         <h3><i class="fa fa-close"></i> <?php _e( 'Close', 'telmarh' ); ?> <?php echo esc_html( get_theme_mod( 'telmarh_menu_name', __( 'Menu', 'telmarh' )  )); ?></h3>
         <?php wp_nav_menu( array( 'theme_location' => 'primary' ) ); ?>
 	</nav>
+	<div id="login-user" class="login" style="display: none;">
+		<div class="inset">
+			<form  method="post" action="http://localhost/projets/telmarh/srcs/wp-login.php">
+		         <div>
+					<span><label>Username</label></span>
+					<span><input type="text" class="textbox" id="active" name="log"></span>
+				 </div>
+				 <div>
+					<span><label>Password</label></span>
+				    <span><input type="password" class="password" name="pwd"></span>
+				 </div>
+				<div class="sign">
+					<div class="submit">
+					  <input type="submit" onclick="myFunction()" value="LOGIN" >
+					</div>
+					<span class="forget-pass">
+						<a href="#">Forgot Password?</a>
+					</span>
+						<div class="clear"> </div>
+				</div>
+			</form>
+		</div>
+	</div>
 
 	<div id="content" class="site-content">

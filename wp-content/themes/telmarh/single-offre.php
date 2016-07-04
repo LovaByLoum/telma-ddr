@@ -26,7 +26,7 @@ get_header(); ?>
 		                            </h1>
 		                            <?php if ( isset( $offre->criticite ) && !empty( $offre->criticite ) && $offre->criticite[0]->term_id == ID_TAXONOMIE_CRITICITE_URGENT ) :?>
 			                            <div class="entry-meta">
-	                                        <span class="meta-block"><i class="fa fa-exclamation-triangle"></i><?php echo $offre->criticite[0]->name;?></span>
+				                            <div class="criticite-offre"><?php echo $offre->criticite[0]->name;?></div></span>
 	                                    </div>
 		                            <?php  endif;?>
 		                            <!-- .entry-meta -->
