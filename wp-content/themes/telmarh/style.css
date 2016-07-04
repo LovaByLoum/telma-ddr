@@ -2247,3 +2247,19 @@ body.page-template-offres #page .site-content  .content-accordion .control{
     float: left;
     margin : 0 19px 0 0 ;
 }
+#comments .single-offre-left{
+    float: left;
+    width: 50%;
+    text-align: center;
+}
+#comments .single-offre-left .submit_link{
+    min-width: 45%;
+}
+#comments .single-offre-right{
+    float: right;
+    width: 50%;
+    text-align: center;
+}
+#comments .single-offre-right .submit_link{
+    min-width: 45%;
+}

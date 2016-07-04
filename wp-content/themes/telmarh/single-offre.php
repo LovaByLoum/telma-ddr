@@ -71,7 +71,7 @@ get_header(); ?>
                                 </div>
 	                            <?php endif;?>
 
-	                            <div>
+	                            <div id="comments">
 		                            <!--description des missions-->
 		                            <?php if ( isset( $offreElment->mission_principal ) ) :?>
 			                            <header class="entry-header">
@@ -102,12 +102,14 @@ get_header(); ?>
                                         </div>
 		                            <?php endif;?>
 		                            <!--description qualité requise-->
-		                            <p class="animate-plus animate-init link_formation" data-animations="fadeInUp" data-animation-delay="1.5s">
+		                            <p class="animate-plus animate-init single-offre-left" data-animations="fadeInUp" data-animation-delay="1.5s">
                                         <a href="<?php echo get_permalink( $postOffes->ID );?>" class="submit_link button--wapasha button--round-l">
                                             <span>
                                                 Postuler a cet offre
                                             </span>
                                         </a>
+			                            </p>
+		                            <p class="animate-plus animate-init single-offre-right" data-animations="fadeInUp" data-animation-delay="1.5s">
                                         <a href="<?php echo get_permalink( $postOffes->ID );?>" class="submit_link button--wapasha button--round-l">
                                             <span>
                                                 Rétour aux offres
