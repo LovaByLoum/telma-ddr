@@ -208,6 +208,26 @@ function jpress_jm_register_post_types_tax(){
             );
             register_taxonomy( JM_TAXONOMIE_CRITICITE, array( JM_POSTTYPE_OFFRE ), $args );
         }
+
+        //add taxonomy criticité
+        if ( jpress_jm_is_in_options( JM_TAXONOMIE_NIVEAU_ETUDE, 'tax' ) ){
+            $labels_tax_doc = jpress_jm_get_custom_tax_labels("Niveau d'étude", "Niveaux d'étude", 0);
+            $args = array(
+                'hierarchical'      => true,
+                'labels'            => $labels_tax_doc,
+                'show_ui'           => true,
+                'show_admin_column' => true,
+                'query_var'         => true,
+                'capabilities'      => array(
+                    'manage_terms' => 'manage_term_' . JM_POSTTYPE_OFFRE,
+                    'edit_terms'   => 'manage_term_' . JM_POSTTYPE_OFFRE,
+                    'delete_terms' => 'manage_term_' . JM_POSTTYPE_OFFRE,
+                    'assign_terms' => 'manage_term_' . JM_POSTTYPE_OFFRE,
+                ),
+                'rewrite'           => array( 'slug' => JM_TAXONOMIE_NIVEAU_ETUDE ),
+            );
+            register_taxonomy( JM_TAXONOMIE_NIVEAU_ETUDE, array( JM_POSTTYPE_OFFRE ), $args );
+        }
     }
 
     //::::::::::::::::::::::::::::candidature::::::::::::::::::::::::::::::::::::::::::::::::::::::

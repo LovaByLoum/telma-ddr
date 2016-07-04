@@ -93,6 +93,12 @@ $options = get_option( JM_OPTIONS );
                              Criticité
                          </label>
                      </fieldset>
+                     <fieldset>
+                         <label for="<?php echo JM_TAXONOMIE_NIVEAU_ETUDE;?>">
+                             <input name="tax[]" type="checkbox" id="<?php echo JM_TAXONOMIE_NIVEAU_ETUDE;?>" value="<?php echo JM_TAXONOMIE_NIVEAU_ETUDE;?>" <?php if( jpress_jm_is_in_options( JM_TAXONOMIE_NIVEAU_ETUDE, 'tax' ) ) :?>checked<?php endif;?>>
+                             Niveau d'étude
+                         </label>
+                     </fieldset>
                  </td>
              </tr>
 

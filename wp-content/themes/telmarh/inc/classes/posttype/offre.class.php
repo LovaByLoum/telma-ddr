@@ -272,6 +272,58 @@ class COffre
 	        }
 	    }
 
+		public static function getCompetenceRequis( $pid ){
+			$hierarchyTerm = array();
+			$competenceRequis = wp_get_post_terms( $pid, JM_TAXONOMIE_COMPETENCE_REQUISES );
+			if ( !empty( $competenceRequis ) && count( $competenceRequis ) ){
+				foreach ( $competenceRequis as $key => $term ){
+					if ( $term->parent == 0 ) {
+						$hierarchyTerm[0][] = array(
+							'id'    => $term->term_id,
+							'name'  => $term->name,
+						);
+					}
+				}
+				if ( isset( $hierarchyTerm[0] ) && !empty( $hierarchyTerm[0] ) ) {
+					foreach ( $hierarchyTerm[0] as $key => $parentTerm ){
+						foreach ( $competenceRequis as $term ){
+							if ( $parentTerm['id'] == $term->parent ){
+								$hierarchyTerm[$parentTerm['id']][0][] = array(
+									'id'    => $term->term_id,
+									'name'  => $term->name
+								);
+							}
+						}
+						if ( isset( $hierarchyTerm[$parentTerm['id']][0] ) && !empty( $hierarchyTerm[$parentTerm['id']][0] )  ){
+							foreach ( $hierarchyTerm[$parentTerm['id']][0] as $elementParent ){
+								foreach ( $competenceRequis as $term ){
+									if ( $elementParent['id'] == $term->parent ){
+										$hierarchyTerm[$parentTerm['id']][$elementParent['id']][0][] = array(
+											'id'    => $term->term_id,
+											'name'  => $term->name
+										);
+									}
+								}
+								if ( isset( $hierarchyTerm[$parentTerm['id']][$elementParent['id']][0] ) && !empty( $hierarchyTerm[$parentTerm['id']][$elementParent['id']][0] ) ){
+									foreach ( $hierarchyTerm[$parentTerm['id']][$elementParent['id']][0] as $elementChild ) {
+										foreach ( $competenceRequis as $term ){
+											if ( $elementChild['id'] == $term->parent ){
+												$hierarchyTerm[$parentTerm['id']][$elementChild[id]][0][] = array(
+													'id'    => $term->term_id,
+													'name'  => $term->name
+												);
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+
+			return $hierarchyTerm;
+		}
 
 	//set you custom function
 

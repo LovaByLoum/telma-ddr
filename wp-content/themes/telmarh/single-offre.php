@@ -9,6 +9,7 @@ $offre = JM_Offre::getById( $post->ID );
 $offreElment = COffre::getById( $post->ID );
 $idEntreprise = ( isset( $offre->societe_associe ) && !empty( $offre->societe_associe ) ) ? $offre->societe_associe : "";
 $society = ( intval( $idEntreprise ) > 0 ) ? JM_Societe::getById( $idEntreprise ) : "";
+$competenceRequis = COffre::getCompetenceRequis( $post->ID );
 get_header(); ?>
 	<section id="page-entry-content" class="single-offer">
 	    <div class="grid grid-pad">
@@ -151,22 +152,35 @@ get_header(); ?>
 	                    </h3>
 						<ul>
 							<?php if ( isset( $offre->{JM_TAXONOMIE_ANNEE_EXPERIENCE} )  && !empty( $offre->{JM_TAXONOMIE_ANNEE_EXPERIENCE} ) ):?>
-								<li><strong>Nom de l'entreprise :</strong>&nbsp;<?php echo $offre->{JM_TAXONOMIE_ANNEE_EXPERIENCE}[0]->name . " d'expérience ";?></li>
+								<li><i class="fa fa-check-square-o"></i>&nbsp;&nbsp;<?php echo $offre->{JM_TAXONOMIE_ANNEE_EXPERIENCE}[0]->name . " d'expérience ";?></li>
 							<?php endif;?>
-							<?php if ( isset( $offre->localisation )  && !empty( $offre->localisation ) ):?>
-								<li><strong>Région :</strong>&nbsp;<?php echo $offre->localisation[0]->name;?></li>
+							<?php if ( isset( $offre->{JM_TAXONOMIE_NIVEAU_ETUDE} )  && !empty( $offre->{JM_TAXONOMIE_NIVEAU_ETUDE} ) ):?>
+								<li><i class="fa fa-check-square-o"></i>&nbsp;&nbsp;<?php echo $offre->{JM_TAXONOMIE_NIVEAU_ETUDE}[0]->name;?></li>
 							<?php endif;?>
-							<?php if ( isset( $offre->date )  && !empty( $offre->date ) ):?>
-								<li><strong>Date de publication :</strong>&nbsp;<?php echo COffre::dateLongueText( $offre->date );?></li>
-							<?php endif;?>
-							<?php if ( isset( $offre->expire )  && !empty( $offre->expire ) ):?>
-								<li><strong>Date d'expiration :</strong>&nbsp;<?php echo COffre::dateLongueText( $offre->expire );?></li>
-							<?php endif;?>
-							<?php if ( isset( $offreElment->domaine_metier )  && !empty( $offreElment->domaine_metier ) ):?>
-								<li><strong>Domaine de métier :</strong>&nbsp;<?php echo $offreElment->domaine_metier;?></li>
-							<?php endif;?>
-							<?php if ( isset( $offre->{JM_TAXONOMIE_TYPE_CONTRAT} )  && !empty( $offre->{JM_TAXONOMIE_TYPE_CONTRAT} ) ):?>
-								<li><strong>Type de contrat :</strong>&nbsp;<?php echo $offre->{JM_TAXONOMIE_TYPE_CONTRAT}[0]->name;?></li>
+							<?php if ( isset( $offre->{JM_TAXONOMIE_COMPETENCE_REQUISES} )  && !empty( $offre->{JM_TAXONOMIE_COMPETENCE_REQUISES} ) ):?>
+								<?php foreach( $competenceRequis[0] as $parent ): ?>
+								<li><i class="fa fa-check-square-o"></i>&nbsp;&nbsp;
+									<?php echo $parent['name'] ;?>
+									<?php if ( isset( $competenceRequis[$parent['id']][0] ) && !empty( $competenceRequis[$parent['id']][0] ) ):?>
+										<ul>
+											<?php foreach( $competenceRequis[$parent['id']][0] as $firstChild ):?>
+												<li>&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-circle-right"></i>
+													<?php echo $firstChild['name'];?>
+													<?php if ( isset( $competenceRequis[$parent['id']][$firstChild['id']][0] ) && !empty( $competenceRequis[$parent['id']][$firstChild['id']][0] ) ):?>
+														<ul>
+															<?php foreach( $competenceRequis[$parent['id']][$firstChild['id']][0] as $secondChild ):?>
+																<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-fighter-jet"></i>
+																	<?php echo $secondChild['name'];?>
+																</li>
+															<?php endforeach;?>
+														</ul>
+													<?php endif;?>
+												</li>
+											<?php endforeach;?>
+										</ul>
+									<?php endif;?>
+								</li>
+								<?php endforeach;?>
 							<?php endif;?>
 						</ul>
                     </aside>
