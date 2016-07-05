@@ -130,11 +130,11 @@
 		<div class="inset">
 			<form method="post" action="http://localhost/projets/telmarh/srcs/wp-login.php">
 		         <div>
-					<span><label>Username</label></span>
+					<span><label>Login</label></span>
 					<span><input type="text" class="textbox" id="active" name="log"></span>
 				 </div>
 				 <div>
-					<span><label>Password</label></span>
+					<span><label>Mot de passe</label></span>
 				    <span><input type="password" class="password" name="pwd"></span>
 				 </div>
 				<div class="sign">
@@ -142,7 +142,7 @@
 					  <input type="submit" value="LOGIN" >
 					</div>
 					<span class="forget-pass">
-						<a href="#">Forgot Password?</a>
+						<a href="#">Mot de passe oublié?</a>
 					</span>
 						<div class="clear"> </div>
 				</div>

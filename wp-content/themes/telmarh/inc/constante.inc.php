@@ -64,7 +64,10 @@ define ( "DESCRIPTION_TESTIMONIAL", "description_testimonial" );
 define ( "AUTEUR_TESTIMONIAL", "auteur_testimonial" );
 define ( "PROFESSION_TESTIMONIAL", "profession_testimonial" );
 
+// id taxonomy
 define ( "ID_TAXONOMIE_CRITICITE_URGENT", 38 );
 
+//slug menu
+define ( "SLUG_MENU_FOOTER", 'footer' );
 
 

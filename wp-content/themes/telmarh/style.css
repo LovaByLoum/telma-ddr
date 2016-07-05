@@ -2416,3 +2416,25 @@ input[type="text"]:hover,input[type="Password"]:hover,#active{
 .copy-right p a:hover {
 	color:#fff;
 }
+
+.menu-footer > li{
+    font-weight: 700;
+    text-transform: uppercase;
+}
+.menu-footer > li a {
+    color: #28b1ff;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+}
+.menu-footer li li > a {
+    color: #fff;
+    font-size: 14px;
+    text-transform: none;
+    font-family: 'Source Sans Pro',Helvetica Neue,Helvetica,arial,sans-serif;
+    font-weight: 300;
+    line-height: 1.5;
+}
+.menu-footer > li, .menu-footer li {
+    list-style: none;
+}

@@ -349,9 +349,9 @@ function telmarh_add_menu_items( $items, $args ){
 	if ( isset( $args->theme_location ) && $args->theme_location == "primary" ){
 		$items .= '<li class="menu-item">';
 		if ( is_user_logged_in() ){
-			$items .='<a href="javascript:;" title="Se déconnecté" id="login_user"><i class="fa fa-user-md"></i>&nbsp;Se déconnecté</a>';
+			$items .='<a href="javascript:;" title="Se déconnecter" id="login_user"><i class="fa fa-user-md"></i>&nbsp;Se déconnecter</a>';
 		} else {
-			$items .='<a href="javascript:;" title="Se Connecté" id="login_user"><i class="fa fa-user-secret"></i>&nbsp;Se Connecté</a>';
+			$items .='<a href="javascript:;" title="Se Connecter" id="login_user"><i class="fa fa-user-secret"></i>&nbsp;Se Connecter</a>';
 		}
 		if (wp_is_mobile()){
 			$items .= "mobile ono";
