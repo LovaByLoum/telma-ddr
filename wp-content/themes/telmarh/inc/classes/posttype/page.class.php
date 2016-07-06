@@ -107,6 +107,7 @@ class CPage
 					$elts->fontClass    = $element[FONT_ELEMENTS_BLOC_SERVICE];
 					$elts->titre        = $element[TITRE_ELEMENTS_BLOC_SERVICE];
 					$elts->description  = $element[DESC_ELEMENTS_BLOC_SERVICE];
+					$elts->link         = $element[LINK_ELEMENT_BLOC_SERVICE];
 					$elt[] = $elts;
 				}
 			}

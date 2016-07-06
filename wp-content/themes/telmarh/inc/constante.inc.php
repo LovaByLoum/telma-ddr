@@ -48,6 +48,7 @@ define ( "ELEMENTS_BLOC_SERVICE", "elements_bloc_service" );
 define ( "FONT_ELEMENTS_BLOC_SERVICE", "font_element_service" );
 define ( "TITRE_ELEMENTS_BLOC_SERVICE", "titre_element_service" );
 define ( "DESC_ELEMENTS_BLOC_SERVICE", "description_element_service" );
+define ( "LINK_ELEMENT_BLOC_SERVICE", "lien_element_service" );
 
 //field ACF slide
 define ( "TITRE_BLOC_PARTENAIRE", "titre_partenaire" );

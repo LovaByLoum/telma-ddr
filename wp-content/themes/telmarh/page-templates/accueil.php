@@ -82,15 +82,22 @@ get_header('home'); ?>
 													<!--elements-->
 													<?php if ( isset( $blocService['element'] ) && count( $blocService['element'] ) > 0 ):?>
 														<div class="grid grid-pad">
-															<?php foreach ( $blocService['element'] as $element ):?>
+															<?php foreach ( $blocService['element'] as $element ):
+																	$infosLink = ( isset($element->link ) && !empty( $element->link ) ) ? $element->link : array() ;
+																	$link = ( isset( $infosLink['link'] ) && !empty( $infosLink['link'] ) ) ? $infosLink['link'] : "";
+																	$label = ( isset( $infosLink['label'] ) && !empty( $infosLink['label'] ) ) ? $infosLink['label'] : $element->titre; ?>
 															<div class="col-1-3 tri-clear">
 																<div class="single-service">
 																	<?php if ( isset( $element->fontClass ) && !empty( $element->fontClass ) ):?>
-																		<i class="fa <?php echo $element->fontClass;?> service-icon"></i>
+																		<a href="<?php echo $link;?>" title="<?php echo $label;?>">
+																			<i class="fa <?php echo $element->fontClass;?> service-icon"></i>
+																		</a>
 																	<?php endif;?>
 																	<?php if ( isset( $element->titre ) && !empty( $element->titre ) ): ?>
 																		<h3 class="service-title">
-																			<?php echo $element->titre;?>
+																			<a href="<?php echo $link;?>" title="<?php echo $label;?>">
+																				<?php echo $element->titre;?>
+																			</a>
 																		</h3>
 																	<?php endif;?>
 																	<?php if ( isset( $element->description ) && !empty( $element->description ) ):?>
