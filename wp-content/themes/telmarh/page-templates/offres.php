@@ -63,7 +63,7 @@ get_header(); ?>
                                             //set list or table view
                                             $object->setListView('div');
                                             //number of item on first load
-                                            $object->setItemPerPage(8);
+                                            $object->setItemPerPage(4);
                                             //container class
                                             $object->setContainerClasses('wrapper');
                                             //item classes
