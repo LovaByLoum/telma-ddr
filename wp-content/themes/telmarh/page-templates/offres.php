@@ -13,6 +13,7 @@ $anneeExperiences = get_terms( JM_TAXONOMIE_ANNEE_EXPERIENCE, array( 'hide_empty
 $typeContrat = get_terms( JM_TAXONOMIE_TYPE_CONTRAT, array( 'hide_empty' => false ) );
 $localisation = get_terms( JM_TAXONOMIE_LOCALISATION,array( 'hide_empty' => false ) );
 $criticites = get_terms( JM_TAXONOMIE_CRITICITE, array( 'hide_empty' => false ) );
+$domaineMetier = get_terms( JM_TAXONOMIE_DEPARTEMENT, array( 'hide_empty' => false ) );
 $entreprises  = JM_Societe::getBy();
 $recherche = ( isset( $_GET['sof'] ) && !empty( $_GET['sof'] ) ) ? $_GET['sof'] : "";
 get_header(); ?>
@@ -79,6 +80,7 @@ get_header(); ?>
                                             $object->addFilter('order-criteria');
                                             $object->addFilter('entreprise');
                                             $object->addFilter(JM_TAXONOMIE_CRITICITE);
+                                            $object->addFilter(JM_TAXONOMIE_DEPARTEMENT);
                                             $object->addFilter(JM_TAXONOMIE_ANNEE_EXPERIENCE);
                                             $object->addFilter(JM_TAXONOMIE_TYPE_CONTRAT);
                                             $object->addFilter(JM_TAXONOMIE_LOCALISATION);
@@ -173,6 +175,21 @@ get_header(); ?>
                                         foreach ( $typeContrat as $term ):?>
                                             <label class="control control--checkbox"><?php echo $term->name;?>
                                                 <input type="checkbox" value="<?php echo $term->term_id;?>" name="<?php echo JM_TAXONOMIE_TYPE_CONTRAT;?>" data-filter="<?php echo JM_TAXONOMIE_TYPE_CONTRAT;?>" class="<?php echo JM_TAXONOMIE_TYPE_CONTRAT;?>">
+                                                <div class="control__indicator"></div>
+                                            </label>
+                                <?php   endforeach;
+                                    endif;?>
+			                </div>
+		                </div>
+                    </aside>
+	                <aside class="widget">
+		                <div class="control-group">
+	                        <h4 class="head-accordion open">Domaine métier</h4>
+			                <div class="content-accordion">
+				                <?php if ( !empty( $domaineMetier ) && count( $domaineMetier ) > 0 ):
+                                        foreach ( $domaineMetier as $term ):?>
+                                            <label class="control control--checkbox"><?php echo $term->name;?>
+                                                <input type="checkbox" value="<?php echo $term->term_id;?>" name="<?php echo JM_TAXONOMIE_DEPARTEMENT;?>" data-filter="<?php echo JM_TAXONOMIE_DEPARTEMENT;?>" class="<?php echo JM_TAXONOMIE_DEPARTEMENT;?>">
                                                 <div class="control__indicator"></div>
                                             </label>
                                 <?php   endforeach;

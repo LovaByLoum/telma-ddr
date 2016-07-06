@@ -111,7 +111,7 @@ function jpress_jm_register_post_types_tax(){
 
         //add taxonomy département hierarchique
         if ( jpress_jm_is_in_options( JM_TAXONOMIE_DEPARTEMENT, 'tax' ) ){
-            $labels_tax_doc = jpress_jm_get_custom_tax_labels('département', 'départements', 1);
+            $labels_tax_doc = jpress_jm_get_custom_tax_labels('Domaine métier', 'Domaines métier', 1);
             $args = array(
                 'hierarchical'      => true,
                 'labels'            => $labels_tax_doc,

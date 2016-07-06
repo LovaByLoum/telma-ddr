@@ -51,7 +51,7 @@ function jpress_jm_offre_relations($post){
         <tbody>
             <tr>
                 <th scope="row">
-                    <label>Entreprise rattachée</label>
+                    <label>Entreprise rattachée <span class="required">*</span></label>
                 </th>
                 <td>
                     <select name="<?php echo JM_META_SOCIETE_OFFRE_RELATION;?>" data-placeholder="Séléctionner une Entreprise" class="chosen-select" tabindex="2">
