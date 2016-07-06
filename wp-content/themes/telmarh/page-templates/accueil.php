@@ -31,7 +31,7 @@ get_header('home'); ?>
 	            <form role="search" method="get" class="search-form" action="<?php echo get_permalink( $postOffes->ID );?>" autocomplete="off">
                     <label>
                     <span class="screen-reader-text">Search for:</span>
-                    <input class="search-field offre" placeholder="Recherche offre …" value="" name="sof" type="search">
+                    <input class="search-field offre" placeholder="Rechercher une offre …" value="" name="sof" type="search">
                     </label>
                     <input class="search-submit" value="Search" type="submit">
                 </form>
