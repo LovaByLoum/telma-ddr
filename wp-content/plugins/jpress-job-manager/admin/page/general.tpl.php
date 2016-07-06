@@ -171,7 +171,7 @@ $options = get_option( JM_OPTIONS );
 
              <tr>
                  <th scope="row">
-                     <label for="societe_notification">Envoyer un mail à la Entreprise rattaché à l'offre</label>
+                     <label for="societe_notification">Envoyer un mail à la Entreprise rattachée à l'offre</label>
                  </th>
                  <td colspan="2">
                      <input name="settings[societe_notification]" type="checkbox" id="societe_notification" value="1" <?php if( jpress_jm_is_in_options( 'societe_notification', 'settings' ) ) :?>checked<?php endif;?>>
