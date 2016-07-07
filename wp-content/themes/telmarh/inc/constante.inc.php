@@ -72,4 +72,7 @@ define ( "ID_TAXONOMIE_CRITICITE_URGENT", 38 );
 //slug menu
 define ( "SLUG_MENU_FOOTER", 'footer' );
 
+//slug role
+define ( "GESTIONNAIRE_DE_TALENT", "gestionnaire_talent" );
+
 
