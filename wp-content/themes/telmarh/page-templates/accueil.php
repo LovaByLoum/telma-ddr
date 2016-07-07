@@ -31,7 +31,7 @@ get_header('home'); ?>
 	            <form role="search" method="get" class="search-form" action="<?php echo get_permalink( $postOffes->ID );?>" autocomplete="off">
                     <label>
                     <span class="screen-reader-text">Search for:</span>
-                    <input class="search-field offre" placeholder="Recherche offre …" value="" name="sof" type="search">
+                    <input class="search-field offre" placeholder="Rechercher une offre …" value="" name="sof" type="search">
                     </label>
                     <input class="search-submit" value="Search" type="submit">
                 </form>
@@ -82,15 +82,22 @@ get_header('home'); ?>
 													<!--elements-->
 													<?php if ( isset( $blocService['element'] ) && count( $blocService['element'] ) > 0 ):?>
 														<div class="grid grid-pad">
-															<?php foreach ( $blocService['element'] as $element ):?>
+															<?php foreach ( $blocService['element'] as $element ):
+																	$infosLink = ( isset($element->link ) && !empty( $element->link ) ) ? $element->link : array() ;
+																	$link = ( isset( $infosLink['link'] ) && !empty( $infosLink['link'] ) ) ? $infosLink['link'] : "";
+																	$label = ( isset( $infosLink['label'] ) && !empty( $infosLink['label'] ) ) ? $infosLink['label'] : $element->titre; ?>
 															<div class="col-1-3 tri-clear">
 																<div class="single-service">
 																	<?php if ( isset( $element->fontClass ) && !empty( $element->fontClass ) ):?>
-																		<i class="fa <?php echo $element->fontClass;?> service-icon"></i>
+																		<a href="<?php echo $link;?>" title="<?php echo $label;?>">
+																			<i class="fa <?php echo $element->fontClass;?> service-icon"></i>
+																		</a>
 																	<?php endif;?>
 																	<?php if ( isset( $element->titre ) && !empty( $element->titre ) ): ?>
 																		<h3 class="service-title">
-																			<?php echo $element->titre;?>
+																			<a href="<?php echo $link;?>" title="<?php echo $label;?>">
+																				<?php echo $element->titre;?>
+																			</a>
 																		</h3>
 																	<?php endif;?>
 																	<?php if ( isset( $element->description ) && !empty( $element->description ) ):?>
@@ -244,7 +251,7 @@ get_header('home'); ?>
 														<?php if ( isset( $offre->type_contrat ) && !empty( $offre->type_contrat ) ):?>
 															<p><strong>Type de cotrat  : </strong><em><?php echo $offre->type_contrat;?></em></p>
 														<?php endif;?>
-														<a href="javascript:;" class="submit_link button--wapasha button--round-l" title="En savoir plus">
+														<a href="<?php echo get_permalink( $postOffes->ID );?>" class="submit_link button--wapasha button--round-l" title="En savoir plus">
 															En savoir plus
 														</a>
 													</div>

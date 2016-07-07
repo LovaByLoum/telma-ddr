@@ -133,7 +133,15 @@ get_header(); ?>
 								<li><strong>Nom de l'entreprise :</strong>&nbsp;<?php echo $society->titre;?></li>
 							<?php endif;?>
 							<?php if ( isset( $offre->localisation )  && !empty( $offre->localisation ) ):?>
-								<li><strong>Région :</strong>&nbsp;<?php echo $offre->localisation[0]->name;?></li>
+								<li><strong>Région :</strong>&nbsp;
+									<?php   $i = 1;
+											$glue = ', ';
+											foreach ( $offre->localisation as $term ){
+												echo $term->name;
+												if ( ( count( $offre->localisation ) - 1 ) == $i  ) { echo " et "; $i++; }
+												if ( count( $offre->localisation ) > $i )  { echo $glue; $i++; }
+											}?>
+								</li>
 							<?php endif;?>
 							<?php if ( isset( $offre->date )  && !empty( $offre->date ) ):?>
 								<li><strong>Date de publication :</strong>&nbsp;<?php echo COffre::dateLongueText( $offre->date );?></li>
@@ -141,11 +149,27 @@ get_header(); ?>
 							<?php if ( isset( $offre->expire )  && !empty( $offre->expire ) ):?>
 								<li><strong>Date d'expiration :</strong>&nbsp;<?php echo COffre::dateLongueText( $offre->expire );?></li>
 							<?php endif;?>
-							<?php if ( isset( $offreElment->domaine_metier )  && !empty( $offreElment->domaine_metier ) ):?>
-								<li><strong>Domaine de métier :</strong>&nbsp;<?php echo $offreElment->domaine_metier;?></li>
+							<?php if ( isset( $offre->{JM_TAXONOMIE_DEPARTEMENT} )  && !empty( $offre->{JM_TAXONOMIE_DEPARTEMENT} ) && count( $offre->{JM_TAXONOMIE_DEPARTEMENT} ) > 0 ):?>
+								<li><strong>Domaine de métier :</strong>&nbsp;
+							<?php   $i = 1;
+									$glue = ', ';
+									foreach ( $offre->{JM_TAXONOMIE_DEPARTEMENT} as $term ){
+										echo $term->name;
+										if ( ( count( $offre->{JM_TAXONOMIE_DEPARTEMENT} ) - 1 ) == $i  ) { echo " et "; $i++; }
+										if ( count( $offre->{JM_TAXONOMIE_DEPARTEMENT} ) > $i )  { echo $glue; $i++; }
+									}?>
+								</li>
 							<?php endif;?>
 							<?php if ( isset( $offre->{JM_TAXONOMIE_TYPE_CONTRAT} )  && !empty( $offre->{JM_TAXONOMIE_TYPE_CONTRAT} ) ):?>
-								<li><strong>Type de contrat :</strong>&nbsp;<?php echo $offre->{JM_TAXONOMIE_TYPE_CONTRAT}[0]->name;?></li>
+								<li><strong>Type de contrat :</strong>&nbsp;
+									<?php   $i = 1;
+											$glue = ', ';
+											foreach ( $offre->{JM_TAXONOMIE_TYPE_CONTRAT} as $term ){
+												echo $term->name;
+												if ( ( count( $offre->{JM_TAXONOMIE_TYPE_CONTRAT} ) - 1 ) == $i  ) { echo " et "; $i++; }
+												if ( count( $offre->{JM_TAXONOMIE_TYPE_CONTRAT} ) > $i )  { echo $glue; $i++; }
+											}?>
+								</li>
 							<?php endif;?>
 						</ul>
                     </aside>
@@ -183,6 +207,11 @@ get_header(); ?>
 										</ul>
 									<?php endif;?>
 								</li>
+								<?php endforeach;?>
+							<?php endif;?>
+							<?php if ( isset( $offreElment->autreProfil ) && !empty( $offreElment->autreProfil ) && count( $offreElment->autreProfil ) ) :?>
+								<?php foreach( $offreElment->autreProfil as $profil ):?>
+									<li><i class="fa fa-check-square-o"></i>&nbsp;&nbsp;<?php echo $profil[FIELD_PROFIL_ELEMENT];?></li>
 								<?php endforeach;?>
 							<?php endif;?>
 						</ul>

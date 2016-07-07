@@ -44,6 +44,11 @@ function jpress_jm_offre_fields($post){
 }
 
 function jpress_jm_offre_relations($post){
+	global $current_user;
+	$societeCurrent = -1;
+	if ( in_array($current_user->roles[0], array( JM_ROLE_RESPONSABLE_RH ) ) ) {
+		$societeCurrent = get_user_meta( $current_user->ID, JM_META_USER_SOCIETE_FILTER_ID, true);
+	}
     $offre = JM_Offre::getById($post->ID);
     $societes = JM_Societe::getBy();
     ?>
@@ -51,13 +56,13 @@ function jpress_jm_offre_relations($post){
         <tbody>
             <tr>
                 <th scope="row">
-                    <label>Entreprise rattaché</label>
+                    <label>Entreprise rattachée</label>
                 </th>
                 <td>
-                    <select name="<?php echo JM_META_SOCIETE_OFFRE_RELATION;?>" data-placeholder="Séléctionner une Entreprise" class="chosen-select" tabindex="2">
+                    <select name="<?php echo JM_META_SOCIETE_OFFRE_RELATION;?>" data-placeholder="Séléctionner une Entreprise" class="chosen-select" tabindex="2" <?php if ( $societeCurrent > 0 ):?>disabled="true"<?php endif;?> >
                         <option value=""></option>
                         <?php foreach ( $societes as $soc):?>
-                            <option value="<?php echo $soc->id;?>" <?php if ( $offre->societe_associe ==  $soc->id ): ?>selected<?php endif;?>><?php echo $soc->titre;?></option>
+                            <option value="<?php echo $soc->id;?>" <?php if ( $offre->societe_associe ==  $soc->id ||  ( $societeCurrent > 0 && $societeCurrent == $soc->id ) ): ?>selected<?php endif;?>><?php echo $soc->titre;?></option>
                         <?php endforeach; ?>
                     </select>
                 </td>

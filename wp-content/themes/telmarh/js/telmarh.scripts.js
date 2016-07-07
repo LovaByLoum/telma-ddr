@@ -46,7 +46,7 @@ jQuery( function( $ ){
     		});
     	});
     }
-    jQuery(".entreprise, .localisation, .annee-experience, .type-contrat, .criticite").change(function(){
+    jQuery(".entreprise, .localisation, .annee-experience, .type-contrat, .criticite, .departement").change(function(){
         _this = jQuery(this);
         if ( _this.is(":checked") ){
             _this.parent("label").addClass("checked");
