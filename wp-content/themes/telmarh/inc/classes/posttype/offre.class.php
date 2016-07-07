@@ -50,11 +50,12 @@ class COffre
 		$p = get_post( $pid );
 
 		if ( $p->post_type == JM_POSTTYPE_OFFRE ) {
-			$element = new stdClass();
-			$element->domaine_metier = get_field( FIELD_DOMAINE_METIER, $p->ID );
+			$element                    = new stdClass();
+			$element->domaine_metier    = get_field( FIELD_DOMAINE_METIER, $p->ID );
 			$element->mission_principal = get_field( FIELD_MISSIONS_PRINCIPALE, $p->ID );
-			$element->responsabilite = get_field( FIELD_RESPONSABILITE, $p->ID );
-			$element->qualite_requise = get_field( FIELD_QUALITE_REQUISE, $p->ID );
+			$element->responsabilite    = get_field( FIELD_RESPONSABILITE, $p->ID );
+			$element->qualite_requise   = get_field( FIELD_QUALITE_REQUISE, $p->ID );
+			$element->autreProfil       = get_field( FIELD_PROFILS, $p->ID );
 			//stocker dans le tableau statique
 			self::$_elements[$pid] = $element;
 		}
@@ -204,9 +205,20 @@ class COffre
 	            	<header class="entry-header">
 	                    <h2 class="entry-title"><a href="' . get_permalink( $offre->id ) . '" title="' . $offre->titre . '"> ' . $offre->titre . '</a></h2>
 	                    <div class="entry-meta">
-	                            	<span class="meta-block"><i class="fa fa-eye"></i>Publié le ' .self::dateLongueText( $offre->date ) . '</span>
-	                                <span class="meta-block"><i class="fa fa-suitcase"></i>' . $elementOffre->domaine_metier  .'</span>
-                        </div>
+	                            	<span class="meta-block"><i class="fa fa-eye"></i>Publié le ' .self::dateLongueText( $offre->date ) . '</span>';
+		if ( isset( $offre->departement ) && !empty( $offre->departement ) && count( $offre->departement ) > 0 ) {
+			$html .= '<span class="meta-block"><i class="fa fa-suitcase"></i>';
+			$i = 1;
+			$glue = ', ';
+			foreach ( $offre->departement as $term ) {
+				$html .= $term->name;
+				if ( count( $offre->departement ) > $i ) $html .= $glue;
+				$i++;
+			}
+			$html .= '</span>';
+		}
+
+        	$html .= '                    </div>
 	                </header><!-- .entry-header -->
 	                ' . apply_filters( "the_content", $offre->extrait );
 		if ( $isUrgent ){

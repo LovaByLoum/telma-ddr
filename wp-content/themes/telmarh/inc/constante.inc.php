@@ -39,6 +39,8 @@ define ( "FIELD_DOMAINE_METIER", "domaine_de_metier_offre" );
 define ( "FIELD_MISSIONS_PRINCIPALE", "missions_principales_offre" );
 define ( "FIELD_RESPONSABILITE", "responsabilites_offre" );
 define ( "FIELD_QUALITE_REQUISE", "qualites_requises_offre" );
+define ( "FIELD_PROFILS", "profil_offre" );
+define ( "FIELD_PROFIL_ELEMENT", "profil_element_offre" );
 
 //field ACF homepage
 define ( "TITRE_BLOC_SERVICE", "titre_bloc_service" );

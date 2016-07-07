@@ -185,6 +185,11 @@ get_header(); ?>
 								</li>
 								<?php endforeach;?>
 							<?php endif;?>
+							<?php if ( isset( $offreElment->autreProfil ) && !empty( $offreElment->autreProfil ) && count( $offreElment->autreProfil ) ) :?>
+								<?php foreach( $offreElment->autreProfil as $profil ):?>
+									<li><i class="fa fa-check-square-o"></i>&nbsp;&nbsp;<?php echo $profil[FIELD_PROFIL_ELEMENT];?></li>
+								<?php endforeach;?>
+							<?php endif;?>
 						</ul>
                     </aside>
                 </div>
