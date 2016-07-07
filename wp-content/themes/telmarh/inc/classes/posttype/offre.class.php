@@ -212,8 +212,8 @@ class COffre
 			$glue = ', ';
 			foreach ( $offre->departement as $term ) {
 				$html .= $term->name;
-				if ( count( $offre->departement ) > $i ) $html .= $glue;
-				$i++;
+				if ( ( count( $offre->{JM_TAXONOMIE_DEPARTEMENT} ) - 1 ) == $i  ) { $html .= " et "; $i++; }
+				if ( count( $offre->{JM_TAXONOMIE_DEPARTEMENT} ) > $i )  { $html .= $glue; $i++; }
 			}
 			$html .= '</span>';
 		}
