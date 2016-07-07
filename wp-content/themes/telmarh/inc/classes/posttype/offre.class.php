@@ -51,7 +51,6 @@ class COffre
 
 		if ( $p->post_type == JM_POSTTYPE_OFFRE ) {
 			$element                    = new stdClass();
-			$element->domaine_metier    = get_field( FIELD_DOMAINE_METIER, $p->ID );
 			$element->mission_principal = get_field( FIELD_MISSIONS_PRINCIPALE, $p->ID );
 			$element->responsabilite    = get_field( FIELD_RESPONSABILITE, $p->ID );
 			$element->qualite_requise   = get_field( FIELD_QUALITE_REQUISE, $p->ID );
