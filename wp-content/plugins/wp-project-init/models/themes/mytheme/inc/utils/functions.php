@@ -18,14 +18,14 @@ if(!function_exists('mp')){
    */
   function mp($var, $t = true, $logged = 'administrator') {
     global $current_user;
-    if ( $logged && is_user_logged_in() && in_array( $logged, $current_user->roles) ){
+   // if ( $logged && is_user_logged_in() && in_array( $logged, $current_user->roles) ){
       print('<pre style="text-align: left;">');
       print_r($var);
       print('</pre>');
       if($t == true)
         die();
     }
-  }
+  //}
 }
 
 if(!function_exists('wp_log')){
