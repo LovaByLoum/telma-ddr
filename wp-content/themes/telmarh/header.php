@@ -74,27 +74,19 @@
         <?php wp_nav_menu( array( 'theme_location' => 'primary' ) ); ?>
 	</nav>
 	<div id="login-user" class="login" style="display: none;">
-		<div class="inset">
-			<form  method="post" action="http://localhost/projets/telmarh/srcs/wp-login.php">
-		         <div>
-					<span><label>Login</label></span>
-					<span><input type="text" class="textbox" id="active" name="log"></span>
-				 </div>
-				 <div>
-					<span><label>Mot de passe</label></span>
-				    <span><input type="password" class="password" name="pwd"></span>
-				 </div>
-				<div class="sign">
-					<div class="submit">
-					  <input type="submit" value="LOGIN" >
-					</div>
-					<span class="forget-pass">
-						<a href="#">Mot de passe oublié?</a>
-					</span>
-						<div class="clear"> </div>
-				</div>
-			</form>
-		</div>
+		<?php 	if ( !is_user_logged_in() ) :?>
+						<div class="inset">
+					<?php	$args = array(
+								'echo' => 'true',
+								'form_id'        => 'loginform',
+								'id_username'    => 'user_login',
+								'id_password'    => 'user_pass',
+								'id_remember'    => 'rememberme',
+								'id_submit'      => 'wp-submit',
+							);
+							wp_login_form();?>
+						</div>
+			<?php   endif;?>
 	</div>
 
 	<div id="content" class="site-content">

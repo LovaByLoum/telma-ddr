@@ -319,7 +319,16 @@ if ( function_exists('siteorigin_panels_activate') ) {
 	require get_template_directory() . "/widgets/telmarh-cta.php";  
 	require get_template_directory() . "/widgets/telmarh-columns.php";
 	
-} 
+}
+if (is_admin()){
+  require_once( get_template_directory() . '/admin-functions.php' );
+
+  /*** Theme Option ***/
+  require get_template_directory() . '/theme-options/theme-options.php';
+
+}
+global $telmarh_options;
+$telmarh_options = get_option( 'telmarh_theme_options' );
 
 /**
  * Enqueues the necessary script for image uploading in widgets
