@@ -65,14 +65,32 @@ class CMenu
 	}
 
 	public static function renderMenuFooter() {
+		global $telmarh_options;
 		$html = '';
+		$html .= '<ul class="menu-footer clearfix">';
+		if ( !empty( $telmarh_options['facebook'] ) || !empty( $telmarh_options['google'] ) || !empty( $telmarh_options['linkedin'] ) || !empty( $telmarh_options['instagramm'] ) || !empty( $telmarh_options['twitter'] )  ){
+			$html .= '<li class="col-1-4">';
+			$html .= '<a href="javascript:;" title="Suivez-nous">Suivez-nous</a>';
+			$arrayKeyRs = array( 'facebook', 'google', 'linkedin', 'instagramm', 'twitter' );
+			$html .= '<ul class="social-media-icons footer">';
+			foreach ( $arrayKeyRs as $key ){
+				if ( isset( $telmarh_options[$key] ) && !empty( $telmarh_options[$key] ) ){
+					$html .= '	<li class="test">
+	                                <a href="' . $telmarh_options[$key] . '" target="_blank">
+	                                    <i class="fa fa-' . $key . '"></i>
+	                                </a>
+                            	</li>';
+				}
+			}
+			$html .= '</ul>';
+			$html .= '<li>';
+		}
 		$menuFooterElement = self::getMenuhierarchy( SLUG_MENU_FOOTER );
 		$menuFooter = ( isset( $menuFooterElement['data'] ) && !empty( $menuFooterElement['data'] ) ) ? $menuFooterElement['data'] : array();
 		if ( isset( $menuFooter[0] ) && !empty( $menuFooter[0] ) && count( $menuFooter[0] ) > 0 ){
 			//parcourir le parent
-			$html .= '<ul class="menu-footer clearfix">';
 			foreach ( $menuFooter[0] as $parent ) {
-				$html .= '<li class="col-1-3">';
+				$html .= '<li class="col-1-4">';
 				$html .= '<a href="' . get_permalink( $parent['url'] ) . '" >' . $parent['title'] . '</a>' ;
 				if ( isset( $menuFooter[$parent['id']][0] ) && !empty( $menuFooter[$parent['id']][0] ) ){
 					//menu child
@@ -96,8 +114,21 @@ class CMenu
 				}
 				$html .= '</li>';
 			}
-			$html .= '</ul>';
 		}
+		if ( isset( $telmarh_options['description_footer'] ) && !empty( $telmarh_options['description_footer'] ) ) {
+			$html .= '<li class="col-1-4">';
+			$html .= '<a href="javascript:;" title="Suivez-nous">Suivez-nous</a>';
+			$html .= '  <div class="site-info">
+  							' . apply_filters("the_content", $telmarh_options['description_footer']) . '
+  							<p class="contact">
+  							    <a href="#" class="submit_link button--wapasha button--round-l " title="Nous contactez">
+                                    Nous contactez
+                                </a>
+  							</p>
+  						</div>';
+			$html .= '</li>';
+		}
+		$html .= '</ul>';
 		return $html;
 	}
 }

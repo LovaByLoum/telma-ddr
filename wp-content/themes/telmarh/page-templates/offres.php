@@ -8,13 +8,14 @@
  * @since telmarh 1.0
  * @author : Netapsys
  */
-global $post;
+global $post, $telmarh_options;
 $anneeExperiences = get_terms( JM_TAXONOMIE_ANNEE_EXPERIENCE, array( 'hide_empty' => false ) );
 $typeContrat = get_terms( JM_TAXONOMIE_TYPE_CONTRAT, array( 'hide_empty' => false ) );
 $localisation = get_terms( JM_TAXONOMIE_LOCALISATION,array( 'hide_empty' => false ) );
 $criticites = get_terms( JM_TAXONOMIE_CRITICITE, array( 'hide_empty' => false ) );
 $domaineMetier = get_terms( JM_TAXONOMIE_DEPARTEMENT, array( 'hide_empty' => false ) );
 $entreprises  = JM_Societe::getBy();
+$nbrAffichage = ( isset( $telmarh_options['nombre_atus'] ) && !empty( $telmarh_options['nombre_atus'] ) ) ? $telmarh_options['nombre_atus'] : 4 ;
 $recherche = ( isset( $_GET['sof'] ) && !empty( $_GET['sof'] ) ) ? $_GET['sof'] : "";
 get_header(); ?>
 	<section class="listing-offer">
@@ -64,7 +65,7 @@ get_header(); ?>
                                             //set list or table view
                                             $object->setListView('div');
                                             //number of item on first load
-                                            $object->setItemPerPage(4);
+                                            $object->setItemPerPage($nbrAffichage);
                                             //container class
                                             $object->setContainerClasses('wrapper');
                                             //item classes

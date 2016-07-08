@@ -354,10 +354,6 @@ function telmarh_add_menu_items( $items, $args ){
 		} else {
 			$items .='<a href="javascript:;" title="Se Connecter" id="login_user"><i class="fa fa-user-secret"></i>&nbsp;Se Connecter</a>';
 		}
-		if (wp_is_mobile()){
-			$items .= "mobile ono";
-		}
-
 
 		$items .='</li>';
 

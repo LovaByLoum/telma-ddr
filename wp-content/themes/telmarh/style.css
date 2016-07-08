@@ -2438,3 +2438,27 @@ input[type="text"]:hover,input[type="Password"]:hover,#active{
 .menu-footer > li, .menu-footer li {
     list-style: none;
 }
+.menu-footer li.col-1-4{
+    min-height: 100px;
+}
+.site-footer .site-info p{
+    color: #fff;
+    font-size: 14px;
+    text-transform: none;
+    font-family: 'Source Sans Pro',Helvetica Neue,Helvetica,arial,sans-serif;
+    font-weight: 300;
+    line-height: 1.5;
+}
+.site-footer .site-info .contact a{
+    min-width: 200px;
+}
+.site-footer .site-info .contact{
+    text-align: center;
+}
+.social-media-icons.footer {
+    text-align: inherit;
+    margin: 0;
+}
+.social-media-icons.footer li a {
+    font-size: 20px;
+}

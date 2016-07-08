@@ -6,27 +6,28 @@
  *
  * @package telmarh
  */
+global $telmarh_options;
 ?>
 
 	</div><!-- #content -->
 
 	<footer id="colophon" class="site-footer" role="contentinfo">
     	<div class="grid grid-pad">
-		    <div class="col-9-12 tri-clear">
+		    <div class="col-1-1 tri-clear">
                 <div class="menu-footer">
                     <?php echo CMenu::renderMenuFooter();?>
                 </div><!-- .site-info -->
             </div>
-        	<div class="col-3-12">
-                <div class="site-info">
-                    <?php if ( get_theme_mod( 'telmarh_footerid' ) ) : ?>
-        				<?php echo esc_html( get_theme_mod( 'telmarh_footerid' )); // footer id ?>
-					<?php else : ?>  
-    					<?php printf( __( 'Theme: %1$s by %2$s', 'telmarh' ), 'telmarh', '<a href="http://modernthemes.net" rel="designer">modernthemes.net</a>' ); ?>
-					<?php endif; ?> 
-                </div><!-- .site-info -->
-        	</div>
         </div>
+		<?php if ( isset( $telmarh_options['copyright'] ) && !empty( $telmarh_options['copyright'] ) ):?>
+		<div class="grid grid-pad">
+			<div class="col-1-1">
+				<p class="copy-right">
+					<?php echo $telmarh_options['copyright'];?>
+				</p>
+			</div>
+		</div>
+		<?php endif;?>
 	</footer><!-- #colophon -->
 </div><!-- #page -->
 

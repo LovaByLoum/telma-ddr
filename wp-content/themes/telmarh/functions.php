@@ -327,6 +327,8 @@ if (is_admin()){
   require get_template_directory() . '/theme-options/theme-options.php';
 
 }
+global $telmarh_options;
+$telmarh_options = get_option( 'telmarh_theme_options' );
 
 /**
  * Enqueues the necessary script for image uploading in widgets
