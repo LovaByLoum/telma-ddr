@@ -15,6 +15,7 @@ $localisation = get_terms( JM_TAXONOMIE_LOCALISATION,array( 'hide_empty' => fals
 $criticites = get_terms( JM_TAXONOMIE_CRITICITE, array( 'hide_empty' => false ) );
 $niveauEtudes = get_terms( JM_TAXONOMIE_NIVEAU_ETUDE, array( 'hide_empty' => false ) );
 $referentielEtude = array();
+$entreprises  = JM_Societe::getBy();
 
 get_header(); ?>
 	<section id="page-full-entry-content">
@@ -76,39 +77,61 @@ get_header(); ?>
 			                            <div class="control-group  open">
 				                            <h4 class="head-accordion">Votre parcours</h4>
 				                            <div class="head-accordion">
-												<p class="col-1-3 form-field select">
-													<select>
-														<option value="">Sélectionnez</option>
-														<?php if ( !empty( $niveauEtudes ) && count( $niveauEtudes ) > 0 ):?>
-															<?php foreach ( $niveauEtudes as $term ):?>
-																<option value="<?php echo $term->term_id;?>"><?php echo $term->name;?></option>
-															<?php endforeach;?>
-														<?php endif;?>
-													</select>
-					                                <div class="select__arrow"></div>
-												</p>
-												<p class="col-1-3 form-field select">
-													<select>
-														<option value="">Sélectionnez</option>
-														<?php if ( !empty( $referentielEtude ) && count( $referentielEtude ) > 0 ):?>
-															<?php foreach ( $referentielEtude as $element ):?>
-																<option value=""></option>
-															<?php endforeach;?>
-														<?php endif;?>
-													</select>
-					                                <div class="select__arrow"></div>
-												</p>
-												<p class="col-1-3 form-field select">
-													<select>
-														<option value="">Sélectionnez</option>
-														<?php if ( !empty( $localisation ) && count( $localisation ) > 0 ):?>
-															<?php foreach ( $localisation as $term ):?>
-																<option value="<?php echo $term->term_id;?>"><?php echo $term->name;?></option>
-															<?php endforeach;?>
-														<?php endif;?>
-													</select>
-					                                <div class="select__arrow"></div>
-												</p>
+												<div class="col-1-3 form-field">
+													<h5>Niveau d'etude</h5>
+													<p class="select">
+						                            <select>
+                                                        <option value="">Sélectionnez</option>
+                                                        <?php if ( !empty( $niveauEtudes ) && count( $niveauEtudes ) > 0 ):?>
+                                                            <?php foreach ( $niveauEtudes as $term ):?>
+                                                                <option value="<?php echo $term->term_id;?>"><?php echo $term->name;?></option>
+                                                            <?php endforeach;?>
+                                                        <?php endif;?>
+                                                    </select>
+                                                    <div class="select__arrow"></div>
+					                                </p>
+
+												</div>
+												<div class="col-1-3 form-field">
+													<h5>Domaine d'etude</h5>
+													<p class="select">
+						                            <select>
+                                                        <option value="">Sélectionnez</option>
+                                                        <?php if ( !empty( $referentielEtude ) && count( $referentielEtude ) > 0 ):?>
+                                                            <?php foreach ( $referentielEtude as $element ):?>
+                                                                <option value=""></option>
+                                                            <?php endforeach;?>
+                                                        <?php endif;?>
+                                                    </select>
+                                                    <div class="select__arrow"></div>
+					                                </p>
+
+												</div>
+												<div class="col-1-3 form-field">
+													<h5>Région</h5>
+													<p class="select">
+														<select>
+															<option value="">Sélectionnez</option>
+															<?php if ( !empty( $localisation ) && count( $localisation ) > 0 ):?>
+																<?php foreach ( $localisation as $term ):?>
+																	<option value="<?php echo $term->term_id;?>"><?php echo $term->name;?></option>
+																<?php endforeach;?>
+															<?php endif;?>
+														</select>
+						                                <div class="select__arrow"></div>
+													</p>
+												</div>
+					                            <div class="col-1-3 form-field">
+						                            <h5>En poste</h5>
+                                                    <label class="control control--radio">Oui
+                                                        <input type="radio"  value="0" name="">
+                                                        <div class="control__indicator"></div>
+                                                    </label>
+                                                    <label class="control control--radio">Non
+                                                        <input type="radio"  value="1">
+                                                        <div class="control__indicator"></div>
+                                                    </label>
+					                            </div>
 				                            </div>
 			                            </div>
 
