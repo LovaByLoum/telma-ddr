@@ -239,7 +239,7 @@ get_header('home'); ?>
 												<div class="grid grid-pad">
 													<?php foreach( $offresUrgent as $offre ):?>
 													<div class="col-1-3 tri-clear">
-														<h5><strong><?php echo $offre->titre;?></strong></h5>
+														<h5><a href="<?php echo get_permalink( $postOffes->ID );?>" title="<?php echo $offre->titre;?>"><strong><?php echo $offre->titre;?></strong></a></h5>
 
 														<p>
 															<?php echo $offre->desc;?>
