@@ -346,10 +346,11 @@ function telmarh_save_post( $post_id ){
 
 add_filter( "wp_nav_menu_items", "telmarh_add_menu_items", 10, 2 );
 function telmarh_add_menu_items( $items, $args ){
+	global $post;
 	if ( isset( $args->theme_location ) && $args->theme_location == "primary" ){
 		$items .= '<li class="menu-item">';
 		if ( is_user_logged_in() ){
-			$items .='<a href="javascript:;" title="Se déconnecter" id="login_user"><i class="fa fa-user-md"></i>&nbsp;Se déconnecter</a>';
+			$items .='<a href="' . wp_logout_url( get_permalink( $post->ID ) ) .'" title="Se déconnecter" ><i class="fa fa-user-md"></i>&nbsp;Se déconnecter</a>';
 		} else {
 			$items .='<a href="javascript:;" title="Se Connecter" id="login_user"><i class="fa fa-user-secret"></i>&nbsp;Se Connecter</a>';
 		}
