@@ -2318,12 +2318,12 @@ form#loginform p label {
 	font-weight: 600;
 	font-family: 'Open Sans', sans-serif;
 }
-input[type="text"],input[type="Password"] {
+input[type="text"],input[type="Password"],textarea, select {
 	padding: 9px;
 	width: 90%;
 	font-size: 1.1em;
 	margin: 18px 0px;
-	border: 2px solid#EAEEF1;
+	border: 2px solid#EAEEF1!important;
 	color: #666666;
 	background:#EAEEF1;
 	font-family: 'Open Sans', sans-serif;
@@ -2336,7 +2336,7 @@ input[type="text"],input[type="Password"] {
 	-o-transition: all 0.3s ease-out;
 	transition: all 0.3s ease-out;
 }
-input[type="text"]:hover,input[type="Password"]:hover,#active{
+input[type="text"]:hover,input[type="Password"]:hover,#active ,textarea:hover, select:hover{
 	background:#fff;
 	border:2px solid #609EC3;
 	outline:none;
@@ -2461,4 +2461,22 @@ input[type="text"]:hover,input[type="Password"]:hover,#active{
 }
 .social-media-icons.footer li a {
     font-size: 20px;
+}
+.comment-form .form-field input[type="text"],
+.comment-form .form-field input[type="Password"],
+.comment-form .form-field textarea {
+    width: 100%;
+}
+.comment-form .form-field .select select{
+    background:#EAEEF1!important;
+    margin-top: 0;
+}
+.comment-form .form-field label {
+    font-weight: 300;
+    clear: both;
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 20px;
+    line-height: 24px;
+    font-family: Source Sans Pro;
 }

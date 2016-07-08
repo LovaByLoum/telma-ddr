@@ -134,15 +134,18 @@ jQuery( function( $ ){
 
     });
 
-    //jQuery("body").on("click", function(e){
-    //    if ( jQuery("#login-user").is(":visible") ){
-    //    if (e.target.id != "login-user"){
-    //
-    //            jQuery("#login-user").hide();
-    //        }
-    //
-    //    }
-    //});
+    jQuery('input.datepicker').datepicker({
+        dateFormat : 'dd/mm/yy',
+        altField : '',
+        altFormat :  'dd/mm/yy',
+        changeYear: true,
+        yearRange: '-100:+100',
+        changeMonth: true,
+        showButtonPanel : true,
+        firstDay: 1,
+        showButtonPanel: true,
+        closeText: 'Fermer'
+    });
 
 
 });
