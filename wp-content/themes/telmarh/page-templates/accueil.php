@@ -239,7 +239,7 @@ get_header('home'); ?>
 												<div class="grid grid-pad">
 													<?php foreach( $offresUrgent as $offre ):?>
 													<div class="col-1-3 tri-clear">
-														<h5><a href="<?php echo get_permalink( $postOffes->ID );?>" title="<?php echo $offre->titre;?>"><strong><?php echo $offre->titre;?></strong></a></h5>
+														<h5><a href="<?php echo get_permalink( $offre->id );?>" title="<?php echo $offre->titre;?>"><strong><?php echo $offre->titre;?></strong></a></h5>
 
 														<p>
 															<?php echo $offre->desc;?>
@@ -251,7 +251,7 @@ get_header('home'); ?>
 														<?php if ( isset( $offre->type_contrat ) && !empty( $offre->type_contrat ) ):?>
 															<p><strong>Type de cotrat  : </strong><em><?php echo $offre->type_contrat;?></em></p>
 														<?php endif;?>
-														<a href="<?php echo get_permalink( $postOffes->ID );?>" class="submit_link button--wapasha button--round-l" title="En savoir plus">
+														<a href="<?php echo get_permalink( $offre->id );?>" class="submit_link button--wapasha button--round-l" title="En savoir plus">
 															En savoir plus
 														</a>
 													</div>
