@@ -2480,3 +2480,6 @@ input[type="text"]:hover,input[type="Password"]:hover,#active ,textarea:hover, s
     line-height: 24px;
     font-family: Source Sans Pro;
 }
+.comment-form .col-1-1.add-element{
+    text-align: center;
+}

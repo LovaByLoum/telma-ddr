@@ -144,8 +144,38 @@ jQuery( function( $ ){
         showButtonPanel : true,
         firstDay: 1,
         showButtonPanel: true,
-        closeText: 'Fermer'
+        closeText: 'Fermer',
     });
-
+    jQuery( "#addExperience").click(function (){
+        var _clone = jQuery('.experience').last().clone();
+        var _count = jQuery('.experience').length;
+        _clone.removeClass("sample");
+        _clone = setCollabsBlockTo( _clone, _count, true );
+        _clone.insertAfter( jQuery('.experience').last() );
+        _number = jQuery('.experience').length-1;
+        jQuery( "#experience-number").val(_number);
+    });
+    jQuery('.deleteExperience').live('click', function(){
+        _this = jQuery(this);
+        _this.parents('.experience').remove();
+        //refresh
+        jQuery('.experience').each(function(index){
+            setCollabsBlockTo(jQuery(this), index, false);
+        })
+        _number = jQuery('.experience').length-1;
+        jQuery('#experience-number').val(_number);
+    })
 
 });
+function setCollabsBlockTo(element, count, removevalue){
+    element.find('.col-1-1.number h5 > span').html(count+1);
+    //name
+    element.find('[name]').each(function(){
+        _name = jQuery(this).attr('name').match(/[a-zA-Z_-]+/);
+        if (removevalue){
+            jQuery(this).val('');
+        }
+        jQuery(this).attr('name', _name + count);
+    })
+    return element;
+}

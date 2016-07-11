@@ -244,7 +244,15 @@ get_header(); ?>
 			                            </div>
 			                            <div class="control-group">
 				                            <h4 class="head-accordion">Expériences professionnelles (dont stages) <span class="required">*</span></h4>
-				                            <div class="content-accordion">
+				                            <div id="experience-repeat" class="content-accordion experience sample">
+					                            <div class="col-1-1 number">
+                                                    <h5>Expérience professionnelles n°<span>1</span></h5>
+                                                </div>
+					                            <div class="col-1-1 add-element">
+						                            <a href="javascript:;" class="submit_link button--wapasha button--round-l deleteExperience" title="En savoir plus">
+                                                        <i class="fa fa-minus"></i>&nbsp;&nbsp;Supprimer
+                                                    </a>
+					                            </div>
 												<div class="col-1-1">
 													<p class="col-1-3 form-field">
 														<label for="titre_exp_prof">Titre de l'experience <span class="required">*</span></label>
@@ -284,15 +292,19 @@ get_header(); ?>
                                                     </div>
 												</div>
 				                            </div>
-				                            <p class="col-1-1">
-                                                <a href="javascript:;" class="submit_link button--wapasha button--round-l" title="En savoir plus">
-                                                    Ajouter une autre
+				                            <p class="col-1-1 add-element">
+                                                <a href="javascript:;" class="submit_link button--wapasha button--round-l" id="addExperience" title="En savoir plus">
+                                                    <i class="fa fa-plus"></i>&nbsp;&nbsp;Ajouter une autre
                                                 </a>
+					                            <input type="hidden" id="experience-number" value="">
                                             </p>
 			                            </div>
 			                            <div class="control-group">
 				                            <h4 class="head-accordion">Formations <span class="required">*</span></h4>
-				                            <div class="content-accordion">
+				                            <div id="formation-repeat" class="content-accordion sample">
+					                            <div class="col-1-1">
+						                            <h5>Formation n°<span>1</span></h5>
+					                            </div>
 												<div class="col-1-1">
 													<p class="col-1-3 form-field">
 														<label for="titre_exp_for">Titre de l'experience <span class="required">*</span></label>
@@ -332,15 +344,18 @@ get_header(); ?>
                                                     </div>
 												</div>
 				                            </div>
-				                            <p class="col-1-1">
-	                                            <a href="javascript:;" class="submit_link button--wapasha button--round-l" title="En savoir plus">
-	                                                Ajouter une autre
+				                            <p class="col-1-1 add-element">
+	                                            <a href="javascript:;" id="addFormation" class="submit_link button--wapasha button--round-l" title="En savoir plus">
+		                                            <i class="fa fa-plus"></i>&nbsp;&nbsp;Ajouter une autre
 	                                            </a>
 	                                        </p>
 			                            </div>
 			                            <div class="control-group">
 				                            <h4 class="head-accordion">Projets personnels, professionnels <span class="required">*</span></h4>
-				                            <div class="content-accordion">
+				                            <div id="projet-repeat" class="content-accordion sample">
+					                            <div class="col-1-1">
+                                                    <h5>Projets n°<span>1</span></h5>
+                                                </div>
 												<div class="col-1-1">
 													<p class="col-1-3 form-field">
 														<label for="titre_exp_pgt">Titre de l'experience <span class="required">*</span></label>
@@ -380,9 +395,9 @@ get_header(); ?>
                                                     </div>
 												</div>
 				                            </div>
-				                            <p class="col-1-3 form-field">
-                                                <a href="javascript:;" class="submit_link button--wapasha button--round-l" title="En savoir plus">
-                                                    Ajouter une autre
+				                            <p class="col-1-1 add-element">
+                                                <a href="javascript:;" id="addProjet" class="submit_link button--wapasha button--round-l" title="En savoir plus">
+	                                                <i class="fa fa-plus"></i>&nbsp;&nbsp;Ajouter une autre
                                                 </a>
                                             </p>
 			                            </div>
