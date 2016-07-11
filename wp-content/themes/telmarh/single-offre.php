@@ -105,7 +105,7 @@ get_header(); ?>
 		                            <p class="animate-plus animate-init single-offre-left" data-animations="fadeInUp" data-animation-delay="1.5s">
                                         <a href="<?php echo get_permalink( $postOffes->ID );?>" class="submit_link button--wapasha button--round-l">
                                             <span>
-                                                Postuler a cet offre
+                                                Postuler à cette offre
                                             </span>
                                         </a>
 			                            </p>
