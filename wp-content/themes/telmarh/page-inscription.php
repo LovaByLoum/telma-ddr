@@ -9,6 +9,7 @@
  * @author : Netapsys
  */
 global $post;
+telmarh_inscription_user();
 $anneeExperiences       = get_terms( JM_TAXONOMIE_ANNEE_EXPERIENCE, array( 'hide_empty' => false ) );
 $typeContrat            = get_terms( JM_TAXONOMIE_TYPE_CONTRAT, array( 'hide_empty' => false ) );
 $localisation           = get_terms( JM_TAXONOMIE_LOCALISATION,array( 'hide_empty' => false ) );
@@ -17,7 +18,7 @@ $niveauEtudes           = get_terms( JM_TAXONOMIE_NIVEAU_ETUDE, array( 'hide_emp
 $domainesMetier         = get_terms( JM_TAXONOMIE_DEPARTEMENT, array( 'hide_empty' => false ) );
 $referentielEtude = array();
 $entreprises  = JM_Societe::getBy();
-
+$nonce = wp_create_nonce( "inscription-user" );
 get_header(); ?>
 	<section id="page-full-entry-content">
 		    <div class="grid grid-pad">
@@ -37,7 +38,7 @@ get_header(); ?>
 									<div class="entry-content">
 	                                    <?php echo apply_filters("the_content", $post->post_content );?>
                                     </div>
-		                            <form class="comment-form" autocomplete="off">
+		                            <form class="comment-form" id="inscription_user" autocomplete="off" action="<?php echo get_permalink( $post->ID );?>" method="post">
 			                            <div class="control-group">
 				                            <h4 class="head-accordion open">Compte</h4>
 				                            <div class="head-accordion">
@@ -61,11 +62,11 @@ get_header(); ?>
                                                     </p>
                                                     <p class="col-1-3 form-field">
 	                                                    <label for="prenom">Prénom <span class="required">*</span></label>
-                                                        <input type="text" placeholder="Prénom " id="prenom">
+                                                        <input type="text" placeholder="Prénom " id="prenom" name="prenom">
                                                     </p>
                                                     <p class="col-1-3 form-field">
 	                                                    <label for="birthday">Date de naissance <span class="required">*</span></label>
-                                                        <input type="text" class="datepicker" placeholder="DD/MM/YYYY" readonly name="birthday" id="birthday">
+                                                        <input type="text" class="datepicker" placeholder="date/mois/année" readonly name="birthday" id="birthday">
                                                     </p>
 					                            </div>
 					                            <div class="col-1-1">
@@ -90,9 +91,9 @@ get_header(); ?>
 					                            <div class="col-1-1">
 						                            <div class="col-1-3 form-field">
                                                         <h5>Niveau d'etude <span class="required">*</span></h5>
-                                                        <p class="select">
+                                                        <div class="select">
                                                         <select name="niveau_etude">
-                                                            <option value="">Sélectionnez</option>
+                                                            <option value="0">Sélectionnez</option>
                                                             <?php if ( !empty( $niveauEtudes ) && count( $niveauEtudes ) > 0 ):?>
                                                                 <?php foreach ( $niveauEtudes as $term ):?>
                                                                     <option value="<?php echo $term->term_id;?>"><?php echo $term->name;?></option>
@@ -100,13 +101,13 @@ get_header(); ?>
                                                             <?php endif;?>
                                                         </select>
                                                         <div class="select__arrow"></div>
-                                                        </p>
+                                                        </div>
                                                     </div>
                                                     <div class="col-1-3 form-field">
-                                                        <h5>Domaine d'etude <span class="required">*</span></h5>
-                                                        <p class="select">
+                                                        <h5>Domaine d'etude</h5>
+                                                        <div class="select">
                                                         <select name="ref_etude">
-                                                            <option value="">Sélectionnez</option>
+                                                            <option value="0">Sélectionnez</option>
                                                             <?php if ( !empty( $referentielEtude ) && count( $referentielEtude ) > 0 ):?>
                                                                 <?php foreach ( $referentielEtude as $element ):?>
                                                                     <option value=""></option>
@@ -114,14 +115,14 @@ get_header(); ?>
                                                             <?php endif;?>
                                                         </select>
                                                         <div class="select__arrow"></div>
-                                                        </p>
+                                                        </div>
 
                                                     </div>
                                                     <div class="col-1-3 form-field">
-                                                        <h5>Région <span class="required">*</span></h5>
-                                                        <p class="select">
+                                                        <h5>Mobilité</h5>
+                                                        <div class="select">
                                                             <select name="region">
-                                                                <option value="">Sélectionnez</option>
+                                                                <option value="0">Sélectionnez</option>
                                                                 <?php if ( !empty( $localisation ) && count( $localisation ) > 0 ):?>
                                                                     <?php foreach ( $localisation as $term ):?>
                                                                         <option value="<?php echo $term->term_id;?>"><?php echo $term->name;?></option>
@@ -129,26 +130,26 @@ get_header(); ?>
                                                                 <?php endif;?>
                                                             </select>
                                                             <div class="select__arrow"></div>
-                                                        </p>
+                                                        </div>
                                                     </div>
 					                            </div>
 					                            <div class="col-1-1">
 						                            <div class="col-1-3 form-field">
                                                         <h5>En poste<span class="required">*</span></h5>
-                                                        <label class="control control--radio">Oui
+                                                        <label class="control control--radio">Non
                                                             <input type="radio"  value="0" name="en_poste" checked="checked">
                                                             <div class="control__indicator"></div>
                                                         </label>
-                                                        <label class="control control--radio">Non
+                                                        <label class="control control--radio">Oui
                                                             <input type="radio"  value="1" name="en_poste">
                                                             <div class="control__indicator"></div>
                                                         </label>
                                                     </div>
-                                                    <p class="col-1-3 form-field">
-	                                                    <label for="entreprise">Nom de l'entreprise <span class="required">*</span></label>
+                                                    <p class="col-1-3 form-field post-required">
+	                                                    <label for="entreprise">Nom de l'entreprise</label>
                                                         <input type="text" name="entreprise_user" placeholder="Nom de l'entreprise" id="entreprise"/>
                                                     </p>
-                                                    <p class="col-1-3 form-field">
+                                                    <p class="col-1-3 form-field post-required">
 	                                                    <label for="fonction">Nom de l'entreprise <span class="required">*</span></label>
                                                         <input type="text" name="fonction_user" placeholder="Fonction *" id="fonction"/>
                                                     </p>
@@ -156,9 +157,9 @@ get_header(); ?>
 												<div class="col-1-1">
 													<div class="col-1-3 form-field">
 		                                                <h5>Domaine de métier recherché</h5>
-		                                                <p class="select">
+		                                                <div class="select">
 		                                                    <select name="dom_metier">
-		                                                        <option value="">Sélectionnez</option>
+		                                                        <option value="0">Sélectionnez</option>
 		                                                        <?php if ( !empty( $domainesMetier ) && count( $domainesMetier ) > 0 ):?>
 		                                                            <?php foreach ( $domainesMetier as $term ):?>
 		                                                                <option value="<?php echo $term->term_id;?>"><?php echo $term->name;?></option>
@@ -166,22 +167,22 @@ get_header(); ?>
 		                                                        <?php endif;?>
 		                                                    </select>
 		                                                    <div class="select__arrow"></div>
-		                                                </p>
+		                                                </div>
 		                                            </div>
 												</div>
 												<div class="col-1-1">
 													<div class="col-1-3 form-field">
 	                                                    <h5>Permis de conduire <span class="required">*</span></h5>
-	                                                    <label class="control control--radio">Oui
+	                                                    <label class="control control--radio">Non
 	                                                        <input type="radio"  value="0" name="permis" checked="checked">
 	                                                        <div class="control__indicator"></div>
 	                                                    </label>
-	                                                    <label class="control control--radio">Non
+	                                                    <label class="control control--radio">Oui
 	                                                        <input type="radio"  value="1" name="permis">
 	                                                        <div class="control__indicator"></div>
 	                                                    </label>
 	                                                </div>
-						                            <div class="col-1-3 form-field">
+						                            <div class="col-1-3 form-field permis-required">
 	                                                    <h5>Catégories permis<span class="required">*</span></h5>
 	                                                    <label class="control control--checkbox">Permis A
 	                                                        <input type="checkbox"  value="a" name="permis_cat">
@@ -200,7 +201,7 @@ get_header(); ?>
 	                                                        <div class="control__indicator"></div>
 	                                                    </label>
 	                                                </div>
-						                            <div class="col-1-3 form-field suite">
+						                            <div class="col-1-3 form-field permis-required">
 							                            <label class="control control--checkbox">Permis D
 	                                                        <input type="checkbox"  value="d" name="permis_cat">
 	                                                        <div class="control__indicator"></div>
@@ -218,13 +219,13 @@ get_header(); ?>
 					                            <div class="col-1-1">
 						                            <p class="col-1-3 form-field">
 							                            <label for="date_dispo">Date de disponibilité <span class="required">*</span></label>
-                                                        <input type="text" class="datepicker" placeholder="DD/MM/YYYY" readonly name="date_dispo" id="date_dispo">
+                                                        <input type="text" class="datepicker" placeholder="date/mois/année" readonly name="date_dispo" id="date_dispo">
                                                     </p>
 						                            <div class="col-1-3 form-field">
                                                         <h5>Années d’expérience professionnelle <span class="required">*</span></h5>
-                                                        <p class="select">
+                                                        <div class="select">
                                                         <select name="annee_exp">
-                                                            <option value="">Sélectionnez</option>
+                                                            <option value="0">Sélectionnez</option>
                                                             <?php if ( !empty( $anneeExperiences ) && count( $anneeExperiences ) > 0 ):?>
                                                                 <?php foreach ( $anneeExperiences as $term ):?>
                                                                     <option value="<?php echo $term->term_id;?>"><?php echo $term->name;?></option>
@@ -233,9 +234,9 @@ get_header(); ?>
 	                                                        <option value="autre">Autres</option>
                                                         </select>
                                                         <div class="select__arrow"></div>
-                                                        </p>
+                                                        </div>
                                                     </div>
-						                            <p class="col-1-3 form-field">
+						                            <p class="col-1-3 form-field experience-required">
 							                            <label for="autre_exp">Autre <span class="required">*</span></label>
                                                         <input type="text" placeholder="Autre années d'experience" name="autre_exp" id="autre_exp">
                                                     </p>
@@ -249,7 +250,7 @@ get_header(); ?>
                                                     <h5>Expérience professionnelles n°<span>1</span></h5>
                                                 </div>
 					                            <div class="col-1-1 add-element">
-						                            <a href="javascript:;" class="submit_link button--wapasha button--round-l deleteExperience" title="En savoir plus">
+						                            <a href="javascript:;" class="deleteExperience" title="En savoir plus">
                                                         <i class="fa fa-minus"></i>&nbsp;&nbsp;Supprimer
                                                     </a>
 					                            </div>
@@ -260,11 +261,11 @@ get_header(); ?>
 	                                                </p>
 	                                                <p class="col-1-3 form-field">
 		                                                <label for="db_exp_prof">Date de debut <span class="required">*</span></label>
-	                                                    <input type="text" class="datepicker" placeholder="DD/MM/YYYY" readonly name="db_exp_prof" id="db_exp_prof">
+	                                                    <input type="text" class="datepicker" placeholder="date/mois/année" readonly name="db_exp_prof" id="db_exp_prof">
 	                                                </p>
 	                                                <p class="col-1-3 form-field">
 		                                                <label for="df_exp_prof">Date de fin <span class="required">*</span></label>
-	                                                    <input type="text" class="datepicker" placeholder="DD/MM/YYYY" readonly name="df_exp_prof" id="df_exp_prof">
+	                                                    <input type="text" class="datepicker" placeholder="date/mois/année" readonly name="df_exp_prof" id="df_exp_prof">
 	                                                </p>
 												</div>
 												<div class="col-1-1">
@@ -278,9 +279,9 @@ get_header(); ?>
 													</p>
 													<div class="col-1-3 form-field">
                                                         <h5>Localisation </h5>
-                                                        <p class="select">
+                                                        <div class="select">
                                                             <select name="localisation_prof">
-                                                                <option value="">Sélectionnez</option>
+                                                                <option value="0">Sélectionnez</option>
                                                                 <?php if ( !empty( $niveauEtudes ) && count( $niveauEtudes ) > 0 ):?>
                                                                     <?php foreach ( $niveauEtudes as $term ):?>
                                                                         <option value="<?php echo $term->term_id;?>"><?php echo $term->name;?></option>
@@ -288,23 +289,28 @@ get_header(); ?>
                                                                 <?php endif;?>
                                                             </select>
                                                             <div class="select__arrow"></div>
-                                                        </p>
+                                                        </div>
                                                     </div>
 												</div>
 				                            </div>
 				                            <p class="col-1-1 add-element">
-                                                <a href="javascript:;" class="submit_link button--wapasha button--round-l" id="addExperience" title="En savoir plus">
+                                                <a href="javascript:;" id="addExperience" title="En savoir plus">
                                                     <i class="fa fa-plus"></i>&nbsp;&nbsp;Ajouter une autre
                                                 </a>
-					                            <input type="hidden" id="experience-number" value="">
+					                            <input type="hidden" id="experience-number" value=""><input type="hidden" id="experience-number" value="">
                                             </p>
 			                            </div>
 			                            <div class="control-group">
 				                            <h4 class="head-accordion">Formations <span class="required">*</span></h4>
-				                            <div id="formation-repeat" class="content-accordion sample">
-					                            <div class="col-1-1">
+				                            <div id="formation-repeat" class="content-accordion sample formation">
+					                            <div class="col-1-1 number">
 						                            <h5>Formation n°<span>1</span></h5>
 					                            </div>
+					                            <div class="col-1-1 add-element">
+                                                    <a href="javascript:;" class="deleteFormation" title="En savoir plus">
+                                                        <i class="fa fa-minus"></i>&nbsp;&nbsp;Supprimer
+                                                    </a>
+                                                </div>
 												<div class="col-1-1">
 													<p class="col-1-3 form-field">
 														<label for="titre_exp_for">Titre de l'experience <span class="required">*</span></label>
@@ -312,11 +318,11 @@ get_header(); ?>
 	                                                </p>
 	                                                <p class="col-1-3 form-field">
 		                                                <label for="db_exp_for">Date de debut <span class="required">*</span></label>
-	                                                    <input type="text" class="datepicker" placeholder="DD/MM/YYYY" readonly name="db_exp_for" id="db_exp_for">
+	                                                    <input type="text" class="datepicker" placeholder="date/mois/année" readonly name="db_exp_for" id="db_exp_for">
 	                                                </p>
 	                                                <p class="col-1-3 form-field">
 		                                                <label for="df_exp_for">Date de fin <span class="required">*</span></label>
-	                                                    <input type="text" class="datepicker" placeholder="DD/MM/YYYY" readonly name="df_exp_for" id="df_exp_for">
+	                                                    <input type="text" class="datepicker" placeholder="date/mois/année" readonly name="df_exp_for" id="df_exp_for">
 	                                                </p>
 												</div>
 												<div class="col-1-1">
@@ -330,9 +336,9 @@ get_header(); ?>
 													</p>
 													<div class="col-1-3 form-field">
                                                         <h5>Localisation</h5>
-                                                        <p class="select">
+                                                        <div class="select">
                                                             <select name="localisation_for">
-                                                                <option value="">Sélectionnez</option>
+                                                                <option value="0">Sélectionnez</option>
                                                                 <?php if ( !empty( $niveauEtudes ) && count( $niveauEtudes ) > 0 ):?>
                                                                     <?php foreach ( $niveauEtudes as $term ):?>
                                                                         <option value="<?php echo $term->term_id;?>"><?php echo $term->name;?></option>
@@ -340,21 +346,27 @@ get_header(); ?>
                                                                 <?php endif;?>
                                                             </select>
                                                             <div class="select__arrow"></div>
-                                                        </p>
+                                                        </div>
                                                     </div>
 												</div>
 				                            </div>
 				                            <p class="col-1-1 add-element">
-	                                            <a href="javascript:;" id="addFormation" class="submit_link button--wapasha button--round-l" title="En savoir plus">
+	                                            <a href="javascript:;" id="addFormation"  title="En savoir plus">
 		                                            <i class="fa fa-plus"></i>&nbsp;&nbsp;Ajouter une autre
 	                                            </a>
+					                            <input type="hidden" id="formation-number" name="formation-number">
 	                                        </p>
 			                            </div>
 			                            <div class="control-group">
 				                            <h4 class="head-accordion">Projets personnels, professionnels <span class="required">*</span></h4>
-				                            <div id="projet-repeat" class="content-accordion sample">
-					                            <div class="col-1-1">
+				                            <div id="projet-repeat" class="content-accordion projet sample">
+					                            <div class="col-1-1 number">
                                                     <h5>Projets n°<span>1</span></h5>
+                                                </div>
+					                            <div class="col-1-1 add-element">
+                                                    <a href="javascript:;" class="deleteProjet" title="En savoir plus">
+                                                        <i class="fa fa-minus"></i>&nbsp;&nbsp;Supprimer
+                                                    </a>
                                                 </div>
 												<div class="col-1-1">
 													<p class="col-1-3 form-field">
@@ -363,11 +375,11 @@ get_header(); ?>
 	                                                </p>
 	                                                <p class="col-1-3 form-field">
 		                                                <label for="db_exp_pgt">Date de debut <span class="required">*</span></label>
-	                                                    <input type="text" class="datepicker" placeholder="DD/MM/YYYY" readonly name="db_exp_pgt" id="db_exp_pgt">
+	                                                    <input type="text" class="datepicker" placeholder="date/mois/année" readonly name="db_exp_pgt" id="db_exp_pgt">
 	                                                </p>
 	                                                <p class="col-1-3 form-field">
 		                                                <label for="df_exp_pgt">Date de fin <span class="required">*</span></label>
-	                                                    <input type="text" class="datepicker" placeholder="DD/MM/YYYY" readonly name="df_exp_for" id="df_exp_pgt">
+	                                                    <input type="text" class="datepicker" placeholder="date/mois/année" readonly name="df_exp_for" id="df_exp_pgt">
 	                                                </p>
 												</div>
 												<div class="col-1-1">
@@ -381,9 +393,9 @@ get_header(); ?>
 													</p>
 													<div class="col-1-3 form-field">
                                                         <h5>Localisation</h5>
-                                                        <p class="select">
+                                                        <div class="select">
                                                             <select name="localisation_pgt">
-                                                                <option value="">Sélectionnez</option>
+                                                                <option value="0">Sélectionnez</option>
                                                                 <?php if ( !empty( $niveauEtudes ) && count( $niveauEtudes ) > 0 ):?>
                                                                     <?php foreach ( $niveauEtudes as $term ):?>
                                                                         <option value="<?php echo $term->term_id;?>"><?php echo $term->name;?></option>
@@ -391,16 +403,22 @@ get_header(); ?>
                                                                 <?php endif;?>
                                                             </select>
                                                             <div class="select__arrow"></div>
-                                                        </p>
+                                                        </div>
                                                     </div>
 												</div>
 				                            </div>
 				                            <p class="col-1-1 add-element">
-                                                <a href="javascript:;" id="addProjet" class="submit_link button--wapasha button--round-l" title="En savoir plus">
+                                                <a href="javascript:;" id="addProjet" title="En savoir plus">
 	                                                <i class="fa fa-plus"></i>&nbsp;&nbsp;Ajouter une autre
                                                 </a>
+					                            <input type="hidden" name="projet-number" id="projet-number">
                                             </p>
 			                            </div>
+			                            <div class="col-1-1">
+				                            <input type="hidden" name="nonce-inscription" value="<?php echo $nonce;?>">
+                                            <input type="submit" class="submit_link button--wapasha button--round-l" value="Envoyer">
+                                        </div>
+
 		                            </form>
 								</div>
 							</article>

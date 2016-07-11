@@ -30,7 +30,8 @@ global $telmarh_options;
 		<?php endif;?>
 	</footer><!-- #colophon -->
 </div><!-- #page -->
-
+<script src="<?php echo get_template_directory_uri()?>/js/library/jquery.validate.min.js"></script>
+<script src="<?php echo get_template_directory_uri()?>/js/library/validate.methods.js"></script>
 <?php wp_footer(); ?>
 
 </body>

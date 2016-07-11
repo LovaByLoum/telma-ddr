@@ -83,5 +83,33 @@ class CUser {
     return $elts;
   }
 
-}  
+	public static function telmarh_check_email_exist()
+	{
+		$data = 0;
+		if ( isset( $_POST['data_type'] ) && !empty( $_POST['data_type'] ) ) {
+			$email = $_POST['data_type'];
+			$existEmail = email_exists( $email );
+			$data = ( $existEmail ) ? false : true;
+		}
+		echo $data;
+		die();
+	}
+
+	public static function telmarh_check_login_exist(){
+		$data = 0;
+		if ( isset( $_POST['data_type'] ) && !empty( $_POST['data_type'] ) ){
+			$login = $_POST['data_type'];
+			$loginExist = username_exists( $login );
+			$data = ( $loginExist ) ? false : true;
+		}
+		echo $data;
+		die();
+	}
+
+}
+
+add_filter('wp_ajax_telmarh_check_email_exist',array('CUser','telmarh_check_email_exist'));
+add_filter('wp_ajax_nopriv_telmarh_check_email_exist',array('CUser','telmarh_check_email_exist'));
+add_filter('wp_ajax_telmarh_check_login_exist',array('CUser','telmarh_check_login_exist'));
+add_filter('wp_ajax_nopriv_telmarh_check_login_exist',array('CUser','telmarh_check_login_exist'));
 ?>

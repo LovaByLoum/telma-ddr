@@ -398,3 +398,25 @@ function wpse_enqueue_datepicker() {
     wp_enqueue_style( 'jquery-ui' );
 }
 add_action( 'wp_enqueue_scripts', 'wpse_enqueue_datepicker' );
+
+add_action('wp_head','pluginname_ajaxurl');
+function pluginname_ajaxurl() {
+  echo '<script type="text/javascript">
+  var ajaxurl = "' . admin_url('admin-ajax.php') .'"
+  </script>';
+}
+
+/**
+ *  add inscription user
+ */
+function telmarh_inscription_user(){
+	$msg = "";
+	$login  = ( isset( $_POST['login'] ) && !empty( $_POST['login'] ) ) ? $_POST['login'] : "";
+	$password  = ( isset( $_POST['passwrd'] ) && !empty( $_POST['passwrd'] ) ) ? $_POST['passwrd'] : "";
+	if ( isset( $_POST['nonce-inscription'] ) && !empty( $_POST['nonce-inscription'] ) && wp_verify_nonce( $_POST['nonce-inscription'], "inscription-user" ) ){
+
+	} else {
+		$msg .= "Ceci est un robot";
+	}
+	return $msg;
+}
