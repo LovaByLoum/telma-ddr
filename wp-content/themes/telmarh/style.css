@@ -2483,7 +2483,7 @@ input[type="text"]:hover,input[type="Password"]:hover,#active ,textarea:hover, s
 .comment-form .col-1-1.add-element{
     text-align: right;
 }
-.comment-form .sample.formation .deleteFormation, .comment-form .sample.projet .deleteProjet, .comment-form .sample.experience .deleteExperience{
+.comment-form .sample.formation .deleteFormation, .comment-form .sample.projet .deleteProjet, .comment-form .sample.experience .deleteExperience, .comment-form #projet-repeat , .comment-form #addProjet{
     display: none;
 }
 .comment-form .post-required, .comment-form .permis-required, .comment-form .experience-required {

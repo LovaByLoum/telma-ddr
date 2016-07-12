@@ -9,7 +9,7 @@
  * @author : Netapsys
  */
 global $post;
-telmarh_inscription_user();
+$results = telmarh_inscription_user();
 $anneeExperiences       = get_terms( JM_TAXONOMIE_ANNEE_EXPERIENCE, array( 'hide_empty' => false ) );
 $typeContrat            = get_terms( JM_TAXONOMIE_TYPE_CONTRAT, array( 'hide_empty' => false ) );
 $localisation           = get_terms( JM_TAXONOMIE_LOCALISATION,array( 'hide_empty' => false ) );
@@ -185,33 +185,33 @@ get_header(); ?>
 						                            <div class="col-1-3 form-field permis-required">
 	                                                    <h5>Catégories permis<span class="required">*</span></h5>
 	                                                    <label class="control control--checkbox">Permis A
-	                                                        <input type="checkbox"  value="a" name="permis_cat">
+	                                                        <input type="checkbox"  value="a" name="permis_cat[]">
 	                                                        <div class="control__indicator"></div>
 	                                                    </label>
 	                                                    <label class="control control--checkbox">Permis A'
-	                                                        <input type="checkbox"  value="ap" name="permis_cat">
+	                                                        <input type="checkbox"  value="ap" name="permis_cat[]">
 	                                                        <div class="control__indicator"></div>
 	                                                    </label>
 	                                                    <label class="control control--checkbox">Permis B
-	                                                        <input type="checkbox"  value="b" name="permis_cat">
+	                                                        <input type="checkbox"  value="b" name="permis_cat[]">
 	                                                        <div class="control__indicator"></div>
 	                                                    </label>
 	                                                    <label class="control control--checkbox">Permis C
-	                                                        <input type="checkbox"  value="c" name="permis_cat">
+	                                                        <input type="checkbox"  value="c" name="permis_cat[]">
 	                                                        <div class="control__indicator"></div>
 	                                                    </label>
 	                                                </div>
 						                            <div class="col-1-3 form-field permis-required">
 							                            <label class="control control--checkbox">Permis D
-	                                                        <input type="checkbox"  value="d" name="permis_cat">
+	                                                        <input type="checkbox"  value="d" name="permis_cat[]">
 	                                                        <div class="control__indicator"></div>
 	                                                    </label>
 	                                                    <label class="control control--checkbox">Permis E
-	                                                        <input type="checkbox"  value="e" name="permis_cat">
+	                                                        <input type="checkbox"  value="e" name="permis_cat[]">
 	                                                        <div class="control__indicator"></div>
 	                                                    </label>
 	                                                    <label class="control control--checkbox">Permis F
-	                                                        <input type="checkbox"  value="f" name="permis_cat">
+	                                                        <input type="checkbox"  value="f" name="permis_cat[]">
 	                                                        <div class="control__indicator"></div>
 	                                                    </label>
 						                            </div>
@@ -297,7 +297,7 @@ get_header(); ?>
                                                 <a href="javascript:;" id="addExperience" title="En savoir plus">
                                                     <i class="fa fa-plus"></i>&nbsp;&nbsp;Ajouter une autre
                                                 </a>
-					                            <input type="hidden" id="experience-number" value=""><input type="hidden" id="experience-number" value="">
+					                            <input type="hidden" id="experience-number" value="0" name="experience-number">
                                             </p>
 			                            </div>
 			                            <div class="control-group">
@@ -354,11 +354,22 @@ get_header(); ?>
 	                                            <a href="javascript:;" id="addFormation"  title="En savoir plus">
 		                                            <i class="fa fa-plus"></i>&nbsp;&nbsp;Ajouter une autre
 	                                            </a>
-					                            <input type="hidden" id="formation-number" name="formation-number">
+					                            <input type="hidden" id="formation-number" name="formation-number" value="0">
 	                                        </p>
 			                            </div>
 			                            <div class="control-group">
-				                            <h4 class="head-accordion">Projets personnels, professionnels <span class="required">*</span></h4>
+				                            <h4 class="head-accordion">Projets personnels, professionnels </h4>
+				                            <div class="col-1-1 form-field">
+	                                            <h5>Projets</h5>
+	                                            <label class="control control--radio">Non
+	                                                <input type="radio"  value="0" name="projet" checked="checked">
+	                                                <div class="control__indicator"></div>
+	                                            </label>
+	                                            <label class="control control--radio">Oui
+	                                                <input type="radio"  value="1" name="projet">
+	                                                <div class="control__indicator"></div>
+	                                            </label>
+	                                        </div>
 				                            <div id="projet-repeat" class="content-accordion projet sample">
 					                            <div class="col-1-1 number">
                                                     <h5>Projets n°<span>1</span></h5>
@@ -379,7 +390,7 @@ get_header(); ?>
 	                                                </p>
 	                                                <p class="col-1-3 form-field">
 		                                                <label for="df_exp_pgt">Date de fin <span class="required">*</span></label>
-	                                                    <input type="text" class="datepicker" placeholder="date/mois/année" readonly name="df_exp_for" id="df_exp_pgt">
+	                                                    <input type="text" class="datepicker" placeholder="date/mois/année" readonly name="df_exp_pgt" id="df_exp_pgt">
 	                                                </p>
 												</div>
 												<div class="col-1-1">
@@ -411,7 +422,7 @@ get_header(); ?>
                                                 <a href="javascript:;" id="addProjet" title="En savoir plus">
 	                                                <i class="fa fa-plus"></i>&nbsp;&nbsp;Ajouter une autre
                                                 </a>
-					                            <input type="hidden" name="projet-number" id="projet-number">
+					                            <input type="hidden" name="projet-number" id="projet-number" value="0">
                                             </p>
 			                            </div>
 			                            <div class="col-1-1">

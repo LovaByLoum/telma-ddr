@@ -44,23 +44,16 @@ class CUser {
     global $wpdb;
     $uid = intval($uid);
     $user = get_user_by('id',$uid);
-
     $element = new stdClass();
     //traitement des données
     $element->id          =   $user->data->ID;
-    $element->nom         =   $user->data->user_firstname;
-    $element->prenom      =   $user->data->user_lastname;
+    $element->nom         =   get_user_meta( $user->data->ID, "last_name", true );
+    $element->prenom      =   get_user_meta( $user->data->ID, "first_name", true );
     $element->email       =   $user->data->user_email;
     $element->pseudo      =   $user->data->user_login;
     $element->role        =   $user->roles[0];
     $element->register    =   mysql2date( get_option( 'date_format' ), $user->data->user_registered );
 
-    //champ personnalisé
-    $element->civilite    =   get_user_meta($uid, FIELD_USER_CIVILITE, true);
-    $element->annee       =   get_user_meta($uid, FIELD_USER_DATE_NAISSANCE, true);
-    $element->adresse     =   get_user_meta($uid, FIELD_USER_ADRESSE, true);
-    $element->ville       =   get_user_meta($uid, FIELD_USER_VILLE, true);
-    $element->cp          =   get_user_meta($uid, FIELD_USER_CP, true);
 
     //...
 
@@ -104,6 +97,38 @@ class CUser {
 		}
 		echo $data;
 		die();
+	}
+
+	public static function request_user_approval_email( $userId )
+	{
+		$user = self::getById( $userId );
+		$email = $user->email;
+		/* on procède au cryptage de la variable */
+		$hash = crypt( "123456", "activate_user_" . $user->id );
+		$link = site_url() . "?action=confirmation-user&id=" . $user->id . "&hash=" . urlencode( $hash ) . "&appouve=1";
+		$userEmail = $email;
+		$adminEmail = get_option( "admin_email" );
+		$blogname = wp_specialchars_decode( get_option( 'blogname' ), ENT_QUOTES );
+		$subjetAdmin = "Un utilisateur vient d'inscrire sur le site";
+		$messageAdmin = "Bonjour Admin,
+
+	                      Un utilisateur vient de s'inscrire sur " . get_option( "blogname" ) . "
+
+	                      Voici ses informations :
+	                        - <strong>Nom : </strong> {$user->nom}
+	                        - <strong>Prénom : </strong> {$user->prenom}
+	                        - <strong>Email : </strong> {$user->email}
+
+	                      Cordialement,
+	                      ";
+		$sujetUser = "Confirmation de votre compte";
+		$messageUser = "Bonjour {$user->prenom}  {$user->nom} ,
+
+	                      Veuillez clique sur ce lien pour confirmer votre compte :<br /><a href='" . $link . "'>Ici</a> <br />
+
+	                      Cordialement,";
+		telmarh_send_mail( $adminEmail, $subjetAdmin, $messageAdmin, $blogname );
+		telmarh_send_mail( $userEmail, $sujetUser, $messageUser, $blogname );
 	}
 
 }

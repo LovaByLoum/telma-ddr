@@ -189,14 +189,44 @@ jQuery( function( $ ){
     var infosEnPoste = {
         "fonction_user" : {
             required : true,
-            minlenght : 3
+        messages : {
+            required : "La fonction est requise."
+            }
         }
     };
 
     var autreExperience = {
         "autre_exp" : {
             required : true,
-            minlenght : 3
+        messages : {
+            required : "L'autre année d'expérience est requis."
+            }
+        }
+    };
+
+    var permisCat = {
+        "permis_cat" :{
+            required : true,
+            messages : {
+                required : "La catégorie du permis est requise."
+            }
+        }
+    };
+    var projet = {
+        "titre_exp_pgt" : {
+            required : true
+        },
+        "db_exp_pgt" : {
+            required : true
+        },
+        "df_exp_pgt" : {
+            required : true
+        },
+        "organisme_exp_pgt" : {
+            required : true
+        },
+        "desc_exp_pgt" : {
+            required : true
         }
     };
 
@@ -226,13 +256,30 @@ jQuery( function( $ ){
         }
     });
 
+    //projets
+    jQuery( "input[name=projet]" ).change(function(){
+        validatorInscription.resetForm();
+        if ( jQuery(this).val() == 1 ){
+            jQuery( "#projet-repeat" ).show();
+            jQuery( "#addProjet" ).show();
+            addRules( projet );
+        } else {
+            jQuery( "#projet-repeat").hide();
+            jQuery( "#addProjet").hide();
+            removeRules( projet );
+        }
+    });
+
     //permis
     jQuery( "input[name=permis]" ).change(function(){
+        validatorInscription.resetForm();
         var _this = jQuery(this);
         if(_this.val() == 1){
             jQuery( ".permis-required").show();
+            addRules( permisCat );
         } else {
             jQuery( ".permis-required").hide();
+            removeRules( permisCat );
         }
     });
 
@@ -308,21 +355,6 @@ jQuery( function( $ ){
                 required : true
             },
             "desc_exp_for" : {
-                required : true
-            },
-            "titre_exp_pgt" : {
-                required : true
-            },
-            "db_exp_pgt" : {
-                required : true
-            },
-            "df_exp_for" : {
-                required : true
-            },
-            "organisme_exp_pgt" : {
-                required : true
-            },
-            "desc_exp_pgt" : {
                 required : true
             }
         },
@@ -401,7 +433,7 @@ jQuery( function( $ ){
             "db_exp_pgt" : {
                 required : "La date de début est requis."
             },
-            "df_exp_for" : {
+            "df_exp_pgt" : {
                 required : "La date de fin est requis."
             },
             "organisme_exp_pgt" : {

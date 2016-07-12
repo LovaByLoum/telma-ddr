@@ -342,3 +342,329 @@ function telmarh_image_upload($post) {
 		return;    
     wp_enqueue_media();    
 }
+
+/**
+ *  add inscription user
+ *
+ * @return string
+ */
+function telmarh_inscription_user(){
+	$msg = "";
+	if ( isset( $_POST['nonce-inscription'] ) && !empty( $_POST['nonce-inscription'] ) && wp_verify_nonce( $_POST['nonce-inscription'], "inscription-user" ) ){
+		$login  = ( isset( $_POST['login'] ) && !empty( $_POST['login'] ) ) ? strip_tags( $_POST['login'] ) : "";
+		$password  = ( isset( $_POST['passwrd'] ) && !empty( $_POST['passwrd'] ) ) ? strip_tags( $_POST['passwrd'] ) : "";
+		$nom  = ( isset( $_POST['nom'] ) && !empty( $_POST['nom'] ) ) ? strip_tags( $_POST['nom'] ) : "";
+		$prenom  = ( isset( $_POST['prenom'] ) && !empty( $_POST['prenom'] ) ) ? strip_tags( $_POST['prenom'] ) : "";
+		$birthday  = ( isset( $_POST['birthday'] ) && !empty( $_POST['birthday'] ) ) ? strip_tags( $_POST['birthday'] ) : "";
+		$adresse  = ( isset( $_POST['adresse'] ) && !empty( $_POST['adresse'] ) ) ? strip_tags( $_POST['adresse'] ) : "";
+		$numPhone  = ( isset( $_POST['num_phone'] ) && !empty( $_POST['num_phone'] ) ) ? strip_tags( $_POST['num_phone'] ) : "";
+		$email  = ( isset( $_POST['email'] ) && !empty( $_POST['email'] ) ) ? strip_tags( $_POST['email'] ) : "";
+		$niveauEtude  = ( isset( $_POST['niveau_etude'] ) && !empty( $_POST['niveau_etude'] ) ) ? strip_tags( $_POST['niveau_etude'] ) : "";
+		$domaineEtude = ( isset( $_POST['ref_etude'] ) && !empty( $_POST['ref_etude'] ) ) ? strip_tags( $_POST['ref_etude'] ) : "";
+		$mobilite = ( isset( $_POST['region'] ) && !empty( $_POST['region'] ) ) ? strip_tags( $_POST['region'] ) : "";
+		$enPoste = ( isset( $_POST['en_poste'] ) && !empty( $_POST['en_poste'] ) ) ? strip_tags( $_POST['en_poste'] ) : "";
+		$nomEntreprise = ( isset( $_POST['entreprise_user'] ) && !empty( $_POST['entreprise_user'] ) ) ? strip_tags( $_POST['entreprise_user'] ) : "";
+		$fonction = ( isset( $_POST['fonction_user'] ) && !empty( $_POST['fonction_user'] ) ) ? strip_tags( $_POST['fonction_user'] ) : "";
+		$domaineMetier = ( isset( $_POST['dom_metier'] ) && !empty( $_POST['dom_metier'] ) ) ? strip_tags( $_POST['dom_metier'] ) : "";
+		$permis = ( isset( $_POST['permis'] ) && !empty( $_POST['permis'] ) ) ? strip_tags( $_POST['permis'] ) : "";
+		$catPermis = ( isset( $_POST['permis_cat'] ) && !empty( $_POST['permis_cat'] ) ) ? $_POST['permis_cat'] : "";
+		$dateDispo = ( isset( $_POST['date_dispo'] ) && !empty( $_POST['date_dispo'] ) ) ? strip_tags( $_POST['date_dispo'] ) : "";
+		$anneeExperience = ( isset( $_POST['annee_exp'] ) && !empty( $_POST['annee_exp'] ) ) ? strip_tags( $_POST['annee_exp'] ) : "";
+		$autreExperience = ( isset( $_POST['autre_exp'] ) && !empty( $_POST['autre_exp'] ) ) ? strip_tags( $_POST['autre_exp'] ) : "";
+		$titreExpProf = ( isset( $_POST['titre_exp_prof'] ) && !empty( $_POST['titre_exp_prof'] ) ) ? strip_tags( $_POST['titre_exp_prof'] ) : "";
+		$isProjet = ( isset( $_POST['projet'] ) && !empty( $_POST['projet'] ) ) ? strip_tags( $_POST['projet'] ) : "";
+		$dbExpProf = ( isset( $_POST['db_exp_prof'] ) && !empty( $_POST['db_exp_prof'] ) ) ? strip_tags( $_POST['db_exp_prof'] ) : "";
+		$dfExpProf = ( isset( $_POST['df_exp_prof'] ) && !empty( $_POST['df_exp_prof'] ) ) ? strip_tags( $_POST['df_exp_prof'] ) : "";
+		$organismeExpProf = ( isset( $_POST['organisme_exp_prof'] ) && !empty( $_POST['organisme_exp_prof'] ) ) ? strip_tags( $_POST['organisme_exp_prof'] ) : "";
+		$descExpProf = ( isset( $_POST['desc_exp_prof'] ) && !empty( $_POST['desc_exp_prof'] ) ) ? strip_tags( $_POST['desc_exp_prof'] ) : "";
+		$localisationExpProf = ( isset( $_POST['localisation_prof'] ) && !empty( $_POST['localisation_prof'] ) ) ? strip_tags( $_POST['localisation_prof'] ) : "";
+		$titreExpFor = ( isset( $_POST['titre_exp_for'] ) && !empty( $_POST['titre_exp_for'] ) ) ? strip_tags( $_POST['titre_exp_for'] ) : "";
+		$dbExpFor = ( isset( $_POST['db_exp_for'] ) && !empty( $_POST['db_exp_for'] ) ) ? strip_tags( $_POST['db_exp_for'] ) : "";
+		$dfExpFor = ( isset( $_POST['df_exp_for'] ) && !empty( $_POST['df_exp_for'] ) ) ? strip_tags( $_POST['df_exp_for'] ) : "";
+		$organismeExpFor = ( isset( $_POST['organisme_exp_for'] ) && !empty( $_POST['organisme_exp_for'] ) ) ? strip_tags( $_POST['organisme_exp_for'] ) : "";
+		$descExpFor = ( isset( $_POST['desc_exp_for'] ) && !empty( $_POST['desc_exp_for'] ) ) ? strip_tags( $_POST['desc_exp_for'] ) : "";
+		$localisationExpfor = ( isset( $_POST['localisation_for'] ) && !empty( $_POST['localisation_for'] ) ) ? strip_tags( $_POST['localisation_for'] ) : "";
+		$titreExpPgt = ( isset( $_POST['titre_exp_pgt'] ) && !empty( $_POST['titre_exp_pgt'] ) ) ? strip_tags( $_POST['titre_exp_pgt'] ) : "";
+		$dbExpPgt = ( isset( $_POST['db_exp_pgt'] ) && !empty( $_POST['db_exp_pgt'] ) ) ? strip_tags( $_POST['db_exp_pgt'] ) : "";
+		$dfExpPgt = ( isset( $_POST['df_exp_pgt'] ) && !empty( $_POST['df_exp_pgt'] ) ) ? strip_tags( $_POST['df_exp_pgt'] ) : "";
+		$organismeExpPgt = ( isset( $_POST['organisme_exp_pgt'] ) && !empty( $_POST['organisme_exp_pgt'] ) ) ? strip_tags( $_POST['organisme_exp_pgt'] ) : "";
+		$descExpPgt = ( isset( $_POST['desc_exp_pgt'] ) && !empty( $_POST['desc_exp_pgt'] ) ) ? strip_tags( $_POST['desc_exp_pgt'] ) : "";
+		$localisationExpPgt = ( isset( $_POST['localisation_pgt'] ) && !empty( $_POST['localisation_pgt'] ) ) ? strip_tags( $_POST['localisation_pgt'] ) : "";
+		$nationalite = "Malagasy";
+		//test login
+		if ( !empty( $login ) ) $msg .= "<li>Le login est requis.</li>";
+		//test mdp
+		if ( !empty( $password ) ) $msg .="<li>Le mot de passe est requis.</li>";
+		//test nom
+		if ( !empty( $nom ) ) $msg .= "<li>Le nom est requis.</li>";
+		//test prenom
+		if ( !empty( $prenom ) ) $msg .= "<li>Le prénom est requis.</li>";
+		//test date de naissance
+		if ( !empty( $birthday ) ) $msg .= "<li>La date de naissance est requise.</li>";
+		//test adresse
+		if ( !empty( $adresse ) ) $msg .= "<li>L'adresse est requise.</li>";
+		//test N° Téléphone
+		if ( !empty( $numPhone) ) $msg .= "<li>La numéro du téléphone est requise.</li>";
+		//test email
+		if ( !empty( $email) ) $msg .= "<li>L'adresse email est requis.</li>";
+		//test email
+		if ( !empty( $niveauEtude) ) $msg .= "<li>Le niveau d'etude est requis.</li>";
+		//en poste
+		if ( $enPoste == 1 ){
+			if ( !empty( $fonction ) ) $msg .= "<li>La fonction est requise.</li>";
+		}
+		//permis de conduire
+		if ( $permis == 1 ){
+			if ( !empty( $catPermis ) ) $msg .= "<li>La catégorie de permis est requise.</li>";
+		}
+		// date de disponibilite
+		if ( !empty($dateDispo ) ) $msg .= "<li>La date de disponibilité est requise.</li>";
+
+		// année d'experience
+		if ( $anneeExperience == "0" ) $msg .= "<li>L'année d'expérience professionnelle est requise.</li>";
+
+		//années experience autre
+		if ( $anneeExperience == "autre" ) {
+			if ( !empty( $autreExperience ) ) $msg .= "<li>Autre année d'expériznce est requise.</li>";
+		}
+
+		// titre experience professionnelle
+		if ( !empty( $titreExpProf ) ) $msg .= "<li>Le titre de l'expérience professionnelle est requis</li>";
+
+		//titre formation professionnelle
+		if ( !empty( $titreExpFor ) ) $msg .= "<li>Le titre de la formation professionnelle est requis</li>";
+
+		//projet
+		if ( $isProjet == "1" ){
+			if ( !empty( $titreExpPgt ) ) $msg .= "<li>Le titre du projet est requis.</li>";
+		}
+
+		// date de debut experience professionnelle
+		if ( !empty( $dbExpProf ) ) $msg .= "<li>La date de début de l'expérience professionnelle est requise</li>";
+
+		//date de debut formation professionnelle
+		if ( !empty( $dbExpFor ) ) $msg .= "<li>La date de début  du formation professionnelle est requise</li>";
+
+		//projet
+		if ( $isProjet == 1 ){
+			if ( !empty( $dbExpPgt ) ) $msg .= "<li>La date de début  du projet est requise.</li>";
+		}
+
+		// date de fin experience professionnelle
+		if ( !empty( $dfExpProf ) ) $msg .= "<li>La date de fin de l'expérience professionnelle est requise</li>";
+
+		//date de fin formation professionnelle
+		if ( !empty( $dfExpFor ) ) $msg .= "<li>La date de fin  du formation professionnelle est requise</li>";
+
+		//projet
+		if ( $isProjet == 1 ){
+			if ( !empty( $dfExpPgt ) ) $msg .= "<li>La date de fin  du projet est requise.</li>";
+		}
+
+		// organisme experience professionnelle
+		if ( !empty( $organismeExpProf ) ) $msg .= "<li>Organisme ou Entreprise de l'expérience professionnelle est requise</li>";
+
+		//date de fin formation professionnelle
+		if ( !empty( $organismeExpFor ) ) $msg .= "<li>Organisme ou Entreprise de la formation professionnelle est requise</li>";
+
+		//projet
+		if ( $isProjet == "1" ){
+			if ( !empty( $organismeExpPgt ) ) $msg .= "<li>Organisme ou Entreprise  du projet est requise.</li>";
+		}
+
+		// organisme experience professionnelle
+		if ( !empty( $descExpProf ) ) $msg .= "<li>La description de l'expérience professionnelle est requise</li>";
+
+		//date de fin formation professionnelle
+		if ( !empty( $descExpFor ) ) $msg .= "<li>La description de la formation professionnelle est requise</li>";
+
+		//projet
+		if ( $isProjet == "1" ){
+			if ( !empty( $descExpPgt ) ) $msg .= "<li>La description du projet est requise.</li>";
+		}
+		if ( !empty( $msg ) ){
+			$oNiveauEtude                   =  get_term_by( "id", $niveauEtude, JM_TAXONOMIE_NIVEAU_ETUDE );
+			$oDomaineEtude                  =  get_term_by( "id", $domaineEtude, JM_TAXONOMIE_DEPARTEMENT );
+			$nameDomaineEtude               = ( !empty( $oDomaineEtude ) ) ? $oDomaineEtude->name : "";
+			$oDomaineEtudeRecherche         =  get_term_by( "id", $domaineMetier, JM_TAXONOMIE_DEPARTEMENT );
+			$nameDomaineEtudeRecherche      = ( !empty( $oDomaineEtudeRecherche ) ) ? $oDomaineEtudeRecherche->name : "";
+			$oMobilite                      = get_term_by( "id", $mobilite, JM_TAXONOMIE_LOCALISATION );
+			$nameMobilite                   = ( !empty( $oMobilite ) ) ? $oMobilite->name : "";
+			//create user
+			$obj = pw_new_user_approve();
+			remove_action( "user_register", array( $obj , 'add_user_status') );
+			remove_action( "user_register", array( $obj , 'request_admin_approval_email_2') );
+			add_action( "user_register", "CUser::request_user_approval_email");
+			$args = array(
+				"user_login"        => wp_slash( $login ),
+				"user_email"        => wp_slash( $email ),
+				'user_pass'         => $password,
+				'nickname'          => $login,
+				'first_name'        => $nom,
+				'last_name'         => $prenom,
+				'display_name'      => $prenom . '  ' . $nom,
+				'role'              => 'subscriber'
+			);
+			$userId = wp_insert_user( $args );
+			wp_set_password( $password, $userId );
+			//field user
+			add_user_meta( $userId, 'pw_user_status', 'pending' );
+			add_user_meta( $userId, 'nationalite_user', $nationalite );
+			add_user_meta( $userId, 'date_naissance_user', date( "Ymd", strtotime( str_replace('/', '-',  $birthday ) ) ) );
+			add_user_meta( $userId, 'adresse_user', $adresse );
+			add_user_meta( $userId, 'num_phone_user', $numPhone );
+			add_user_meta( $userId, 'niveau_etude_user', $oNiveauEtude->name );
+			add_user_meta( $userId, 'domaine_etude_user', $nameDomaineEtude );
+			add_user_meta( $userId, 'mobilite_user', $nameMobilite );
+			add_user_meta( $userId, 'en_poste_user', $enPoste );
+			if ( $enPoste == "1" ){
+				add_user_meta( $userId, 'entreprise_user', $nomEntreprise );
+				add_user_meta( $userId, 'fonction_user', $fonction );
+			}
+			add_user_meta( $userId, 'domaine_metier_recherche_user', $nameDomaineEtudeRecherche );
+			add_user_meta( $userId, 'permis_de_conduire', $permis );
+			if ( $permis == 1 ){
+				$i = 1;
+				$glue = ', ';
+				$cats = "";
+				foreach ( $catPermis as $cat ){
+					$cats .= $cat;
+					if ( ( count( $catPermis ) - 1 ) == $i  ) { $cats .= " et "; $i++; }
+					if ( count( $catPermis ) > $i )  { $cats .= $glue; $i++; }
+				}
+				add_user_meta( $userId, 'categorie_permis_user', $cats );
+			}
+			add_user_meta( $userId, 'date_disponibilite_user', date( "Ymd", strtotime( $dateDispo ) ) );
+			//experience professionnel
+			$field_key = "annee_exp_prof";
+			$key = get_acf_key( $field_key );
+			$value = array();
+			$value[] = array(
+				"titre_exp_prof"        =>  $titreExpProf,
+				"db_exp_prof"           =>  date( "Ymd" , strtotime( str_replace('/', '-', $dbExpProf ) ) ),
+				"df_exp_prof"           =>  date( "Ymd" , strtotime( str_replace('/', '-', $dfExpProf ) ) ),
+				"description_exp_prof"  =>  $descExpProf,
+				"organisme_exp_prof"    =>  $organismeExpProf,
+				"localisation"          =>  $localisationExpProf
+			);
+			if ( isset( $_POST['experience-number'] ) && intval( $_POST['experience-number'] ) > 0 ){
+				for ( $i = 1; $i <= intval( $_POST['experience-number'] ); $i++  ){
+					$value[] = array(
+						"titre_exp_prof"        =>  strip_tags( $_POST['titre_exp_prof' . $i] ),
+						"db_exp_prof"           =>  date( "Ymd" , strtotime( str_replace('/', '-', $_POST['db_exp_prof' . $i] ) ) ),
+						"df_exp_prof"           =>  date( "Ymd" , strtotime( str_replace('/', '-', $_POST['df_exp_prof' . $i] ) ) ),
+						"description_exp_prof"  =>  strip_tags( $_POST['desc_exp_prof' . $i] ),
+						"organisme_exp_prof"    =>  strip_tags( $_POST['organisme_exp_prof' . $i] ),
+						"localisation"          =>  strip_tags( $_POST['localisation_prof' . $i] )
+					);
+				}
+			}
+
+			update_field( $key, $value, "user_" . $userId );
+
+			//formation
+			$field_key = "formations_user";
+			$key = get_acf_key( $field_key );
+			$value = array();
+			$value[] = array(
+				"titre_exp_for"        => $titreExpFor,
+				"db_exp_for"            => date( "Ymd" , strtotime( str_replace('/', '-', $dbExpFor  ) ) ),
+				"df_exp_for"            => date( "Ymd" , strtotime( str_replace('/', '-', $dfExpFor ) ) ),
+				"description_exp_for"   => $descExpFor,
+				"organisme_exp_for"     => $organismeExpFor,
+				"localisation_exp_for"  => $localisationExpfor
+			);
+			if ( isset( $_POST['formation-number'] ) && intval( $_POST['formation-number'] ) > 0 ){
+				for ( $i = 1; $i <= intval( $_POST['formation-number'] ); $i++  ){
+					$value[] = array(
+						"titre_exp_for"        => strip_tags( $_POST['titre_exp_for' . $i] ),
+						"db_exp_for"            => date( "Ymd" , strtotime( str_replace('/', '-', $_POST['db_exp_for' . $i] ) ) ),
+						"df_exp_for"            => date( "Ymd" , strtotime( str_replace('/', '-', $_POST['df_exp_for' . $i] ) ) ),
+						"description_exp_for"   => strip_tags( $_POST['desc_exp_for' . $i] ),
+						"organisme_exp_for"     => strip_tags( $_POST['organisme_exp_for' . $i] ),
+						"localisation_exp_for"  => strip_tags( $_POST['localisation_for' . $i] )
+					);
+				}
+			}
+
+			update_field( $key, $value, "user_" . $userId );
+
+
+			//projets
+			if (  intval( $isProjet )  ) {
+				$field_key = "projets_personnels_professionnels_user";
+				$key = get_acf_key( $field_key );
+				$value = array();
+				$value[] = array(
+					"titre_exp_pgt"         => $titreExpPgt,
+					"db_exp_pgt"            => date( "Ymd" , strtotime( str_replace('/', '-', $dbExpPgt ) ) ),
+					"df_exp_pgt"            => date( "Ymd" , strtotime( str_replace('/', '-', $dfExpPgt ) ) ),
+					"description_exp_pgt"   => $descExpPgt,
+					"organisme_exp_pgt"     => $organismeExpPgt,
+					"localisation_exp_pgt"  => $localisationExpPgt
+				);
+
+				if ( isset( $_POST['projet-number'] ) && intval( $_POST['projet-number'] ) > 0 ){
+					for ( $i = 1; $i <= intval( $_POST['projet-number'] ); $i++  ){
+						$value[] = array(
+							"titre_exp_pgt"         => strip_tags( $_POST['titre_exp_pgt' . $i] ),
+							"db_exp_pgt"            => date( "Ymd" , strtotime( str_replace('/', '-', $_POST['db_exp_pgt' . $i] ) ) ),
+							"df_exp_pgt"            => date( "Ymd" , strtotime( str_replace('/', '-', $_POST['df_exp_pgt' . $i] ) ) ),
+							"description_exp_pgt"   => strip_tags( $_POST['desc_exp_pgt' . $i] ),
+							"organisme_exp_pgt"     => strip_tags( $_POST['organisme_exp_pgt' . $i] ),
+							"localisation_exp_pgt"  => strip_tags( $_POST['localisation_pgt' . $i] )
+						);
+					}
+				}
+			}
+
+
+			update_field( $key, $value, "user_" . $userId );
+			$error = 0;
+		} else {
+			$error = 1;
+		}
+
+	} else {
+		$error = (isset(  $_POST['nonce-inscription']  ) ) ? 1 : 0;
+		$msg .= (isset(  $_POST['nonce-inscription']  ) ) ? "Ceci est un robot" : "";
+	}
+	return array( 'error' => $error, 'messages' => $msg );
+}
+
+/**
+ * @param $email
+ * @param $subjet_mail
+ * @param $msg
+ * @param $blogname
+ */
+function telmarh_send_mail( $email, $subjet_mail, $msg, $blogname )
+{
+	ob_start();
+	include( "tpl/template.tpl.php" );
+	$output = ob_get_contents();
+	ob_end_clean();
+	$header = 'From: ' . $blogname . ' <noreply@' . $_SERVER['HTTP_HOST'] . '>';
+	add_filter( 'wp_mail_content_type', 'set_html_content_type' );
+	@wp_mail( $email, $subjet_mail, $output, $header );
+}
+
+/**
+ * @return string
+ */
+function set_html_content_type()
+{
+	return 'text/html';
+}
+
+function get_acf_key($field_name) {
+
+    global $wpdb;
+
+    return $wpdb->get_var("
+        SELECT `meta_key`
+        FROM $wpdb->postmeta
+        WHERE `meta_key` LIKE 'field_%' AND `meta_value` LIKE '%$field_name%';
+    ");
+
+}

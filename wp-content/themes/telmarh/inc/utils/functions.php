@@ -406,17 +406,3 @@ function pluginname_ajaxurl() {
   </script>';
 }
 
-/**
- *  add inscription user
- */
-function telmarh_inscription_user(){
-	$msg = "";
-	$login  = ( isset( $_POST['login'] ) && !empty( $_POST['login'] ) ) ? $_POST['login'] : "";
-	$password  = ( isset( $_POST['passwrd'] ) && !empty( $_POST['passwrd'] ) ) ? $_POST['passwrd'] : "";
-	if ( isset( $_POST['nonce-inscription'] ) && !empty( $_POST['nonce-inscription'] ) && wp_verify_nonce( $_POST['nonce-inscription'], "inscription-user" ) ){
-
-	} else {
-		$msg .= "Ceci est un robot";
-	}
-	return $msg;
-}
