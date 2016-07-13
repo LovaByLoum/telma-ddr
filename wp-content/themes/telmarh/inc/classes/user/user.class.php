@@ -109,7 +109,7 @@ class CUser {
 		$userEmail = $email;
 		$adminEmail = get_option( "admin_email" );
 		$blogname = wp_specialchars_decode( get_option( 'blogname' ), ENT_QUOTES );
-		$subjetAdmin = "Un utilisateur vient d'inscrire sur le site";
+		$subjetAdmin = "Un utilisateur vient de s'inscrire sur le site";
 		$messageAdmin = "Bonjour Admin,
 
 	                      Un utilisateur vient de s'inscrire sur " . get_option( "blogname" ) . "
@@ -124,8 +124,10 @@ class CUser {
 		$sujetUser = "Confirmation de votre compte";
 		$messageUser = "Bonjour {$user->prenom}  {$user->nom} ,
 
-	                      Veuillez clique sur ce lien pour confirmer votre compte :<br /><a href='" . $link . "'>Ici</a> <br />
+	                      Merci d'avoir créé un compte sur le site  <a href='" . site_url() . "'>Jobopportunity</a>.
+	                      Veuillez cliquer ce lien pour confirmer votre compte :<br /><a href='" . $link . "'>Ici</a> <br />
 
+						  L'équipe Jobopportunity
 	                      Cordialement,";
 		telmarh_send_mail( $adminEmail, $subjetAdmin, $messageAdmin, $blogname );
 		telmarh_send_mail( $userEmail, $sujetUser, $messageUser, $blogname );

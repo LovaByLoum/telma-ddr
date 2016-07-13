@@ -16,7 +16,8 @@ $localisation           = get_terms( JM_TAXONOMIE_LOCALISATION,array( 'hide_empt
 $criticites             = get_terms( JM_TAXONOMIE_CRITICITE, array( 'hide_empty' => false ) );
 $niveauEtudes           = get_terms( JM_TAXONOMIE_NIVEAU_ETUDE, array( 'hide_empty' => false ) );
 $domainesMetier         = get_terms( JM_TAXONOMIE_DEPARTEMENT, array( 'hide_empty' => false ) );
-$referentielEtude       = get_terms( JM_TAXONOMIE_DEPARTEMENT, array( 'hide_empty' => false ) );
+$referentielEtude       = array( "Informatiques", "Géstion" );
+$listPays               = array( "France","Madagascar", "Nigéria" );
 $entreprises  = JM_Societe::getBy();
 $nonce = wp_create_nonce( "inscription-user" );
 get_header(); ?>
@@ -38,17 +39,25 @@ get_header(); ?>
 									<div class="entry-content">
 	                                    <?php echo apply_filters("the_content", $post->post_content );?>
                                     </div>
+		                            <?php if ( isset( $results['error'] ) && $results['error'] == 1  ) :?>
+			                            <!--error php-->
+			                            <?php if ( isset( $results['messages'] ) && !empty( $results['messages'] ) ):?>
+				                            <ul>
+					                            <?php echo $results['messages'];?>
+				                            </ul>
+										<?php  endif;?>
+			                            <!--error php-->
 		                            <form class="comment-form" id="inscription_user" autocomplete="off" action="<?php echo get_permalink( $post->ID );?>" method="post">
 			                            <div class="control-group">
 				                            <h4 class="head-accordion open">Compte</h4>
 				                            <div class="head-accordion">
 					                            <p class="col-1-3 form-field">
 						                            <label for="login">Login <span class="required">*</span></label>
-                                                    <input type="text" placeholder="Login" name="login" id="login">
+                                                    <input type="text" placeholder="Login" name="login" id="login" value="<?php echo $_POST['login'];?>">
                                                 </p>
                                                 <p class="col-1-3 form-field">
 	                                                <label for="passwrd">Mot de passe <span class="required">*</span></label>
-                                                    <input type="password" placeholder="Mot de passe" name="passwrd" id="passwrd">
+                                                    <input type="password" placeholder="Mot de passe" name="passwrd" id="passwrd" value="<?php echo $_POST['passwrd'];?>">
                                                 </p>
 				                            </div>
 			                            </div>
@@ -58,29 +67,29 @@ get_header(); ?>
 					                            <div class="col-1-1">
 						                            <p class="col-1-3 form-field">
 							                            <label for="nom">Nom <span class="required">*</span></label>
-							                            <input type="text" placeholder="Nom " name="nom" id="nom">
+							                            <input type="text" placeholder="Nom " name="nom" id="nom" value="<?php echo $_POST['nom'];?>">
                                                     </p>
                                                     <p class="col-1-3 form-field">
 	                                                    <label for="prenom">Prénom <span class="required">*</span></label>
-                                                        <input type="text" placeholder="Prénom " id="prenom" name="prenom">
+                                                        <input type="text" placeholder="Prénom " id="prenom" name="prenom" value="<?php echo $_POST['prenom'];?>">
                                                     </p>
                                                     <p class="col-1-3 form-field">
 	                                                    <label for="birthday">Date de naissance <span class="required">*</span></label>
-                                                        <input type="text" class="datepicker" placeholder="date/mois/année" readonly name="birthday" id="birthday">
+                                                        <input type="text" class="datepicker" placeholder="date/mois/année" readonly name="birthday" id="birthday" value="<?php echo $_POST['birthday'];?>">
                                                     </p>
 					                            </div>
 					                            <div class="col-1-1">
 						                            <p class="col-1-3 form-field">
 							                            <label for="adresse">Adresse <span class="required">*</span></label>
-                                                        <input type="text" placeholder="Adresse" name="adresse" id="adresse">
+                                                        <input type="text" placeholder="Adresse" name="adresse" id="adresse" value="<?php echo $_POST['adresse'];?>">
                                                     </p>
                                                     <p class="col-1-3 form-field">
 	                                                    <label for="num_phone">N° de téléphone <span class="required">*</span></label>
-                                                        <input type="text" placeholder="N° de téléphone" id="num_phone" name="num_phone">
+                                                        <input type="text" placeholder="N° de téléphone" id="num_phone" name="num_phone" value="<?php echo $_POST['num_phone'];?>">
                                                     </p>
                                                     <p class="col-1-3 form-field">
 	                                                    <label for="email">Adresse email <span class="required">*</span></label>
-                                                        <input type="text" placeholder="Adresse email" name="email" id="email">
+                                                        <input type="text" placeholder="Adresse email" name="email" id="email" value="<?php echo $_POST['email'];?>">
                                                     </p>
 					                            </div>
 				                            </div>
@@ -96,7 +105,7 @@ get_header(); ?>
                                                             <option value="0">Sélectionnez</option>
                                                             <?php if ( !empty( $niveauEtudes ) && count( $niveauEtudes ) > 0 ):?>
                                                                 <?php foreach ( $niveauEtudes as $term ):?>
-                                                                    <option value="<?php echo $term->term_id;?>"><?php echo $term->name;?></option>
+                                                                    <option value="<?php echo $term->term_id;?>" <?php if ( $_POST['niveau_etude'] == $term->term_id ):?>selected="selected" <?php endif;?> ><?php echo $term->name;?></option>
                                                                 <?php endforeach;?>
                                                             <?php endif;?>
                                                         </select>
@@ -110,7 +119,7 @@ get_header(); ?>
                                                             <option value="0">Sélectionnez</option>
                                                             <?php if ( !empty( $referentielEtude ) && count( $referentielEtude ) > 0 ):?>
                                                                 <?php foreach ( $referentielEtude as $element ):?>
-                                                                    <option value=""></option>
+                                                                    <option value="<?php echo $element;?>" <?php if ( $_POST['ref_etude'] == $element ):?>selected="selected" <?php endif;?>><?php echo $element;?></option>
                                                                 <?php endforeach;?>
                                                             <?php endif;?>
                                                         </select>
@@ -125,7 +134,7 @@ get_header(); ?>
                                                                 <option value="0">Sélectionnez</option>
                                                                 <?php if ( !empty( $localisation ) && count( $localisation ) > 0 ):?>
                                                                     <?php foreach ( $localisation as $term ):?>
-                                                                        <option value="<?php echo $term->term_id;?>"><?php echo $term->name;?></option>
+                                                                        <option value="<?php echo $term->term_id;?>" <?php if ( $_POST['region'] == $term->term_id ):?>selected="selected" <?php endif;?>><?php echo $term->name;?></option>
                                                                     <?php endforeach;?>
                                                                 <?php endif;?>
                                                             </select>
@@ -147,11 +156,11 @@ get_header(); ?>
                                                     </div>
                                                     <p class="col-1-3 form-field post-required">
 	                                                    <label for="entreprise">Nom de l'entreprise</label>
-                                                        <input type="text" name="entreprise_user" placeholder="Nom de l'entreprise" id="entreprise"/>
+                                                        <input type="text" name="entreprise_user" placeholder="Nom de l'entreprise" id="entreprise" value="<?php echo $_POST['entreprise_user'];?>"/>
                                                     </p>
                                                     <p class="col-1-3 form-field post-required">
 	                                                    <label for="fonction">Nom de l'entreprise <span class="required">*</span></label>
-                                                        <input type="text" name="fonction_user" placeholder="Fonction *" id="fonction"/>
+                                                        <input type="text" name="fonction_user" placeholder="Fonction *" id="fonction" value="<?php echo $_POST['fonction_user'];?>"/>
                                                     </p>
 					                            </div>
 												<div class="col-1-1">
@@ -162,7 +171,7 @@ get_header(); ?>
 		                                                        <option value="0">Sélectionnez</option>
 		                                                        <?php if ( !empty( $domainesMetier ) && count( $domainesMetier ) > 0 ):?>
 		                                                            <?php foreach ( $domainesMetier as $term ):?>
-		                                                                <option value="<?php echo $term->term_id;?>"><?php echo $term->name;?></option>
+		                                                                <option value="<?php echo $term->term_id;?>" <?php if ( $_POST['dom_metier'] == $term->term_id ):?>selected="selected" <?php endif;?>><?php echo $term->name;?></option>
 		                                                            <?php endforeach;?>
 		                                                        <?php endif;?>
 		                                                    </select>
@@ -219,7 +228,7 @@ get_header(); ?>
 					                            <div class="col-1-1">
 						                            <p class="col-1-3 form-field">
 							                            <label for="date_dispo">Date de disponibilité <span class="required">*</span></label>
-                                                        <input type="text" class="datepicker" placeholder="date/mois/année" readonly name="date_dispo" id="date_dispo">
+                                                        <input type="text" class="datepicker" placeholder="date/mois/année" readonly name="date_dispo" id="date_dispo" value="<?php echo $_POST['date_dispo'];?>">
                                                     </p>
 						                            <div class="col-1-3 form-field">
                                                         <h5>Années d’expérience professionnelle <span class="required">*</span></h5>
@@ -228,7 +237,7 @@ get_header(); ?>
                                                             <option value="0">Sélectionnez</option>
                                                             <?php if ( !empty( $anneeExperiences ) && count( $anneeExperiences ) > 0 ):?>
                                                                 <?php foreach ( $anneeExperiences as $term ):?>
-                                                                    <option value="<?php echo $term->term_id;?>"><?php echo $term->name;?></option>
+                                                                    <option value="<?php echo $term->term_id;?>" <?php if ( $_POST['annee_exp'] == $term->term_id ):?>selected="selected" <?php endif;?>><?php echo $term->name;?></option>
                                                                 <?php endforeach;?>
                                                             <?php endif;?>
 	                                                        <option value="autre">Autres</option>
@@ -238,7 +247,7 @@ get_header(); ?>
                                                     </div>
 						                            <p class="col-1-3 form-field experience-required">
 							                            <label for="autre_exp">Autre <span class="required">*</span></label>
-                                                        <input type="text" placeholder="Autre années d'experience" name="autre_exp" id="autre_exp">
+                                                        <input type="text" placeholder="Autre années d'experience" name="autre_exp" id="autre_exp" value="<?php echo $_POST['autre_exp'];?>">
                                                     </p>
 					                            </div>
 				                            </div>
@@ -257,34 +266,34 @@ get_header(); ?>
 												<div class="col-1-1">
 													<p class="col-1-3 form-field">
 														<label for="titre_exp_prof">Titre de l'experience <span class="required">*</span></label>
-	                                                    <input type="text" placeholder="Titre de l'experience" name="titre_exp_prof" id="titre_exp_prof">
+	                                                    <input type="text" placeholder="Titre de l'experience" name="titre_exp_prof" id="titre_exp_prof" value="<?php echo $_POST['titre_exp_prof'];?>">
 	                                                </p>
 	                                                <p class="col-1-3 form-field">
 		                                                <label for="db_exp_prof">Date de debut <span class="required">*</span></label>
-	                                                    <input type="text" class="datepicker" placeholder="date/mois/année" readonly name="db_exp_prof" id="db_exp_prof">
+	                                                    <input type="text" class="datepicker" placeholder="date/mois/année" readonly name="db_exp_prof" id="db_exp_prof" value="<?php echo $_POST['db_exp_prof'];?>">
 	                                                </p>
 	                                                <p class="col-1-3 form-field">
 		                                                <label for="df_exp_prof">Date de fin <span class="required">*</span></label>
-	                                                    <input type="text" class="datepicker" placeholder="date/mois/année" readonly name="df_exp_prof" id="df_exp_prof">
+	                                                    <input type="text" class="datepicker" placeholder="date/mois/année" readonly name="df_exp_prof" id="df_exp_prof" value="<?php echo $_POST['df_exp_prof'];?>">
 	                                                </p>
 												</div>
 												<div class="col-1-1">
 													<p class="col-1-3 form-field">
 														<label for="organisme_exp_prof">Organisme / Entreprise <span class="required">*</span></label>
-														<input type="text" placeholder="Organisme / Entreprise " name="organisme_exp_prof" id="organisme_exp_prof">
+														<input type="text" placeholder="Organisme / Entreprise " name="organisme_exp_prof" id="organisme_exp_prof" value="<?php echo $_POST['organisme_exp_prof'];?>">
                                                     </p>
 													<p class="col-1-3 form-field">
 														<label for="desc_exp_prof">Description <span class="required">*</span></label>
-														<textarea name="desc_exp_prof" id="desc_exp_prof" placeholder="Quelques description"></textarea>
+														<textarea name="desc_exp_prof" id="desc_exp_prof" placeholder="Quelques description"><?php echo $_POST['desc_exp_prof'];?></textarea>
 													</p>
 													<div class="col-1-3 form-field">
                                                         <h5>Localisation </h5>
                                                         <div class="select">
                                                             <select name="localisation_prof">
                                                                 <option value="0">Sélectionnez</option>
-                                                                <?php if ( !empty( $niveauEtudes ) && count( $niveauEtudes ) > 0 ):?>
-                                                                    <?php foreach ( $niveauEtudes as $term ):?>
-                                                                        <option value="<?php echo $term->term_id;?>"><?php echo $term->name;?></option>
+                                                                <?php if ( !empty( $listPays ) && count( $listPays ) > 0 ):?>
+                                                                    <?php foreach ( $listPays as $pays ):?>
+                                                                        <option value="<?php echo $pays;?>" <?php if ( $_POST['localisation_prof'] == $pays ):?>selected="selected" <?php endif;?>><?php echo $pays;?></option>
                                                                     <?php endforeach;?>
                                                                 <?php endif;?>
                                                             </select>
@@ -314,34 +323,34 @@ get_header(); ?>
 												<div class="col-1-1">
 													<p class="col-1-3 form-field">
 														<label for="titre_exp_for">Titre de l'experience <span class="required">*</span></label>
-	                                                    <input type="text" placeholder="Titre de l'experience" name="titre_exp_for" id="titre_exp_for">
+	                                                    <input type="text" placeholder="Titre de l'experience" name="titre_exp_for" id="titre_exp_for" value="<?php echo $_POST['titre_exp_for'];?>">
 	                                                </p>
 	                                                <p class="col-1-3 form-field">
 		                                                <label for="db_exp_for">Date de debut <span class="required">*</span></label>
-	                                                    <input type="text" class="datepicker" placeholder="date/mois/année" readonly name="db_exp_for" id="db_exp_for">
+	                                                    <input type="text" class="datepicker" placeholder="date/mois/année" readonly name="db_exp_for" id="db_exp_for" value="<?php echo $_POST['db_exp_for'];?>">
 	                                                </p>
 	                                                <p class="col-1-3 form-field">
 		                                                <label for="df_exp_for">Date de fin <span class="required">*</span></label>
-	                                                    <input type="text" class="datepicker" placeholder="date/mois/année" readonly name="df_exp_for" id="df_exp_for">
+	                                                    <input type="text" class="datepicker" placeholder="date/mois/année" readonly name="df_exp_for" id="df_exp_for" value="<?php echo $_POST['df_exp_for'];?>">
 	                                                </p>
 												</div>
 												<div class="col-1-1">
 													<p class="col-1-3 form-field">
 														<label for="organisme_exp_for">Organisme / Entreprise <span class="required">*</span></label>
-														<input type="text" placeholder="Organisme / Entreprise " name="organisme_exp_for" id="organisme_exp_for">
+														<input type="text" placeholder="Organisme / Entreprise " name="organisme_exp_for" id="organisme_exp_for" value="<?php echo $_POST['organisme_exp_for'];?>">
                                                     </p>
 													<p class="col-1-3 form-field">
 														<label for="desc_exp_for">Description <span class="required">*</span></label>
-														<textarea name="desc_exp_for" id="desc_exp_for" placeholder="Quelques description"></textarea>
+														<textarea name="desc_exp_for" id="desc_exp_for" placeholder="Quelques description"><?php echo $_POST['desc_exp_for'];?></textarea>
 													</p>
 													<div class="col-1-3 form-field">
                                                         <h5>Localisation</h5>
                                                         <div class="select">
                                                             <select name="localisation_for">
                                                                 <option value="0">Sélectionnez</option>
-                                                                <?php if ( !empty( $niveauEtudes ) && count( $niveauEtudes ) > 0 ):?>
-                                                                    <?php foreach ( $niveauEtudes as $term ):?>
-                                                                        <option value="<?php echo $term->term_id;?>"><?php echo $term->name;?></option>
+                                                                <?php if ( !empty( $listPays ) && count( $listPays ) > 0 ):?>
+                                                                    <?php foreach ( $listPays as $pays ):?>
+                                                                        <option value="<?php echo $pays;?>" <?php if ( $_POST['localisation_for'] == $pays ):?>selected="selected" <?php endif;?>><?php echo $pays;?></option>
                                                                     <?php endforeach;?>
                                                                 <?php endif;?>
                                                             </select>
@@ -382,34 +391,34 @@ get_header(); ?>
 												<div class="col-1-1">
 													<p class="col-1-3 form-field">
 														<label for="titre_exp_pgt">Titre de l'experience <span class="required">*</span></label>
-	                                                    <input type="text" placeholder="Titre de l'experience" name="titre_exp_pgt" id="titre_exp_pgt">
+	                                                    <input type="text" placeholder="Titre de l'experience" name="titre_exp_pgt" id="titre_exp_pgt" value="<?php echo $_POST['titre_exp_pgt'];?>">
 	                                                </p>
 	                                                <p class="col-1-3 form-field">
 		                                                <label for="db_exp_pgt">Date de debut <span class="required">*</span></label>
-	                                                    <input type="text" class="datepicker" placeholder="date/mois/année" readonly name="db_exp_pgt" id="db_exp_pgt">
+	                                                    <input type="text" class="datepicker" placeholder="date/mois/année" readonly name="db_exp_pgt" id="db_exp_pgt" value="<?php echo $_POST['db_exp_pgt'];?>">
 	                                                </p>
 	                                                <p class="col-1-3 form-field">
 		                                                <label for="df_exp_pgt">Date de fin <span class="required">*</span></label>
-	                                                    <input type="text" class="datepicker" placeholder="date/mois/année" readonly name="df_exp_pgt" id="df_exp_pgt">
+	                                                    <input type="text" class="datepicker" placeholder="date/mois/année" readonly name="df_exp_pgt" id="df_exp_pgt" value="<?php echo $_POST['df_exp_pgt'];?>">
 	                                                </p>
 												</div>
 												<div class="col-1-1">
 													<p class="col-1-3 form-field">
 														<label for="organisme_exp_pgt">Organisme / Entreprise <span class="required">*</span></label>
-														<input type="text" placeholder="Organisme / Entreprise " name="organisme_exp_pgt" id="organisme_exp_pgt">
+														<input type="text" placeholder="Organisme / Entreprise " name="organisme_exp_pgt" id="organisme_exp_pgt" value="<?php echo $_POST['organisme_exp_pgt'];?>">
                                                     </p>
 													<p class="col-1-3 form-field">
 														<label for="desc_exp_pgt">Description <span class="required">*</span></label>
-														<textarea name="desc_exp_pgt" id="desc_exp_pgt" placeholder="Quelques description"></textarea>
+														<textarea name="desc_exp_pgt" id="desc_exp_pgt" placeholder="Quelques description"><?php echo $_POST['desc_exp_pgt'];?></textarea>
 													</p>
 													<div class="col-1-3 form-field">
                                                         <h5>Localisation</h5>
                                                         <div class="select">
                                                             <select name="localisation_pgt">
                                                                 <option value="0">Sélectionnez</option>
-                                                                <?php if ( !empty( $niveauEtudes ) && count( $niveauEtudes ) > 0 ):?>
-                                                                    <?php foreach ( $niveauEtudes as $term ):?>
-                                                                        <option value="<?php echo $term->term_id;?>"><?php echo $term->name;?></option>
+                                                                <?php if ( !empty( $listPays ) && count( $listPays ) > 0 ):?>
+                                                                    <?php foreach ( $listPays as $pays ):?>
+                                                                        <option value="<?php echo $pays;?>" <?php if ( $_POST['localisation_pgt'] == $pays ):?>selected="selected" <?php endif;?>><?php echo $pays;?></option>
                                                                     <?php endforeach;?>
                                                                 <?php endif;?>
                                                             </select>
@@ -425,12 +434,19 @@ get_header(); ?>
 					                            <input type="hidden" name="projet-number" id="projet-number" value="0">
                                             </p>
 			                            </div>
-			                            <div class="col-1-1">
+			                            <div class="col-1-1 submit-form">
 				                            <input type="hidden" name="nonce-inscription" value="<?php echo $nonce;?>">
                                             <input type="submit" class="submit_link button--wapasha button--round-l" value="Envoyer">
                                         </div>
 
 		                            </form>
+		                            <?php else : ?>
+		                                <div class="col-1-1">
+			                                <p>Merci d'avoir créé un compte sur le site  <a href='<?php echo site_url();?>'>Jobopportunity</a>.<br>
+				                                Veuillez consulter votre email pour la confirmation de votre inscription.
+			                                </p>
+		                                </div>
+									<?php endif;?>
 								</div>
 							</article>
                         </main>

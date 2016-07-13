@@ -626,7 +626,7 @@ function telmarh_inscription_user(){
 		}
 
 	} else {
-		$error = (isset(  $_POST['nonce-inscription']  ) ) ? 1 : 0;
+		$error =  1;
 		$msg .= (isset(  $_POST['nonce-inscription']  ) ) ? "Ceci est un robot" : "";
 	}
 	return array( 'error' => $error, 'messages' => $msg );

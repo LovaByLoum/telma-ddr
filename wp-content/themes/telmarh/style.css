@@ -2495,3 +2495,8 @@ input[type="text"]:hover,input[type="Password"]:hover,#active ,textarea:hover, s
 .comment-form .form-field label > span.required, .comment-form .head-accordion > span.required,.comment-form .form-field h5 > span.required, .comment-form .form-field span.error   {
     color :#FF0000;
 }
+
+.comment-form .submit-form{
+    margin: 20px 0;
+    text-align: right;
+}
