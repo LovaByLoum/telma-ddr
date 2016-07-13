@@ -16,7 +16,7 @@ $localisation           = get_terms( JM_TAXONOMIE_LOCALISATION,array( 'hide_empt
 $criticites             = get_terms( JM_TAXONOMIE_CRITICITE, array( 'hide_empty' => false ) );
 $niveauEtudes           = get_terms( JM_TAXONOMIE_NIVEAU_ETUDE, array( 'hide_empty' => false ) );
 $domainesMetier         = get_terms( JM_TAXONOMIE_DEPARTEMENT, array( 'hide_empty' => false ) );
-$referentielEtude = array();
+$referentielEtude       = get_terms( JM_TAXONOMIE_DEPARTEMENT, array( 'hide_empty' => false ) );
 $entreprises  = JM_Societe::getBy();
 $nonce = wp_create_nonce( "inscription-user" );
 get_header(); ?>
@@ -185,33 +185,33 @@ get_header(); ?>
 						                            <div class="col-1-3 form-field permis-required">
 	                                                    <h5>Catégories permis<span class="required">*</span></h5>
 	                                                    <label class="control control--checkbox">Permis A
-	                                                        <input type="checkbox"  value="a" name="permis_cat[]">
+	                                                        <input type="checkbox"  value="A" name="permis_cat[]">
 	                                                        <div class="control__indicator"></div>
 	                                                    </label>
 	                                                    <label class="control control--checkbox">Permis A'
-	                                                        <input type="checkbox"  value="ap" name="permis_cat[]">
+	                                                        <input type="checkbox"  value="A'" name="permis_cat[]">
 	                                                        <div class="control__indicator"></div>
 	                                                    </label>
 	                                                    <label class="control control--checkbox">Permis B
-	                                                        <input type="checkbox"  value="b" name="permis_cat[]">
+	                                                        <input type="checkbox"  value="B" name="permis_cat[]">
 	                                                        <div class="control__indicator"></div>
 	                                                    </label>
 	                                                    <label class="control control--checkbox">Permis C
-	                                                        <input type="checkbox"  value="c" name="permis_cat[]">
+	                                                        <input type="checkbox"  value="C" name="permis_cat[]">
 	                                                        <div class="control__indicator"></div>
 	                                                    </label>
 	                                                </div>
 						                            <div class="col-1-3 form-field permis-required">
 							                            <label class="control control--checkbox">Permis D
-	                                                        <input type="checkbox"  value="d" name="permis_cat[]">
+	                                                        <input type="checkbox"  value="D" name="permis_cat[]">
 	                                                        <div class="control__indicator"></div>
 	                                                    </label>
 	                                                    <label class="control control--checkbox">Permis E
-	                                                        <input type="checkbox"  value="e" name="permis_cat[]">
+	                                                        <input type="checkbox"  value="E" name="permis_cat[]">
 	                                                        <div class="control__indicator"></div>
 	                                                    </label>
 	                                                    <label class="control control--checkbox">Permis F
-	                                                        <input type="checkbox"  value="f" name="permis_cat[]">
+	                                                        <input type="checkbox"  value="F" name="permis_cat[]">
 	                                                        <div class="control__indicator"></div>
 	                                                    </label>
 						                            </div>

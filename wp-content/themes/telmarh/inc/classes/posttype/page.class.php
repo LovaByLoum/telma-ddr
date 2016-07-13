@@ -219,6 +219,29 @@ class CPage
 	    }
 	    return array($w, $h, $sp);
 	}
+
+	public static function action(){
+		if (
+			isset( $_REQUEST['action'] )
+			&& isset( $_REQUEST['id'] )
+			&& isset( $_REQUEST['hash'] )
+			&& isset( $_REQUEST['appouve'] )
+			&& 'confirmation-user' == $_REQUEST['action']
+		) {
+			if ( hash_equals( urldecode( $_REQUEST['hash'] ), crypt( '123456','activate_user_' . $_REQUEST['id']) )
+                && $_REQUEST['appouve'] == "1" ) {
+				update_user_meta( $_REQUEST['id'],"pw_user_status" , "approved" );
+	            $user = new WP_User($_REQUEST['id']);
+	            $userData = $user->data;
+				CUser::programmatic_login( $userData->user_login );
+			} else {
+				wp_die( 'Vous n\'avez pas le droit d\'accèder à ce lien. Veuillez contactez l\'administrateur.' );
+			}
+
+		}
+	}
 }
+
+add_action( "init", "CPage::action" );
 
 ?>

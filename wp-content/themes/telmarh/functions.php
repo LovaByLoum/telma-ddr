@@ -534,7 +534,7 @@ function telmarh_inscription_user(){
 				}
 				add_user_meta( $userId, 'categorie_permis_user', $cats );
 			}
-			add_user_meta( $userId, 'date_disponibilite_user', date( "Ymd", strtotime( $dateDispo ) ) );
+			add_user_meta( $userId, 'date_disponibilite_user', date( "Ymd", strtotime( str_replace('/', '-', $dateDispo ) ) ) );
 			//experience professionnel
 			$field_key = "annee_exp_prof";
 			$key = get_acf_key( $field_key );

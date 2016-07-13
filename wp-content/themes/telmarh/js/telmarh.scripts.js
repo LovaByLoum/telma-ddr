@@ -134,38 +134,33 @@ jQuery( function( $ ){
 
     });
 
-    jQuery('input.datepicker').datepicker({
-        dateFormat : 'dd/mm/yy',
-        altField : '',
-        altFormat :  'dd/mm/yy',
-        changeYear: true,
-        yearRange: '-100:+100',
-        changeMonth: true,
-        showButtonPanel : true,
-        firstDay: 1,
-        showButtonPanel: true,
-        closeText: 'Fermer'
-    });
+    addDatePickerInClass("datepicker");
     //add experience
     jQuery( "#addExperience").click(function (){
+        jQuery( ".datepicker" ).datepicker( "destroy");
         validatorInscription.resetForm();
         addElementRepeater( "experience", "experience-number" );
         var index = jQuery("#experience-number").val();
         addRulesElementRepeater( index, "exp_prof" );
+        addDatePickerInClass("datepicker");
     });
 
     //add formation
     jQuery( "#addFormation" ).click(function(){
+        jQuery( ".datepicker" ).datepicker( "destroy");
         addElementRepeater( "formation", "formation-number" );
         var index = jQuery("#formation-number").val();
         addRulesElementRepeater( index, "exp_for" );
+        addDatePickerInClass("datepicker");
     });
 
     //add projet
     jQuery( "#addProjet" ).click(function(){
+        jQuery( ".datepicker" ).datepicker( "destroy");
         addElementRepeater( "projet", "projet-number" );
         var index = jQuery("#projet-number").val();
-        addRulesElementRepeater( index, "exp_pgt" )
+        addRulesElementRepeater( index, "exp_pgt" );
+        addDatePickerInClass("datepicker");
     });
 
     //delete experience
@@ -572,4 +567,19 @@ function deleteElementRepeater( element, classContainer, idNumberElement ){
         _number = jQuery('.' + classContainer).length-1;
         jQuery( "#" + idNumberElement ).val(_number);
     }
+}
+
+function addDatePickerInClass( elementClass ){
+    jQuery('input.' + elementClass).datepicker({
+        dateFormat : 'dd/mm/yy',
+        altField : '',
+        altFormat :  'dd/mm/yy',
+        changeYear: true,
+        yearRange: '-100:+100',
+        changeMonth: true,
+        showButtonPanel : true,
+        firstDay: 1,
+        showButtonPanel: true,
+        closeText: 'Fermer'
+    });
 }
