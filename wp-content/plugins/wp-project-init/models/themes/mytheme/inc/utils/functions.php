@@ -146,28 +146,6 @@ if(!function_exists('wp_limite_word')){
   }
 }
 
-if(!function_exists('wp_get_post_by_template')){
-  /**
-   * fonction qui recherche les posts par son template
-   */
-  function wp_get_post_by_template($meta_value, $dir_page_template = 'page-templates/'){
-    $args = array(
-      'post_type' => 'page',
-      'meta_key' => '_wp_page_template',
-      'meta_value' => $dir_page_template . $meta_value,
-      'suppress_filters' => FALSE,
-      'numberposts' => 1,
-      //'fields' => 'ids'
-    );
-    $posts = get_posts($args);
-    if(isset($posts) && !empty($posts)){
-      return $posts[0];
-    }else{
-      global $post;
-      return $post;
-    }
-  }
-}
 
 if (!function_exists('get_post_by_slug')) :
   //fonction recherchant les post par slug

@@ -668,3 +668,19 @@ function get_acf_key($field_name) {
     ");
 
 }
+add_action('wp_logout','telmarh_go_home');
+function telmarh_go_home(){
+  wp_redirect( home_url() );
+  exit();
+}
+
+add_filter( "login_form_bottom", "telmarh_login_form_bottom", 10, 1 );
+function telmarh_login_form_bottom( $arg ) {
+	$pageInscription = wp_get_post_by_template( "page-inscription.php", "" );
+	$html = '<p class="login-submit link-inscript">
+				<a href="' . get_permalink( $pageInscription->ID ) . '" class="submit_link button--wapasha button--round-l" title="Inscription">
+					Inscription
+				</a>
+			 </p>';
+	return $html;
+}

@@ -2081,7 +2081,7 @@ aside.homepage p.separator span{
 #home-hero .telmarh-hero-content-container a.submit_link:focus, a.submit_link:focus{
     outline: none;
 }
-.submit_link.button--wapasha {
+.submit_link.button--wapasha, .inset .button-primary {
     background-color: #28b1ff;
     color: #fff;
 	/*-webkit-transition: background-color 0.3s, color 0.3s;*/
@@ -2091,7 +2091,7 @@ aside.homepage p.separator span{
 	background: #28b1ff;
 	color: #fff;
 }
-.button--wapasha::before {
+.button--wapasha::before, .inset .button-primary::before {
 	content: '';
 	position: absolute;
 	top: 0;
@@ -2112,7 +2112,7 @@ aside.homepage p.separator span{
 .button--wapasha.button--inverted::before {
 	border-color: #28b1ff;
 }
-.submit_link.button--wapasha:hover {
+.submit_link.button--wapasha:hover, .inset .button-primary:hover {
 	background-color: #fff;
 	color: #28b1ff!important;
 }
@@ -2120,7 +2120,7 @@ aside.homepage p.separator span{
 	background-color: #37474f;
 	color: #7986cb;
 }
-.button--wapasha:hover::before {
+.button--wapasha:hover::before, .inset .button-primary:hover::before {
 	-webkit-transform: scale3d(1, 1, 1);
 	transform: scale3d(1, 1, 1);
 	opacity: 1;
@@ -2291,23 +2291,31 @@ body.page-template-offres #page .site-content  .content-accordion .control{
 }
 .inset {
 	position:relative;
-	background: #28b1ff;
+	background: #fff;
 	padding: 2em 2em;
 	border-radius: 0.3em;
 	-webkit-border-radius: 0.3em;
 	-o-border-radius: 0.3em;
 	-moz-border-radius: 0.3em;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    background-color: #fff;
+    -webkit-box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.13);
+    -moz-box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.13);
+    box-shadow: 0 0 23px 9px rgba(0, 0, 0, 0.13);
 }
 .inset:before{
 	content: '';
 	width: 0;
 	height: 0;
-	border: 20px solid #28b1ff;
+	border: 20px solid #fff;
 	border-top: 0 solid rgba(0, 0, 0, 0)!important;
 	border-right: 13px solid rgba(0, 0, 0, 0)!important;
 	border-left: 13px solid rgba(0, 0, 0, 0);
 	left: 77.1%;
-    top: -4.4%;
+    top: -4%;
 	position: absolute;
 }
 form#loginform p label {
@@ -2499,4 +2507,24 @@ input[type="text"]:hover,input[type="Password"]:hover,#active ,textarea:hover, s
 .comment-form .submit-form{
     margin: 20px 0;
     text-align: right;
+}
+.inset .button-primary {
+    width: 260px;
+}
+.inset .login-submit.link-inscript a {
+     font-size: 13px;
+     line-height: 1;
+     padding: 1em 2em;
+     text-shadow: none;
+     text-transform: uppercase;
+     font-weight: 600;
+     letter-spacing: 0.2em;
+     text-align: center;
+     min-width: 260px;
+ }
+.inset .login-submit.link-inscript a::before {
+    border: 1px solid #28b1ff;
+}
+#fm-form-1 .col-1-2 input[type=text] {
+    width: 100%;
 }
