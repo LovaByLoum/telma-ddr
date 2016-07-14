@@ -68,6 +68,8 @@ define ( "PROFESSION_TESTIMONIAL", "profession_testimonial" );
 
 // id taxonomy
 define ( "ID_TAXONOMIE_CRITICITE_URGENT", 38 );
+define ( "ID_TAXONOMIE_INFORMATIQUE", 24 );
+define ( "ID_TAXONOMIE_LINGUISTIQUES", 29 );
 
 //slug menu
 define ( "SLUG_MENU_FOOTER", 'footer' );

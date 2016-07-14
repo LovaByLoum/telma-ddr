@@ -440,6 +440,20 @@ jQuery( function( $ ){
         }
     });
 
+    if ( jQuery("#fm-form-1").length > 0 ){
+        //remove checked radio if not checked parent
+        jQuery( "input.parent").change(function(){
+            var _this = jQuery(this);
+            var classChild = _this.data("class");
+            if ( !_this.is(":checked") ){
+                jQuery('.' + classChild).removeAttr('checked');
+            }
+        });
+
+
+        jQuery(".inputfile").change(showPreviewImage_click);
+    }
+
 });
 
 jQuery.validator.addMethod("mailExistUser", function( value, element, arg ){
@@ -582,4 +596,22 @@ function addDatePickerInClass( elementClass ){
         showButtonPanel: true,
         closeText: 'Fermer'
     });
+}
+function showPreviewImage_click(event) {
+    var files = this.files;
+    var $input = jQuery(this);
+    var i = 0,
+        len = files.length;
+    (function readFile(n) {
+        var reader = new FileReader();
+        var f = files[n];
+        reader.onload = function (e) {
+            $input.next().next().html(f.name);
+
+            // if `n` is less than `len` ,
+            // call `readFile` with incremented `n` as parameter
+            if (n < len - 1) readFile(++n)
+        };
+        reader.readAsDataURL(f); // `f` : current `File` object
+    }(i)); // `i` : `n` within immediately invoked function expression
 }

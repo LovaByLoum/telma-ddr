@@ -12,7 +12,8 @@ $society = ( intval( $idEntreprise ) > 0 ) ? JM_Societe::getById( $idEntreprise 
 $postOffes = ( is_object( wp_get_post_by_template( "offres.php" ) ) ) ?  wp_get_post_by_template( "offres.php" ) : $post;
 $competenceRequis = COffre::getCompetenceRequis( $post->ID );
 $pageInscription = wp_get_post_by_template( "page-inscription.php", "" );
-$linkPostule = ( is_user_logged_in() ) ? get_permalink( $offre->id ) : get_permalink( $pageInscription->ID );
+$pagePostuleOffre = wp_get_post_by_template( "page-postuler-offre.php", "" );
+$linkPostule = ( is_user_logged_in() ) ? get_permalink( $pagePostuleOffre->ID ) : get_permalink( $pageInscription->ID );
 get_header(); ?>
 	<section id="page-entry-content" class="single-offer">
 	    <div class="grid grid-pad">
@@ -105,7 +106,7 @@ get_header(); ?>
 		                            <?php endif;?>
 		                            <!--description qualité requise-->
 		                            <p class="animate-plus animate-init single-offre-left" data-animations="fadeInUp" data-animation-delay="1.5s">
-                                        <a href="<?php echo $linkPostule;?>" class="submit_link button--wapasha button--round-l">
+                                        <a href="<?php echo $linkPostule ."?po=" . $post->ID;?>" class="submit_link button--wapasha button--round-l" id="postule-offre">
                                             <span>
                                                 Postuler à cette offre
                                             </span>

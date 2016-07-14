@@ -2528,3 +2528,58 @@ input[type="text"]:hover,input[type="Password"]:hover,#active ,textarea:hover, s
 #fm-form-1 .col-1-2 input[type=text] {
     width: 100%;
 }
+#fm-form-1 .col-1-1 .list-parent {
+    list-style: none;
+    margin: 0;
+    -webkit-padding-start: 0px;
+}
+#fm-form-1 .col-1-1 .list-parent .list-children {
+    margin:0;
+}
+#fm-form-1 .col-1-1 .list-parent .list-children > li {
+    display: inline-block;
+    margin-left: 10px;
+}
+#fm-form-1 .inputfile{
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+.inputfile + label {
+    max-width: 80%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
+    color: #fff;
+    display: inline-block;
+    overflow: hidden;
+    background-color: #28b1ff;
+    font-size: 13px;
+    line-height: 1;
+    padding: 1em 2em;
+    text-shadow: none;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    box-shadow: none;
+    border-radius: 100px;
+    /* 10px 20px */
+}
+.inputfile + label:hover{
+    background-color: #fff;
+    color: #28b1ff!important;
+    border: 1px solid;
+}
+.inputfile + label:hover::before {
+	-webkit-transform: scale3d(1, 1, 1);
+	transform: scale3d(1, 1, 1);
+	opacity: 1;
+}
+
+.inputfile + label * {
+    /* pointer-events: none; */
+    /* in case of FastClick lib use */
+}

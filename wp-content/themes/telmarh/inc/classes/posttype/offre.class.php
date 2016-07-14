@@ -283,9 +283,13 @@ class COffre
 	        }
 	    }
 
-		public static function getCompetenceRequis( $pid ){
+		public static function getCompetenceRequis( $pid = 0 , $taxonomie = JM_TAXONOMIE_COMPETENCE_REQUISES  ){
 			$hierarchyTerm = array();
-			$competenceRequis = wp_get_post_terms( $pid, JM_TAXONOMIE_COMPETENCE_REQUISES );
+			if ( $pid ){
+				$competenceRequis = wp_get_post_terms( $pid, $taxonomie );
+			} else {
+				$competenceRequis = get_terms( $taxonomie, array( 'hide_empty' => false ) );
+			}
 			if ( !empty( $competenceRequis ) && count( $competenceRequis ) ){
 				foreach ( $competenceRequis as $key => $term ){
 					if ( $term->parent == 0 ) {
