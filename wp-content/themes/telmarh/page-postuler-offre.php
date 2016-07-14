@@ -10,12 +10,12 @@
  */
 global $post;
 $offreId = ( isset( $_GET['po'] ) && !empty( $_GET['po'] ) ) ? $_GET['po'] : 0;
-$offre = COffre::getById( $offreId );
+$offre = JM_Offre::getById( $offreId );
 $pageInscription = wp_get_post_by_template( "page-inscription.php", "" );
 if ( !is_user_logged_in()  ){
 	wp_redirect( get_permalink( $pageInscription->ID ) );
 }
-if ( !empty( $offre ) || !isset( $_GET['po'] ) ){
+if ( empty( $offre ) || !isset( $_GET['po'] ) ){
 	wp_die( 'Vous n\'avez pas le droit d\'accèder à ce lien. Veuillez contactez l\'administrateur.' );
 }
 
@@ -31,7 +31,8 @@ get_header(); ?>
 								<?php if ( isset( $post->post_title ) && !empty( $post->post_title ) ):?>
 									<header class="entry-header">
 			                            <h1 class="entry-title">
-				                            <?php echo $post->post_title;?>
+				                            Postulé à l'offre
+				                            <a href="<?php echo get_permalink( $offre->id );?>">&quot;<?php echo $offre->titre;?>&quot;</a>
 			                            </h1>
 			                            <!-- .entry-meta -->
 		                            </header>

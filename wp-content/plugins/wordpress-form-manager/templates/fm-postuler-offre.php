@@ -68,45 +68,48 @@ $termInformatiques = get_term_children( ID_TAXONOMIE_INFORMATIQUE, JM_TAXONOMIE_
 $termCompetence = COffre::getCompetenceRequis(0);
 $termLinguistiques = $termCompetence[ID_TAXONOMIE_LINGUISTIQUES];
 $user = CUser::getById( $current_user->ID );
+$postID = ( isset($_GET['po'] ) && !empty( $_GET['po'] ) ) ? $_GET['po'] : 0;
 ?>
 <form enctype="multipart/form-data" method="post" action="<?php echo $fm_display->currentFormOptions['action'];?>" name="fm-form-<?php echo $fm_display->currentFormInfo['ID'];?>" id="fm-form-<?php echo $fm_display->currentFormInfo['ID'];?>" autocomplete="on" novalidate="novalidate">
 	<div class="control-group">
         <h4 class="head-accordion open">Informations personnelles</h4>
         <div class="head-accordion">
-            <p class="col-1-2 form-field">
+            <div class="col-1-2 form-field">
 				<label for="nom">Nom<span class="required">*</span></label>
                 <input type="text" placeholder="Nom" name="<?php echo $form_items['name_postule'];?>" id="nom" value="<?php echo $user->nom;?>" readonly>
-            </p>
-            <p class="col-1-2 form-field">
+            </div>
+            <div class="col-1-2 form-field">
                 <label for="prenom">Prénom <span class="required">*</span></label>
                 <input type="text" placeholder="Prénom" name="<?php echo $form_items['prenom_postule'];?>" id="prenom" value="<?php echo $user->prenom;?>" readonly>
-            </p>
-	        <p class="col-1-2 form-field">
+            </div>
+	        <div class="col-1-2 form-field">
 		        <label for="email">Adresse email <span class="required">*</span></label>
                 <input type="text" placeholder="Email" name="<?php echo $form_items['email_postule'];?>" id="email" value="<?php echo $user->email;?>" readonly>
-	        </p>
+	        </div>
         </div>
     </div>
 	<div class="control-group">
 		<div class="col-1-1 form-field">
-		    <p class="col-1-2">
-			<h5 class="head-accordion open">Comptetences Informatiques</h5>
-				<?php if ( !empty( $termInformatiques ) && count( $termInformatiques ) > 0 ) :?>
+		    <div class="col-1-2">
+			<h5 class="head-accordion open">Compétences Informatiques<span class="required">*</span></h5>
+				<?php if ( !empty( $termInformatiques ) && count( $termInformatiques ) > 0 ) :
+						$i=1?>
 					<?php foreach ( $termInformatiques as $termId ):
 							$term = get_term_by( "id", $termId, JM_TAXONOMIE_COMPETENCE_REQUISES );?>
-		                <label class="control control--checkbox"><?php echo $term->name;?>
+		                <label class="control control--checkbox <?php if ( count( $termInformatiques ) == $i ):?>latest<?php endif;?>"><?php echo $term->name;?>
 							<input type="checkbox"  value="<?php echo $termId;?>" name="compInfo[]">
 							<div class="control__indicator"></div>
 						</label>
-					<?php endforeach;?>
+					<?php   $i++;
+							endforeach;?>
 				<?php endif;?>
-		    </p>
+		    </div>
 		</div>
 	</div>
 	<div class="control-group">
         <div class="col-1-1 form-field">
 	        <div class="col-1-2">
-	        <h5 class="head-accordion open">Comptetences linguistiques</h5>
+	        <h5 class="head-accordion open">Compétences linguistiques<span class="required">*</span></h5>
 	        <?php if ( !empty( $termLinguistiques ) && count( $termLinguistiques ) > 0 ):?>
 		        <ul class="list-parent">
 		        <?php foreach ( $termLinguistiques[0] as $termParent ) :?>
@@ -146,18 +149,32 @@ $user = CUser::getById( $current_user->ID );
 			<div class="col-1-2">
 				<input type="hidden" name="MAX_FILE_SIZE" value="10240000">
 				<input name="<?php echo $form_items['cv_postule'];?>" id="fileCv" type="file" class="inputfile">
-				<label for="fileCv" class="input-file-trigger"><span>Votre CV&hellip; *</span></label>
-				<span class="file-return"></span>
+				<label for="fileCv" class="input-file-trigger"><span>Mon CV *</span></label>
+				<span class="file-return cv"></span>
 			</div>
 			<div class="col-1-2">
 				<input type="hidden" name="MAX_FILE_SIZE" value="10240000">
 				<input name="<?php echo $form_items['lm_postule'];?>" id="fileLm" type="file" class="inputfile">
-				<label for="fileLm" class="input-file-trigger"><span>Lettre de motivation&hellip; *</span></label>
-				<span class="file-return"></span>
+				<label for="fileLm" class="input-file-trigger"><span>Ma lettre de motivation *</span></label>
+				<span class="file-return lm"></span>
 
 			</div>
 		</div>
 	</div>
+	<div class="control-group">
+		<div class="col-1-1 form-field">
+			<h5 class="head-accordion open">Autres documents </h5>
+			<div class="col-1-2">
+				<input type="hidden" name="MAX_FILE_SIZE" value="10240000">
+				<input name="<?php echo $form_items['autre_postule'];?>" id="fileAutre" type="file" class="inputfile">
+				<label for="fileAutre" class="input-file-trigger"><span>Autres documents</span></label>
+				<span class="file-return"></span>
+			</div>
+		</div>
+	</div>
 	<input type="submit" name="fm_form_submit" id="fm_form_submit" class="submit" value="Valider" >
-<?php echo fm_form_hidden(); ?>
+	<input type="hidden" name="fm_nonce" id="fm_nonce" value="<?php echo wp_create_nonce('fm-nonce');?>" />
+	<input type="hidden" name="fm_id" id="fm_id" value="<?php echo $fm_display->currentFormInfo['ID'];?>" />
+	<input type="hidden" name="fm_uniq_id" id="fm_uniq_id" value="fm-<?php echo uniqid();?>" />
+	<input type="hidden" name="fm_parent_post_id" id="fm_parent_post_id" value="<?php echo $postID;?>" />
 <?php echo fm_form_end(); ?>

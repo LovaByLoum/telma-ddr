@@ -2586,3 +2586,7 @@ input[type="text"]:hover,input[type="Password"]:hover,#active ,textarea:hover, s
     /* pointer-events: none; */
     /* in case of FastClick lib use */
 }
+#fm-form-1 .control-group span.error{
+    display: block;
+    color: #FF0000;
+}

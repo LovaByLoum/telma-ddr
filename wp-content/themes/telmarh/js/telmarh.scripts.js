@@ -282,6 +282,14 @@ jQuery( function( $ ){
         ignore : "",
         errorElement : "span",
         errorClass : "error",
+        invalidHandler:  function(e){
+              setTimeout(
+                function(){
+                  scrollto(jQuery('input.error,textarea.error').eq(0).parent());
+                },
+                500
+              );
+            },
         rules :{
             "login" : {
                 required : true,
@@ -447,9 +455,71 @@ jQuery( function( $ ){
             var classChild = _this.data("class");
             if ( !_this.is(":checked") ){
                 jQuery('.' + classChild).removeAttr('checked');
+            } else {
+                jQuery('.' + classChild).eq(0).attr('checked', true);
             }
         });
 
+        var validatorPostule = jQuery( "#fm-form-1" ).validate({
+            ignore : "",
+            errorElement : "span",
+            errorClass : "error",
+            invalidHandler:  function(e){
+              setTimeout(
+                function(){
+                  scrollto(jQuery('input.error,textarea.error').eq(0).parent());
+                },
+                500
+              );
+            },
+            errorPlacement: function(error, element) {
+                if(element.attr("name") == "compInfo[]" ) {
+                    error.insertAfter(jQuery(".latest"));
+                } else if( element.attr("name") == "langue[]" ){
+                    error.insertAfter(jQuery(".list-parent"));
+                } else if( element.attr("name") == "file-57864af3474de" ){
+                    error.insertAfter(jQuery(".cv"));
+                } else if( element.attr("name") == "file-57864b273eb37" ){
+                    error.insertAfter(jQuery(".lm"));
+                } else {
+                    error.insertAfter(element);
+                }
+            },
+            rules : {
+                "compInfo[]" : {
+                    required : true
+                },
+                "langue[]" : {
+                    required : true
+                },
+                "textarea-57864acd93cf8" : {
+                    required : true
+                },
+                "file-57864af3474de" : {
+                    required : true
+                },
+                "file-57864b273eb37" : {
+                    required : true
+                }
+            },
+            messages : {
+                "compInfo[]" : {
+                    required : "La compétence informatiques est requise."
+                },
+                "langue[]" : {
+                    required : "La compétence linguistiques est requise."
+                },
+                "textarea-57864acd93cf8" : {
+                    required : "Le message est requis."
+                },
+                "file-57864af3474de" : {
+                    required : "Le CV est requis."
+                },
+                "file-57864b273eb37" : {
+                    required : "La lettre de motivation est requis."
+                }
+            }
+        });
 
         jQuery(".inputfile").change(showPreviewImage_click);
     }
