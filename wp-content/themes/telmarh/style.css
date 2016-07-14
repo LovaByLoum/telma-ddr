@@ -2427,6 +2427,9 @@ input[type="text"]:hover,input[type="Password"]:hover,#active{
     font-weight: 600;
     letter-spacing: 0.1em;
 }
+.menu-footer > li a.submit_link{
+    font-weight: 300;
+}
 .menu-footer li li > a {
     color: #fff;
     font-size: 14px;

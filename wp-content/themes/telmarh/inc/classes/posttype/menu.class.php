@@ -124,8 +124,8 @@ class CMenu
 			$html .= '  <div class="site-info">
   							' . apply_filters("the_content", $telmarh_options['description_footer']) . '
   							<p class="contact">
-  							    <a href="#" class="submit_link button--wapasha button--round-l " title="Nous contactez">
-                                    Nous contactez
+  							    <a href="#" class="submit_link button--wapasha button--round-l " title="Nous contacter">
+                                    Nous contacter
                                 </a>
   							</p>
   						</div>';
