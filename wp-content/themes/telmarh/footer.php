@@ -13,7 +13,7 @@ global $telmarh_options;
 
 	<footer id="colophon" class="site-footer" role="contentinfo">
     	<div class="grid grid-pad">
-		    <div class="col-1-1 tri-clear">
+		    <div class="col-1-1">
                 <div class="menu-footer">
                     <?php echo CMenu::renderMenuFooter();?>
                 </div><!-- .site-info -->
