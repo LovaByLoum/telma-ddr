@@ -459,6 +459,7 @@ jQuery( function( $ ){
                 jQuery('.' + classChild).eq(0).attr('checked', true);
             }
         });
+        //active parent is checked box
 
         var validatorPostule = jQuery( "#fm-form-1" ).validate({
             ignore : "",
@@ -497,10 +498,11 @@ jQuery( function( $ ){
                 },
                 "file-57864af3474de" : {
                     required : true,
-                    accept : "pdf"
+                    extension : "pdf|rtf|docx|doc"
                 },
                 "file-57864b273eb37" : {
-                    required : true
+                    required : true,
+                    extension : "pdf|rtf|docx|doc"
                 }
             },
             messages : {
@@ -515,9 +517,11 @@ jQuery( function( $ ){
                 },
                 "file-57864af3474de" : {
                     required : "Le CV est requis.",
+                    extension : "Le format n'est pas valide( seulement pdf,rtf,docx et doc )."
                 },
                 "file-57864b273eb37" : {
-                    required : "La lettre de motivation est requis."
+                    required : "La lettre de motivation est requis.",
+                    extension : "Le format n'est pas valide( seulement pdf,rtf,docx et doc )."
                 }
             }
         });

@@ -65,11 +65,11 @@ function outputTableHead($cols){
 			<th class="manage-column column-cb check-column"><input type="checkbox" id="cb-col-top" onchange="fm_dataCBColChange()"/></th>
 			<?php if(!$fm_MEMBERS_EXISTS || current_user_can('form_manager_data_summary')): ?>
 				<th class="fm-data-actions-col">&nbsp</th>
-			<?php endif?>
+			<?php endif; ?>
 	<?php foreach($cols as $col): ?>
 		<?php if( fm_userCanViewCol($col) ):?>
 			<?php if(!isset($col['attributes'])): ?>
-				<th><?php echo $col['item']['label'];?></th>
+				<th><?php echo $col['value'];?></th>
 			<?php else: ?>
 				<th <?php foreach($col['attributes'] as $att=>$val): echo $att.'="'.$val.'" '; endforeach; ?>><?php echo $col['value'];?></th>
 			<?php endif; ?>
@@ -93,7 +93,7 @@ function outputTableFoot($cols){
 	<?php foreach($cols as $col): ?>
 		<?php if( fm_userCanViewCol($col) ):?>
 			<?php if(!isset($col['attributes'])): ?>
-				<th><?php echo $col['item']['label'];?></th>
+				<th><?php echo $col['value'];?></th>
 			<?php else: ?>
 				<th <?php foreach($col['attributes'] as $att=>$val): echo $att.'="'.$val.'" '; endforeach; ?>><?php echo $col['value'];?></th>
 			<?php endif; ?>

@@ -8,14 +8,15 @@
  * @since telmarh 1.0
  * @author : Netapsys
  */
-global $post,$fmdb;;
-$offreId = ( isset( $_GET['po'] ) && !empty( $_GET['po'] ) ) ? $_GET['po'] : 0;
+global $post,$fmdb, $fm_globals;
+$offreId = ( isset( $_GET['po'] ) && !empty( $_GET['po'] ) ) ? $_GET['po'] : ( ( isset( $fm_globals['post_data'] ) && !empty( $fm_globals['post_data'] ) ) ? $fm_globals['post_data'][FORMULAIRE_POSTULER_OFFRE]['parent_post_id'] :  0 );
 $offre = JM_Offre::getById( $offreId );
 $pageInscription = wp_get_post_by_template( "page-inscription.php", "" );
 if ( !is_user_logged_in()  ){
 	wp_redirect( get_permalink( $pageInscription->ID ) );
 }
-if ( !isset( $_POST ) && empty( $_POST ) ) {
+
+if ( empty( $_POST ) ) {
 	if ( empty( $offre ) || !isset( $_GET['po'] ) ){
 		wp_die( 'Vous n\'avez pas le droit d\'accèder à ce lien. Veuillez contactez l\'administrateur.' );
 	}

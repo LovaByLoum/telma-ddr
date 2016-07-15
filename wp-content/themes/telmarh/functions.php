@@ -685,8 +685,8 @@ function telmarh_login_form_bottom( $arg ) {
 	return $html;
 }
 
-add_filter( "custom_validate_php_form", "telmarh_custom_validate_php_form", 10, 2 );
-function telmarh_custom_validate_php_form( $postDataSend, $postData ){
+add_filter( "custom_validate_php_form", "telmarh_custom_validate_php_form", 10, 1 );
+function telmarh_custom_validate_php_form( $postDataSend ){
 	$error = 0;
 	if ( isset( $postDataSend['fm_id'] ) && !empty( $postDataSend['fm_id'] )  ){
 		if ( $postDataSend['fm_id'] == FORMULAIRE_POSTULER_OFFRE ){
@@ -722,15 +722,15 @@ function telmarh_custom_validate_php_form( $postDataSend, $postData ){
 					if ( ( count( $postDataSend['compInfo'] ) - 1 ) == $i  ) { $competenceInfo .= " et "; $i++; }
 					if ( count( $postDataSend['compInfo'] ) > $i )  { $competenceInfo .= $glue; $i++; }
 				}
-				$postData[CPage::fm_get_unique_name_by_nickname( "informatique_postule",$postDataSend['fm_id'] )] = $competenceInfo;
+				$_POST[CPage::fm_get_unique_name_by_nickname( "informatique_postule",$postDataSend['fm_id'] )] = $competenceInfo;
 				$slugLangues = array( "anglais", "francais", "malagasy" );
 				foreach ( $slugLangues as $langue ){
 					if ( isset( $postDataSend[$langue] ) && !empty( $postDataSend[$langue] ) ){
 						$term = get_term_by( "id", $postDataSend[$langue], JM_TAXONOMIE_COMPETENCE_REQUISES );
-						$postData[CPage::fm_get_unique_name_by_nickname( $langue . "_postule",$postDataSend['fm_id'] )] = $term->name;
+						$_POST[CPage::fm_get_unique_name_by_nickname( $langue . "_postule",$postDataSend['fm_id'] )] = $term->name;
 					}
 				}
-				return $postData;
+				return $error;
 			}
 		}
 	}

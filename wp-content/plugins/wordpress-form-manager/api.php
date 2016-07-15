@@ -290,7 +290,7 @@ function fm_doFormBySlug($formSlug, $options = array()){
 function fm_processPost( $formInfo ) {
 	global $current_user;
 	global $fmdb;
-
+	
 	// check if the form is restricted to registered users	
 	if(isset($formInfo['behaviors']['reg_user_only']) && $current_user->user_login == "")
 		return false;
@@ -309,9 +309,14 @@ function fm_processPost( $formInfo ) {
 		if( ! wp_verify_nonce($_POST['fm_nonce'],'fm-nonce') )
 			return false;	
 	}
-
+			
 	get_currentuserinfo();
 	$overwrite = (isset($formInfo['behaviors']['display_summ']) || isset($formInfo['behaviors']['overwrite']));
+	//custom filter by Netapsys
+	$post = apply_filters( "custom_validate_php_form", $_POST);
+		if ( $post == 1 )
+			return false;
+
 	// this will do the processing and the database insertion.
 	$postData = $fmdb->processPost(
 		$formInfo['ID'],
@@ -322,11 +327,9 @@ function fm_processPost( $formInfo ) {
 			),
 		$overwrite
 		);
-   //custom filter by Netapsys
-   	$postData = apply_filters( "custom_validate_php_form", $_POST, $postData );
-   	if ( $postData == 1 )
-   		return false;
-		
+
+
+
 	//strip slashes so the action hooks get nice data
 	foreach($formInfo['items'] as $item){			
 		$postData[$item['unique_name']] = stripslashes($postData[$item['unique_name']]);
@@ -338,9 +341,11 @@ function fm_processPost( $formInfo ) {
 		if($item['nickname'] != "")
 			$niceData[$item['nickname']] = $postData[$item['unique_name']];
 	}
+	
 	// if there was a failure, we need to stop
 	if($fmdb->processFailed())
 		return $postData;
+		
 	do_action( 'fm_form_submission', array('form' => $formInfo, 'data' => $niceData) );
 	
 	return $postData;
@@ -392,9 +397,6 @@ function fm_helper_displayAck( $formInfo, $postData ){
 	
 	$ack = fm_getSubmissionDataShortcoded($formInfo['submitted_msg'], $formInfo, $postData);
 	$output = '<p>'.$ack.'</p>';
-
-  //customized by Netapsys
-  $output = apply_filters("fm_helper_displayAck_information", $output, $formInfo );
 	
 	//show the automatic redirection script
 	if($formInfo['auto_redirect'] == 1){
