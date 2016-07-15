@@ -310,11 +310,8 @@ function fm_processPost( $formInfo ) {
 			return false;	
 	}
 
-	// process the post
-	
-	get_currentuserinfo();		
+	get_currentuserinfo();
 	$overwrite = (isset($formInfo['behaviors']['display_summ']) || isset($formInfo['behaviors']['overwrite']));
-	
 	// this will do the processing and the database insertion.
 	$postData = $fmdb->processPost(
 		$formInfo['ID'],
@@ -325,11 +322,10 @@ function fm_processPost( $formInfo ) {
 			),
 		$overwrite
 		);
-  //custom filter by Netapsys
-	$postData = apply_filters( "custom_validate_php_form", $_POST, $postData );
-
-	if ( $postData == 1 )
-		return false;
+   //custom filter by Netapsys
+   	$postData = apply_filters( "custom_validate_php_form", $_POST, $postData );
+   	if ( $postData == 1 )
+   		return false;
 		
 	//strip slashes so the action hooks get nice data
 	foreach($formInfo['items'] as $item){			
@@ -342,11 +338,9 @@ function fm_processPost( $formInfo ) {
 		if($item['nickname'] != "")
 			$niceData[$item['nickname']] = $postData[$item['unique_name']];
 	}
-	
 	// if there was a failure, we need to stop
 	if($fmdb->processFailed())
 		return $postData;
-
 	do_action( 'fm_form_submission', array('form' => $formInfo, 'data' => $niceData) );
 	
 	return $postData;

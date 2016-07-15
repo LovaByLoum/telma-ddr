@@ -436,6 +436,7 @@ function fm_handleFormSubmission(){
 		$fm_globals['form_info'][$_POST['fm_id']] = $formInfo;
 		
 		$postData = fm_processPost( $formInfo );
+
 		if($postData !== false)
 			$fm_globals['post_data'][$_POST['fm_id']] = $postData;
 	}

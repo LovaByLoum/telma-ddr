@@ -684,3 +684,54 @@ function telmarh_login_form_bottom( $arg ) {
 			 </p>';
 	return $html;
 }
+
+add_filter( "custom_validate_php_form", "telmarh_custom_validate_php_form", 10, 2 );
+function telmarh_custom_validate_php_form( $postDataSend, $postData ){
+	$error = 0;
+	if ( isset( $postDataSend['fm_id'] ) && !empty( $postDataSend['fm_id'] )  ){
+		if ( $postDataSend['fm_id'] == FORMULAIRE_POSTULER_OFFRE ){
+			//validation competences Informatique
+			if ( isset( $_POST['compInfo'] ) && empty( $_POST['compInfo'] ) ){
+				$error = 1;
+			}
+
+			//validation competence liguistique
+			if ( isset( $_POST['langue'] ) && empty( $_POST['langue'] ) ){
+				$error = 1;
+			}
+
+			//cv
+			if ( isset( $postDataSend['file-57864af3474de'] ) && empty( $postDataSend['file-57864af3474de'] ) ) {
+				$error = 1;
+			}
+			//lm
+			if ( isset( $postDataSend['file-57864b273eb37'] ) && empty( $postDataSend['file-57864b273eb37'] ) ){
+				$error = 1;
+			}
+
+			if ( $error ) {
+				return false;
+			} else {
+				//competence infos
+				$competenceInfo = "";
+				$i = 1;
+				$glue = ", ";
+				foreach ( $postDataSend['compInfo'] as $termId ){
+					$term = get_term_by( "id", $termId, JM_TAXONOMIE_COMPETENCE_REQUISES );
+					$competenceInfo .= $term->name;
+					if ( ( count( $postDataSend['compInfo'] ) - 1 ) == $i  ) { $competenceInfo .= " et "; $i++; }
+					if ( count( $postDataSend['compInfo'] ) > $i )  { $competenceInfo .= $glue; $i++; }
+				}
+				$postData[CPage::fm_get_unique_name_by_nickname( "informatique_postule",$postDataSend['fm_id'] )] = $competenceInfo;
+				$slugLangues = array( "anglais", "francais", "malagasy" );
+				foreach ( $slugLangues as $langue ){
+					if ( isset( $postDataSend[$langue] ) && !empty( $postDataSend[$langue] ) ){
+						$term = get_term_by( "id", $postDataSend[$langue], JM_TAXONOMIE_COMPETENCE_REQUISES );
+						$postData[CPage::fm_get_unique_name_by_nickname( $langue . "_postule",$postDataSend['fm_id'] )] = $term->name;
+					}
+				}
+				return $postData;
+			}
+		}
+	}
+}

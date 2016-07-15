@@ -174,6 +174,7 @@ $postID = ( isset($_GET['po'] ) && !empty( $_GET['po'] ) ) ? $_GET['po'] : 0;
 	</div>
 	<input type="submit" name="fm_form_submit" id="fm_form_submit" class="submit" value="Valider" >
 	<input type="hidden" name="fm_nonce" id="fm_nonce" value="<?php echo wp_create_nonce('fm-nonce');?>" />
+	<input type="hidden" name="fm_nonce" id="fm_nonce" value="<?php echo wp_create_nonce('fm-nonce');?>" />
 	<input type="hidden" name="fm_id" id="fm_id" value="<?php echo $fm_display->currentFormInfo['ID'];?>" />
 	<input type="hidden" name="fm_uniq_id" id="fm_uniq_id" value="fm-<?php echo uniqid();?>" />
 	<input type="hidden" name="fm_parent_post_id" id="fm_parent_post_id" value="<?php echo $postID;?>" />

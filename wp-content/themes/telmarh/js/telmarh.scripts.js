@@ -496,7 +496,8 @@ jQuery( function( $ ){
                     required : true
                 },
                 "file-57864af3474de" : {
-                    required : true
+                    required : true,
+                    accept : "pdf"
                 },
                 "file-57864b273eb37" : {
                     required : true
@@ -513,7 +514,7 @@ jQuery( function( $ ){
                     required : "Le message est requis."
                 },
                 "file-57864af3474de" : {
-                    required : "Le CV est requis."
+                    required : "Le CV est requis.",
                 },
                 "file-57864b273eb37" : {
                     required : "La lettre de motivation est requis."

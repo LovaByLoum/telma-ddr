@@ -240,6 +240,11 @@ class CPage
 
 		}
 	}
+	public static function fm_get_unique_name_by_nickname($nickname,$formid){
+	global $wpdb;
+
+	return $wpdb->get_var($wpdb->prepare("SELECT unique_name FROM {$wpdb->prefix}fm_items WHERE ID = %d AND nickname = %s",intval($formid),$nickname));
+	}
 }
 
 add_action( "init", "CPage::action" );
