@@ -80,6 +80,8 @@ $table_prefix  = 'wp_';
 define('WP_DEBUG', false);
 
 define('DISABLE_WP_CRON', true);
+if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https')
+	$_SERVER['HTTPS'] = 'on';
 
 /* C'est tout, ne touchez pas à ce qui suit ! Bon blogging ! */
 
