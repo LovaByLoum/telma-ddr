@@ -63,6 +63,9 @@ jQuery( function( $ ){
             }, 1000);
         }
     });
+    jQuery(".order-criteria").change(function(){
+        jQuery(".recherche").val("");
+    });
 
     jQuery(".pagination-button-offre_pagination_box").live( 'click',function(){
         if ( jQuery( window ).width() < 867 ){
