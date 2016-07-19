@@ -249,7 +249,7 @@ get_header('home'); ?>
 														<?php endif;?>
 
 														<?php if ( isset( $offre->type_contrat ) && !empty( $offre->type_contrat ) ):?>
-															<p><strong>Type de cotrat  : </strong><em><?php echo $offre->type_contrat;?></em></p>
+															<p><strong>Type de contrat  : </strong><em><?php echo $offre->type_contrat;?></em></p>
 														<?php endif;?>
 														<a href="<?php echo get_permalink( $offre->id );?>" class="submit_link button--wapasha button--round-l" title="En savoir plus">
 															En savoir plus
