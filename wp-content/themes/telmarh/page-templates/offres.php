@@ -78,6 +78,9 @@ get_header(); ?>
 //                                            $object->addSorting('order-criteria');
                                             //add class to retrieve filter element
                                             $object->addFilter('recherche');
+                                            if ( !empty( $recherche ) ) {
+                                                $object->setOnLoadFilter( array( 'recherche' => $recherche ) );
+                                            }
                                             $object->addFilter('order-criteria');
                                             $object->addFilter('entreprise');
                                             $object->addFilter(JM_TAXONOMIE_CRITICITE);
