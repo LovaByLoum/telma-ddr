@@ -239,7 +239,7 @@ class COffre
 
 	public static function getOffreUrgent(){
 		$data = array();
-		$offres = JM_Offre::getBy( array( 'taxonomy' => JM_TAXONOMIE_CRITICITE, 'id' => ID_TAXONOMIE_CRITICITE_URGENT, null, 3 ) );
+		$offres = JM_Offre::getBy( array( 'taxonomy' => JM_TAXONOMIE_CRITICITE, 'id' => ID_TAXONOMIE_CRITICITE_URGENT), null, 3 );
 		if ( !empty( $offres ) && count( $offres ) > 0 ){
 			foreach ( $offres as $offre ){
 				$elt = new stdClass();
