@@ -234,6 +234,8 @@ class WP_Pagination_Loading
 				$class = apply_filters('wppl_item_class_' . $this->clean_id, 'item', $key);
 				$html .= $this->displayItem(intval($id), $class);
 			}
+		} else {
+			$html .= apply_filters('wppl_message_erreur_' . $this->pagination_load_object->clean_id, '<p>Aucun résultat ne correspond à ce(s) critère(s)<p>');
 		}
 
 		return array(
@@ -491,7 +493,6 @@ class WP_Pagination_Loading
 			'fields'      => 'ids'
 		);
 		$posts = get_posts($args);
-
 		return $posts;
 	}
 
