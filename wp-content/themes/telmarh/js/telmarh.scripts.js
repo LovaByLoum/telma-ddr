@@ -506,6 +506,9 @@ jQuery( function( $ ){
                 "file-57864b273eb37" : {
                     required : true,
                     extension : "pdf|rtf|docx|doc"
+                },
+                "file-5787a3939c837" :{
+                    extension : "pdf|rtf|docx|doc"
                 }
             },
             messages : {
@@ -524,6 +527,9 @@ jQuery( function( $ ){
                 },
                 "file-57864b273eb37" : {
                     required : "La lettre de motivation est requis.",
+                    extension : "Le format n'est pas valide( seulement pdf,rtf,docx et doc )."
+                },
+                "file-5787a3939c837" : {
                     extension : "Le format n'est pas valide( seulement pdf,rtf,docx et doc )."
                 }
             }

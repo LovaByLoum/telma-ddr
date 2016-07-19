@@ -53,5 +53,16 @@ $telmarh_options_settings = array(
             'type'        => 'url',
             'description' => 'Url',
         ),
-    )
+    ),
+	'Formulaire postulation offre' => array(
+		'subjet_mail_gt' => array(
+			'label'         => 'Sujet email GT',
+			'type'          => 'text',
+		),
+		'content_mail_gt' => array(
+			'label'         => 'Contenu du message',
+			'type'          => 'textarea',
+			'description'   => 'token : <ul><li><strong>lien vers l\'offre :</strong>[offre:url]</li><li><strong>la soumission :</strong>[soubmission:data]</li><li><strong>le site url :</strong>[site:name]</li></ul>'
+		)
+	)
 );

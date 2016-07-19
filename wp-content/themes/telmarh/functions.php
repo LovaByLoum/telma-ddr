@@ -735,3 +735,57 @@ function telmarh_custom_validate_php_form( $postDataSend ){
 		}
 	}
 }
+
+remove_action( 'fm_form_submission', 'fm_extraSubmissionActions' );
+add_action( 'fm_form_submission', 'telmarh_custom_mail_send' );
+function telmarh_custom_mail_send( $info ){
+	include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+    global $wpdb;
+    CUser::installTable();
+	$postData = $info['data'];
+	$uniqueId = $postData['unique_id'];
+	$offreId = $postData['parent_post_id'];
+	$element = get_post_meta( $offreId, JM_META_SOCIETE_OFFRE_RELATION, true );
+	$args = array(
+		"meta_value"    => $element,
+		"meta_key"      => JM_META_USER_SOCIETE_FILTER_ID,
+		"fields"        => "all"
+	);
+	$users = get_users( $args );
+	if ( !empty( $users ) && count( $users ) > 0 && is_plugin_active( "new-user-approve/new-user-approve.php" ) ){
+		foreach ( $users as $user ){
+            $statusUser = get_user_meta( $user->ID,SLUG_META_APPROVED_USER , true);
+            if ( !empty( $statusUser) && $statusUser == 'approved' ){
+                $wpdb->insert( CUser::$_tableNameEmail, array( 'id' => NULL, 'email' => $user->user_email, 'date_envoi' => NULL, 'envoyer' => 0, "element" => $uniqueId ));
+            }
+        }
+	}
+
+
+}
+
+
+/*
+ * cron pour le sendmail
+ */
+add_filter("cron_schedules", "telmarh_add_scheduled_interval");
+function telmarh_add_scheduled_interval( $shedules ){
+  $schedules['cinq_minute'] = array('interval'=>300, 'display'=>'Once 5 minute');
+  $schedules['dix_minute'] = array('interval'=>600, 'display'=>'Once 10 minute');
+  $schedules['one_day'] = array('interval'=>86400, 'display'=>'Once one Day');
+  return $schedules;
+}
+
+if (!wp_next_scheduled('my_cinq_minute_action')) {
+  wp_schedule_event(time(), 'cinq_minute', 'my_cinq_minute_action');
+}
+if (!wp_next_scheduled('my_dix_minute_action')) {
+  wp_schedule_event(time(), 'dix_minute', 'my_dix_minute_action');
+}
+if (!wp_next_scheduled('my_one_day_action')) {
+  wp_schedule_event(time(), 'one_day', 'my_trente_minute_action');
+}
+
+//for cron job task
+add_action('my_dix_minute_action', array(CUser, 'send_notifications'));
+add_action('my_one_day_action', array(CUser, 'purge_list_email'));

@@ -9,7 +9,8 @@
  */
 class CUser {
 
-  private static $_elements;
+    private static $_elements;
+	public static $_tableNameEmail = "telmarh_email_enqueue";
 	
   public function __construct() {
     
@@ -160,20 +161,82 @@ class CUser {
 
 		return false;
 	}
+
 	/**
-	   * An 'authenticate' filter callback that authenticates the user using only the username.
-	   *
-	   * To avoid potential security vulnerabilities, this should only be used in the context of a programmatic login,
-	   * and unhooked immediately after it fires.
-	   *
-	   * @param WP_User $user
-	   * @param string $username
-	   * @param string $password
-	   * @return bool|WP_User a WP_User object if the username matched an existing user, or false if it didn't
-	   */
-	  public static function allow_programmatic_login( $user, $username, $password ) {
-	  	return get_user_by( 'login', $username );
-	  }
+	 * An 'authenticate' filter callback that authenticates the user using only the username.
+	 *
+	 * To avoid potential security vulnerabilities, this should only be used in the context of a programmatic login,
+	 * and unhooked immediately after it fires.
+	 *
+	 * @param WP_User $user
+	 * @param string  $username
+	 * @param string  $password
+	 *
+	 * @return bool|WP_User a WP_User object if the username matched an existing user, or false if it didn't
+	 */
+	public static function allow_programmatic_login( $user, $username, $password )
+	{
+		return get_user_by( 'login', $username );
+	}
+
+	public static function installTable(){
+		global $wpdb;
+		if ( $wpdb->get_var( "show tables like '" . self::$_tableNameEmail . "'" ) != self::$_tableNameEmail ) {
+
+			$sql = "CREATE TABLE  " . self::$_tableNameEmail . " (
+              id bigint(20) NOT NULL auto_increment,
+              email varchar(255) default NULL,
+              date_envoi datetime default NULL,
+              envoyer int(1) default 0,
+              element varchar(225) default NULL,
+              PRIMARY KEY  (`id`)
+            ) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;";
+
+			$wpdb->query( $sql );
+		}
+
+	}
+
+	public static function send_notifications ( $lot = 100 ){
+		global $wpdb, $telmarh_options;
+		$emails = $wpdb->get_results( $sql = "SELECT * FROM " .  self::$_tableNameEmail . " WHERE envoyer = 0  ORDER BY id ASC LIMIT " . $lot  );
+	    $sujet = ( isset( $telmarh_options['subjet_mail_gt'] ) && !empty( $telmarh_options['subjet_mail_gt'] ) ) ? $telmarh_options['subjet_mail_gt'] : "";
+	    $content = ( isset( $telmarh_options['content_mail_gt'] ) && !empty( $telmarh_options['content_mail_gt'] ) ) ?  $telmarh_options['content_mail_gt'] : "";
+	    $blogname = wp_specialchars_decode(get_option('blogname'), ENT_QUOTES);
+		if ( !empty( $emails ) ){
+			foreach ( $emails as $line ){
+				$email          = $line->email;
+				$dataUniqueId   = $line->element;
+				$siteName       = get_bloginfo( "name" );
+				$data           = COffre::getElementFormInFosByUniqueId( FORMULAIRE_POSTULER_OFFRE, $dataUniqueId );
+				$tobereplaced   = array('[offre:url]', '[soubmission:data]', '[site:name]');
+			    $replacement    = array( $data['offre'], $data['html'], $siteName );
+				$content        = str_replace($tobereplaced, $replacement, $content);
+				telmarh_send_mail( $email, $sujet, $content, $blogname );
+				$wpdb->update( self::$_tableNameEmail, array( 'envoyer' => 1, 'date_envoi' => date('Y-m-d H:i:s')), array( 'id' => $line->id ) );
+			}
+		}
+
+	}
+
+	public static function purge_list_email( $lot = 100 )
+	{
+		global $wpdb;
+		self::installTable();
+		$time_last_month = strtotime( "-1 month", time() );
+		$sql = "SELECT id
+	            FROM " . self::$_tableNameEmail . "
+	            WHERE envoyer = 1
+	            AND UNIX_TIMESTAMP(date_envoi) < '" . $time_last_month . "'
+	            ORDER BY date_envoi ASC LIMIT {$lot}";
+		$ids = $wpdb->get_col( $sql );
+		if ( !empty( $ids ) ) {
+			foreach ( $ids as $id ) {
+				$wpdb->delete( self::$_tableNameEmail, array( 'id' => $id ) );
+			}
+		}
+	}
+
 
 }
 

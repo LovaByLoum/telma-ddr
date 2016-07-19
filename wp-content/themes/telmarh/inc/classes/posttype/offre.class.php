@@ -340,7 +340,31 @@ class COffre
 			return $hierarchyTerm;
 		}
 
-	//set you custom function
+	public static function getElementFormInFosByUniqueId( $formId, $uniqueId ){
+		global $fmdb;
+		$dataHtml = "";
+		$elementOffre = "";
+		$data = $fmdb->getSubmissionByID($formId, $uniqueId);
+		$form = $fmdb->getForm($formId);
+		if ( isset( $form['items'] ) && !empty( $form['items'] ) ) {
+			$dataHtml .= '<ul>';
+			$offre = JM_Offre::getById( $data['parent_post_id'] );
+			$dataHtml .= '<li><strong>Offre :</strong><a href="' . get_permalink( $offre->id ) . '" title="' . $offre->titre . '">' . $offre->titre . '</a></li>';
+			$elementOffre = '<a href="' . get_permalink( $offre->id ) . '" title="' . $offre->titre . '">' . $offre->titre . '</a>';
+			foreach ( $form['items'] as $field ){
+				if ( in_array( $field['type'], array( "text", "textarea" )  ) ) {
+					$dataHtml .= '<li><strong>' . $field['label'] . ' :</strong>' . $data[$field['unique_name']] . '</li>' ;
+				} else {
+					$elt = unserialize( $data[$field['unique_name']] );
+					$dataHtml .= '<li><strong>' . $field['label'] . ' :</strong><a href="' . $elt['upload_url'] . $elt['filename'] . '" title="' . $field['label'] . '">' . $elt['filename'] . '</a></li>';
+				}
+
+			}
+			$dataHtml .= '</ul>';
+		}
+
+		return array( "offre" => $elementOffre, "html" => $dataHtml );
+	}
 
 }
 
