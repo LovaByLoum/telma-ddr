@@ -8,6 +8,9 @@
  * @since telmarh 1.0
  * @author : Netapsys
  */
+if ( is_user_logged_in() ){
+	wp_redirect( home_url() );
+}
 global $post;
 $results = telmarh_inscription_user();
 $anneeExperiences       = get_terms( JM_TAXONOMIE_ANNEE_EXPERIENCE, array( 'hide_empty' => false ) );

@@ -764,6 +764,54 @@ function telmarh_custom_mail_send( $info ){
 
 }
 
+//hide role
+add_action( 'pre_user_query', 'telmarh_pre_user_query' );
+function telmarh_pre_user_query( $user_search )
+{
+    global $wpdb;
+    $user = wp_get_current_user();
+	if ( in_array( $user->roles[0], array( JM_ROLE_RESPONSABLE_RH ) ) ){
+		$user->get_role_caps();
+		    $where = 'WHERE 1=1';
+
+		    // Temporarily remove this hook otherwise we might be stuck in an infinite loop
+		    remove_action( 'pre_user_query', 'telmarh_pre_user_query' );
+
+		    // View adminstrators? (Remember: this is capability defined by you!)
+		    $view_users = in_array( 'list_users', $user->allcaps );
+		    if ( $view_users ) {
+		        // Get the list of admin IDs
+		        $args = array(
+		            'role' => "contributor",
+		        );
+		        $user_query = new WP_User_Query( $args );
+		        $admins = $user_query->get_results();
+
+		        $admin_ids = array();
+		        foreach ( $admins as $admin ) {
+		            $admin_ids[] = $admin->id;
+		        }
+
+		        $where .= ' AND '.$wpdb->users.'.ID NOT IN ('.implode(',', $admin_ids).')';
+		    }
+
+		    // Repeat block above for other capabilities you define,
+		    // i.e. hide users not everybody should see
+		    // ...
+
+		    // Modify original WP_User_Query
+		    $user_search->query_where = str_replace(
+		        'WHERE 1=1',
+		        $where,
+		        $user_search->query_where
+		    );
+
+		     // Re-add the hook
+		    add_action( 'pre_user_query', 'telmarh_pre_user_query' );
+	}
+
+}
+
 
 /*
  * cron pour le sendmail
