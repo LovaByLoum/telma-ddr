@@ -41,7 +41,10 @@ function fm_colSelect($name, $cols, $selected = NULL){
 		<?php foreach ( $cols as $col ): ?>
 			<?php if(!$col['hidden']): ?>
 				<option value="<?php echo $col['key'];?>" <?php if($selected == $col['key']) echo 'selected="selected"';?>>
-					<?php echo $col['value'];?>
+					<?php
+					//filtre by netapsys
+					$data = apply_filters( "fm_change_nickname_to_label", $col );
+					echo $data;?>
 				</option>
 			<?php endif; ?>
 		<?php endforeach; ?>
@@ -67,11 +70,13 @@ function outputTableHead($cols){
 				<th class="fm-data-actions-col">&nbsp</th>
 			<?php endif; ?>
 	<?php foreach($cols as $col): ?>
-		<?php if( fm_userCanViewCol($col) ):?>
+		<?php if( fm_userCanViewCol($col) ):
+				//filters by Netapsys
+				$data = apply_filters( "fm_change_nickname_to_label", $col );?>
 			<?php if(!isset($col['attributes'])): ?>
-				<th><?php echo $col['value'];?></th>
+				<th><?php echo $data;?></th>
 			<?php else: ?>
-				<th <?php foreach($col['attributes'] as $att=>$val): echo $att.'="'.$val.'" '; endforeach; ?>><?php echo $col['value'];?></th>
+				<th <?php foreach($col['attributes'] as $att=>$val): echo $att.'="'.$val.'" '; endforeach; ?>><?php echo $data;?></th>
 			<?php endif; ?>
 		<?php endif; ?>
 	<?php endforeach;?>
@@ -90,12 +95,14 @@ function outputTableFoot($cols){
 			<?php if(!$fm_MEMBERS_EXISTS || current_user_can('form_manager_data_summary')): ?>
 				<th>&nbsp</th>
 			<?php endif; ?>
-	<?php foreach($cols as $col): ?>
+	<?php foreach($cols as $col):
+			//filters by Netapsys
+			$data = apply_filters( "fm_change_nickname_to_label", $col );?>
 		<?php if( fm_userCanViewCol($col) ):?>
 			<?php if(!isset($col['attributes'])): ?>
-				<th><?php echo $col['value'];?></th>
+				<th><?php echo $data;?></th>
 			<?php else: ?>
-				<th <?php foreach($col['attributes'] as $att=>$val): echo $att.'="'.$val.'" '; endforeach; ?>><?php echo $col['value'];?></th>
+				<th <?php foreach($col['attributes'] as $att=>$val): echo $att.'="'.$val.'" '; endforeach; ?>><?php echo $data;?></th>
 			<?php endif; ?>
 		<?php endif; ?>
 	<?php endforeach;?>
@@ -119,7 +126,7 @@ function fm_echoDataTableRow($cols, $dbRow, &$form){
 				<a href="<?php echo get_admin_url(null, 'admin.php')."?page=fm-edit-form&sec=datasingle&id=".$form['ID']."&sub=".$dbRow['unique_id'];?>"><?php _e("View", 'wordpress-form-manager');?></a>
 			</td>
 		<?php endif; ?>
-		<?php foreach($cols as $col): ?>
+		<?php foreach($cols as $col):?>
 			<?php if( fm_userCanViewCol($col) ):?>
 				<?php if(isset($col['show-callback'])): ?>
 					<td><?php echo $col['show-callback']($col, $dbRow);?></td>
@@ -480,9 +487,12 @@ $bulkActions = apply_filters( 'fm_data_bulk_actions', $bulkActions );
 						<th><?php _e("Summary", 'wordpress-form-manager');?></th>						
 					</tr>
 					
-					<?php foreach($cols as $col): ?>
+					<?php foreach($cols as $col):
+							//filters by Netapsys
+							$data = apply_filters( "fm_change_nickname_to_label", $col );
+						?>
 						<tr>
-						<td class="field-title"><label for="fm-show-<?php echo $col['key'];?>"><?php echo strip_tags($col['value']);?></label></td>
+						<td class="field-title"><label for="fm-show-<?php echo $col['key'];?>"><?php echo strip_tags($data);?></label></td>
 						<td><input type="checkbox" name="fm-show-<?php echo $col['key'];?>" <?php if(!$col['hidden']) echo 'checked="checked"';?> /></td>
 						
 						<?php if($fm_MEMBERS_EXISTS):?>

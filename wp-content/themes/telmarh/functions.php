@@ -782,7 +782,7 @@ function telmarh_pre_user_query( $user_search )
 		    if ( $view_users ) {
 		        // Get the list of admin IDs
 		        $args = array(
-		            'role' => "contributor",
+		            'role' => JM_ROLE_RESPONSABLE_RH,
 		        );
 		        $user_query = new WP_User_Query( $args );
 		        $admins = $user_query->get_results();
@@ -824,6 +824,7 @@ function telmarh_add_scheduled_interval( $shedules ){
   return $schedules;
 }
 
+
 if (!wp_next_scheduled('my_cinq_minute_action')) {
   wp_schedule_event(time(), 'cinq_minute', 'my_cinq_minute_action');
 }
@@ -837,3 +838,9 @@ if (!wp_next_scheduled('my_one_day_action')) {
 //for cron job task
 add_action('my_dix_minute_action', array(CUser, 'send_notifications'));
 add_action('my_one_day_action', array(CUser, 'purge_list_email'));
+
+add_filter( "fm_change_nickname_to_label", "telmarh_fm_change_nickname_to_label", 10, 1 );
+function telmarh_fm_change_nickname_to_label( $col ){
+	if ( isset( $col['item'] ) && !empty( $col['item'] ) ) return $col['item']['label'];
+	else return $col['value'];
+}
