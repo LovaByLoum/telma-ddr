@@ -140,7 +140,7 @@ jQuery( function( $ ){
     addDatePickerInClass("datepicker");
     //add experience
     jQuery( "#addExperience").click(function (){
-        jQuery( ".datepicker" ).datepicker( "destroy");
+        jQuery( ".datepicker" ).datepicker( "destroy").removeClass("hasDatepicker");
         validatorInscription.resetForm();
         addElementRepeater( "experience", "experience-number" );
         var index = jQuery("#experience-number").val();
@@ -150,7 +150,7 @@ jQuery( function( $ ){
 
     //add formation
     jQuery( "#addFormation" ).click(function(){
-        jQuery( ".datepicker" ).datepicker( "destroy");
+        jQuery( ".datepicker" ).datepicker( "destroy").removeClass("hasDatepicker");
         addElementRepeater( "formation", "formation-number" );
         var index = jQuery("#formation-number").val();
         addRulesElementRepeater( index, "exp_for" );
@@ -288,7 +288,7 @@ jQuery( function( $ ){
         invalidHandler:  function(e){
               setTimeout(
                 function(){
-                  scrollto(jQuery('input.error,textarea.error').eq(0).parent());
+                    scrollTop :jQuery('input.error,textarea.error').eq(0).parent();
                 },
                 500
               );
@@ -641,6 +641,8 @@ function setCollabsBlockTo(element, count, removevalue){
             jQuery(this).val('');
         }
         jQuery(this).attr('name', _name + count);
+        jQuery(this).attr("id", _name + count);
+        jQuery(this).prev("label").attr("for", _name + count );
     })
     return element;
 }
