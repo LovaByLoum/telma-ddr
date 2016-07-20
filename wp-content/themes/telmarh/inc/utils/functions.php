@@ -406,3 +406,31 @@ function pluginname_ajaxurl() {
   </script>';
 }
 
+add_action("admin_head", "telmarh_admin_head");
+function telmarh_admin_head(){
+	global $current_user;
+	$scripts = "";
+	if ( in_array( $current_user->roles[0], array( JM_ROLE_RESPONSABLE_RH ) ) ) {
+		$scripts .= "\r\n
+	        <script>
+	        jQuery(document).ready(function(){
+	            //menu form
+	            //jQuery(\"#toplevel_page_fm-admin-main\").remove();
+	            jQuery(\"#toplevel_page_fm-admin-main a.toplevel_page_fm-admin-main .wp-menu-name\").html('Formulaires postulation');
+	            jQuery(\"#toplevel_page_fm-admin-main div.wp-submenu\").remove();
+	            jQuery(\"form#fm-main-form input[type=submit][name=fm-add-new]\").remove();
+	            jQuery(\"form#fm-main-form div.wrap div.tablenav\").remove();
+	            jQuery(\"form#fm-main-form div.wrap table.widefat tbody tr td div.row-actions span.edit a[title*='Afficher']\").each(function(){
+	                \$data = jQuery(this);
+	                jQuery(this).parent().html('').append(\$data);
+	                jQuery(this).parent().parent().parent().find('strong a').attr('href',\$data.attr('href'));
+	            });
+	            jQuery(\"#wpbody #fm-editor-tabs-wrap\").remove();
+	        });
+	        </script>
+	    ";
+	}
+
+	echo $scripts;
+}
+

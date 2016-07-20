@@ -812,6 +812,27 @@ function telmarh_pre_user_query( $user_search )
 
 }
 
+add_filter("fm_data_columns", "telmarh_fm_data_columns", 10, 1);
+function telmarh_fm_data_columns( $cols ){
+	$newCols = array();
+	foreach ( $cols as $col ){
+		if ( $col['key'] == "user" ){
+			$col['show-callback'] = "telmarh_fm_link_user";
+		}
+		$newCols[] = $col;
+	}
+	return $newCols;
+}
+
+function telmarh_fm_link_user( $col, $dbRow ){
+	$userName = $dbRow[$col['key']];
+	$user = get_user_by( "login", $userName );
+	if(isset( $user->ID  ) &&  $user->ID != 0)
+			return '<a href="'.get_edit_user_link($user->ID).'">'.$userName.'</a>';
+		else
+			return "";
+}
+
 
 /*
  * cron pour le sendmail

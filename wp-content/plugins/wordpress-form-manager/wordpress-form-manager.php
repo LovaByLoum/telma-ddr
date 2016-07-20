@@ -544,18 +544,18 @@ function fm_showSubmissionDataTopLevel(){
 function fm_init_members_integration() {
 	global $fm_MEMBERS_EXISTS;
 	
-	if ( class_exists( 'Members_Load' ) ) {
+	//if ( class_exists( 'Members_Load' ) ) {
 		$fm_MEMBERS_EXISTS = true;
-		
-		add_filter( 'fm_main_capability', 			'fm_main_capability');
-		add_filter( 'fm_forms_capability', 			'fm_forms_capability');
-		add_filter( 'fm_forms_advanced_capability', 'fm_forms_advanced_capability');
-		add_filter( 'fm_data_capability', 			'fm_data_capability');
-		add_filter( 'fm_settings_capability', 		'fm_settings_capability');
-		add_filter( 'fm_settings_advanced_capability', 'fm_settings_advanced_capability');
+	add_filter( 'fm_main_capability', 			'fm_main_capability');
+			add_filter( 'fm_forms_capability', 			'fm_forms_capability');
+			add_filter( 'fm_forms_advanced_capability', 'fm_forms_advanced_capability');
+			add_filter( 'fm_data_capability', 			'fm_data_capability');
+			add_filter( 'fm_settings_capability', 		'fm_settings_capability');
+			add_filter( 'fm_settings_advanced_capability', 'fm_settings_advanced_capability')
+		;
 		
 		add_filter( 'members_get_capabilities', 	'fm_add_members_capabilities' ); 
-	}
+//	}
 }
 
 function fm_main_capability( $cap ) 			{ return 'form_manager_main'; }

@@ -68,11 +68,11 @@ if ( isset($_POST['submit-edit']) ) $editMode = true;
 
 	<table class="fm-data-summary-table">
 
-		<?php foreach ( $cols as $col ): ?>
+		<?php foreach ( $cols as $col ):  ?>
 			<?php if( fm_userCanViewCol( $col , true) ):?>
 				<tr>
-					<?php if(isset($col['item'])): ?>
-						<td><strong><?php echo $col['item']['nickname'] == "" ? $col['value'] : $col['item']['nickname'];?><strong></td>
+					<?php if(isset($col['item'])):?>
+						<td><strong><?php echo $col['item']['label'] == "" ? $col['value'] : $col['item']['label'];?><strong></td>
 						<?php if( $editMode && fm_userCanEditCol( $col , true)): ?>
 							<td><?php
 							$item = $col['item'];					
@@ -85,7 +85,7 @@ if ( isset($_POST['submit-edit']) ) $editMode = true;
 							<td><?php echo $fm_controls[$col['item']['type']]->parseData($col['key'], $col['item'], $dbRow[$col['key']]);?></td>
 						<?php endif; ?>
 					<?php else: ?>
-						<td><strong><?php echo $col['value'];?></strong></td>						
+						<td><strong><?php echo $col['value'];?></strong></td>
 						<?php if(isset($col['show-callback'])): ?>
 							<td><?php echo $col['show-callback']($col, $dbRow);?></td>
 						<?php else: ?>

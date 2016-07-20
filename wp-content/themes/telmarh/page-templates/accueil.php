@@ -9,8 +9,6 @@
  * @author : Netapsys
  */
 global $post;
-//$dbRow = COffre::getElementFormInFosByUniqueId(FORMULAIRE_POSTULER_OFFRE, "fm-578de15153e2a");
-//mp($dbRow);
 
 $description = ( isset( $post->texte_descriptif_hp ) && !empty( $post->texte_descriptif_hp ) ) ? $post->texte_descriptif_hp : "";
 list( $image ) = ( isset( $post->image_background_hp ) && !empty( $post->image_background_hp ) ) ? wp_get_attachment_image_src( $post->image_background_hp, "full" ) : array();
