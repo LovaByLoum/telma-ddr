@@ -75,7 +75,7 @@ get_header(); ?>
 		                            <!--description des missions-->
 		                            <?php if ( isset( $offreElment->mission_principal ) ) :?>
 			                            <header class="entry-header">
-				                            <h2><i class="fa fa-hand-o-right"></i>&nbsp;Mission principale</h2>
+				                            <h3><i class="fa fa-hand-o-right"></i>&nbsp;Mission principale</h3>
 			                            </header>
 			                            <div class="entry-content">
                                             <?php echo apply_filters("the_content", $offreElment->mission_principal );?>
@@ -85,7 +85,7 @@ get_header(); ?>
 		                            <!--description responsabilite-->
 		                            <?php if ( isset( $offreElment->responsabilite ) && !empty( $offreElment->responsabilite ) ):?>
 			                            <header class="entry-header">
-                                            <h2><i class="fa fa-hand-o-right"></i>&nbsp;Responsabilités</h2>
+                                            <h3><i class="fa fa-hand-o-right"></i>&nbsp;Responsabilités</h3>
                                         </header>
                                         <div class="entry-content">
                                             <?php echo apply_filters("the_content", $offreElment->responsabilite );?>
@@ -95,7 +95,7 @@ get_header(); ?>
 		                            <!--description qualité requise-->
 		                            <?php if ( isset( $offreElment->qualite_requise ) && !empty( $offreElment->qualite_requise ) ) :?>
 			                            <header class="entry-header">
-                                            <h2><i class="fa fa-hand-o-right"></i>&nbsp;Qualités requises</h2>
+                                            <h3><i class="fa fa-hand-o-right"></i>&nbsp;Qualités requises</h3>
                                         </header>
                                         <div class="entry-content">
                                             <?php echo apply_filters("the_content", $offreElment->qualite_requise );?>

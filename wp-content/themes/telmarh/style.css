@@ -2463,9 +2463,10 @@ input[type="text"]:hover,input[type="Password"]:hover,#active{
     text-align: inherit;
     margin: 0;
 }
-.social-media-icons.footer li a {
-    font-size: 20px;
-}
 .single-offer #comments h2 {
     font-size: 27px;
+}
+.listing-offer .type-page input.offre{
+    width: 100%;
+    margin: 0;
 }
