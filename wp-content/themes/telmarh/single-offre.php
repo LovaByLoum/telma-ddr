@@ -78,7 +78,7 @@ get_header(); ?>
 		                            <!--description des missions-->
 		                            <?php if ( isset( $offreElment->mission_principal ) ) :?>
 			                            <header class="entry-header">
-				                            <h3><i class="fa fa-hand-o-right"></i>&nbsp;Mission principale</h3>
+				                            <h3><i class="fa fa-hand-o-right"></i>&nbsp;Missions principales</h3>
 			                            </header>
 			                            <div class="entry-content">
                                             <?php echo apply_filters("the_content", $offreElment->mission_principal );?>
