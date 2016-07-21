@@ -242,7 +242,7 @@ get_header('home'); ?>
 														<h5><a href="<?php echo get_permalink( $offre->id );?>" title="<?php echo $offre->titre;?>"><strong><?php echo $offre->titre;?></strong></a></h5>
 
 														<p>
-															<?php echo $offre->desc;?>
+															<?php echo wp_limite_text( $offre->desc, 200 );?>
 														</p>
 														<?php if ( isset( $offre->nameEntreprise ) && !empty( $offre->nameEntreprise ) ):?>
 															<p><strong>Entreprise : </strong><em><?php echo $offre->nameEntreprise;?></em></p>
