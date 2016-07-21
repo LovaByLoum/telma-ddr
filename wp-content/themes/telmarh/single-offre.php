@@ -95,7 +95,7 @@ get_header(); ?>
 		                            <!--description qualité requise-->
 		                            <?php if ( isset( $offreElment->qualite_requise ) && !empty( $offreElment->qualite_requise ) ) :?>
 			                            <header class="entry-header">
-                                            <h2><i class="fa fa-hand-o-right"></i>&nbsp;Qualité requise</h2>
+                                            <h2><i class="fa fa-hand-o-right"></i>&nbsp;Qualités requises</h2>
                                         </header>
                                         <div class="entry-content">
                                             <?php echo apply_filters("the_content", $offreElment->qualite_requise );?>
