@@ -85,7 +85,7 @@ get_header(); ?>
 		                            <!--description responsabilite-->
 		                            <?php if ( isset( $offreElment->responsabilite ) && !empty( $offreElment->responsabilite ) ):?>
 			                            <header class="entry-header">
-                                            <h2><i class="fa fa-hand-o-right"></i>&nbsp;Résponsabilité</h2>
+                                            <h2><i class="fa fa-hand-o-right"></i>&nbsp;Responsabilités</h2>
                                         </header>
                                         <div class="entry-content">
                                             <?php echo apply_filters("the_content", $offreElment->responsabilite );?>
