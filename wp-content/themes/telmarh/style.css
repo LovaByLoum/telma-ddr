@@ -2466,3 +2466,6 @@ input[type="text"]:hover,input[type="Password"]:hover,#active{
 .social-media-icons.footer li a {
     font-size: 20px;
 }
+.single-offer #comments h2 {
+    font-size: 27px;
+}
