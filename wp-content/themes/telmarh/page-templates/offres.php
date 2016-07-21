@@ -116,7 +116,7 @@ get_header(); ?>
                 <div class="widget-area">
 	                <aside class="widget">
 		                <div class="control-group">
-							<h4>Triée par :</h4>
+							<h5>Triée par :</h5>
 			                <div class="select">
 				                <select class="order-criteria" data-filter="order-criteria">
 									<option value="date">Date de publication</option>
@@ -128,7 +128,7 @@ get_header(); ?>
 	                </aside>
                     <aside class="widget">
 	                    <div class="control-group">
-		                    <h4 class="head-accordion open">Entreprise</h4>
+		                    <h5 class="head-accordion open">Entreprise</h5>
 		                        <div class="content-accordion">
 			                        <?php if ( !empty( $entreprises ) && count( $entreprises ) > 0 ):
 	                                        foreach ( $entreprises as $entreprise ):  ?>
@@ -143,7 +143,7 @@ get_header(); ?>
                     </aside>
 	                <aside class="widget">
                         <div class="control-group">
-	                        <h4 class="head-accordion open">Région</h4>
+	                        <h5 class="head-accordion open">Région</h5>
 							<div class="content-accordion">
 								<?php if ( !empty( $localisation ) && count( $localisation ) > 0 ):
 			                            foreach ( $localisation as $term ):?>
@@ -158,7 +158,7 @@ get_header(); ?>
                     </aside>
 	                <aside class="widget">
 		                <div class="control-group">
-                            <h4 class="head-accordion open">Année d'experience</h4>
+                            <h5 class="head-accordion open">Année d'experience</h5>
 							<div class="content-accordion">
 								<?php if ( !empty( $anneeExperiences ) && count( $anneeExperiences ) > 0 ):
 	                                    foreach ( $anneeExperiences as $term ):?>
@@ -173,7 +173,7 @@ get_header(); ?>
                     </aside>
 	                <aside class="widget">
 		                <div class="control-group">
-	                        <h4 class="head-accordion open">Type de contrat</h4>
+	                        <h5 class="head-accordion open">Type de contrat</h5>
 			                <div class="content-accordion">
 				                <?php if ( !empty( $typeContrat ) && count( $typeContrat ) > 0 ):
                                         foreach ( $typeContrat as $term ):?>
@@ -188,7 +188,7 @@ get_header(); ?>
                     </aside>
 	                <aside class="widget">
 		                <div class="control-group">
-	                        <h4 class="head-accordion open">Domaine métier</h4>
+	                        <h5 class="head-accordion open">Domaine métier</h5>
 			                <div class="content-accordion">
 				                <?php if ( !empty( $domaineMetier ) && count( $domaineMetier ) > 0 ):
                                         foreach ( $domaineMetier as $term ):?>
@@ -203,7 +203,7 @@ get_header(); ?>
                     </aside>
 	                <aside class="widget">
 		                <div class="control-group">
-	                        <h4 class="head-accordion open">Criticité</h4>
+	                        <h5 class="head-accordion open">Criticité</h5>
 			                <div class="content-accordion">
 				                <?php if ( !empty( $criticites ) && count( $criticites ) > 0 ):
                                         foreach ( $criticites as $term ):?>

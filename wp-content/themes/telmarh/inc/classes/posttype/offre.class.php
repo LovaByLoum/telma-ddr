@@ -206,13 +206,35 @@ class COffre
 	                    <div class="entry-meta">
 	                            	<span class="meta-block"><i class="fa fa-eye"></i>Publié le ' .self::dateLongueText( $offre->date ) . '</span>';
 		if ( isset( $offre->departement ) && !empty( $offre->departement ) && count( $offre->departement ) > 0 ) {
-			$html .= '<span class="meta-block"><i class="fa fa-suitcase"></i>';
+			$html .= '<span class="meta-block"><i class="fa fa-suitcase" title="Domaine de métier"></i>';
 			$i = 1;
 			$glue = ', ';
 			foreach ( $offre->departement as $term ) {
 				$html .= $term->name;
 				if ( ( count( $offre->{JM_TAXONOMIE_DEPARTEMENT} ) - 1 ) == $i  ) { $html .= " et "; $i++; }
 				if ( count( $offre->{JM_TAXONOMIE_DEPARTEMENT} ) > $i )  { $html .= $glue; $i++; }
+			}
+			$html .= '</span>';
+		}
+		if ( isset( $offre->{JM_TAXONOMIE_TYPE_CONTRAT} ) && !empty( $offre->{JM_TAXONOMIE_TYPE_CONTRAT} ) && count( $offre->{JM_TAXONOMIE_TYPE_CONTRAT} ) > 0 ) {
+			$html .= '<span class="meta-block"><i class="fa fa-pencil-square-o" title="Type de contrat"></i>';
+			$i = 1;
+			$glue = ', ';
+			foreach ( $offre->{JM_TAXONOMIE_TYPE_CONTRAT} as $term ) {
+				$html .= $term->name;
+				if ( ( count( $offre->{JM_TAXONOMIE_TYPE_CONTRAT} ) - 1 ) == $i  ) { $html .= " et "; $i++; }
+				if ( count( $offre->{JM_TAXONOMIE_TYPE_CONTRAT} ) > $i )  { $html .= $glue; $i++; }
+			}
+			$html .= '</span>';
+		}
+		if ( isset( $offre->localisation ) && !empty( $offre->localisation ) && count( $offre->localisation ) > 0 ) {
+			$html .= '<span class="meta-block"><i class="fa fa-map-marker" title="Région du poste"></i>';
+			$i = 1;
+			$glue = ', ';
+			foreach ( $offre->localisation as $term ) {
+				$html .= $term->name;
+				if ( ( count( $offre->localisation ) - 1 ) == $i  ) { $html .= " et "; $i++; }
+				if ( count( $offre->localisation ) > $i )  { $html .= $glue; $i++; }
 			}
 			$html .= '</span>';
 		}

@@ -2182,14 +2182,14 @@ body.page-template-offres #page .site-content{
     float: right;
     text-align: center;
 }
-body.page-template-offres #page .site-content h4.head-accordion {
+body.page-template-offres #page .site-content h5.head-accordion {
     cursor: pointer;
     position: relative;
 }
 body.page-template-offres #page .site-content .content-accordion {
     display: none;
 }
-body.page-template-offres #page .site-content h4.head-accordion:after {
+body.page-template-offres #page .site-content h5.head-accordion:after {
     background-image: url("images/design/btn-open-accordion.png");
     background-repeat: no-repeat;
     font-size: 20px;
@@ -2204,7 +2204,7 @@ body.page-template-offres #page .site-content h4.head-accordion:after {
     right: 0;
     margin-top: -4px;
 }
-body.page-template-offres #page .site-content h4.head-accordion.open:after {
+body.page-template-offres #page .site-content h5.head-accordion.open:after {
     background-image: url("images/design/btn-close-accordion.png");
     content: "";
 }
@@ -2471,8 +2471,12 @@ input[type="text"]:hover,input[type="Password"]:hover,#active ,textarea:hover, s
     text-align: inherit;
     margin: 0;
 }
-.social-media-icons.footer li a {
-    font-size: 20px;
+.single-offer #comments h2 {
+    font-size: 27px;
+}
+.listing-offer .type-page input.offre{
+    width: 100%;
+    margin: 0;
 }
 .comment-form .form-field input[type="text"],
 .comment-form .form-field input[type="Password"],
