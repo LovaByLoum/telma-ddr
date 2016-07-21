@@ -2182,14 +2182,14 @@ body.page-template-offres #page .site-content{
     float: right;
     text-align: center;
 }
-body.page-template-offres #page .site-content h4.head-accordion {
+body.page-template-offres #page .site-content h5.head-accordion {
     cursor: pointer;
     position: relative;
 }
 body.page-template-offres #page .site-content .content-accordion {
     display: none;
 }
-body.page-template-offres #page .site-content h4.head-accordion:after {
+body.page-template-offres #page .site-content h5.head-accordion:after {
     background-image: url("images/design/btn-open-accordion.png");
     background-repeat: no-repeat;
     font-size: 20px;
@@ -2204,7 +2204,7 @@ body.page-template-offres #page .site-content h4.head-accordion:after {
     right: 0;
     margin-top: -4px;
 }
-body.page-template-offres #page .site-content h4.head-accordion.open:after {
+body.page-template-offres #page .site-content h5.head-accordion.open:after {
     background-image: url("images/design/btn-close-accordion.png");
     content: "";
 }
