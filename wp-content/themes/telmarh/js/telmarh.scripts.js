@@ -463,7 +463,15 @@ jQuery( function( $ ){
             }
         });
         //active parent is checked box
-
+        jQuery("input.anglais","input.francais", "input.malagasy" ).change(function(){
+            var _this = jQuery(this);
+            var _class = _this.attr("class");
+            if ( jQuery('input[data-class =' + _class + ']').is(":checked")  ){
+                //nothing
+            } else {
+                jQuery('input[data-class =' + _class + ']').attr("checked", true);
+            }
+        });
         var validatorPostule = jQuery( "#fm-form-1" ).validate({
             ignore : "",
             errorElement : "span",
