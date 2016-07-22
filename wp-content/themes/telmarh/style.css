@@ -2533,7 +2533,7 @@ input[type="text"]:hover,input[type="Password"]:hover,#active ,textarea:hover, s
 .inset .login-submit.link-inscript a::before {
     border: 1px solid #28b1ff;
 }
-#fm-form-1 .col-1-2 input[type=text] {
+#fm-form-1 .col-1-2 input[type=text], #fm-form-2 .col-1-2 input[type=text] {
     width: 100%;
 }
 #fm-form-1 .col-1-1 .list-parent {
@@ -2548,7 +2548,7 @@ input[type="text"]:hover,input[type="Password"]:hover,#active ,textarea:hover, s
     display: inline-block;
     margin-left: 10px;
 }
-#fm-form-1 .inputfile{
+#fm-form-1 .inputfile, #fm-form-2 .inputfile{
     width: 0.1px;
     height: 0.1px;
     opacity: 0;
@@ -2591,7 +2591,7 @@ input[type="text"]:hover,input[type="Password"]:hover,#active ,textarea:hover, s
     /* pointer-events: none; */
     /* in case of FastClick lib use */
 }
-#fm-form-1 .control-group span.error{
+#fm-form-1 .control-group span.error, #fm-form-2 .control-group span.error{
     display: block;
     color: #FF0000;
 }

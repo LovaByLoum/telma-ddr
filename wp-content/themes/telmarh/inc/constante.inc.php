@@ -79,6 +79,7 @@ define ( "GESTIONNAIRE_DE_TALENT", "gestionnaire_talent" );
 
 //formulaire id
 define ( "FORMULAIRE_POSTULER_OFFRE", 1 );
+define ( "FORMULAIRE_CANDIDATURE_SPONTANEE", 2 );
 
 //slug approved
 define ( "SLUG_META_APPROVED_USER", "pw_user_status" );

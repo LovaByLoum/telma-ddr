@@ -744,22 +744,35 @@ function telmarh_custom_mail_send( $info ){
     CUser::installTable();
 	$postData = $info['data'];
 	$uniqueId = $postData['unique_id'];
-	$offreId = $postData['parent_post_id'];
-	$element = get_post_meta( $offreId, JM_META_SOCIETE_OFFRE_RELATION, true );
-	$args = array(
-		"meta_value"    => $element,
-		"meta_key"      => JM_META_USER_SOCIETE_FILTER_ID,
-		"fields"        => "all"
-	);
-	$users = get_users( $args );
-	if ( !empty( $users ) && count( $users ) > 0 && is_plugin_active( "new-user-approve/new-user-approve.php" ) ){
-		foreach ( $users as $user ){
-            $statusUser = get_user_meta( $user->ID,SLUG_META_APPROVED_USER , true);
-            if ( !empty( $statusUser) && $statusUser == 'approved' ){
-                $wpdb->insert( CUser::$_tableNameEmail, array( 'id' => NULL, 'email' => $user->user_email, 'date_envoi' => NULL, 'envoyer' => 0, "element" => $uniqueId ));
-            }
-        }
+	if ( $info['form']['ID'] == FORMULAIRE_POSTULER_OFFRE ){
+		$offreId = $postData['parent_post_id'];
+		$element = get_post_meta( $offreId, JM_META_SOCIETE_OFFRE_RELATION, true );
+		$args = array(
+			"meta_value"    => $element,
+			"meta_key"      => JM_META_USER_SOCIETE_FILTER_ID,
+			"fields"        => "all"
+		);
+		$users = get_users( $args );
+		if ( !empty( $users ) && count( $users ) > 0 && is_plugin_active( "new-user-approve/new-user-approve.php" ) ){
+			foreach ( $users as $user ){
+	            $statusUser = get_user_meta( $user->ID,SLUG_META_APPROVED_USER , true);
+	            if ( !empty( $statusUser) && $statusUser == 'approved' ){
+	                $wpdb->insert( CUser::$_tableNameEmail, array( 'id' => NULL, 'email' => $user->user_email, 'date_envoi' => NULL, 'envoyer' => 0, "element" => $uniqueId ));
+	            }
+	        }
+		}
+	} elseif ( $info['form']['ID'] == FORMULAIRE_CANDIDATURE_SPONTANEE ) {
+		$users = get_users( array( "role" => JM_ROLE_RESPONSABLE_RH ) );
+		if ( !empty( $users ) && count( $users ) > 0 && is_plugin_active( "new-user-approve/new-user-approve.php" ) ){
+			foreach ( $users as $user ) {
+				$statusUser = get_user_meta( $user->ID,SLUG_META_APPROVED_USER , true);
+	            if ( !empty( $statusUser) && $statusUser == 'approved' ){
+	                $wpdb->insert( CUser::$_tableNameEmail, array( 'id' => NULL, 'email' => $user->user_email, 'date_envoi' => NULL, 'envoyer' => 0, "element" => $uniqueId ));
+	            }
+			}
+		}
 	}
+
 
 
 }

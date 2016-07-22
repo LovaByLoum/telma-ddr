@@ -546,6 +546,72 @@ jQuery( function( $ ){
         jQuery(".inputfile").change(showPreviewImage_click);
     }
 
+    if ( jQuery("#fm-form-2").length > 0 ){
+        jQuery("#fm-form-2").validate({
+            ignore : "",
+            errorElement : "span",
+            errorClass : "error",
+            invalidHandler:  function(e){
+              setTimeout(
+                function(){
+                  scrollto(jQuery('input.error,textarea.error').eq(0).parent());
+                },
+                500
+              );
+            },
+            errorPlacement: function(error, element) {
+                if ( element.attr("name") == "file-5791c48e104c8" ){
+                    error.insertAfter(jQuery(".cv"));
+                } else if( element.attr("name") == "file-5791c4b7d5a8f" ){
+                    error.insertAfter(jQuery(".lm"));
+                } else {
+                    error.insertAfter(element);
+                }
+            },
+            rules :{
+                "text-5791c400818e9" :{
+                    required : true
+                },
+                "text-5791c435dbe6d" : {
+                    required : true
+                },
+                "text-5791c44862170" : {
+                    required : true,
+                    email : true
+                },
+                "file-5791c48e104c8" : {
+                    required : true,
+                    extension : "pdf|rtf|docx|doc"
+                },
+                "file-5791c4b7d5a8f" : {
+                    required : true,
+                    extension : "pdf|rtf|docx|doc"
+                }
+            },
+            messages :{
+                "text-5791c400818e9" :{
+                    required : "Le nom est requis."
+                },
+                "text-5791c435dbe6d" : {
+                    required : "Le prénom est requis."
+                },
+                "text-5791c44862170" : {
+                    required : "L'adresse email est requis.",
+                    email : "L'adresse email n'est pas valide."
+                },
+                "file-5791c48e104c8" : {
+                    required : "Le CV est requis.",
+                    extension : "Le format n'est pas valide( seulement pdf,rtf,docx et doc )."
+                },
+                "file-5791c4b7d5a8f" : {
+                    required : "La lettre de motivation est requise.",
+                    extension : "Le format n'est pas valide( seulement pdf,rtf,docx et doc )."
+                }
+            }
+        });
+        jQuery(".inputfile").change(showPreviewImage_click);
+    }
+
 });
 
 jQuery.validator.addMethod("mailExistUser", function( value, element, arg ){
