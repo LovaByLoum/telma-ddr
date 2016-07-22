@@ -2081,7 +2081,7 @@ aside.homepage p.separator span{
 #home-hero .telmarh-hero-content-container a.submit_link:focus, a.submit_link:focus{
     outline: none;
 }
-.submit_link.button--wapasha {
+.submit_link.button--wapasha, .inset .button-primary {
     background-color: #28b1ff;
     color: #fff;
 	/*-webkit-transition: background-color 0.3s, color 0.3s;*/
@@ -2091,7 +2091,7 @@ aside.homepage p.separator span{
 	background: #28b1ff;
 	color: #fff;
 }
-.button--wapasha::before {
+.button--wapasha::before, .inset .button-primary::before {
 	content: '';
 	position: absolute;
 	top: 0;
@@ -2112,7 +2112,7 @@ aside.homepage p.separator span{
 .button--wapasha.button--inverted::before {
 	border-color: #28b1ff;
 }
-.submit_link.button--wapasha:hover {
+.submit_link.button--wapasha:hover, .inset .button-primary:hover {
 	background-color: #fff;
 	color: #28b1ff!important;
 }
@@ -2120,7 +2120,7 @@ aside.homepage p.separator span{
 	background-color: #37474f;
 	color: #7986cb;
 }
-.button--wapasha:hover::before {
+.button--wapasha:hover::before, .inset .button-primary:hover::before {
 	-webkit-transform: scale3d(1, 1, 1);
 	transform: scale3d(1, 1, 1);
 	opacity: 1;
@@ -2174,7 +2174,13 @@ aside.homepage p.separator span{
 #wppl_item_container_offre-pagination-box .list-offres .testimonial{
     background: #fff;
 }
-body.page-template-offres #page .site-content{
+body.page-template-offres #page .site-content,
+body.single-societe #page .site-content,
+body.tax-type-contrat #page .site-content,
+body.tax-localisation #page .site-content,
+body.tax-departement #page .site-content,
+body.tax-annee-experience #page .site-content,
+body.tax-criticite #page .site-content{
     background: #f5f5f5;
 }
 #wppl_item_container_offre-pagination-box .list-offres .entry-footer{
@@ -2182,14 +2188,41 @@ body.page-template-offres #page .site-content{
     float: right;
     text-align: center;
 }
-body.page-template-offres #page .site-content h5.head-accordion {
+body.page-template-offres #page .site-content h5.head-accordion,
+body.single-societe #page .site-content h5.head-accordion,
+body.tax-type-contrat #page .site-content h5.head-accordion,
+body.tax-localisation #page .site-content h5.head-accordion,
+body.tax-departement #page .site-content h5.head-accordion,
+body.tax-annee-experience #page .site-content h5.head-accordion,
+body.tax-criticite #page .site-content h5.head-accordion  {
     cursor: pointer;
     position: relative;
 }
-body.page-template-offres #page .site-content .content-accordion {
+body.page-template-offres #page .site-content .content-accordion,
+body.single-societe #page .site-content .content-accordion,
+body.tax-type-contrat #page .site-content .content-accordion,
+body.tax-localisation #page .site-content .content-accordion,
+body.tax-departement #page .site-content .content-accordion,
+body.tax-annee-experience #page .site-content .content-accordion,
+body.tax-criticite #page .site-content .content-accordion {
     display: none;
 }
-body.page-template-offres #page .site-content h5.head-accordion:after {
+body.page-template-offres #page .site-content .content-accordion,
+body.single-societe #page .site-content .content-accordion.open,
+body.tax-type-contrat #page .site-content .content-accordion.open,
+body.tax-localisation #page .site-content .content-accordion.open,
+body.tax-departement #page .site-content .content-accordion.open,
+body.tax-annee-experience #page .site-content .content-accordion.open,
+body.tax-criticite #page .site-content .content-accordion.open {
+    display: block;
+}
+body.page-template-offres #page .site-content h5.head-accordion:after,
+body.single-societe #page .site-content h5.head-accordion:after,
+body.tax-type-contrat #page .site-content h5.head-accordion:after,
+body.tax-localisation #page .site-content h5.head-accordion:after,
+body.tax-departement #page .site-content h5.head-accordion:after,
+body.tax-annee-experience #page .site-content h5.head-accordion:after,
+body.tax-criticite #page .site-content h5.head-accordion:after {
     background-image: url("images/design/btn-open-accordion.png");
     background-repeat: no-repeat;
     font-size: 20px;
@@ -2204,14 +2237,32 @@ body.page-template-offres #page .site-content h5.head-accordion:after {
     right: 0;
     margin-top: -4px;
 }
-body.page-template-offres #page .site-content h5.head-accordion.open:after {
+body.page-template-offres #page .site-content h5.head-accordion.open:after,
+body.single-societe #page .site-content h5.head-accordion.open:after,
+body.tax-type-contrat #page .site-content h5.head-accordion.open:after,
+body.tax-localisation #page .site-content h5.head-accordion.open:after,
+body.tax-departement #page .site-content h5.head-accordion.open:after,
+body.tax-annee-experience #page .site-content h5.head-accordion.open:after,
+body.tax-criticite #page .site-content h5.head-accordion.open:after {
     background-image: url("images/design/btn-close-accordion.png");
     content: "";
 }
-body.page-template-offres #page .site-content  .content-accordion .control.checked{
+body.page-template-offres #page .site-content  .content-accordion .control.checked,
+body.single-societe #page .site-content  .content-accordion .control.checked,
+body.tax-type-contrat #page .site-content  .content-accordion .control.checked,
+body.tax-localisation #page .site-content  .content-accordion .control.checked,
+body.tax-departement #page .site-content  .content-accordion .control.checked,
+body.tax-annee-experience #page .site-content  .content-accordion .control.checked,
+body.tax-criticite #page .site-content  .content-accordion .control.checked{
     color:#2aa1c0;
 }
-body.page-template-offres #page .site-content  .content-accordion .control{
+body.page-template-offres #page .site-content  .content-accordion .control,
+body.single-societe #page .site-content  .content-accordion .control,
+body.tax-type-contrat #page .site-content  .content-accordion .control,
+body.tax-localisation #page .site-content  .content-accordion .control,
+body.tax-departement #page .site-content  .content-accordion .control,
+body.tax-annee-experience #page .site-content  .content-accordion .control,
+body.tax-criticite #page .site-content  .content-accordion .control{
     color:#ccc;
 }
 #pl-636 .panel-grid:nth-child(even){
@@ -2292,23 +2343,31 @@ body.page-template-offres #page .site-content  .content-accordion .control{
 }
 .inset {
 	position:relative;
-	background: #28b1ff;
+	background: #fff;
 	padding: 2em 2em;
 	border-radius: 0.3em;
 	-webkit-border-radius: 0.3em;
 	-o-border-radius: 0.3em;
 	-moz-border-radius: 0.3em;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    background-color: #fff;
+    -webkit-box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.13);
+    -moz-box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.13);
+    box-shadow: 0 0 23px 9px rgba(0, 0, 0, 0.13);
 }
 .inset:before{
 	content: '';
 	width: 0;
 	height: 0;
-	border: 20px solid #28b1ff;
+	border: 20px solid #fff;
 	border-top: 0 solid rgba(0, 0, 0, 0)!important;
 	border-right: 13px solid rgba(0, 0, 0, 0)!important;
 	border-left: 13px solid rgba(0, 0, 0, 0);
 	left: 77.1%;
-    top: -4.4%;
+    top: -4%;
 	position: absolute;
 }
 form#loginform p label {
@@ -2319,12 +2378,12 @@ form#loginform p label {
 	font-weight: 600;
 	font-family: 'Open Sans', sans-serif;
 }
-input[type="text"],input[type="Password"] {
+input[type="text"],input[type="Password"],textarea, .comment-form select {
 	padding: 9px;
 	width: 90%;
 	font-size: 1.1em;
 	margin: 18px 0px;
-	border: 2px solid#EAEEF1;
+	border: 2px solid#EAEEF1!important;
 	color: #666666;
 	background:#EAEEF1;
 	font-family: 'Open Sans', sans-serif;
@@ -2337,7 +2396,7 @@ input[type="text"],input[type="Password"] {
 	-o-transition: all 0.3s ease-out;
 	transition: all 0.3s ease-out;
 }
-input[type="text"]:hover,input[type="Password"]:hover,#active{
+input[type="text"]:hover,input[type="Password"]:hover,#active ,textarea:hover, select:hover{
 	background:#fff;
 	border:2px solid #609EC3;
 	outline:none;
@@ -2477,4 +2536,121 @@ input[type="text"]:hover,input[type="Password"]:hover,#active{
     float: left;
     width: auto;
     height: auto;
+}
+.comment-form .form-field input[type="text"],
+.comment-form .form-field input[type="Password"],
+.comment-form .form-field textarea {
+    width: 100%;
+}
+.comment-form .form-field .select select{
+    background:#EAEEF1!important;
+    margin-top: 0;
+}
+.comment-form .form-field label {
+    font-weight: 300;
+    clear: both;
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 20px;
+    line-height: 24px;
+    font-family: Source Sans Pro;
+}
+.comment-form .col-1-1.add-element{
+    text-align: right;
+}
+.comment-form .sample.formation .deleteFormation, .comment-form .sample.projet .deleteProjet, .comment-form .sample.experience .deleteExperience, .comment-form #projet-repeat , .comment-form #addProjet{
+    display: none;
+}
+.comment-form .post-required, .comment-form .permis-required, .comment-form .experience-required {
+    display: none;
+}
+.comment-form input.error, .comment-form select.error, .comment-form textarea.error{
+    border-color: #FF0000!important;
+}
+.comment-form .form-field label > span.required, .comment-form .head-accordion > span.required,.comment-form .form-field h5 > span.required, .comment-form .form-field span.error   {
+    color :#FF0000;
+}
+
+.comment-form .submit-form{
+    margin: 20px 0;
+    text-align: right;
+}
+.inset .button-primary {
+    width: 260px;
+}
+.inset .login-submit.link-inscript a {
+     font-size: 13px;
+     line-height: 1;
+     padding: 1em 2em;
+     text-shadow: none;
+     text-transform: uppercase;
+     font-weight: 600;
+     letter-spacing: 0.2em;
+     text-align: center;
+     min-width: 260px;
+ }
+.inset .login-submit.link-inscript a::before {
+    border: 1px solid #28b1ff;
+}
+#fm-form-1 .col-1-2 input[type=text], #fm-form-2 .col-1-2 input[type=text] {
+    width: 100%;
+}
+#fm-form-1 .col-1-1 .list-parent {
+    list-style: none;
+    margin: 0;
+    -webkit-padding-start: 0px;
+}
+#fm-form-1 .col-1-1 .list-parent .list-children {
+    margin:0;
+}
+#fm-form-1 .col-1-1 .list-parent .list-children > li {
+    display: inline-block;
+    margin-left: 10px;
+}
+#fm-form-1 .inputfile, #fm-form-2 .inputfile{
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+.inputfile + label {
+    max-width: 80%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
+    color: #fff;
+    display: inline-block;
+    overflow: hidden;
+    background-color: #28b1ff;
+    font-size: 13px;
+    line-height: 1;
+    padding: 1em 2em;
+    text-shadow: none;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    box-shadow: none;
+    border-radius: 100px;
+    /* 10px 20px */
+}
+.inputfile + label:hover{
+    background-color: #fff;
+    color: #28b1ff!important;
+    border: 1px solid;
+}
+.inputfile + label:hover::before {
+	-webkit-transform: scale3d(1, 1, 1);
+	transform: scale3d(1, 1, 1);
+	opacity: 1;
+}
+
+.inputfile + label * {
+    /* pointer-events: none; */
+    /* in case of FastClick lib use */
+}
+#fm-form-1 .control-group span.error, #fm-form-2 .control-group span.error{
+    display: block;
+    color: #FF0000;
 }

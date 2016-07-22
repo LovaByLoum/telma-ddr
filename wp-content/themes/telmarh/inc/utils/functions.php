@@ -322,8 +322,6 @@ function telmarh_save_post( $post_id ){
 		return;
 	$post_type = get_post_type( $post_id );
 	if ( $post_type == JM_POSTTYPE_OFFRE ) {
-		$dernierIncremente  = get_option( INCREMENTATION_OFFRE, 1 );
-		$codeReferenceOld   = get_post_meta( $post_id, REFERENCE_OFFRE, true );
 		$offre              = JM_Offre::getById( $post_id );
 		$societe            = ( isset( $offre->societe_associe ) && !empty( $offre->societe_associe ) ) ? JM_Societe::getById( $offre->societe_associe ) : "";
 		$societeName        = ( !empty( $societe ) && isset( $societe->slug ) && !empty( $societe->slug ) ) ? mb_strtoupper( $societe->slug ) : "TELMA";
@@ -331,16 +329,7 @@ function telmarh_save_post( $post_id ){
 		$departementName    = ( !empty( $departement ) && isset( $departement->slug ) && !empty( $departement->slug ) ) ? mb_strtoupper( $departement->slug ) : "RH";
 		$dateNow            =  date( "Ym" );
 
-		if ( !empty( $codeReferenceOld ) ){
-			$element = explode( "/", $codeReferenceOld );
-			$societeNameNew         = ( $societeName != $element[0] ) ? $societeName : $element[0];
-			$departementNameNew     = ( $departementName != $element[1] ) ? $departementName : $element[1];
-			update_post_meta( $post_id, REFERENCE_OFFRE, $societeNameNew . "/" . $departementNameNew . "/" . $element[2] );
-		} else {
-			$incrementation         = ( $dernierIncremente == 1 ) ?  1 : intval( $dernierIncremente ) + 1;
-			$codeReferenceNew       = $societeName . "/" . $departementName . "/" . $dateNow . "_" . $incrementation;
-			add_post_meta( $post_id, REFERENCE_OFFRE, $codeReferenceNew );
-		}
+		changeReferenceIsExistToMeta( $societeName . "/" . $departementName . "/" . $dateNow, $post_id );
 	}
 }
 
@@ -382,3 +371,65 @@ function telmarh_login_logo_url_title() {
 }
 add_filter( 'login_headertitle', 'telmarh_login_logo_url_title' );
 
+add_filter('manage_edit-' . JM_POSTTYPE_OFFRE . '_columns', 'telmarh_manage_candidature_columns',10);
+function telmarh_manage_candidature_columns( $columns ){
+	$columns['reference'] = "Réference";
+
+	return $columns;
+}
+//societe column value
+add_action( 'manage_' . JM_POSTTYPE_OFFRE .'_posts_custom_column', 'telmarh_manage_societe_column_value', 10, 2 );
+function telmarh_manage_societe_column_value( $column_name, $post_id ) {
+	$reference = get_post_meta( $post_id, REFERENCE_OFFRE, true );
+	if ( $column_name == "reference" ){
+		echo $reference;
+	}
+}
+add_action('add_meta_boxes','telmarh_init_metabox_offre');
+function telmarh_init_metabox_offre(){
+	add_meta_box('reference', 'Réference Offre', 'telmarh_offre_relations', JM_POSTTYPE_OFFRE, 'normal');
+}
+function telmarh_offre_relations( $post ){
+	if ( !empty( $post->post_title ) ) $reference = get_post_meta( $post->ID, REFERENCE_OFFRE, true );
+	else $reference = "Obtenu apres sauvegarde...";
+
+	?>
+	    <table class="form-table">
+	        <tbody>
+	            <tr>
+	                <th scope="row">
+	                    <label>Réference offre</label>
+	                </th>
+	                <td>
+	                    <input type="text" value="<?php echo $reference;?>" readonly style="width: 100%;">
+	                </td>
+	            </tr>
+	        </tbody>
+	    </table>
+	<?php
+}
+function changeReferenceIsExistToMeta( $reference, $postId ){
+	global $wpdb;
+	$sql = "SELECT
+	  post_id,
+	  meta_value
+	FROM
+	  " . $wpdb->prefix . "postmeta
+	WHERE meta_key = '" . REFERENCE_OFFRE . "'
+	  AND  meta_value LIKE '%" . $reference . "_%'
+	ORDER BY meta_value ASC ";
+	$result = end($wpdb->get_results( $sql ));
+	if ( isset($result->post_id ) && !empty( $result->post_id ) && isset( $result->meta_value ) && !empty( $result->meta_value ) ){ //update reference
+		$explode = explode( "_", $result->meta_value );
+		if ( $postId == $result->post_id ){
+			$referenceNew = $result->meta_value;
+		} else {
+			$increment = intval( $explode[1] );
+			$referenceNew = $explode[0] . '_' . ( $increment + 1 );
+		}
+		update_post_meta( $postId, REFERENCE_OFFRE, $referenceNew );
+	} else { //nouveau reference
+		$referenceNew = $reference . '_1';
+		add_post_meta( $postId, REFERENCE_OFFRE, $referenceNew );
+	}
+}
