@@ -42,9 +42,11 @@ get_header(); ?>
 			                            <i class="fa fa-industry"></i>&nbsp;<?php echo $society->titre; ?>
                                     </h2>
 		                            <?php  endif;?>
-		                            <?php if ( isset( $society->logo ) && !empty( $society->logo ) ):?>
-                                        <img src="<?php echo $society->logo;?>" height="150" width="150">
-		                            <?php endif;?>
+		                            <?php if ( isset( $society->logo ) && !empty( $society->logo ) ):
+                                        list( $urlImage, $w, $h ) = $society->logo;
+                                                    ?>
+                                        <img src="<?php echo $urlImage;?>" width="<?php echo $w;?>" height="<?php echo $h;?>" title="<?php echo $societe->titre;?>" >
+                                    <?php endif;?>
 		                            <?php if ( isset( $society->description ) && !empty( $society->description ) ):?>
                                         <?php echo apply_filters("the_content", $society->description);?>
 		                            <?php endif;?>

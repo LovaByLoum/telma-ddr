@@ -195,6 +195,7 @@ class COffre
 	public static function renderItemCallback( $pid ){
 		$html = "";
 		$offre = JM_Offre::getById( $pid );
+		$societe = JM_Societe::getById( $offre->societe_associe );
         $elementOffre = COffre::getById( $pid );
 		$isUrgent = ( isset( $offre->criticite ) && !empty( $offre->criticite ) && $offre->criticite[0]->slug != "normale" ) ? true : false;
 		$reference = get_post_meta( $pid, REFERENCE_OFFRE, true );
@@ -240,8 +241,12 @@ class COffre
 		}
 
         	$html .= '                    </div>
-	                </header><!-- .entry-header -->
-	                ' . apply_filters( "the_content", $offre->extrait );
+	                </header><!-- .entry-header -->';
+		if ( isset( $societe->logo ) && !empty( $societe->logo ) ){
+			list( $urlImage, $w, $h ) = $societe->logo;
+			$html .='<img src="' . $urlImage . '" width="' . $w . '" height="' . $h . '" title="' . $societe->titre . '" >';
+		}
+	        $html .= apply_filters( "the_content", $offre->extrait );
 		if ( $isUrgent ){
 			$html .= '        <div class="newFormation">' . $offre->criticite[0]->name . '</div>';
 		}

@@ -2470,3 +2470,11 @@ input[type="text"]:hover,input[type="Password"]:hover,#active{
     width: 100%;
     margin: 0;
 }
+.list-offres .testimonial img, .single-offer .testimonial img {
+    border-radius: inherit;
+    border: none;
+    margin: 5px 10px 5px 0;
+    float: left;
+    width: auto;
+    height: auto;
+}

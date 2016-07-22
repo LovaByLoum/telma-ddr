@@ -48,7 +48,7 @@ class JM_Societe {
             $element->extrait       = empty($p->post_excerpt) ? jpress_jm_limite_text( strip_shortcodes( strip_tags( $p->post_content ) ), 200 ) : $p->post_excerpt ;
             $element->date          = $p->post_date;
             $element->auteur        = $p->post_author;
-            list($element->logo)    = wp_get_attachment_image_src( get_post_thumbnail_id($p->ID), 'thumbnail' ) ;
+            $element->logo          = wp_get_attachment_image_src( get_post_thumbnail_id($p->ID), 'full' ) ;
 
             //champs supplementaire
             foreach ( $jpress_jm_societe_fields as $field) {
