@@ -61,7 +61,8 @@ function jpress_jm_manage_societe_column_value($column_name, $post_id){
     switch ($column_name){
         case 'thumbnail' :
             if ( $object->logo ){
-                echo '<img src="' . $object->logo . '" width="100%" style="max-width:200px;"/>';
+	            list($urlImage) = $object->logo;
+                echo '<img src="' . $urlImage . '" width="100%" style="max-width:200px;"/>';
             }
             break;
         default:
