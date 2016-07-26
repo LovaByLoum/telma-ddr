@@ -533,3 +533,41 @@ function telmarh_fm_data_query_clauses( $queryClauses ){
 
 	return $queryClauses;
 }
+
+function telmarh_add_custom_filter() {
+	global $filterNiveauEtudeShow;
+	if ( !is_null( $filterNiveauEtudeShow ) ) return;
+	$filterNiveauEtudeShow = true;
+	$niveauEtudes = get_terms( JM_TAXONOMIE_NIVEAU_ETUDE, array( 'hide_empty' => false ) );
+    if ( isset( $_GET[ 'niveau_etude' ]) ) {
+        $section = $_GET[ 'niveau_etude' ];
+        $section = !empty( $section ) ? $section : "";
+    } else {
+        $section = "";
+    }
+    echo ' <select name="niveau_etude" id="niveau_etude" style="float:none;"><option value="">Niveau Etude...</option>';
+    foreach ( $niveauEtudes as $term ) {
+        $selected = $term->name == $section ? ' selected="selected"' : '';
+        echo '<option value="' . $term->name . '"' . $selected . '>' . $term->name . '</option>';
+    }
+    echo '<input type="submit" class="button" value="Filter">';
+}
+add_action( 'restrict_manage_users', 'telmarh_add_custom_filter' );
+function telmarh_filter_users_by_custom( $query ) {
+    global $pagenow;
+    if ( is_admin() &&
+         'users.php' == $pagenow &&
+         isset( $_GET[ 'niveau_etude' ] )
+        ) {
+        $section = $_GET[ 'niveau_etude' ];
+        $section = !empty( $section ) ? $section : "";
+        $meta_query = array(
+            array(
+                'key' => 'niveau_etude_user',
+                'value' => $section
+            )
+        );
+        $query->set( 'meta_query', $meta_query );
+    }
+}
+add_filter( 'pre_get_users', 'telmarh_filter_users_by_custom' );
