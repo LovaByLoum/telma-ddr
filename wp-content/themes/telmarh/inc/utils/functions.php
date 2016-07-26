@@ -485,3 +485,51 @@ function telmarh_admin_head(){
 
 	echo $scripts;
 }
+add_filter( "fm_filter_custom", "telmarh_fm_search_custom", 10, 1 );
+function telmarh_fm_search_custom( $postData ){
+	if ( isset( $_GET['id'] ) && $_GET['id'] == FORMULAIRE_POSTULER_OFFRE ){
+		$societes =  JM_Societe::getBy();
+			$selected = $postData['fm-data-search-society'];
+			$dataSelect = array( "" => "Tous" );
+			foreach ( $societes as $societe ){
+				$dataSelect[ $societe->titre ] = $societe->titre;
+			}
+			?>
+		<div class="postbox fm-data-options" style="float:right;">
+			<h3>Recherche par entreprise</h3>
+			<table>
+				<tr>
+					<td>Entreprise:</td>
+					<td>
+						<select name="fm-data-search-society" id="fm-data-search-society">
+							<?php foreach ( $dataSelect as $key => $col ): ?>
+									<option value="<?php echo $key;?>" <?php if($selected == $key) echo 'selected="selected"';?>>
+										<?php
+										echo $col;?>
+									</option>
+							<?php endforeach; ?>
+						</select>
+					</td>
+				</tr>
+			</table>
+		</div><?php
+	}
+
+}
+add_filter( "fm_data_query_clauses", "telmarh_fm_data_query_clauses", 10, 1 );
+function telmarh_fm_data_query_clauses( $queryClauses ){
+	global $wpdb;
+	if ( isset( $_POST['form-id'] ) && !empty( $_POST['form-id'] ) && $_POST['form-id'] == FORMULAIRE_POSTULER_OFFRE ){
+		$nickname = CPage::fm_get_unique_name_by_nickname( "entreprise_postule", FORMULAIRE_POSTULER_OFFRE );
+		if ( isset( $_POST['fm-data-search-society'] ) && !empty( $_POST['fm-data-search-society'] ) ){
+			if ( !trim($_POST['fm-data-search']) == "" && isset( $_POST['fm-data-search-column'] ) && $_POST['fm-data-search-column'] == $nickname ){
+				unset($_POST['fm-data-search-society']);
+			} else {
+				$queryClauses[] = $wpdb->prepare("`". $nickname ."` = %s ", $_POST['fm-data-search-society']);
+			}
+
+		}
+	}
+
+	return $queryClauses;
+}

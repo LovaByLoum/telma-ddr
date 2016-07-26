@@ -364,7 +364,6 @@ if(sizeof($queryClauses) > 0){
 	$dataQuery .= $clauses;
 	$countQuery .= $clauses;
 }
-
 //get the full query count
 $dataCount = $fmdb->get_results($countQuery);
 $dataCount = $dataCount[0]['cnt'];
@@ -582,7 +581,7 @@ $bulkActions = apply_filters( 'fm_data_bulk_actions', $bulkActions );
 			</tr>
 		</table>
 	</div>
-
+	<?php echo apply_filters( "fm_filter_custom", $_POST );?>
 	<div class="tablenav" style="float:right; clear:right;">
 		<div class="alignleft actions">
 			<label for="fm-data-per-page"><?php _e("Results per page", 'wordpress-form-manager'); ?>:</label>
