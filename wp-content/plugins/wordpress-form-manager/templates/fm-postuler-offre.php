@@ -71,6 +71,7 @@ $user = CUser::getById( $current_user->ID );
 $postID = ( isset($_GET['po'] ) && !empty( $_GET['po'] ) ) ? $_GET['po'] : 0;
 $entrepriseId = get_post_meta( $postID, JM_META_SOCIETE_OFFRE_RELATION, true);
 $entreprise = JM_Societe::getById( $entrepriseId );
+$reference = get_post_meta( $postID, REFERENCE_OFFRE, true );
 ?>
 <form enctype="multipart/form-data" method="post" action="<?php echo $fm_display->currentFormOptions['action'];?>" name="fm-form-<?php echo $fm_display->currentFormInfo['ID'];?>" id="fm-form-<?php echo $fm_display->currentFormInfo['ID'];?>" autocomplete="on" novalidate="novalidate">
 	<div class="control-group">
@@ -176,6 +177,7 @@ $entreprise = JM_Societe::getById( $entrepriseId );
 	</div>
 	<input type="submit" name="fm_form_submit" id="fm_form_submit" class="submit" value="Valider" >
 	<input type="hidden" name="<?php echo $form_items['entreprise_postule']?>" value="<?php echo $entreprise->titre;?>">
+	<input type="hidden" name="<?php echo $form_items['ref_postule']?>" value="<?php echo $reference;?>">
 	<input type="hidden" name="fm_nonce" id="fm_nonce" value="<?php echo wp_create_nonce('fm-nonce');?>" />
 	<input type="hidden" name="fm_nonce" id="fm_nonce" value="<?php echo wp_create_nonce('fm-nonce');?>" />
 	<input type="hidden" name="fm_id" id="fm_id" value="<?php echo $fm_display->currentFormInfo['ID'];?>" />
