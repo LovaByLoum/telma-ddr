@@ -410,7 +410,7 @@ jQuery( function( $ ){
             },
             "email" : {
                 required : "L'adresse email est requis.",
-                mailExistUser : "Cet email a est déjà utiliser."
+                mailExistUser : "Cette adresse mail est déjà utilisée."
             },
             "niveau_etude" : {
                 valueNotEquals : "Le Niveau d'étude est requis."
