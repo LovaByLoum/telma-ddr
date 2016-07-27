@@ -2654,3 +2654,6 @@ input[type="text"]:hover,input[type="Password"]:hover,#active ,textarea:hover, s
     display: block;
     color: #FF0000;
 }
+.result-submit {
+    color: #008803;
+}

@@ -42,7 +42,7 @@ get_header(); ?>
 									<div class="entry-content">
 	                                    <?php echo apply_filters("the_content", $post->post_content );?>
                                     </div>
-		                            <?php if ( isset( $results['error'] ) && $results['error'] == 1  ) :?>
+		                            <?php if ( false && isset( $results['error'] ) && $results['error'] == 1  ) :?>
 			                            <!--error php-->
 			                            <?php if ( isset( $results['messages'] ) && !empty( $results['messages'] ) ):?>
 				                            <ul>
@@ -449,9 +449,9 @@ get_header(); ?>
 
 		                            </form>
 		                            <?php else : ?>
-		                                <div class="col-1-1">
+		                                <div class="col-1-1 result-submit">
 			                                <p>Merci d'avoir créé un compte sur le site  <a href='<?php echo site_url();?>'>Jobopportunity</a>.<br>
-				                                Veuillez consulter votre email pour la confirmation de votre inscription.
+				                                Veuillez consulter votre email pour confirmer votre inscription.
 			                                </p>
 		                                </div>
 									<?php endif;?>
