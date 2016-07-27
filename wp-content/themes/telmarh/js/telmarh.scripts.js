@@ -317,6 +317,10 @@ jQuery( function( $ ){
                 required : true,
                 minlength : 5
             },
+            "passwrdConfirm" : {
+                required : true,
+                equalTo : "#passwrd"
+            },
             "nom" : {
                 required : true,
                 minlength : 3
@@ -386,6 +390,10 @@ jQuery( function( $ ){
             "passwrd" : {
                 required : "Le mot de passe est requis.",
                 minlength : "Le mot de passe est trop court."
+            },
+            "passwrdConfirm" : {
+                required : "La confirmation mot de passe est requis.",
+                equalTo : "Il n'est pas identique au mot de passe."
             },
             "nom" : {
                 required : "Le nom est requis.",

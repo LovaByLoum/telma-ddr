@@ -62,6 +62,10 @@ get_header(); ?>
 	                                                <label for="passwrd">Mot de passe <span class="required">*</span></label>
                                                     <input type="password" placeholder="Mot de passe" name="passwrd" id="passwrd" value="<?php echo $_POST['passwrd'];?>">
                                                 </p>
+                                                <p class="col-1-3 form-field">
+	                                                <label for="passwrdConfirm">Confirmation du mot de passe <span class="required">*</span></label>
+                                                    <input type="password" placeholder="Confirmation du mot de passe" name="passwrdConfirm" id="passwrdConfirm" value="<?php echo $_POST['passwrdConfirm'];?>">
+                                                </p>
 				                            </div>
 			                            </div>
 			                            <div class="control-group  open">
