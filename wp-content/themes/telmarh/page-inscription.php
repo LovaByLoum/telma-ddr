@@ -149,7 +149,7 @@ get_header(); ?>
                                                         </label>
                                                     </div>
                                                     <p class="col-1-3 form-field post-required">
-	                                                    <label for="entreprise">Nom de l'entreprise</label>
+	                                                    <label for="entreprise">Nom de l'entreprise <span class="required">*</span></label>
                                                         <input type="text" name="entreprise_user" placeholder="Nom de l'entreprise" id="entreprise" value="<?php echo $_POST['entreprise_user'];?>"/>
                                                     </p>
                                                     <p class="col-1-3 form-field post-required">

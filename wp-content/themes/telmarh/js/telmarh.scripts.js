@@ -192,6 +192,12 @@ jQuery( function( $ ){
         messages : {
             required : "La fonction dans l'entreprise est requise."
             }
+        },
+        "entreprise_user" :{
+            required : true,
+            messages : {
+                required : "Le nom de l'entreprise est requis."
+            }
         }
     };
 
