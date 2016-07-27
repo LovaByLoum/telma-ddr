@@ -205,7 +205,7 @@ jQuery( function( $ ){
         "autre_exp" : {
             required : true,
         messages : {
-            required : "Le niveau d'etude est requis."
+            required : "Le Niveau d'étude est requis."
             }
         }
     };
@@ -405,7 +405,7 @@ jQuery( function( $ ){
                 mailExistUser : "Cet email a est déjà utiliser."
             },
             "niveau_etude" : {
-                valueNotEquals : "Le niveau d'etude est requis."
+                valueNotEquals : "Le Niveau d'étude est requis."
             },
             "date_dispo" :{
                 required : "La date de disponibilité est requise."

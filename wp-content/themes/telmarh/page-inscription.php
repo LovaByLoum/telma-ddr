@@ -78,7 +78,7 @@ get_header(); ?>
                                                     </p>
                                                     <p class="col-1-3 form-field">
 	                                                    <label for="birthday">Date de naissance <span class="required">*</span></label>
-                                                        <input type="text" class="datepicker" placeholder="date/mois/année" readonly name="birthday" id="birthday" value="<?php echo $_POST['birthday'];?>">
+                                                        <input type="text" class="datepicker" placeholder="jour/mois/année" readonly name="birthday" id="birthday" value="<?php echo $_POST['birthday'];?>">
                                                     </p>
 					                            </div>
 					                            <div class="col-1-1">
@@ -102,7 +102,7 @@ get_header(); ?>
 				                            <div class="content-accordion">
 					                            <div class="col-1-1">
 						                            <div class="col-1-3 form-field">
-                                                        <h5>Niveau d'etude <span class="required">*</span></h5>
+                                                        <h5>Niveau d'étude <span class="required">*</span></h5>
                                                         <div class="select">
                                                         <select name="niveau_etude">
                                                             <option value="0">Sélectionnez</option>
@@ -118,10 +118,10 @@ get_header(); ?>
                                                     </div>
 						                            <p class="col-1-3 form-field niveau-required">
                                                         <label for="autre_exp">Autre <span class="required">*</span></label>
-                                                        <input type="text" placeholder="Autre niveau d'etude" name="autre_exp" id="autre_exp" value="<?php echo $_POST['autre_exp'];?>">
+                                                        <input type="text" placeholder="Autre Niveau d'étude" name="autre_exp" id="autre_exp" value="<?php echo $_POST['autre_exp'];?>">
                                                     </p>
                                                     <div class="col-1-3 form-field">
-                                                        <h5>Domaine d'etude</h5>
+                                                        <h5>Domaine d'étude</h5>
                                                         <div class="select">
                                                         <select name="ref_etude">
                                                             <option value="0">Sélectionnez</option>
@@ -200,7 +200,7 @@ get_header(); ?>
 	                                                    </label>
 	                                                </div>
 						                            <div class="col-1-3 form-field permis-required">
-	                                                    <h5>Catégories permis<span class="required">*</span></h5>
+	                                                    <h5>Catégories <span class="required">*</span></h5>
 	                                                    <label class="control control--checkbox">Permis A
 	                                                        <input type="checkbox"  value="A" name="permCat">
 	                                                        <div class="control__indicator"></div>
@@ -219,6 +219,7 @@ get_header(); ?>
 	                                                    </label>
 	                                                </div>
 						                            <div class="col-1-3 form-field permis-required">
+							                            <h5>&nbsp;</h5>
 							                            <label class="control control--checkbox">Permis D
 	                                                        <input type="checkbox"  value="D" name="permCat">
 	                                                        <div class="control__indicator"></div>
@@ -236,10 +237,10 @@ get_header(); ?>
 					                            <div class="col-1-1">
 						                            <p class="col-1-3 form-field">
 							                            <label for="date_dispo">Date de disponibilité <span class="required">*</span></label>
-                                                        <input type="text" class="datepicker" placeholder="date/mois/année" readonly name="date_dispo" id="date_dispo" value="<?php echo $_POST['date_dispo'];?>">
+                                                        <input type="text" class="datepicker" placeholder="jour/mois/année" readonly name="date_dispo" id="date_dispo" value="<?php echo $_POST['date_dispo'];?>">
                                                     </p>
 						                            <div class="col-1-3 form-field">
-                                                        <h5>Années d’expérience professionnelle <span class="required">*</span></h5>
+                                                        <h5>Nombre d’années d’expérience professionnelle <span class="required">*</span></h5>
                                                         <div class="select">
                                                         <select name="annee_exp">
                                                             <option value="0">Sélectionnez</option>
@@ -259,7 +260,7 @@ get_header(); ?>
 				                            <h4 class="head-accordion">Expériences professionnelles (dont stages) <span class="required">*</span></h4>
 				                            <div id="experience-repeat" class="content-accordion experience sample">
 					                            <div class="col-1-1 number">
-                                                    <h5>Expérience professionnelles n°<span>1</span></h5>
+                                                    <h5>Expérience professionnelle n°<span>1</span></h5>
                                                 </div>
 					                            <div class="col-1-1 add-element">
 						                            <a href="javascript:;" class="deleteExperience" title="En savoir plus">
@@ -273,11 +274,11 @@ get_header(); ?>
 	                                                </p>
 	                                                <p class="col-1-3 form-field">
 		                                                <label for="db_exp_prof">Date de debut <span class="required">*</span></label>
-	                                                    <input type="text" class="datepicker" placeholder="date/mois/année" readonly name="db_exp_prof" id="db_exp_prof" value="<?php echo $_POST['db_exp_prof'];?>">
+	                                                    <input type="text" class="datepicker" placeholder="jour/mois/année" readonly name="db_exp_prof" id="db_exp_prof" value="<?php echo $_POST['db_exp_prof'];?>">
 	                                                </p>
 	                                                <p class="col-1-3 form-field">
 		                                                <label for="df_exp_prof">Date de fin <span class="required">*</span></label>
-	                                                    <input type="text" class="datepicker" placeholder="date/mois/année" readonly name="df_exp_prof" id="df_exp_prof" value="<?php echo $_POST['df_exp_prof'];?>">
+	                                                    <input type="text" class="datepicker" placeholder="jour/mois/année" readonly name="df_exp_prof" id="df_exp_prof" value="<?php echo $_POST['df_exp_prof'];?>">
 	                                                </p>
 												</div>
 												<div class="col-1-1">
@@ -330,11 +331,11 @@ get_header(); ?>
 	                                                </p>
 	                                                <p class="col-1-3 form-field">
 		                                                <label for="db_exp_for">Date de debut <span class="required">*</span></label>
-	                                                    <input type="text" class="datepicker" placeholder="date/mois/année" readonly name="db_exp_for" id="db_exp_for" value="<?php echo $_POST['db_exp_for'];?>">
+	                                                    <input type="text" class="datepicker" placeholder="jour/mois/année" readonly name="db_exp_for" id="db_exp_for" value="<?php echo $_POST['db_exp_for'];?>">
 	                                                </p>
 	                                                <p class="col-1-3 form-field">
 		                                                <label for="df_exp_for">Date de fin <span class="required">*</span></label>
-	                                                    <input type="text" class="datepicker" placeholder="date/mois/année" readonly name="df_exp_for" id="df_exp_for" value="<?php echo $_POST['df_exp_for'];?>">
+	                                                    <input type="text" class="datepicker" placeholder="jour/mois/année" readonly name="df_exp_for" id="df_exp_for" value="<?php echo $_POST['df_exp_for'];?>">
 	                                                </p>
 												</div>
 												<div class="col-1-1">
@@ -398,11 +399,11 @@ get_header(); ?>
 	                                                </p>
 	                                                <p class="col-1-3 form-field">
 		                                                <label for="db_exp_pgt">Date de debut <span class="required">*</span></label>
-	                                                    <input type="text" class="datepicker" placeholder="date/mois/année" readonly name="db_exp_pgt" id="db_exp_pgt" value="<?php echo $_POST['db_exp_pgt'];?>">
+	                                                    <input type="text" class="datepicker" placeholder="jour/mois/année" readonly name="db_exp_pgt" id="db_exp_pgt" value="<?php echo $_POST['db_exp_pgt'];?>">
 	                                                </p>
 	                                                <p class="col-1-3 form-field">
 		                                                <label for="df_exp_pgt">Date de fin <span class="required">*</span></label>
-	                                                    <input type="text" class="datepicker" placeholder="date/mois/année" readonly name="df_exp_pgt" id="df_exp_pgt" value="<?php echo $_POST['df_exp_pgt'];?>">
+	                                                    <input type="text" class="datepicker" placeholder="jour/mois/année" readonly name="df_exp_pgt" id="df_exp_pgt" value="<?php echo $_POST['df_exp_pgt'];?>">
 	                                                </p>
 												</div>
 												<div class="col-1-1">
