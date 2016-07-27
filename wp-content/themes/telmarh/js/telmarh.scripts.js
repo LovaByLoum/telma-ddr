@@ -190,7 +190,7 @@ jQuery( function( $ ){
         "fonction_user" : {
             required : true,
         messages : {
-            required : "La fonction est requise."
+            required : "La fonction dans l'entreprise est requise."
             }
         }
     };
@@ -205,11 +205,8 @@ jQuery( function( $ ){
     };
 
     var permisCat = {
-        "permis_cat" :{
-            required : true,
-            messages : {
-                required : "La catégorie du permis est requise."
-            }
+        "permCat" :{
+            required : true
         }
     };
     var projetNew = {
@@ -274,12 +271,14 @@ jQuery( function( $ ){
     jQuery( "input[name=permis]" ).change(function(){
         validatorInscription.resetForm();
         var _this = jQuery(this);
-        if(_this.val() == 1){
-            jQuery( ".permis-required").show();
+
+        if(_this.val() == "1"){
             addRules( permisCat );
+            jQuery( ".permis-required").show();
+
         } else {
-            jQuery( ".permis-required").hide();
             removeRules( permisCat );
+            jQuery( ".permis-required").hide();
         }
     });
 
@@ -295,6 +294,13 @@ jQuery( function( $ ){
                 500
               );
             },
+        errorPlacement: function(error, element) {
+            if(element.attr("name") == "permCat" ) {
+                error.insertAfter(jQuery(".latest"));
+            } else {
+                error.insertAfter(element);
+            }
+        },
         rules :{
             "login" : {
                 required : true,
@@ -332,7 +338,6 @@ jQuery( function( $ ){
                 valueNotEquals : "0"
             },
             "num_phone" :{
-                required : true,
                 number : true
             },
             "titre_exp_prof" : {
@@ -403,7 +408,6 @@ jQuery( function( $ ){
                 valueNotEquals : "l'année d'expérience est requis."
             },
             "num_phone" :{
-                required : "La numéro de téléphone est requise.",
                 number : "La numéro de téléphone est invalide (entier uniquement)"
             },
             "titre_exp_prof" : {
@@ -450,6 +454,9 @@ jQuery( function( $ ){
             },
             "desc_exp_pgt" : {
                 required : "La description est requise."
+            },
+            "permCat" : {
+                required : "La catégorie du permis est requise."
             }
         }
     });

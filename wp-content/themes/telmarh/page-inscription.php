@@ -87,7 +87,7 @@ get_header(); ?>
                                                         <input type="text" placeholder="Adresse" name="adresse" id="adresse" value="<?php echo $_POST['adresse'];?>">
                                                     </p>
                                                     <p class="col-1-3 form-field">
-	                                                    <label for="num_phone">N° de téléphone <span class="required">*</span></label>
+	                                                    <label for="num_phone">N° de téléphone </label>
                                                         <input type="text" placeholder="N° de téléphone" id="num_phone" name="num_phone" value="<?php echo $_POST['num_phone'];?>">
                                                     </p>
                                                     <p class="col-1-3 form-field">
@@ -162,7 +162,7 @@ get_header(); ?>
                                                         <input type="text" name="entreprise_user" placeholder="Nom de l'entreprise" id="entreprise" value="<?php echo $_POST['entreprise_user'];?>"/>
                                                     </p>
                                                     <p class="col-1-3 form-field post-required">
-	                                                    <label for="fonction">Nom de l'entreprise <span class="required">*</span></label>
+	                                                    <label for="fonction">Fonction dans l'entreprise <span class="required">*</span></label>
                                                         <input type="text" name="fonction_user" placeholder="Fonction *" id="fonction" value="<?php echo $_POST['fonction_user'];?>"/>
                                                     </p>
 					                            </div>
@@ -197,33 +197,33 @@ get_header(); ?>
 						                            <div class="col-1-3 form-field permis-required">
 	                                                    <h5>Catégories permis<span class="required">*</span></h5>
 	                                                    <label class="control control--checkbox">Permis A
-	                                                        <input type="checkbox"  value="A" name="permis_cat[]">
+	                                                        <input type="checkbox"  value="A" name="permCat">
 	                                                        <div class="control__indicator"></div>
 	                                                    </label>
 	                                                    <label class="control control--checkbox">Permis A'
-	                                                        <input type="checkbox"  value="A'" name="permis_cat[]">
+	                                                        <input type="checkbox"  value="A'" name="permCat">
 	                                                        <div class="control__indicator"></div>
 	                                                    </label>
 	                                                    <label class="control control--checkbox">Permis B
-	                                                        <input type="checkbox"  value="B" name="permis_cat[]">
+	                                                        <input type="checkbox"  value="B" name="permCat">
 	                                                        <div class="control__indicator"></div>
 	                                                    </label>
 	                                                    <label class="control control--checkbox">Permis C
-	                                                        <input type="checkbox"  value="C" name="permis_cat[]">
+	                                                        <input type="checkbox"  value="C" name="permCat">
 	                                                        <div class="control__indicator"></div>
 	                                                    </label>
 	                                                </div>
 						                            <div class="col-1-3 form-field permis-required">
 							                            <label class="control control--checkbox">Permis D
-	                                                        <input type="checkbox"  value="D" name="permis_cat[]">
+	                                                        <input type="checkbox"  value="D" name="permCat">
 	                                                        <div class="control__indicator"></div>
 	                                                    </label>
 	                                                    <label class="control control--checkbox">Permis E
-	                                                        <input type="checkbox"  value="E" name="permis_cat[]">
+	                                                        <input type="checkbox"  value="E" name="permCat">
 	                                                        <div class="control__indicator"></div>
 	                                                    </label>
-	                                                    <label class="control control--checkbox">Permis F
-	                                                        <input type="checkbox"  value="F" name="permis_cat[]">
+	                                                    <label class="control control--checkbox latest">Permis F
+	                                                        <input type="checkbox"  value="F" name="permCat">
 	                                                        <div class="control__indicator"></div>
 	                                                    </label>
 						                            </div>
