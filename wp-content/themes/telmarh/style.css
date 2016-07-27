@@ -2561,7 +2561,7 @@ input[type="text"]:hover,input[type="Password"]:hover,#active ,textarea:hover, s
 .comment-form .sample.formation .deleteFormation, .comment-form .sample.projet .deleteProjet, .comment-form .sample.experience .deleteExperience, .comment-form #projet-repeat , .comment-form #addProjet{
     display: none;
 }
-.comment-form .post-required, .comment-form .permis-required, .comment-form .experience-required {
+.comment-form .post-required, .comment-form .permis-required, .comment-form .niveau-required {
     display: none;
 }
 .comment-form input.error, .comment-form select.error, .comment-form textarea.error{

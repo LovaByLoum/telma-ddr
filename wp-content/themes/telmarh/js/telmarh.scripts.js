@@ -199,7 +199,7 @@ jQuery( function( $ ){
         "autre_exp" : {
             required : true,
         messages : {
-            required : "L'autre année d'expérience est requis."
+            required : "Le niveau d'etude est requis."
             }
         }
     };
@@ -242,13 +242,13 @@ jQuery( function( $ ){
     });
 
     //années d'experience
-    jQuery("select[name=annee_exp]").change(function(){
+    jQuery("select[name=niveau_etude]").change(function(){
         validatorInscription.resetForm();
         if ( jQuery(this).val() == "autre" ) {
-            jQuery('.experience-required').show();
+            jQuery('.niveau-required').show();
             addRules( autreExperience );
         } else {
-            jQuery('.experience-required').hide();
+            jQuery('.niveau-required').hide();
             removeRules( autreExperience );
         }
     });

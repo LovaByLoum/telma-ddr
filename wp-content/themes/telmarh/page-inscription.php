@@ -111,10 +111,15 @@ get_header(); ?>
                                                                     <option value="<?php echo $term->term_id;?>" <?php if ( $_POST['niveau_etude'] == $term->term_id ):?>selected="selected" <?php endif;?> ><?php echo $term->name;?></option>
                                                                 <?php endforeach;?>
                                                             <?php endif;?>
+	                                                        <option value="autre">Autres</option>
                                                         </select>
                                                         <div class="select__arrow"></div>
                                                         </div>
                                                     </div>
+						                            <p class="col-1-3 form-field niveau-required">
+                                                        <label for="autre_exp">Autre <span class="required">*</span></label>
+                                                        <input type="text" placeholder="Autre niveau d'etude" name="autre_exp" id="autre_exp" value="<?php echo $_POST['autre_exp'];?>">
+                                                    </p>
                                                     <div class="col-1-3 form-field">
                                                         <h5>Domaine d'etude</h5>
                                                         <div class="select">
@@ -129,20 +134,6 @@ get_header(); ?>
                                                         <div class="select__arrow"></div>
                                                         </div>
 
-                                                    </div>
-                                                    <div class="col-1-3 form-field">
-                                                        <h5>Mobilité</h5>
-                                                        <div class="select">
-                                                            <select name="region">
-                                                                <option value="0">Sélectionnez</option>
-                                                                <?php if ( !empty( $localisation ) && count( $localisation ) > 0 ):?>
-                                                                    <?php foreach ( $localisation as $term ):?>
-                                                                        <option value="<?php echo $term->term_id;?>" <?php if ( $_POST['region'] == $term->term_id ):?>selected="selected" <?php endif;?>><?php echo $term->name;?></option>
-                                                                    <?php endforeach;?>
-                                                                <?php endif;?>
-                                                            </select>
-                                                            <div class="select__arrow"></div>
-                                                        </div>
                                                     </div>
 					                            </div>
 					                            <div class="col-1-1">
@@ -167,6 +158,20 @@ get_header(); ?>
                                                     </p>
 					                            </div>
 												<div class="col-1-1">
+													<div class="col-1-3 form-field">
+		                                                <h5>Mobilité</h5>
+		                                                <div class="select">
+		                                                    <select name="region">
+		                                                        <option value="0">Sélectionnez</option>
+		                                                        <?php if ( !empty( $localisation ) && count( $localisation ) > 0 ):?>
+		                                                            <?php foreach ( $localisation as $term ):?>
+		                                                                <option value="<?php echo $term->term_id;?>" <?php if ( $_POST['region'] == $term->term_id ):?>selected="selected" <?php endif;?>><?php echo $term->name;?></option>
+		                                                            <?php endforeach;?>
+		                                                        <?php endif;?>
+		                                                    </select>
+		                                                    <div class="select__arrow"></div>
+		                                                </div>
+		                                            </div>
 													<div class="col-1-3 form-field">
 		                                                <h5>Domaine de métier recherché</h5>
 		                                                <div class="select">
@@ -243,15 +248,10 @@ get_header(); ?>
                                                                     <option value="<?php echo $term->term_id;?>" <?php if ( $_POST['annee_exp'] == $term->term_id ):?>selected="selected" <?php endif;?>><?php echo $term->name;?></option>
                                                                 <?php endforeach;?>
                                                             <?php endif;?>
-	                                                        <option value="autre">Autres</option>
                                                         </select>
                                                         <div class="select__arrow"></div>
                                                         </div>
                                                     </div>
-						                            <p class="col-1-3 form-field experience-required">
-							                            <label for="autre_exp">Autre <span class="required">*</span></label>
-                                                        <input type="text" placeholder="Autre années d'experience" name="autre_exp" id="autre_exp" value="<?php echo $_POST['autre_exp'];?>">
-                                                    </p>
 					                            </div>
 				                            </div>
 			                            </div>
