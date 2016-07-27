@@ -287,7 +287,7 @@ get_header(); ?>
                                                     </p>
 													<p class="col-1-3 form-field">
 														<label for="desc_exp_prof">Description <span class="required">*</span></label>
-														<textarea name="desc_exp_prof" id="desc_exp_prof" placeholder="Quelques description"><?php echo $_POST['desc_exp_prof'];?></textarea>
+														<textarea name="desc_exp_prof" id="desc_exp_prof" placeholder="Quelques mots"><?php echo $_POST['desc_exp_prof'];?></textarea>
 													</p>
 													<div class="col-1-3 form-field">
                                                         <h5>Localisation </h5>
@@ -344,7 +344,7 @@ get_header(); ?>
                                                     </p>
 													<p class="col-1-3 form-field">
 														<label for="desc_exp_for">Description <span class="required">*</span></label>
-														<textarea name="desc_exp_for" id="desc_exp_for" placeholder="Quelques description"><?php echo $_POST['desc_exp_for'];?></textarea>
+														<textarea name="desc_exp_for" id="desc_exp_for" placeholder="Quelques mots"><?php echo $_POST['desc_exp_for'];?></textarea>
 													</p>
 													<div class="col-1-3 form-field">
                                                         <h5>Localisation</h5>
@@ -412,7 +412,7 @@ get_header(); ?>
                                                     </p>
 													<p class="col-1-3 form-field">
 														<label for="desc_exp_pgt">Description <span class="required">*</span></label>
-														<textarea name="desc_exp_pgt" id="desc_exp_pgt" placeholder="Quelques description"><?php echo $_POST['desc_exp_pgt'];?></textarea>
+														<textarea name="desc_exp_pgt" id="desc_exp_pgt" placeholder="Quelques mots"><?php echo $_POST['desc_exp_pgt'];?></textarea>
 													</p>
 													<div class="col-1-3 form-field">
                                                         <h5>Localisation</h5>
