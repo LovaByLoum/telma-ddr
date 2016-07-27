@@ -150,6 +150,7 @@ jQuery( function( $ ){
 
     //add formation
     jQuery( "#addFormation" ).click(function(){
+        validatorInscription.resetForm();
         jQuery( ".datepicker" ).datepicker( "destroy").removeClass("hasDatepicker");
         addElementRepeater( "formation", "formation-number" );
         var index = jQuery("#formation-number").val();
@@ -159,6 +160,7 @@ jQuery( function( $ ){
 
     //add projet
     jQuery( "#addProjet" ).click(function(){
+        validatorInscription.resetForm();
         jQuery( ".datepicker" ).datepicker( "destroy");
         addElementRepeater( "projet", "projet-number" );
         var index = jQuery("#projet-number").val();
@@ -210,7 +212,7 @@ jQuery( function( $ ){
             }
         }
     };
-    var projet = {
+    var projetNew = {
         "titre_exp_pgt" : {
             required : true
         },
@@ -220,10 +222,10 @@ jQuery( function( $ ){
         "df_exp_pgt" : {
             required : true
         },
-        "organisme_exp_pgt" : {
+        "desc_exp_pgt" : {
             required : true
         },
-        "desc_exp_pgt" : {
+        "organisme_exp_pgt" : {
             required : true
         }
     };
@@ -260,11 +262,11 @@ jQuery( function( $ ){
         if ( jQuery(this).val() == 1 ){
             jQuery( "#projet-repeat" ).show();
             jQuery( "#addProjet" ).show();
-            addRules( projet );
+            addRules( projetNew );
         } else {
             jQuery( "#projet-repeat").hide();
             jQuery( "#addProjet").hide();
-            removeRules( projet );
+            removeRules( projetNew );
         }
     });
 
@@ -330,11 +332,11 @@ jQuery( function( $ ){
                 valueNotEquals : "0"
             },
             "num_phone" :{
-                required : true
+                required : true,
+                number : true
             },
             "titre_exp_prof" : {
-                required : true,
-                minlenght: 3
+                required : true
             },
             "db_exp_prof" : {
                 required : true
@@ -401,7 +403,8 @@ jQuery( function( $ ){
                 valueNotEquals : "l'année d'expérience est requis."
             },
             "num_phone" :{
-                required : "La numéro de téléphone est requise."
+                required : "La numéro de téléphone est requise.",
+                number : "La numéro de téléphone est invalide (entier uniquement)"
             },
             "titre_exp_prof" : {
                 required : "Le titre est requis."
@@ -681,6 +684,12 @@ function addRulesElementRepeater( index, namePrefix ){
             }
         }
     );
+    jQuery( "textarea[name=" + description + "]").rules("add", {
+        required : true,
+        messages : {
+            required : "La description est requise."
+        }
+    })
     jQuery( "input[name= " + dateFin + "]" ).rules("add", {
             required : true,
             messages : {
