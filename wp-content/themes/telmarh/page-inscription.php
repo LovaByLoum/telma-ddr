@@ -306,8 +306,8 @@ get_header(); ?>
 												</div>
 				                            </div>
 				                            <p class="col-1-1 add-element">
-                                                <a href="javascript:;" id="addExperience" title="En savoir plus">
-                                                    <i class="fa fa-plus"></i>&nbsp;&nbsp;Ajouter une autre
+                                                <a href="javascript:;" id="addExperience" title="Ajouter plus">
+                                                    <i class="fa fa-plus"></i>&nbsp;&nbsp;Ajouter
                                                 </a>
 					                            <input type="hidden" id="experience-number" value="0" name="experience-number">
                                             </p>
@@ -363,8 +363,8 @@ get_header(); ?>
 												</div>
 				                            </div>
 				                            <p class="col-1-1 add-element">
-	                                            <a href="javascript:;" id="addFormation"  title="En savoir plus">
-		                                            <i class="fa fa-plus"></i>&nbsp;&nbsp;Ajouter une autre
+	                                            <a href="javascript:;" id="addFormation"  title="Ajouter plus">
+		                                            <i class="fa fa-plus"></i>&nbsp;&nbsp;Ajouter
 	                                            </a>
 					                            <input type="hidden" id="formation-number" name="formation-number" value="0">
 	                                        </p>
@@ -431,8 +431,8 @@ get_header(); ?>
 												</div>
 				                            </div>
 				                            <p class="col-1-1 add-element">
-                                                <a href="javascript:;" id="addProjet" title="En savoir plus">
-	                                                <i class="fa fa-plus"></i>&nbsp;&nbsp;Ajouter une autre
+                                                <a href="javascript:;" id="addProjet" title="Ajouter plus">
+	                                                <i class="fa fa-plus"></i>&nbsp;&nbsp;Ajouter
                                                 </a>
 					                            <input type="hidden" name="projet-number" id="projet-number" value="0">
                                             </p>
