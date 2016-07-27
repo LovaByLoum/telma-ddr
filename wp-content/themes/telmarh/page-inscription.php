@@ -11,7 +11,7 @@
 if ( is_user_logged_in() ){
 	wp_redirect( home_url() );
 }
-global $post;
+global $post, $telmarh_options;
 $results = telmarh_inscription_user();
 $anneeExperiences       = get_terms( JM_TAXONOMIE_ANNEE_EXPERIENCE, array( 'hide_empty' => false ) );
 $typeContrat            = get_terms( JM_TAXONOMIE_TYPE_CONTRAT, array( 'hide_empty' => false ) );
@@ -19,10 +19,10 @@ $localisation           = get_terms( JM_TAXONOMIE_LOCALISATION,array( 'hide_empt
 $criticites             = get_terms( JM_TAXONOMIE_CRITICITE, array( 'hide_empty' => false ) );
 $niveauEtudes           = get_terms( JM_TAXONOMIE_NIVEAU_ETUDE, array( 'hide_empty' => false ) );
 $domainesMetier         = get_terms( JM_TAXONOMIE_DEPARTEMENT, array( 'hide_empty' => false ) );
-$referentielEtude       = array( "Informatiques", "Géstion" );
-$listPays               = array( "France","Madagascar", "Nigéria" );
-$entreprises  = JM_Societe::getBy();
-$nonce = wp_create_nonce( "inscription-user" );
+$referentielEtude       = ( isset( $telmarh_options['list_domaine_etude'] ) && !empty( $telmarh_options['list_domaine_etude'] ) ) ? explode(",", $telmarh_options['list_domaine_etude']) : array();
+$listPays               = ( isset( $telmarh_options['list_pays'] ) && !empty( $telmarh_options['list_pays'] ) ) ? explode( ",", $telmarh_options['list_pays'] ) : array();
+$entreprises            = JM_Societe::getBy();
+$nonce                  = wp_create_nonce( "inscription-user" );
 get_header(); ?>
 	<section id="page-full-entry-content">
 		    <div class="grid grid-pad">

@@ -535,39 +535,92 @@ function telmarh_fm_data_query_clauses( $queryClauses ){
 }
 
 function telmarh_add_custom_filter() {
-	global $filterNiveauEtudeShow;
-	if ( !is_null( $filterNiveauEtudeShow ) ) return;
-	$filterNiveauEtudeShow = true;
+	global $filterNiveauEtudeShow, $filterDomaineMetier;
+	//Niveau d'etude
 	$niveauEtudes = get_terms( JM_TAXONOMIE_NIVEAU_ETUDE, array( 'hide_empty' => false ) );
-    if ( isset( $_GET[ 'niveau_etude' ]) ) {
-        $section = $_GET[ 'niveau_etude' ];
-        $section = !empty( $section ) ? $section : "";
-    } else {
-        $section = "";
-    }
-    echo ' <select name="niveau_etude" id="niveau_etude" style="float:none;"><option value="">Niveau Etude...</option>';
-    foreach ( $niveauEtudes as $term ) {
-        $selected = $term->name == $section ? ' selected="selected"' : '';
-        echo '<option value="' . $term->name . '"' . $selected . '>' . $term->name . '</option>';
-    }
-    echo '<input type="submit" class="button" value="Filter">';
+	if ( !is_null( $filterNiveauEtudeShow ) ) return;
+	//Domaine d'etude
+	$domaineMetier = get_terms( JM_TAXONOMIE_DEPARTEMENT, array( 'hide_empty' => false ) );
+	if ( !is_null( $filterDomaineMetier ) ) return;
+	$filterNiveauEtudeShow = true;
+	$filterDomaineMetier = true;
+	$niveauEtudesSelected = ( isset( $_GET[ 'niveau_etude' ] ) && !empty( $_GET[ 'niveau_etude' ] ) ) ? $_GET[ 'niveau_etude' ] : "";
+	$domaineEtudeSelected = ( isset( $_GET[ 'domaine_etude' ] ) && !empty( $_GET[ 'domaine_etude' ] ) ) ? $_GET[ 'domaine_etude' ] : "";
+	echo ' <select name="domaine_etude" id="domaine_etude" style="float:none;"><option value="">Domaine métier ciblé...</option>';
+	foreach ( $domaineMetier as $term ) {
+		$selected = $term->name == $domaineEtudeSelected ? ' selected="selected"' : '';
+		echo '<option value="' . $term->name . '"' . $selected . '>' . $term->name . '</option>';
+	}
+	echo '</select>';
+	echo '<input type="submit" class="button" value="Filter">';
+	echo ' <select name="niveau_etude" id="niveau_etude" style="float:none;"><option value="">Niveau Etude...</option>';
+	foreach ( $niveauEtudes as $term ) {
+		$selected = $term->name == $niveauEtudesSelected ? ' selected="selected"' : '';
+		echo '<option value="' . $term->name . '"' . $selected . '>' . $term->name . '</option>';
+	}
+	echo '</select>';
+	echo '<input type="submit" class="button" value="Filter">';
 }
 add_action( 'restrict_manage_users', 'telmarh_add_custom_filter' );
 function telmarh_filter_users_by_custom( $query ) {
     global $pagenow;
-    if ( is_admin() &&
-         'users.php' == $pagenow &&
-         isset( $_GET[ 'niveau_etude' ] )
-        ) {
-        $section = $_GET[ 'niveau_etude' ];
-        $section = !empty( $section ) ? $section : "";
-        $meta_query = array(
-            array(
-                'key' => 'niveau_etude_user',
-                'value' => $section
-            )
-        );
-        $query->set( 'meta_query', $meta_query );
+    if ( is_admin() && 'users.php' == $pagenow ) {
+	    if ( isset( $_GET[ 'niveau_etude' ] ) ){
+		    $niveauEtude = !empty( $_GET[ 'niveau_etude' ] ) ? $_GET[ 'niveau_etude' ] : "";
+            $meta_query[] = array(
+                array(
+                    'key' => 'niveau_etude_user',
+                    'value' => $niveauEtude
+                )
+            );
+	    }
+
+	    if ( isset( $_GET['domaine_etude'] ) ){
+			$domaineMetier = !empty( $_GET['domaine_etude'] ) ? $_GET['domaine_etude'] : "" ;
+		    $meta_query[] = array(
+			    array(
+				    'key' => "domaine_metier_recherche_user",
+				    'value' => $domaineMetier
+			    )
+		    );
+	    }
+	    $query->set( 'meta_query', $meta_query );
     }
 }
 add_filter( 'pre_get_users', 'telmarh_filter_users_by_custom' );
+//domaine Etude
+function acf_load_domaine_etude_field_choices( $field ){
+	global $telmarh_options;
+	//reset choices
+	$field['choices'] = array( );
+	$field['choices'][""] = "Domaine d'etude ...";
+	if ( isset( $telmarh_options['list_domaine_etude'] ) && !empty( $telmarh_options['list_domaine_etude'] ) ){
+		$domainesEtudes = explode( ",", $telmarh_options['list_domaine_etude'] );
+		foreach ( $domainesEtudes as $elt ){
+			$field['choices'][sanitize_title( $elt )] = $elt;
+		}
+	}
+
+	return $field;
+}
+add_filter('acf/load_field/name=domaine_etude_user', 'acf_load_domaine_etude_field_choices');
+
+//nationnalite
+function acf_load_nationalite_field_choices( $field ){
+	global $telmarh_options;
+	//reset choices
+	$field['choices'] = array( );
+	$field['choices'][""] = "Nationalité ...";
+	if ( isset( $telmarh_options['list_nationnalite'] ) && !empty( $telmarh_options['list_nationnalite'] ) ){
+		$nationalites = explode( ",", $telmarh_options['list_nationnalite'] );
+		foreach ( $nationalites as $elt ){
+			$field['choices'][sanitize_title( $elt )] = $elt;
+		}
+	}
+
+	return $field;
+}
+add_filter('acf/load_field/name=nationalite_user', 'acf_load_nationalite_field_choices');
+
+
+
