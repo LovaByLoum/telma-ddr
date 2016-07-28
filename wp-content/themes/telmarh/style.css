@@ -2546,7 +2546,7 @@ input[type="text"]:hover,input[type="Password"]:hover,#active ,textarea:hover, s
     background:#EAEEF1!important;
     margin-top: 0;
 }
-.comment-form .form-field label {
+.comment-form .form-field label, #fm-form-1 .form-field label {
     font-weight: 300;
     clear: both;
     margin-top: 0;
@@ -2567,7 +2567,12 @@ input[type="text"]:hover,input[type="Password"]:hover,#active ,textarea:hover, s
 .comment-form input.error, .comment-form select.error, .comment-form textarea.error{
     border-color: #FF0000!important;
 }
-.comment-form .form-field label > span.required, .comment-form .head-accordion > span.required,.comment-form .form-field h5 > span.required, .comment-form .form-field span.error   {
+.comment-form .form-field label > span.required,
+#fm-form-1 .form-field label > span.required,
+.comment-form .head-accordion > span.required,
+#fm-form-1 .form-field h4 > span.required,
+.comment-form .form-field h5 > span.required,
+.comment-form .form-field span.error   {
     color :#FF0000;
 }
 

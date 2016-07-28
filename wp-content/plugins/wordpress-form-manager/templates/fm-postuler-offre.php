@@ -78,7 +78,7 @@ $reference = get_post_meta( $postID, REFERENCE_OFFRE, true );
         <h4 class="head-accordion open">Informations personnelles</h4>
         <div class="head-accordion">
             <div class="col-1-2 form-field">
-				<label for="nom">Nom<span class="required">*</span></label>
+				<label for="nom">Nom <span class="required">*</span></label>
                 <input type="text" placeholder="Nom" name="<?php echo $form_items['name_postule'];?>" id="nom" value="<?php echo $user->nom;?>" readonly>
             </div>
             <div class="col-1-2 form-field">
@@ -94,7 +94,7 @@ $reference = get_post_meta( $postID, REFERENCE_OFFRE, true );
 	<div class="control-group">
 		<div class="col-1-1 form-field">
 		    <div class="col-1-2">
-			<h5 class="head-accordion open">Compétences Informatiques<span class="required">*</span></h5>
+			<h4 class="head-accordion open">Compétences Informatiques <span class="required">*</span></h4>
 				<?php if ( !empty( $termInformatiques ) && count( $termInformatiques ) > 0 ) :
 						$i=1?>
 					<?php foreach ( $termInformatiques as $termId ):
@@ -112,7 +112,7 @@ $reference = get_post_meta( $postID, REFERENCE_OFFRE, true );
 	<div class="control-group">
         <div class="col-1-1 form-field">
 	        <div class="col-1-2">
-	        <h5 class="head-accordion open">Compétences linguistiques<span class="required">*</span></h5>
+	        <h4 class="head-accordion open">Compétences linguistiques <span class="required">*</span></h4>
 	        <?php if ( !empty( $termLinguistiques ) && count( $termLinguistiques ) > 0 ):?>
 		        <ul class="list-parent">
 		        <?php foreach ( $termLinguistiques[0] as $termParent ) :?>
@@ -142,13 +142,13 @@ $reference = get_post_meta( $postID, REFERENCE_OFFRE, true );
     </div>
 	<div class="control-group">
 		<div class="col-1-1 form-field">
-			<h5 class="head-accordion open">Votre Message</h5>
+			<h4 class="head-accordion open">Votre message <span class="required">*</span></h4>
 			<textarea name="<?php echo $form_items['message_postule'];?>" placeholder="Votre message"></textarea>
 		</div>
 	</div>
 	<div class="control-group">
-		<div class="col-1-1 form-field">
-			<h5 class="head-accordion open">Pièces jointes</h5>
+		<div class="col-1-1">
+			<h4 class="head-accordion open">Pièces jointes</h4>
 			<div class="col-1-2">
 				<input type="hidden" name="MAX_FILE_SIZE" value="10240000">
 				<input name="<?php echo $form_items['cv_postule'];?>" id="fileCv" type="file" class="inputfile">
@@ -165,8 +165,8 @@ $reference = get_post_meta( $postID, REFERENCE_OFFRE, true );
 		</div>
 	</div>
 	<div class="control-group">
-		<div class="col-1-1 form-field">
-			<h5 class="head-accordion open">Autres documents </h5>
+		<div class="col-1-1">
+			<h4 class="head-accordion open">Autres documents </h4>
 			<div class="col-1-2">
 				<input type="hidden" name="MAX_FILE_SIZE" value="10240000">
 				<input name="<?php echo $form_items['autre_postule'];?>" id="fileAutre" type="file" class="inputfile">
