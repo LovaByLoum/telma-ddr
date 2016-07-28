@@ -517,6 +517,8 @@ jQuery( function( $ ){
                     error.insertAfter(jQuery(".cv"));
                 } else if( element.attr("name") == "file-57864b273eb37" ){
                     error.insertAfter(jQuery(".lm"));
+                }else if( element.attr("name") == "file-5787a3939c837" ){
+                    error.insertAfter(jQuery(".autre"));
                 } else {
                     error.insertAfter(element);
                 }
@@ -555,14 +557,14 @@ jQuery( function( $ ){
                 },
                 "file-57864af3474de" : {
                     required : "Le CV est requis.",
-                    extension : "Le format n'est pas valide( seulement pdf,rtf,docx et doc )."
+                    extension : "Le format n'est pas valide ( seulement pdf, rtf, docx et doc )."
                 },
                 "file-57864b273eb37" : {
                     required : "La lettre de motivation est requis.",
-                    extension : "Le format n'est pas valide( seulement pdf,rtf,docx et doc )."
+                    extension : "Le format n'est pas valide ( seulement pdf, rtf, docx et doc )."
                 },
                 "file-5787a3939c837" : {
-                    extension : "Le format n'est pas valide( seulement pdf,rtf,docx et doc )."
+                    extension : "Le format n'est pas valide ( seulement pdf, rtf, docx et doc )."
                 }
             }
         });

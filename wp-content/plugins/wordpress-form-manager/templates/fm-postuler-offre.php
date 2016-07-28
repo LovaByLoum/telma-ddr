@@ -174,7 +174,7 @@ $reference = get_post_meta( $postID, REFERENCE_OFFRE, true );
 				<input name="<?php echo $form_items['autre_postule'];?>" id="fileAutre" type="file" class="inputfile">
 				<label for="fileAutre" class="input-file-trigger"><span>Autres documents</span></label>
 				<em>(.doc, .rtf, .pdf, .docx)</em>
-				<span class="file-return"></span>
+				<span class="file-return autre"></span>
 			</div>
 		</div>
 	</div>

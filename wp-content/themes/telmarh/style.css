@@ -2620,6 +2620,9 @@ input[type="text"]:hover,input[type="Password"]:hover,#active ,textarea:hover, s
     position: absolute;
     z-index: -1;
 }
+#fm-form-1 .submit {
+    margin: 20px 0;
+}
 .inputfile + label {
     max-width: 80%;
     text-overflow: ellipsis;
