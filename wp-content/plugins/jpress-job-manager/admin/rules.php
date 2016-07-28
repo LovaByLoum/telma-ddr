@@ -11,7 +11,7 @@ function jpress_jm_profile_personal_options($profile){
     $options = get_option( JM_OPTIONS );
     $rh_by_tax = jpress_jm_is_in_options( 'rh_by_tax', 'settings' );
     $rh_by_soc = jpress_jm_is_in_options( 'rh_by_soc', 'settings' );
-    if ( !empty($rh_by_tax) || !empty($rh_by_soc) ):?>
+    if ( ( $profile->roles[0] == JM_ROLE_RESPONSABLE_RH && !empty($rh_by_tax) ) || ( $profile->roles[0] == JM_ROLE_RESPONSABLE_RH && !empty($rh_by_soc) ) ):?>
         <h3>Gestion des offres</h3>
         <table class="form-table">
             <tbody>
