@@ -148,17 +148,19 @@ $reference = get_post_meta( $postID, REFERENCE_OFFRE, true );
 	</div>
 	<div class="control-group">
 		<div class="col-1-1">
-			<h4 class="head-accordion open">Pièces jointes</h4>
+			<h4 class="head-accordion open">Pièces jointes </h4>
 			<div class="col-1-2">
 				<input type="hidden" name="MAX_FILE_SIZE" value="10240000">
 				<input name="<?php echo $form_items['cv_postule'];?>" id="fileCv" type="file" class="inputfile">
 				<label for="fileCv" class="input-file-trigger"><span>Mon CV *</span></label>
+				<em>(.doc, .rtf, .pdf, .docx)</em>
 				<span class="file-return cv"></span>
 			</div>
 			<div class="col-1-2">
 				<input type="hidden" name="MAX_FILE_SIZE" value="10240000">
 				<input name="<?php echo $form_items['lm_postule'];?>" id="fileLm" type="file" class="inputfile">
 				<label for="fileLm" class="input-file-trigger"><span>Ma lettre de motivation *</span></label>
+				<em>(.doc, .rtf, .pdf, .docx)</em>
 				<span class="file-return lm"></span>
 
 			</div>
@@ -171,6 +173,7 @@ $reference = get_post_meta( $postID, REFERENCE_OFFRE, true );
 				<input type="hidden" name="MAX_FILE_SIZE" value="10240000">
 				<input name="<?php echo $form_items['autre_postule'];?>" id="fileAutre" type="file" class="inputfile">
 				<label for="fileAutre" class="input-file-trigger"><span>Autres documents</span></label>
+				<em>(.doc, .rtf, .pdf, .docx)</em>
 				<span class="file-return"></span>
 			</div>
 		</div>

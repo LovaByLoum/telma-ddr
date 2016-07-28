@@ -803,8 +803,10 @@ function addDatePickerInClass( elementClass ){
 function showPreviewImage_click(event) {
     var files = this.files;
     var $input = jQuery(this);
+    var $id = $input.attr("id");
     var i = 0,
         len = files.length;
+    jQuery("label[for=" + $id + "]").html("Modifier");
     (function readFile(n) {
         var reader = new FileReader();
         var f = files[n];
