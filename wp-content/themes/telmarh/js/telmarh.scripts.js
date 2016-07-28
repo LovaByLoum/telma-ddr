@@ -568,6 +568,11 @@ jQuery( function( $ ){
         });
 
         jQuery(".inputfile").change(showPreviewImage_click);
+        jQuery(".list-children input[type=radio]").click(function(){
+            var _this = jQuery(this);
+            var _class = _this.attr("class");
+            jQuery("input[data-class= " + _class + " ]"). attr( "checked", true );
+        });
     }
 
     if ( jQuery("#fm-form-2").length > 0 ){
