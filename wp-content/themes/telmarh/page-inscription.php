@@ -61,15 +61,15 @@ get_header(); ?>
 				                            <div class="head-accordion">
 					                            <p class="col-1-3 form-field">
 						                            <label for="login">Login <span class="required">*</span></label>
-                                                    <input type="text" placeholder="Login" name="login" id="login" value="<?php echo $_POST['login'];?>">
+                                                    <input type="text" placeholder="Login" name="login" id="login" value="<?php echo $_POST['login'];?>" autocomplete="off">
                                                 </p>
                                                 <p class="col-1-3 form-field">
 	                                                <label for="passwrd">Mot de passe <span class="required">*</span></label>
-                                                    <input type="password" placeholder="Mot de passe" name="passwrd" id="passwrd" value="">
+                                                    <input type="password" placeholder="Mot de passe" name="passwrd" id="passwrd" value="" autocomplete="off">
                                                 </p>
                                                 <p class="col-1-3 form-field">
 	                                                <label for="passwrdConfirm">Confirmation du mot de passe <span class="required">*</span></label>
-                                                    <input type="password" placeholder="Confirmation du mot de passe" name="passwrdConfirm" id="passwrdConfirm" value="<?php echo $_POST['passwrdConfirm'];?>">
+                                                    <input type="password" placeholder="Confirmation du mot de passe" name="passwrdConfirm" id="passwrdConfirm" value="<?php echo $_POST['passwrdConfirm'];?>" autocomplete="off">
                                                 </p>
 				                            </div>
 			                            </div>
@@ -79,29 +79,29 @@ get_header(); ?>
 					                            <div class="col-1-1">
 						                            <p class="col-1-3 form-field">
 							                            <label for="nom">Nom <span class="required">*</span></label>
-							                            <input type="text" placeholder="Nom " name="nom" id="nom" value="<?php echo $_POST['nom'];?>">
+							                            <input type="text" autocomplete="off" placeholder="Nom " name="nom" id="nom" value="<?php echo $_POST['nom'];?>">
                                                     </p>
                                                     <p class="col-1-3 form-field">
 	                                                    <label for="prenom">Prénom <span class="required">*</span></label>
-                                                        <input type="text" placeholder="Prénom " id="prenom" name="prenom" value="<?php echo $_POST['prenom'];?>">
+                                                        <input type="text" autocomplete="off" placeholder="Prénom " id="prenom" name="prenom" value="<?php echo $_POST['prenom'];?>">
                                                     </p>
                                                     <p class="col-1-3 form-field">
 	                                                    <label for="birthday">Date de naissance <span class="required">*</span></label>
-                                                        <input type="text" class="datepicker" placeholder="jour/mois/année" readonly name="birthday" id="birthday" value="<?php echo $_POST['birthday'];?>">
+                                                        <input type="text" autocomplete="off" class="datepicker" placeholder="jour/mois/année" readonly name="birthday" id="birthday" value="<?php echo $_POST['birthday'];?>">
                                                     </p>
 					                            </div>
 					                            <div class="col-1-1">
 						                            <p class="col-1-3 form-field">
 							                            <label for="adresse">Adresse <span class="required">*</span></label>
-                                                        <input type="text" placeholder="Adresse" name="adresse" id="adresse" value="<?php echo $_POST['adresse'];?>">
+                                                        <input type="text" autocomplete="off" placeholder="Adresse" name="adresse" id="adresse" value="<?php echo $_POST['adresse'];?>">
                                                     </p>
                                                     <p class="col-1-3 form-field">
 	                                                    <label for="num_phone">N° de téléphone </label>
-                                                        <input type="text" placeholder="N° de téléphone" id="num_phone" name="num_phone" value="<?php echo $_POST['num_phone'];?>">
+                                                        <input type="text" autocomplete="off" placeholder="N° de téléphone" id="num_phone" name="num_phone" value="<?php echo $_POST['num_phone'];?>">
                                                     </p>
                                                     <p class="col-1-3 form-field">
 	                                                    <label for="email">Adresse email <span class="required">*</span></label>
-                                                        <input type="text" placeholder="Adresse email" name="email" id="email" value="<?php echo $_POST['email'];?>">
+                                                        <input type="text" autocomplete="off" placeholder="Adresse email" name="email" id="email" value="<?php echo $_POST['email'];?>">
                                                     </p>
 					                            </div>
 				                            </div>
@@ -127,7 +127,7 @@ get_header(); ?>
                                                     </div>
 						                            <p class="col-1-3 form-field niveau-required" <?php if ( $_POST['niveau_etude'] == "autre" ):?>style="display: block;" <?php endif;?> >
                                                         <label for="autre_exp">Autre <span class="required">*</span></label>
-                                                        <input type="text" placeholder="Autre Niveau d'étude" name="autre_exp" id="autre_exp" value="<?php echo $_POST['autre_exp'];?>">
+                                                        <input type="text" autocomplete="off" placeholder="Autre Niveau d'étude" name="autre_exp" id="autre_exp" value="<?php echo $_POST['autre_exp'];?>">
                                                     </p>
                                                     <div class="col-1-3 form-field">
                                                         <h5>Domaine d'étude</h5>
@@ -157,11 +157,11 @@ get_header(); ?>
                                                     </div>
                                                     <p class="col-1-3 form-field post-required" <?php if ( isset( $_POST['en_poste'] ) && $_POST['en_poste'] == 1 ):?>style="display: block;" <?php endif;?>>
 	                                                    <label for="entreprise">Nom de l'entreprise <span class="required">*</span></label>
-                                                        <input type="text" name="entreprise_user" placeholder="Nom de l'entreprise" id="entreprise" value="<?php echo $_POST['entreprise_user'];?>"/>
+                                                        <input type="text" autocomplete="off" name="entreprise_user" placeholder="Nom de l'entreprise" id="entreprise" value="<?php echo $_POST['entreprise_user'];?>"/>
                                                     </p>
                                                     <p class="col-1-3 form-field post-required" <?php if ( isset( $_POST['en_poste'] ) && $_POST['en_poste'] == 1 ):?>style="display: block;" <?php endif;?>>
 	                                                    <label for="fonction">Fonction dans l'entreprise <span class="required">*</span></label>
-                                                        <input type="text" name="fonction_user" placeholder="Fonction *" id="fonction" value="<?php echo $_POST['fonction_user'];?>"/>
+                                                        <input type="text" autocomplete="off" name="fonction_user" placeholder="Fonction *" id="fonction" value="<?php echo $_POST['fonction_user'];?>"/>
                                                     </p>
 					                            </div>
 												<div class="col-1-1">
@@ -229,7 +229,7 @@ get_header(); ?>
 					                            <div class="col-1-1">
 						                            <p class="col-1-3 form-field">
 							                            <label for="date_dispo">Date de disponibilité <span class="required">*</span></label>
-                                                        <input type="text" class="datepicker" placeholder="jour/mois/année" readonly name="date_dispo" id="date_dispo" value="<?php echo $_POST['date_dispo'];?>">
+                                                        <input type="text" autocomplete="off" class="datepicker" placeholder="jour/mois/année" readonly name="date_dispo" id="date_dispo" value="<?php echo $_POST['date_dispo'];?>">
                                                     </p>
 						                            <div class="col-1-3 form-field">
                                                         <h5>Nombre d’années d’expérience professionnelle <span class="required">*</span></h5>
@@ -262,21 +262,21 @@ get_header(); ?>
 												<div class="col-1-1">
 													<p class="col-1-3 form-field">
 														<label for="titre_exp_prof">Titre de l'experience <span class="required">*</span></label>
-	                                                    <input type="text" placeholder="Titre de l'experience" name="titre_exp_prof" id="titre_exp_prof" value="<?php echo $_POST['titre_exp_prof'];?>">
+	                                                    <input type="text" autocomplete="off" placeholder="Titre de l'experience" name="titre_exp_prof" id="titre_exp_prof" value="<?php echo $_POST['titre_exp_prof'];?>">
 	                                                </p>
 	                                                <p class="col-1-3 form-field">
 		                                                <label for="db_exp_prof">Date de debut <span class="required">*</span></label>
-	                                                    <input type="text" class="datepicker" placeholder="jour/mois/année" readonly name="db_exp_prof" id="db_exp_prof" value="<?php echo $_POST['db_exp_prof'];?>">
+	                                                    <input type="text" autocomplete="off" class="datepicker" placeholder="jour/mois/année" readonly name="db_exp_prof" id="db_exp_prof" value="<?php echo $_POST['db_exp_prof'];?>">
 	                                                </p>
 	                                                <p class="col-1-3 form-field">
 		                                                <label for="df_exp_prof">Date de fin <span class="required">*</span></label>
-	                                                    <input type="text" class="datepicker" placeholder="jour/mois/année" readonly name="df_exp_prof" id="df_exp_prof" value="<?php echo $_POST['df_exp_prof'];?>">
+	                                                    <input type="text" autocomplete="off" class="datepicker" placeholder="jour/mois/année" readonly name="df_exp_prof" id="df_exp_prof" value="<?php echo $_POST['df_exp_prof'];?>">
 	                                                </p>
 												</div>
 												<div class="col-1-1">
 													<p class="col-1-3 form-field">
 														<label for="organisme_exp_prof">Organisme / Entreprise <span class="required">*</span></label>
-														<input type="text" placeholder="Organisme / Entreprise " name="organisme_exp_prof" id="organisme_exp_prof" value="<?php echo $_POST['organisme_exp_prof'];?>">
+														<input type="text" autocomplete="off" placeholder="Organisme / Entreprise " name="organisme_exp_prof" id="organisme_exp_prof" value="<?php echo $_POST['organisme_exp_prof'];?>">
                                                     </p>
 													<p class="col-1-3 form-field">
 														<label for="desc_exp_prof">Description <span class="required">*</span></label>
@@ -319,21 +319,21 @@ get_header(); ?>
 												<div class="col-1-1">
 													<p class="col-1-3 form-field">
 														<label for="titre_exp_for">Titre de l'experience <span class="required">*</span></label>
-	                                                    <input type="text" placeholder="Titre de l'experience" name="titre_exp_for" id="titre_exp_for" value="<?php echo $_POST['titre_exp_for'];?>">
+	                                                    <input type="text" autocomplete="off" placeholder="Titre de l'experience" name="titre_exp_for" id="titre_exp_for" value="<?php echo $_POST['titre_exp_for'];?>">
 	                                                </p>
 	                                                <p class="col-1-3 form-field">
 		                                                <label for="db_exp_for">Date de debut <span class="required">*</span></label>
-	                                                    <input type="text" class="datepicker" placeholder="jour/mois/année" readonly name="db_exp_for" id="db_exp_for" value="<?php echo $_POST['db_exp_for'];?>">
+	                                                    <input type="text" autocomplete="off" class="datepicker" placeholder="jour/mois/année" readonly name="db_exp_for" id="db_exp_for" value="<?php echo $_POST['db_exp_for'];?>">
 	                                                </p>
 	                                                <p class="col-1-3 form-field">
 		                                                <label for="df_exp_for">Date de fin <span class="required">*</span></label>
-	                                                    <input type="text" class="datepicker" placeholder="jour/mois/année" readonly name="df_exp_for" id="df_exp_for" value="<?php echo $_POST['df_exp_for'];?>">
+	                                                    <input type="text" autocomplete="off" class="datepicker" placeholder="jour/mois/année" readonly name="df_exp_for" id="df_exp_for" value="<?php echo $_POST['df_exp_for'];?>">
 	                                                </p>
 												</div>
 												<div class="col-1-1">
 													<p class="col-1-3 form-field">
 														<label for="organisme_exp_for">Organisme / Entreprise <span class="required">*</span></label>
-														<input type="text" placeholder="Organisme / Entreprise " name="organisme_exp_for" id="organisme_exp_for" value="<?php echo $_POST['organisme_exp_for'];?>">
+														<input type="text" autocomplete="off" placeholder="Organisme / Entreprise " name="organisme_exp_for" id="organisme_exp_for" value="<?php echo $_POST['organisme_exp_for'];?>">
                                                     </p>
 													<p class="col-1-3 form-field">
 														<label for="desc_exp_for">Description <span class="required">*</span></label>
@@ -387,21 +387,21 @@ get_header(); ?>
 												<div class="col-1-1">
 													<p class="col-1-3 form-field">
 														<label for="titre_exp_pgt">Titre de l'experience <span class="required">*</span></label>
-	                                                    <input type="text" placeholder="Titre de l'experience" name="titre_exp_pgt" id="titre_exp_pgt" value="<?php echo $_POST['titre_exp_pgt'];?>">
+	                                                    <input type="text" autocomplete="off" placeholder="Titre de l'experience" name="titre_exp_pgt" id="titre_exp_pgt" value="<?php echo $_POST['titre_exp_pgt'];?>">
 	                                                </p>
 	                                                <p class="col-1-3 form-field">
 		                                                <label for="db_exp_pgt">Date de debut <span class="required">*</span></label>
-	                                                    <input type="text" class="datepicker" placeholder="jour/mois/année" readonly name="db_exp_pgt" id="db_exp_pgt" value="<?php echo $_POST['db_exp_pgt'];?>">
+	                                                    <input type="text" autocomplete="off" class="datepicker" placeholder="jour/mois/année" readonly name="db_exp_pgt" id="db_exp_pgt" value="<?php echo $_POST['db_exp_pgt'];?>">
 	                                                </p>
 	                                                <p class="col-1-3 form-field">
 		                                                <label for="df_exp_pgt">Date de fin <span class="required">*</span></label>
-	                                                    <input type="text" class="datepicker" placeholder="jour/mois/année" readonly name="df_exp_pgt" id="df_exp_pgt" value="<?php echo $_POST['df_exp_pgt'];?>">
+	                                                    <input type="text" autocomplete="off" class="datepicker" placeholder="jour/mois/année" readonly name="df_exp_pgt" id="df_exp_pgt" value="<?php echo $_POST['df_exp_pgt'];?>">
 	                                                </p>
 												</div>
 												<div class="col-1-1">
 													<p class="col-1-3 form-field">
 														<label for="organisme_exp_pgt">Organisme / Entreprise <span class="required">*</span></label>
-														<input type="text" placeholder="Organisme / Entreprise " name="organisme_exp_pgt" id="organisme_exp_pgt" value="<?php echo $_POST['organisme_exp_pgt'];?>">
+														<input type="text" autocomplete="off" placeholder="Organisme / Entreprise " name="organisme_exp_pgt" id="organisme_exp_pgt" value="<?php echo $_POST['organisme_exp_pgt'];?>">
                                                     </p>
 													<p class="col-1-3 form-field">
 														<label for="desc_exp_pgt">Description <span class="required">*</span></label>
