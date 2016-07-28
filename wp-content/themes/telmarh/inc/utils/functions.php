@@ -622,5 +622,24 @@ function acf_load_nationalite_field_choices( $field ){
 }
 add_filter('acf/load_field/name=nationalite_user', 'acf_load_nationalite_field_choices');
 
+//pays
+function acf_load_localisation_field_choices( $field ){
+	global $telmarh_options;
+	//reset choices
+	$field['choices'] = array( );
+	$field['choices'][""] = "Localisation ...";
+	if ( isset( $telmarh_options['list_pays'] ) && !empty( $telmarh_options['list_pays'] ) ){
+		$localisations = explode( ",", $telmarh_options['list_pays'] );
+		foreach ( $localisations as $elt ){
+			$field['choices'][sanitize_title( $elt )] = $elt;
+		}
+	}
+
+	return $field;
+}
+add_filter('acf/load_field/name=localisation_exp_pgt', 'acf_load_localisation_field_choices');
+add_filter('acf/load_field/name=localisation_exp_for', 'acf_load_localisation_field_choices');
+add_filter('acf/load_field/name=localisation', 'acf_load_localisation_field_choices');
+
 
 

@@ -211,7 +211,7 @@ jQuery( function( $ ){
     };
 
     var permisCat = {
-        "permCat" :{
+        'permCat[]' :{
             required : true
         }
     };
@@ -301,7 +301,7 @@ jQuery( function( $ ){
               );
             },
         errorPlacement: function(error, element) {
-            if(element.attr("name") == "permCat" ) {
+            if(element.attr("name") == 'permCat[]' ) {
                 error.insertAfter(jQuery(".latest"));
             } else {
                 error.insertAfter(element);
@@ -469,7 +469,7 @@ jQuery( function( $ ){
             "desc_exp_pgt" : {
                 required : "La description est requise."
             },
-            "permCat" : {
+            'permCat[]' : {
                 required : "La catégorie du permis est requise."
             }
         }
@@ -672,6 +672,7 @@ jQuery.validator.addMethod( "loginExist", function( value, element, arg ){
     return isSuccess;
 });
 
+
 jQuery.validator.addMethod("valueNotEquals", function(value, element, arg){
  return arg != value;
 }, "Value must not equal arg.");
@@ -727,12 +728,12 @@ function addRulesElementRepeater( index, namePrefix ){
 
 function addRules(rulesObj){
     for (var item in rulesObj){
-        jQuery('input[name='+item+']').rules('add',rulesObj[item]);
+        jQuery('[name="'+item+'"]').rules('add',rulesObj[item]);
     }
 }
 function removeRules(rulesObj){
     for (var item in rulesObj){
-       jQuery('input[name='+item+']').rules('remove');
+       jQuery('[name="'+item+'"]').rules('remove');
     }
 }
 

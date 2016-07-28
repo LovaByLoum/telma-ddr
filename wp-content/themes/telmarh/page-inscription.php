@@ -23,6 +23,11 @@ $referentielEtude       = ( isset( $telmarh_options['list_domaine_etude'] ) && !
 $listPays               = ( isset( $telmarh_options['list_pays'] ) && !empty( $telmarh_options['list_pays'] ) ) ? explode( ",", $telmarh_options['list_pays'] ) : array();
 $entreprises            = JM_Societe::getBy();
 $nonce                  = wp_create_nonce( "inscription-user" );
+$enPoste                = array( 0 => "Non", 1 => "Oui" );
+$permis                 = $enPoste;
+$catPermis1             = array( "a" => "Permis A", "ap" => "Permis A'", "b" => "Permis B", "c" => "Permis C" );
+$catPermis2             = array( "d" => "Permis D", "e" => "Permis E", "f" => "Permis F" );
+
 get_header(); ?>
 	<section id="page-full-entry-content">
 		    <div class="grid grid-pad">
@@ -42,7 +47,7 @@ get_header(); ?>
 									<div class="entry-content">
 	                                    <?php echo apply_filters("the_content", $post->post_content );?>
                                     </div>
-		                            <?php if ( false && isset( $results['error'] ) && $results['error'] == 1  ) :?>
+		                            <?php if (  isset( $results['error'] ) && $results['error'] == 1  ) :?>
 			                            <!--error php-->
 			                            <?php if ( isset( $results['messages'] ) && !empty( $results['messages'] ) ):?>
 				                            <ul>
@@ -60,7 +65,7 @@ get_header(); ?>
                                                 </p>
                                                 <p class="col-1-3 form-field">
 	                                                <label for="passwrd">Mot de passe <span class="required">*</span></label>
-                                                    <input type="password" placeholder="Mot de passe" name="passwrd" id="passwrd" value="<?php echo $_POST['passwrd'];?>">
+                                                    <input type="password" placeholder="Mot de passe" name="passwrd" id="passwrd" value="">
                                                 </p>
                                                 <p class="col-1-3 form-field">
 	                                                <label for="passwrdConfirm">Confirmation du mot de passe <span class="required">*</span></label>
@@ -115,12 +120,12 @@ get_header(); ?>
                                                                     <option value="<?php echo $term->term_id;?>" <?php if ( $_POST['niveau_etude'] == $term->term_id ):?>selected="selected" <?php endif;?> ><?php echo $term->name;?></option>
                                                                 <?php endforeach;?>
                                                             <?php endif;?>
-	                                                        <option value="autre">Autres</option>
+	                                                        <option value="autre" <?php if ( $_POST['niveau_etude'] == "autre" ):?>selected="selected" <?php endif;?> >Autres</option>
                                                         </select>
                                                         <div class="select__arrow"></div>
                                                         </div>
                                                     </div>
-						                            <p class="col-1-3 form-field niveau-required">
+						                            <p class="col-1-3 form-field niveau-required" <?php if ( $_POST['niveau_etude'] == "autre" ):?>style="display: block;" <?php endif;?> >
                                                         <label for="autre_exp">Autre <span class="required">*</span></label>
                                                         <input type="text" placeholder="Autre Niveau d'étude" name="autre_exp" id="autre_exp" value="<?php echo $_POST['autre_exp'];?>">
                                                     </p>
@@ -143,20 +148,18 @@ get_header(); ?>
 					                            <div class="col-1-1">
 						                            <div class="col-1-3 form-field">
                                                         <h5>En poste<span class="required">*</span></h5>
-                                                        <label class="control control--radio">Non
-                                                            <input type="radio"  value="0" name="en_poste" checked="checked">
-                                                            <div class="control__indicator"></div>
-                                                        </label>
-                                                        <label class="control control--radio">Oui
-                                                            <input type="radio"  value="1" name="en_poste">
-                                                            <div class="control__indicator"></div>
-                                                        </label>
+							                            <?php foreach ( $enPoste as $key=>$val ) :?>
+		                                                    <label class="control control--radio"><?php echo $val;?>
+		                                                        <input type="radio"  value="<?php echo $key;?>" name="en_poste" <?php if ( isset( $_POST['en_poste'] ) && intval( $_POST['en_poste'] ) == $key ):?>checked="checked"<?php endif;?><?php if ( !isset( $_POST['en_poste'] ) && $key == 0 ):?>checked="checked"<?php endif;?>>
+		                                                        <div class="control__indicator"></div>
+		                                                    </label>
+														<?php endforeach;?>
                                                     </div>
-                                                    <p class="col-1-3 form-field post-required">
+                                                    <p class="col-1-3 form-field post-required" <?php if ( isset( $_POST['en_poste'] ) && $_POST['en_poste'] == 1 ):?>style="display: block;" <?php endif;?>>
 	                                                    <label for="entreprise">Nom de l'entreprise <span class="required">*</span></label>
                                                         <input type="text" name="entreprise_user" placeholder="Nom de l'entreprise" id="entreprise" value="<?php echo $_POST['entreprise_user'];?>"/>
                                                     </p>
-                                                    <p class="col-1-3 form-field post-required">
+                                                    <p class="col-1-3 form-field post-required" <?php if ( isset( $_POST['en_poste'] ) && $_POST['en_poste'] == 1 ):?>style="display: block;" <?php endif;?>>
 	                                                    <label for="fonction">Fonction dans l'entreprise <span class="required">*</span></label>
                                                         <input type="text" name="fonction_user" placeholder="Fonction *" id="fonction" value="<?php echo $_POST['fonction_user'];?>"/>
                                                     </p>
@@ -194,48 +197,30 @@ get_header(); ?>
 												<div class="col-1-1">
 													<div class="col-1-3 form-field">
 	                                                    <h5>Permis de conduire <span class="required">*</span></h5>
-	                                                    <label class="control control--radio">Non
-	                                                        <input type="radio"  value="0" name="permis" checked="checked">
+														<?php foreach ( $permis as $key=>$val ) :?>
+	                                                    <label class="control control--radio"><?php echo $val;?>
+	                                                        <input type="radio"  value="<?php echo $key;?>" name="permis" <?php if ( isset( $_POST['permis'] ) && intval( $_POST['permis'] ) == $key ):?>checked="checked"<?php endif;?><?php if ( !isset( $_POST['permis'] ) && $key == 0 ):?>checked="checked"<?php endif;?>>
 	                                                        <div class="control__indicator"></div>
 	                                                    </label>
-	                                                    <label class="control control--radio">Oui
-	                                                        <input type="radio"  value="1" name="permis">
-	                                                        <div class="control__indicator"></div>
-	                                                    </label>
+														<?php endforeach;?>
 	                                                </div>
-						                            <div class="col-1-3 form-field permis-required">
+						                            <div class="col-1-3 form-field permis-required" <?php if ( isset( $_POST['permis'] ) && $_POST['permis'] == 1 ):?>style="display: block;" <?php endif;?>>
 	                                                    <h5>Catégories <span class="required">*</span></h5>
-	                                                    <label class="control control--checkbox">Permis A
-	                                                        <input type="checkbox"  value="A" name="permCat">
+							                            <?php foreach ( $catPermis1 as $key=> $val ):?>
+	                                                    <label class="control control--checkbox"><?php echo $val;?>
+	                                                        <input type="checkbox"  value="<?php echo $key;?>" name="permCat[]" class="permCat" <?php if ( isset( $_POST['permCat'] ) && in_array( $key, $_POST['permCat'] ) ):?>checked="checked" <?php endif;?> >
 	                                                        <div class="control__indicator"></div>
 	                                                    </label>
-	                                                    <label class="control control--checkbox">Permis A'
-	                                                        <input type="checkbox"  value="A'" name="permCat">
-	                                                        <div class="control__indicator"></div>
-	                                                    </label>
-	                                                    <label class="control control--checkbox">Permis B
-	                                                        <input type="checkbox"  value="B" name="permCat">
-	                                                        <div class="control__indicator"></div>
-	                                                    </label>
-	                                                    <label class="control control--checkbox">Permis C
-	                                                        <input type="checkbox"  value="C" name="permCat">
-	                                                        <div class="control__indicator"></div>
-	                                                    </label>
+														<?php endforeach;?>
 	                                                </div>
-						                            <div class="col-1-3 form-field permis-required">
+						                            <div class="col-1-3 form-field permis-required" <?php if ( isset( $_POST['permis'] ) && $_POST['permis'] == 1 ):?>style="display: block;" <?php endif;?>>
 							                            <h5>&nbsp;</h5>
-							                            <label class="control control--checkbox">Permis D
-	                                                        <input type="checkbox"  value="D" name="permCat">
+							                            <?php foreach ( $catPermis2 as $key=>$val ):?>
+							                            <label class="control control--checkbox"><?php echo $val;?>
+	                                                        <input type="checkbox"  value="<?php echo $key;?>" name="permCat[]" class="permCat" <?php if ( isset( $_POST['permCat'] ) && in_array( $key, $_POST['permCat'] ) ):?>checked="checked" <?php endif;?>>
 	                                                        <div class="control__indicator"></div>
 	                                                    </label>
-	                                                    <label class="control control--checkbox">Permis E
-	                                                        <input type="checkbox"  value="E" name="permCat">
-	                                                        <div class="control__indicator"></div>
-	                                                    </label>
-	                                                    <label class="control control--checkbox latest">Permis F
-	                                                        <input type="checkbox"  value="F" name="permCat">
-	                                                        <div class="control__indicator"></div>
-	                                                    </label>
+														<?php endforeach;?>
 						                            </div>
 												</div>
 					                            <div class="col-1-1">

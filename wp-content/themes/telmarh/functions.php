@@ -351,46 +351,45 @@ function telmarh_image_upload($post) {
 function telmarh_inscription_user(){
 	$msg = "";
 	if ( isset( $_POST['nonce-inscription'] ) && !empty( $_POST['nonce-inscription'] ) && wp_verify_nonce( $_POST['nonce-inscription'], "inscription-user" ) ){
-		$login  = ( isset( $_POST['login'] ) && !empty( $_POST['login'] ) ) ? strip_tags( $_POST['login'] ) : "";
-		$password  = ( isset( $_POST['passwrd'] ) && !empty( $_POST['passwrd'] ) ) ? strip_tags( $_POST['passwrd'] ) : "";
-		$nom  = ( isset( $_POST['nom'] ) && !empty( $_POST['nom'] ) ) ? strip_tags( $_POST['nom'] ) : "";
-		$prenom  = ( isset( $_POST['prenom'] ) && !empty( $_POST['prenom'] ) ) ? strip_tags( $_POST['prenom'] ) : "";
-		$birthday  = ( isset( $_POST['birthday'] ) && !empty( $_POST['birthday'] ) ) ? strip_tags( $_POST['birthday'] ) : "";
-		$adresse  = ( isset( $_POST['adresse'] ) && !empty( $_POST['adresse'] ) ) ? strip_tags( $_POST['adresse'] ) : "";
-		$numPhone  = ( isset( $_POST['num_phone'] ) && !empty( $_POST['num_phone'] ) ) ? strip_tags( $_POST['num_phone'] ) : "";
-		$email  = ( isset( $_POST['email'] ) && !empty( $_POST['email'] ) ) ? strip_tags( $_POST['email'] ) : "";
-		$niveauEtude  = ( isset( $_POST['niveau_etude'] ) && !empty( $_POST['niveau_etude'] ) ) ? strip_tags( $_POST['niveau_etude'] ) : "";
-		$domaineEtude = ( isset( $_POST['ref_etude'] ) && !empty( $_POST['ref_etude'] ) ) ? strip_tags( $_POST['ref_etude'] ) : "";
-		$mobilite = ( isset( $_POST['region'] ) && !empty( $_POST['region'] ) ) ? strip_tags( $_POST['region'] ) : "";
-		$enPoste = ( isset( $_POST['en_poste'] ) && !empty( $_POST['en_poste'] ) ) ? strip_tags( $_POST['en_poste'] ) : "";
-		$nomEntreprise = ( isset( $_POST['entreprise_user'] ) && !empty( $_POST['entreprise_user'] ) ) ? strip_tags( $_POST['entreprise_user'] ) : "";
-		$fonction = ( isset( $_POST['fonction_user'] ) && !empty( $_POST['fonction_user'] ) ) ? strip_tags( $_POST['fonction_user'] ) : "";
-		$domaineMetier = ( isset( $_POST['dom_metier'] ) && !empty( $_POST['dom_metier'] ) ) ? strip_tags( $_POST['dom_metier'] ) : "";
-		$permis = ( isset( $_POST['permis'] ) && !empty( $_POST['permis'] ) ) ? strip_tags( $_POST['permis'] ) : "";
-		$catPermis = ( isset( $_POST['permis_cat'] ) && !empty( $_POST['permis_cat'] ) ) ? $_POST['permis_cat'] : "";
-		$dateDispo = ( isset( $_POST['date_dispo'] ) && !empty( $_POST['date_dispo'] ) ) ? strip_tags( $_POST['date_dispo'] ) : "";
-		$anneeExperience = ( isset( $_POST['annee_exp'] ) && !empty( $_POST['annee_exp'] ) ) ? strip_tags( $_POST['annee_exp'] ) : "";
-		$autreExperience = ( isset( $_POST['autre_exp'] ) && !empty( $_POST['autre_exp'] ) ) ? strip_tags( $_POST['autre_exp'] ) : "";
-		$titreExpProf = ( isset( $_POST['titre_exp_prof'] ) && !empty( $_POST['titre_exp_prof'] ) ) ? strip_tags( $_POST['titre_exp_prof'] ) : "";
-		$isProjet = ( isset( $_POST['projet'] ) && !empty( $_POST['projet'] ) ) ? strip_tags( $_POST['projet'] ) : "";
-		$dbExpProf = ( isset( $_POST['db_exp_prof'] ) && !empty( $_POST['db_exp_prof'] ) ) ? strip_tags( $_POST['db_exp_prof'] ) : "";
-		$dfExpProf = ( isset( $_POST['df_exp_prof'] ) && !empty( $_POST['df_exp_prof'] ) ) ? strip_tags( $_POST['df_exp_prof'] ) : "";
-		$organismeExpProf = ( isset( $_POST['organisme_exp_prof'] ) && !empty( $_POST['organisme_exp_prof'] ) ) ? strip_tags( $_POST['organisme_exp_prof'] ) : "";
-		$descExpProf = ( isset( $_POST['desc_exp_prof'] ) && !empty( $_POST['desc_exp_prof'] ) ) ? strip_tags( $_POST['desc_exp_prof'] ) : "";
+		$login              = ( isset( $_POST['login'] ) && !empty( $_POST['login'] ) ) ? strip_tags( $_POST['login'] ) : "";
+		$password           = ( isset( $_POST['passwrd'] ) && !empty( $_POST['passwrd'] ) ) ? strip_tags( $_POST['passwrd'] ) : "";
+		$nom                = ( isset( $_POST['nom'] ) && !empty( $_POST['nom'] ) ) ? strip_tags( $_POST['nom'] ) : "";
+		$prenom             = ( isset( $_POST['prenom'] ) && !empty( $_POST['prenom'] ) ) ? strip_tags( $_POST['prenom'] ) : "";
+		$birthday           = ( isset( $_POST['birthday'] ) && !empty( $_POST['birthday'] ) ) ? strip_tags( $_POST['birthday'] ) : "";
+		$adresse            = ( isset( $_POST['adresse'] ) && !empty( $_POST['adresse'] ) ) ? strip_tags( $_POST['adresse'] ) : "";
+		$numPhone           = ( isset( $_POST['num_phone'] ) && !empty( $_POST['num_phone'] ) ) ? strip_tags( $_POST['num_phone'] ) : "";
+		$email              = ( isset( $_POST['email'] ) && !empty( $_POST['email'] ) ) ? strip_tags( $_POST['email'] ) : "";
+		$niveauEtude        = ( isset( $_POST['niveau_etude'] ) && !empty( $_POST['niveau_etude'] ) ) ? strip_tags( $_POST['niveau_etude'] ) : "";
+		$autreNivEtude      = ( isset( $_POST['autre_exp'] ) && !empty( $_POST['autre_exp'] ) ) ? strip_tags( $_POST['autre_exp'] ) : "";
+		$domaineEtude       = ( isset( $_POST['ref_etude'] ) && !empty( $_POST['ref_etude'] ) ) ? strip_tags( $_POST['ref_etude'] ) : "";
+		$mobilite           = ( isset( $_POST['region'] ) && !empty( $_POST['region'] ) ) ? strip_tags( $_POST['region'] ) : "";
+		$enPoste            = ( isset( $_POST['en_poste'] ) && !empty( $_POST['en_poste'] ) ) ? strip_tags( $_POST['en_poste'] ) : "";
+		$nomEntreprise      = ( isset( $_POST['entreprise_user'] ) && !empty( $_POST['entreprise_user'] ) ) ? strip_tags( $_POST['entreprise_user'] ) : "";
+		$fonction           = ( isset( $_POST['fonction_user'] ) && !empty( $_POST['fonction_user'] ) ) ? strip_tags( $_POST['fonction_user'] ) : "";
+		$domaineMetier      = ( isset( $_POST['dom_metier'] ) && !empty( $_POST['dom_metier'] ) ) ? strip_tags( $_POST['dom_metier'] ) : "";
+		$permis             = ( isset( $_POST['permis'] ) && !empty( $_POST['permis'] ) ) ? strip_tags( $_POST['permis'] ) : "";
+		$catPermis          = ( isset( $_POST['permCat'] ) && !empty( $_POST['permCat'] ) ) ? $_POST['permCat'] : "";
+		$dateDispo          = ( isset( $_POST['date_dispo'] ) && !empty( $_POST['date_dispo'] ) ) ? strip_tags( $_POST['date_dispo'] ) : "";
+		$anneeExperience    = ( isset( $_POST['annee_exp'] ) && !empty( $_POST['annee_exp'] ) ) ? strip_tags( $_POST['annee_exp'] ) : "";
+		$titreExpProf       = ( isset( $_POST['titre_exp_prof'] ) && !empty( $_POST['titre_exp_prof'] ) ) ? strip_tags( $_POST['titre_exp_prof'] ) : "";
+		$isProjet           = ( isset( $_POST['projet'] ) && !empty( $_POST['projet'] ) ) ? strip_tags( $_POST['projet'] ) : "";
+		$dbExpProf          = ( isset( $_POST['db_exp_prof'] ) && !empty( $_POST['db_exp_prof'] ) ) ? strip_tags( $_POST['db_exp_prof'] ) : "";
+		$dfExpProf          = ( isset( $_POST['df_exp_prof'] ) && !empty( $_POST['df_exp_prof'] ) ) ? strip_tags( $_POST['df_exp_prof'] ) : "";
+		$organismeExpProf   = ( isset( $_POST['organisme_exp_prof'] ) && !empty( $_POST['organisme_exp_prof'] ) ) ? strip_tags( $_POST['organisme_exp_prof'] ) : "";
+		$descExpProf        = ( isset( $_POST['desc_exp_prof'] ) && !empty( $_POST['desc_exp_prof'] ) ) ? strip_tags( $_POST['desc_exp_prof'] ) : "";
 		$localisationExpProf = ( isset( $_POST['localisation_prof'] ) && !empty( $_POST['localisation_prof'] ) ) ? strip_tags( $_POST['localisation_prof'] ) : "";
-		$titreExpFor = ( isset( $_POST['titre_exp_for'] ) && !empty( $_POST['titre_exp_for'] ) ) ? strip_tags( $_POST['titre_exp_for'] ) : "";
-		$dbExpFor = ( isset( $_POST['db_exp_for'] ) && !empty( $_POST['db_exp_for'] ) ) ? strip_tags( $_POST['db_exp_for'] ) : "";
-		$dfExpFor = ( isset( $_POST['df_exp_for'] ) && !empty( $_POST['df_exp_for'] ) ) ? strip_tags( $_POST['df_exp_for'] ) : "";
-		$organismeExpFor = ( isset( $_POST['organisme_exp_for'] ) && !empty( $_POST['organisme_exp_for'] ) ) ? strip_tags( $_POST['organisme_exp_for'] ) : "";
-		$descExpFor = ( isset( $_POST['desc_exp_for'] ) && !empty( $_POST['desc_exp_for'] ) ) ? strip_tags( $_POST['desc_exp_for'] ) : "";
+		$titreExpFor        = ( isset( $_POST['titre_exp_for'] ) && !empty( $_POST['titre_exp_for'] ) ) ? strip_tags( $_POST['titre_exp_for'] ) : "";
+		$dbExpFor           = ( isset( $_POST['db_exp_for'] ) && !empty( $_POST['db_exp_for'] ) ) ? strip_tags( $_POST['db_exp_for'] ) : "";
+		$dfExpFor           = ( isset( $_POST['df_exp_for'] ) && !empty( $_POST['df_exp_for'] ) ) ? strip_tags( $_POST['df_exp_for'] ) : "";
+		$organismeExpFor    = ( isset( $_POST['organisme_exp_for'] ) && !empty( $_POST['organisme_exp_for'] ) ) ? strip_tags( $_POST['organisme_exp_for'] ) : "";
+		$descExpFor         = ( isset( $_POST['desc_exp_for'] ) && !empty( $_POST['desc_exp_for'] ) ) ? strip_tags( $_POST['desc_exp_for'] ) : "";
 		$localisationExpfor = ( isset( $_POST['localisation_for'] ) && !empty( $_POST['localisation_for'] ) ) ? strip_tags( $_POST['localisation_for'] ) : "";
-		$titreExpPgt = ( isset( $_POST['titre_exp_pgt'] ) && !empty( $_POST['titre_exp_pgt'] ) ) ? strip_tags( $_POST['titre_exp_pgt'] ) : "";
-		$dbExpPgt = ( isset( $_POST['db_exp_pgt'] ) && !empty( $_POST['db_exp_pgt'] ) ) ? strip_tags( $_POST['db_exp_pgt'] ) : "";
-		$dfExpPgt = ( isset( $_POST['df_exp_pgt'] ) && !empty( $_POST['df_exp_pgt'] ) ) ? strip_tags( $_POST['df_exp_pgt'] ) : "";
-		$organismeExpPgt = ( isset( $_POST['organisme_exp_pgt'] ) && !empty( $_POST['organisme_exp_pgt'] ) ) ? strip_tags( $_POST['organisme_exp_pgt'] ) : "";
-		$descExpPgt = ( isset( $_POST['desc_exp_pgt'] ) && !empty( $_POST['desc_exp_pgt'] ) ) ? strip_tags( $_POST['desc_exp_pgt'] ) : "";
+		$titreExpPgt        = ( isset( $_POST['titre_exp_pgt'] ) && !empty( $_POST['titre_exp_pgt'] ) ) ? strip_tags( $_POST['titre_exp_pgt'] ) : "";
+		$dbExpPgt           = ( isset( $_POST['db_exp_pgt'] ) && !empty( $_POST['db_exp_pgt'] ) ) ? strip_tags( $_POST['db_exp_pgt'] ) : "";
+		$dfExpPgt           = ( isset( $_POST['df_exp_pgt'] ) && !empty( $_POST['df_exp_pgt'] ) ) ? strip_tags( $_POST['df_exp_pgt'] ) : "";
+		$organismeExpPgt    = ( isset( $_POST['organisme_exp_pgt'] ) && !empty( $_POST['organisme_exp_pgt'] ) ) ? strip_tags( $_POST['organisme_exp_pgt'] ) : "";
+		$descExpPgt         = ( isset( $_POST['desc_exp_pgt'] ) && !empty( $_POST['desc_exp_pgt'] ) ) ? strip_tags( $_POST['desc_exp_pgt'] ) : "";
 		$localisationExpPgt = ( isset( $_POST['localisation_pgt'] ) && !empty( $_POST['localisation_pgt'] ) ) ? strip_tags( $_POST['localisation_pgt'] ) : "";
-		$nationalite = "Malagasy";
 		//test login
 		if ( !empty( $login ) ) $msg .= "<li>Le login est requis.</li>";
 		//test mdp
@@ -424,8 +423,8 @@ function telmarh_inscription_user(){
 		if ( $anneeExperience == "0" ) $msg .= "<li>L'année d'expérience professionnelle est requise.</li>";
 
 		//années experience autre
-		if ( $anneeExperience == "autre" ) {
-			if ( !empty( $autreExperience ) ) $msg .= "<li>Autre année d'expériznce est requise.</li>";
+		if ( $niveauEtude == "autre" ) {
+			if ( !empty( $autreNivEtude ) ) $msg .= "<li>Autre niveau d'étude est requise.</li>";
 		}
 
 		// titre experience professionnelle
@@ -483,13 +482,6 @@ function telmarh_inscription_user(){
 			if ( !empty( $descExpPgt ) ) $msg .= "<li>La description du projet est requise.</li>";
 		}
 		if ( !empty( $msg ) ){
-			$oNiveauEtude                   =  get_term_by( "id", $niveauEtude, JM_TAXONOMIE_NIVEAU_ETUDE );
-			$oDomaineEtude                  =  get_term_by( "id", $domaineEtude, JM_TAXONOMIE_DEPARTEMENT );
-			$nameDomaineEtude               = ( !empty( $oDomaineEtude ) ) ? $oDomaineEtude->name : "";
-			$oDomaineEtudeRecherche         =  get_term_by( "id", $domaineMetier, JM_TAXONOMIE_DEPARTEMENT );
-			$nameDomaineEtudeRecherche      = ( !empty( $oDomaineEtudeRecherche ) ) ? $oDomaineEtudeRecherche->name : "";
-			$oMobilite                      = get_term_by( "id", $mobilite, JM_TAXONOMIE_LOCALISATION );
-			$nameMobilite                   = ( !empty( $oMobilite ) ) ? $oMobilite->name : "";
 			//create user
 			$obj = pw_new_user_approve();
 			remove_action( "user_register", array( $obj , 'add_user_status') );
@@ -509,30 +501,21 @@ function telmarh_inscription_user(){
 			wp_set_password( $password, $userId );
 			//field user
 			add_user_meta( $userId, 'pw_user_status', 'pending' );
-			add_user_meta( $userId, 'nationalite_user', $nationalite );
 			add_user_meta( $userId, 'date_naissance_user', date( "Ymd", strtotime( str_replace('/', '-',  $birthday ) ) ) );
 			add_user_meta( $userId, 'adresse_user', $adresse );
 			add_user_meta( $userId, 'num_phone_user', $numPhone );
-			add_user_meta( $userId, 'niveau_etude_user', $oNiveauEtude->name );
-			add_user_meta( $userId, 'domaine_etude_user', $nameDomaineEtude );
-			add_user_meta( $userId, 'mobilite_user', $nameMobilite );
+			add_user_meta( $userId, 'niveau_etude_user', $niveauEtude );
+			add_user_meta( $userId, 'domaine_etude_user', sanitize_title($domaineEtude) );
+			add_user_meta( $userId, 'mobilite_user', $mobilite );
 			add_user_meta( $userId, 'en_poste_user', $enPoste );
 			if ( $enPoste == "1" ){
 				add_user_meta( $userId, 'entreprise_user', $nomEntreprise );
 				add_user_meta( $userId, 'fonction_user', $fonction );
 			}
-			add_user_meta( $userId, 'domaine_metier_recherche_user', $nameDomaineEtudeRecherche );
+			add_user_meta( $userId, 'domaine_metier_recherche_user', $domaineMetier );
 			add_user_meta( $userId, 'permis_de_conduire', $permis );
 			if ( $permis == 1 ){
-				$i = 1;
-				$glue = ', ';
-				$cats = "";
-				foreach ( $catPermis as $cat ){
-					$cats .= $cat;
-					if ( ( count( $catPermis ) - 1 ) == $i  ) { $cats .= " et "; $i++; }
-					if ( count( $catPermis ) > $i )  { $cats .= $glue; $i++; }
-				}
-				add_user_meta( $userId, 'categorie_permis_user', $cats );
+				add_user_meta( $userId, 'categorie_permis_user', $catPermis );
 			}
 			add_user_meta( $userId, 'date_disponibilite_user', date( "Ymd", strtotime( str_replace('/', '-', $dateDispo ) ) ) );
 			//experience professionnel
@@ -545,7 +528,7 @@ function telmarh_inscription_user(){
 				"df_exp_prof"           =>  date( "Ymd" , strtotime( str_replace('/', '-', $dfExpProf ) ) ),
 				"description_exp_prof"  =>  $descExpProf,
 				"organisme_exp_prof"    =>  $organismeExpProf,
-				"localisation"          =>  $localisationExpProf
+				"localisation"          =>  sanitize_title( $localisationExpProf )
 			);
 			if ( isset( $_POST['experience-number'] ) && intval( $_POST['experience-number'] ) > 0 ){
 				for ( $i = 1; $i <= intval( $_POST['experience-number'] ); $i++  ){
@@ -555,7 +538,7 @@ function telmarh_inscription_user(){
 						"df_exp_prof"           =>  date( "Ymd" , strtotime( str_replace('/', '-', $_POST['df_exp_prof' . $i] ) ) ),
 						"description_exp_prof"  =>  strip_tags( $_POST['desc_exp_prof' . $i] ),
 						"organisme_exp_prof"    =>  strip_tags( $_POST['organisme_exp_prof' . $i] ),
-						"localisation"          =>  strip_tags( $_POST['localisation_prof' . $i] )
+						"localisation"          =>  sanitize_title( strip_tags( $_POST['localisation_prof' . $i] ) )
 					);
 				}
 			}
@@ -572,7 +555,7 @@ function telmarh_inscription_user(){
 				"df_exp_for"            => date( "Ymd" , strtotime( str_replace('/', '-', $dfExpFor ) ) ),
 				"description_exp_for"   => $descExpFor,
 				"organisme_exp_for"     => $organismeExpFor,
-				"localisation_exp_for"  => $localisationExpfor
+				"localisation_exp_for"  => sanitize_title( $localisationExpfor )
 			);
 			if ( isset( $_POST['formation-number'] ) && intval( $_POST['formation-number'] ) > 0 ){
 				for ( $i = 1; $i <= intval( $_POST['formation-number'] ); $i++  ){
@@ -582,7 +565,7 @@ function telmarh_inscription_user(){
 						"df_exp_for"            => date( "Ymd" , strtotime( str_replace('/', '-', $_POST['df_exp_for' . $i] ) ) ),
 						"description_exp_for"   => strip_tags( $_POST['desc_exp_for' . $i] ),
 						"organisme_exp_for"     => strip_tags( $_POST['organisme_exp_for' . $i] ),
-						"localisation_exp_for"  => strip_tags( $_POST['localisation_for' . $i] )
+						"localisation_exp_for"  => sanitize_title( strip_tags( $_POST['localisation_for' . $i] ) )
 					);
 				}
 			}
@@ -601,7 +584,7 @@ function telmarh_inscription_user(){
 					"df_exp_pgt"            => date( "Ymd" , strtotime( str_replace('/', '-', $dfExpPgt ) ) ),
 					"description_exp_pgt"   => $descExpPgt,
 					"organisme_exp_pgt"     => $organismeExpPgt,
-					"localisation_exp_pgt"  => $localisationExpPgt
+					"localisation_exp_pgt"  => sanitize_title( $localisationExpPgt )
 				);
 
 				if ( isset( $_POST['projet-number'] ) && intval( $_POST['projet-number'] ) > 0 ){
@@ -612,7 +595,7 @@ function telmarh_inscription_user(){
 							"df_exp_pgt"            => date( "Ymd" , strtotime( str_replace('/', '-', $_POST['df_exp_pgt' . $i] ) ) ),
 							"description_exp_pgt"   => strip_tags( $_POST['desc_exp_pgt' . $i] ),
 							"organisme_exp_pgt"     => strip_tags( $_POST['organisme_exp_pgt' . $i] ),
-							"localisation_exp_pgt"  => strip_tags( $_POST['localisation_pgt' . $i] )
+							"localisation_exp_pgt"  => sanitize_title( strip_tags( $_POST['localisation_pgt' . $i] ) )
 						);
 					}
 				}
