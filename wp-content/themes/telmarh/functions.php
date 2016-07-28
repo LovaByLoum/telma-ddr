@@ -784,12 +784,11 @@ function telmarh_pre_user_query( $user_search )
 		    if ( $view_users ) {
 		        // Get the list of admin IDs
 		        $args = array(
-		            'role' => JM_ROLE_RESPONSABLE_RH,
+		            'role__in' => array( JM_ROLE_RESPONSABLE_RH, "administrator", "webmaster", "editor", "author" ),
 		        );
 		        $user_query = new WP_User_Query( $args );
 		        $admins = $user_query->get_results();
-
-		        $admin_ids = array();
+		        $admin_ids = array( );
 		        foreach ( $admins as $admin ) {
 		            $admin_ids[] = $admin->id;
 		        }

@@ -383,7 +383,10 @@ function telmarh_manage_societe_column_value( $column_name, $post_id ) {
 	$reference = get_post_meta( $post_id, REFERENCE_OFFRE, true );
 	if ( $column_name == "reference" ){
 		echo $reference;
+	} elseif ( $column_name == "nbr_candidature" ){
+		echo CPage::fm_get_number_posted_by_post_parent( $post_id, FORMULAIRE_POSTULER_OFFRE );
 	}
+
 }
 add_action('add_meta_boxes','telmarh_init_metabox_offre');
 function telmarh_init_metabox_offre(){

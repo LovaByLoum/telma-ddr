@@ -51,18 +51,23 @@ function jpress_jm_offre_relations($post){
 	}
     $offre = JM_Offre::getById($post->ID);
     $societes = JM_Societe::getBy();
+	if ( $societeCurrent ){
+		$societes = array(
+			JM_Societe::getById( $societeCurrent )
+		);
+	}
     ?>
     <table class="form-table">
         <tbody>
             <tr>
-                <th scope="row">
+                <th scope="rowdf">
                     <label>Entreprise rattachée</label>
                 </th>
                 <td>
-                    <select name="<?php echo JM_META_SOCIETE_OFFRE_RELATION;?>" data-placeholder="Séléctionner une Entreprise" class="chosen-select" tabindex="2" <?php if ( $societeCurrent > 0 ):?>disabled="true"<?php endif;?> >
+                    <select name="<?php echo JM_META_SOCIETE_OFFRE_RELATION;?>" data-placeholder="Séléctionner une Entreprise" class="chosen-select" tabindex="2"  >
                         <option value=""></option>
                         <?php foreach ( $societes as $soc):?>
-                            <option value="<?php echo $soc->id;?>" <?php if ( $offre->societe_associe ==  $soc->id ||  ( $societeCurrent > 0 && $societeCurrent == $soc->id ) ): ?>selected<?php endif;?>><?php echo $soc->titre;?></option>
+                            <option value="<?php echo $soc->id;?>" <?php if ( $offre->societe_associe ==  $soc->id || count( $societes ) == 1 ): ?>selected="selected"<?php endif;?>><?php echo $soc->titre;?></option>
                         <?php endforeach; ?>
                     </select>
                 </td>

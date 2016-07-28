@@ -245,6 +245,11 @@ class CPage
 
 	return $wpdb->get_var($wpdb->prepare("SELECT unique_name FROM {$wpdb->prefix}fm_items WHERE ID = %d AND nickname = %s",intval($formid),$nickname));
 	}
+
+	public static function fm_get_number_posted_by_post_parent( $postId, $formId ){
+		global $wpdb;
+		return $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM  {$wpdb->prefix}fm_data_{$formId} WHERE parent_post_id = %d", $postId ) );
+	}
 }
 
 add_action( "init", "CPage::action" );
