@@ -215,12 +215,15 @@ get_header(); ?>
 	                                                </div>
 						                            <div class="col-1-3 form-field permis-required" <?php if ( isset( $_POST['permis'] ) && $_POST['permis'] == 1 ):?>style="display: block;" <?php endif;?>>
 							                            <h5>&nbsp;</h5>
-							                            <?php foreach ( $catPermis2 as $key=>$val ):?>
-							                            <label class="control control--checkbox"><?php echo $val;?>
+							                            <?php
+							                            $i = 1;
+							                            foreach ( $catPermis2 as $key=>$val ):?>
+							                            <label class="control control--checkbox <?php if ( count( $catPermis2 ) == $i ):?>latest<?php endif;?> "><?php echo $val;?>
 	                                                        <input type="checkbox"  value="<?php echo $key;?>" name="permCat[]" class="permCat" <?php if ( isset( $_POST['permCat'] ) && in_array( $key, $_POST['permCat'] ) ):?>checked="checked" <?php endif;?>>
 	                                                        <div class="control__indicator"></div>
 	                                                    </label>
-														<?php endforeach;?>
+													<?php   $i++;
+						                                endforeach;?>
 						                            </div>
 												</div>
 					                            <div class="col-1-1">
