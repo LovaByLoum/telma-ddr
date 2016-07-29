@@ -484,6 +484,14 @@ function telmarh_admin_head(){
 	        });
 	        </script>
 	    ";
+	} else if ( is_admin() && in_array( $current_user->roles[0], array( "subscriber" ) ) ){
+		$scripts .= "\\
+			<style>
+				#acf-status_user,#acf-notation_user,#acf-observations_user{
+					display: none;
+				}
+			</style>
+			";
 	}
 
 	echo $scripts;

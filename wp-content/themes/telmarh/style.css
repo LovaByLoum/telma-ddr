@@ -2672,8 +2672,10 @@ input[type="text"]:hover,input[type="Password"]:hover,#active ,textarea:hover, s
     display: block;
     color: #FF0000;
 }
-.result-submit {
+.result-submit,
+body.page-template-page-postuler-offre .entry-content + p{
     color: #008803;
+    font-size: 1.5em;
 }
 .widget-area .single-offre-sidebar > a {
     min-width: 220px;
