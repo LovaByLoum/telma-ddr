@@ -503,7 +503,7 @@ jQuery( function( $ ){
             invalidHandler:  function(e){
               setTimeout(
                 function(){
-                  scrollto(jQuery('input.error,textarea.error').eq(0).parent());
+                    scrollTop :jQuery('input.error,textarea.error').eq(0).parent();
                 },
                 500
               );
@@ -570,10 +570,19 @@ jQuery( function( $ ){
         });
 
         jQuery(".inputfile").change(showPreviewImage_click);
-        jQuery(".list-children input[type=radio]").click(function(){
+        jQuery(".list-children input[type=checkbox]").change(function(){
+            var _checked = false;
             var _this = jQuery(this);
             var _class = _this.attr("class");
-            jQuery("input[data-class= " + _class + " ]"). attr( "checked", true );
+            jQuery("input." + _class). each(function (index, elt){
+                if ( jQuery(elt).is(":checked") ) _checked = true;
+            });
+            if ( _checked ) {
+                jQuery("input[data-class= " + _class + " ]"). attr( "checked", true );
+            } else {
+                jQuery("input[data-class= " + _class + " ]"). removeAttr( "checked");
+            }
+
         });
     }
 

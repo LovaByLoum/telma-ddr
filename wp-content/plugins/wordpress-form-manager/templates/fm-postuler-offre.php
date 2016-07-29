@@ -125,8 +125,8 @@ $reference = get_post_meta( $postID, REFERENCE_OFFRE, true );
 				        <ul class="list-children">
 				        <?php foreach ( $termLinguistiques[$termParent['id']][0] as $termChild ):?>
 					        <li>
-						        <label class="control control--radio"><?php echo $termChild['name'];?>
-		                            <input type="radio"  value="<?php echo $termChild['id'];?>" name="<?php echo sanitize_title( $termParent['name'] );?>" class="<?php echo sanitize_title( $termParent['name'] );?>">
+						        <label class="control control--checkbox"><?php echo $termChild['name'];?>
+		                            <input type="checkbox"  value="<?php echo $termChild['id'];?>" name="<?php echo sanitize_title( $termParent['name'] );?>[]" class="<?php echo sanitize_title( $termParent['name'] );?>">
 		                            <div class="control__indicator"></div>
 		                        </label>
 					        </li>
