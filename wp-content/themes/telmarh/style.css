@@ -2594,6 +2594,16 @@ input[type="text"]:hover,input[type="Password"]:hover,#active ,textarea:hover, s
      text-align: center;
      min-width: 260px;
  }
+.inset .lostpassword {
+    display: block;
+    font-size: 1em;
+    color: #787878;
+    padding-bottom: 5px;
+    font-weight: 600;
+    font-family: 'Open Sans', sans-serif;
+    float: left;
+    margin: 0 2em 2em 0;
+}
 .inset .login-submit.link-inscript a::before {
     border: 1px solid #28b1ff;
 }
@@ -2664,4 +2674,8 @@ input[type="text"]:hover,input[type="Password"]:hover,#active ,textarea:hover, s
 }
 .result-submit {
     color: #008803;
+}
+.widget-area .single-offre-sidebar > a {
+    min-width: 220px;
+    text-align: center;
 }

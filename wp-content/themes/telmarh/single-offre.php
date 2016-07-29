@@ -13,7 +13,7 @@ $postOffes = ( is_object( wp_get_post_by_template( "offres.php" ) ) ) ?  wp_get_
 $competenceRequis = COffre::getCompetenceRequis( $post->ID );
 $pageInscription = wp_get_post_by_template( "page-inscription.php", "" );
 $pagePostuleOffre = wp_get_post_by_template( "page-postuler-offre.php", "" );
-$linkPostule = ( is_user_logged_in() ) ? get_permalink( $pagePostuleOffre->ID ) ."?po=" . $post->ID : get_permalink( $pageInscription->ID );
+$linkPostule = ( is_user_logged_in() ) ? get_permalink( $pagePostuleOffre->ID ) ."?po=" . $post->ID : "javascript:;";
 get_header(); ?>
 	<section id="page-entry-content" class="single-offer">
 	    <div class="grid grid-pad">
@@ -108,7 +108,7 @@ get_header(); ?>
 		                            <?php endif;?>
 		                            <!--description qualité requise-->
 		                            <p class="animate-plus animate-init single-offre-left" data-animations="fadeInUp" data-animation-delay="1.5s">
-                                        <a href="<?php echo $linkPostule;?>" class="submit_link button--wapasha button--round-l" id="postule-offre">
+                                        <a href="<?php echo $linkPostule;?>" class="submit_link button--wapasha button--round-l <?php if ( !is_user_logged_in() ):?>postule-offre<?php endif;?>" >
                                             <span>
                                                 Postuler à cette offre
                                             </span>
@@ -130,6 +130,13 @@ get_header(); ?>
 		    <div class="col-3-12">
                 <div class="widget-area">
                     <aside class="widget widget_recent_entries">
+	                    <p class="single-offre-sidebar">
+		                    <a href="<?php echo $linkPostule;?>" class="submit_link button--wapasha button--round-l <?php if ( !is_user_logged_in() ):?>postule-offre<?php endif;?>" >
+                                <span>
+                                    Postuler à cette offre
+                                </span>
+                            </a>
+                        </p>
 	                    <h3 class="widget-title">
 		                    Caracteristiques du poste
 	                    </h3>

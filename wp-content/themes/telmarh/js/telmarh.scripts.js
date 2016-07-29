@@ -132,7 +132,7 @@ jQuery( function( $ ){
         jQuery(".page-template-offres .listing-offer .grid .col-3-12").insertBefore(".page-template-offres .listing-offer .grid .col-9-12");
     }
 
-    jQuery(".menu-item #login_user").on("click", function(){
+    jQuery(".menu-item #login_user, .postule-offre > span").on("click", function(){
         jQuery("#login-user").slideToggle();
 
     });
