@@ -651,6 +651,19 @@ function acf_load_localisation_field_choices( $field ){
 add_filter('acf/load_field/name=localisation_exp_pgt', 'acf_load_localisation_field_choices');
 add_filter('acf/load_field/name=localisation_exp_for', 'acf_load_localisation_field_choices');
 add_filter('acf/load_field/name=localisation', 'acf_load_localisation_field_choices');
+$obj = pw_new_user_approve();
+remove_action( "new_user_approve_approve_user", array($obj, "approve_user" ) );
+add_action( "new_user_approve_approve_user", "telmarh_ew_user_approve_approve_user" );
+function telmarh_ew_user_approve_approve_user( $user_id ){
+	$user = new WP_User( $user_id );
+	if ( in_array( $user->roles[0], array( "subscriber" )  ) ){
+		update_user_meta( $user->ID, 'pw_user_status', 'approved' );
+	} else {
+		$objApprove = pw_new_user_approve();
+		$objApprove->approve_user( $user_id );
+	}
+
+}
 
 
 
