@@ -895,9 +895,10 @@ function telmarh_connection(){
 		$creds['user_password'] = $_POST['custom_pwd'];
 		$creds['remember'] = $_POST['custom_rememberme'];
 		$user = wp_signon( $creds, $secure_cookie );
-		wp_set_current_user( $user->ID );
 		if ( isset( $user->errors ) ){
 			$_POST['errors'] = $user->errors;
+		} else {
+			wp_set_current_user( $user->ID );
 		}
 		$to_redirect = ( isset( $_POST['redirect_to'] ) && !empty( $_POST['redirect_to'] ) ) ? $_POST['redirect_to'] . "offres" : home_url();
 		if ( !is_wp_error($user) ) {

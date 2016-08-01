@@ -127,7 +127,7 @@
         <?php wp_nav_menu( array( 'theme_location' => 'primary' ) ); ?> 
 	</nav><!-- cbp-spmenu -->
 	<?php $error = ( isset( $_POST['errors'] ) && !empty( $_POST['errors'] ) ) ? $_POST['errors'] : "";?>
-	<div id="login-user" class="login" <?php if ( !empty($error) ) :?>style="display: none;"<?php endif;?>>
+	<div id="login-user" class="login" <?php if ( !empty($error) ) :?>style="display: block;"<?php endif;?>>
 		<?php   if ( !is_user_logged_in() ) :?>
 					<div class="inset">
 						<?php include("tpl/connexion.tpl.php");?>
