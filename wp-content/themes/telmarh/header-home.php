@@ -126,18 +126,11 @@
         <h3><i class="fa fa-close"></i> <?php _e( 'Close', 'telmarh' ); ?> <?php echo esc_html( get_theme_mod( 'telmarh_menu_name', __( 'Menu', 'telmarh' )  )); ?></h3>
         <?php wp_nav_menu( array( 'theme_location' => 'primary' ) ); ?> 
 	</nav><!-- cbp-spmenu -->
-	<div id="login-user" class="login">
-		<?php 	if ( !is_user_logged_in() ) :?>
+	<?php $error = ( isset( $_POST['errors'] ) && !empty( $_POST['errors'] ) ) ? $_POST['errors'] : "";?>
+	<div id="login-user" class="login" <?php if ( !empty($error) ) :?>style="display: none;"<?php endif;?>>
+		<?php   if ( !is_user_logged_in() ) :?>
 					<div class="inset">
-				<?php	$args = array(
-							'echo' => 'true',
-							'form_id'        => 'loginform',
-							'id_username'    => 'user_login',
-							'id_password'    => 'user_pass',
-							'id_remember'    => 'rememberme',
-							'id_submit'      => 'wp-submit',
-						);
-						wp_login_form();?>
+						<?php include("tpl/connexion.tpl.php");?>
 					</div>
 		<?php   endif;?>
 	</div>

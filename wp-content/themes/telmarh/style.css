@@ -2564,7 +2564,9 @@ input[type="text"]:hover,input[type="Password"]:hover,#active ,textarea:hover, s
 .comment-form .post-required, .comment-form .permis-required, .comment-form .niveau-required {
     display: none;
 }
-.comment-form input.error, .comment-form select.error, .comment-form textarea.error{
+.comment-form input.error
+, .comment-form select.error
+, .comment-form textarea.error{
     border-color: #FF0000!important;
 }
 .comment-form .form-field label > span.required,
@@ -2680,4 +2682,11 @@ body.page-template-page-postuler-offre .entry-content + p{
 .widget-area .single-offre-sidebar > a {
     min-width: 220px;
     text-align: center;
+}
+#loginform .login-username input.error,
+#loginform .login-password input.error{
+    border-color: #FF0000!important;
+}
+#loginform .login-username.error{
+    color: #ff0000;
 }

@@ -873,3 +873,37 @@ function telmarh_fm_change_nickname_to_label( $col ){
 	if ( isset( $col['item'] ) && !empty( $col['item'] ) ) return $col['item']['label'];
 	else return $col['value'];
 }
+add_action("init", "telmarh_connection");
+function telmarh_connection(){
+	$secure_cookie = '';
+	$creds = array();
+	if ( !is_user_logged_in() ){
+		// If the user wants ssl but the session is not ssl, force a secure cookie.
+			if ( !empty($_POST['custom_log']) && !force_ssl_admin() ) {
+				$user_name = sanitize_user($_POST['custom_log']);
+				$user = get_user_by( 'login', $user_name );
+
+				if ( ! $user && strpos( $user_name, '@' ) ) {
+					$user = get_user_by( 'email', $user_name );
+				}
+
+				if ( isset( $user->ID ) && $user->ID > 0 ) {
+					$secure_cookie = true;
+				}
+			}
+		$creds['user_login'] = $_POST['custom_log'];
+		$creds['user_password'] = $_POST['custom_pwd'];
+		$creds['remember'] = $_POST['custom_rememberme'];
+		$user = wp_signon( $creds, $secure_cookie );
+		wp_set_current_user( $user->ID );
+		if ( isset( $user->errors ) ){
+			$_POST['errors'] = $user->errors;
+		}
+		$to_redirect = ( isset( $_POST['redirect_to'] ) && !empty( $_POST['redirect_to'] ) ) ? $_POST['redirect_to'] . "offres" : home_url();
+		if ( !is_wp_error($user) ) {
+			wp_redirect( $to_redirect );
+		}
+
+	}
+
+}
