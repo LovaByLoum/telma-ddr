@@ -652,6 +652,33 @@ jQuery( function( $ ){
         jQuery(".inputfile").change(showPreviewImage_click);
     }
 
+    if ( jQuery("#loginform").length > 0 ){
+        jQuery("#loginform").validate({
+            ignore : "",
+            errorElement : "p",
+            errorClass : "login-username error",
+            errorPlacement: function(error, element) {
+                error.insertBefore(".data-error");
+            },
+            rules :{
+                "custom_log" : {
+                   required : true
+                },
+                "custom_pwd" : {
+                    required : true
+                }
+            },
+            messages : {
+                "custom_log" : {
+                   required : "L'identifiant ou adresse de messagerie est requis."
+                },
+                "custom_pwd" : {
+                    required : "Le mot de passe est requis."
+                }
+            }
+        });
+    }
+
 });
 
 jQuery.validator.addMethod("mailExistUser", function( value, element, arg ){

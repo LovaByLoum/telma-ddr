@@ -22,7 +22,7 @@ $linkLostPassword = wp_lostpassword_url();
 		        endif;?>
 		</p>
 	<?php endif;?>
-	<p class="login-username">
+	<p class="login-username data-error">
 		<label for="user_login">Identifiant ou adresse de messagerie</label>
 		<input type="text" name="custom_log" id="user_login" class="input <?php if ( !empty( $error ) && isset( $error['invalid_username'] ) && !empty( $error['invalid_username'] ) ):?>error<?php endif;?>" value="<?php echo $_POST['custom_log'];?>" size="20">
 	</p>
