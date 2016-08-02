@@ -51,7 +51,7 @@ function jpress_jm_offre_relations($post){
 	}
     $offre = JM_Offre::getById($post->ID);
     $societes = JM_Societe::getBy();
-	if ( $societeCurrent ){
+	if ( $societeCurrent > 0 ){
 		$societes = array(
 			JM_Societe::getById( $societeCurrent )
 		);
