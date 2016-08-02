@@ -549,10 +549,10 @@ jQuery( function( $ ){
             },
             messages : {
                 "compInfo[]" : {
-                    required : "La compétence informatiques est requise."
+                    required : "La compétence informatique est requise."
                 },
                 "langue[]" : {
-                    required : "La compétence linguistiques est requise."
+                    required : "La compétence linguistique est requise."
                 },
                 "textarea-57864acd93cf8" : {
                     required : "Le message est requis."
