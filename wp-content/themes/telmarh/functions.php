@@ -900,9 +900,10 @@ function telmarh_connection(){
 		} else {
 			wp_set_current_user( $user->ID );
 		}
-		$to_redirect = ( isset( $_POST['redirect_to'] ) && !empty( $_POST['redirect_to'] ) ) ? $_POST['redirect_to'] . "offres" : home_url();
+		$to_redirect = ( isset( $_POST['redirect_to'] ) && !empty( $_POST['redirect_to'] ) ) ? $_POST['redirect_to']  : home_url();
 		if ( !is_wp_error($user) ) {
 			wp_redirect( $to_redirect );
+			exit;
 		}
 
 	}

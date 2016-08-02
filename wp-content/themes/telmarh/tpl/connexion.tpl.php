@@ -8,8 +8,11 @@
 global $post;
 $pageInscription = wp_get_post_by_template( "page-inscription.php", "" );
 $linkLostPassword = wp_lostpassword_url();
+$pagePostule = wp_get_post_by_template( "page-postuler-offre.php", "" );
+$is_offre = ( $post->post_type == JM_POSTTYPE_OFFRE  && is_single( $post->ID ) ) ? true : false;
+$linkRedirect = ( $is_offre ) ? get_permalink( $pagePostule->ID ) ."?po=" . $post->ID : get_permalink( $post->ID );
 ?>
-<form name="loginform" id="loginform" action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="post">
+<form name="loginform" id="loginform" action="<?php echo $linkRedirect; ?>" method="post">
 	<?php if ( isset( $_POST['errors'] ) && !empty( $_POST['errors'] ) ):
 			$errors = $_POST['errors'];?>
 		<p class="login-username error">
@@ -40,7 +43,7 @@ $linkLostPassword = wp_lostpassword_url();
 	</p>
 
 	<p class="login-submit">
-		<input type="hidden" name="redirect_to" value="<?php echo esc_attr(get_permalink( $post->ID )); ?>" />
+		<input type="hidden" name="redirect_to" value="<?php echo esc_attr($linkRedirect); ?>" />
 		<input type="submit" name="telmarh_connection" id="wp-submit" class="button-primary" value="Se connecter">
 	</p>
 
