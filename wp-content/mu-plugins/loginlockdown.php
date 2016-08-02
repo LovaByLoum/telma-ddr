@@ -182,7 +182,7 @@ function listLockedDown() {
 
 function get_loginlockdownOptions() {
 	$loginlockdownAdminOptions = array(
-		'max_login_retries' => 3,
+		'max_login_retries' => 5,
 		'retries_within' => 5,
 		'lockout_length' => 60,
 		'lockout_invalid_usernames' => 'no',
