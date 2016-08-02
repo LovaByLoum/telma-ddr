@@ -2081,7 +2081,7 @@ aside.homepage p.separator span{
 #home-hero .telmarh-hero-content-container a.submit_link:focus, a.submit_link:focus{
     outline: none;
 }
-.submit_link.button--wapasha, .inset .button-primary {
+.submit_link.button--wapasha, .inset .button-primary, #fm-form-1 .button-postuler {
     background-color: #28b1ff;
     color: #fff;
 	/*-webkit-transition: background-color 0.3s, color 0.3s;*/
@@ -2091,7 +2091,7 @@ aside.homepage p.separator span{
 	background: #28b1ff;
 	color: #fff;
 }
-.button--wapasha::before, .inset .button-primary::before {
+.button--wapasha::before, .inset .button-primary::before, #fm-form-1 .button-postuler::before {
 	content: '';
 	position: absolute;
 	top: 0;
@@ -2112,7 +2112,7 @@ aside.homepage p.separator span{
 .button--wapasha.button--inverted::before {
 	border-color: #28b1ff;
 }
-.submit_link.button--wapasha:hover, .inset .button-primary:hover {
+.submit_link.button--wapasha:hover, .inset .button-primary:hover, #fm-form-1 .button-postuler:hover {
 	background-color: #fff;
 	color: #28b1ff!important;
 }
@@ -2120,7 +2120,7 @@ aside.homepage p.separator span{
 	background-color: #37474f;
 	color: #7986cb;
 }
-.button--wapasha:hover::before, .inset .button-primary:hover::before {
+.button--wapasha:hover::before, .inset .button-primary:hover::before, #fm-form-1 .button-postuler:hover::before {
 	-webkit-transform: scale3d(1, 1, 1);
 	transform: scale3d(1, 1, 1);
 	opacity: 1;
@@ -2584,6 +2584,7 @@ input[type="text"]:hover,input[type="Password"]:hover,#active ,textarea:hover, s
 }
 .inset .button-primary {
     width: 260px;
+    border-color: inherit;
 }
 .inset .login-submit.link-inscript a {
      font-size: 13px;
@@ -2635,8 +2636,11 @@ input[type="text"]:hover,input[type="Password"]:hover,#active ,textarea:hover, s
     position: absolute;
     z-index: -1;
 }
-#fm-form-1 .submit {
+#fm-form-1 .button-postuler {
     margin: 20px 0;
+    background-color: #28b1ff;
+    color: #fff;
+    border-color: inherit;
 }
 .inputfile + label {
     max-width: 80%;

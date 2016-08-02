@@ -178,7 +178,7 @@ $reference = get_post_meta( $postID, REFERENCE_OFFRE, true );
 			</div>
 		</div>
 	</div>
-	<input type="submit" name="fm_form_submit" id="fm_form_submit" class="submit" value="Valider" >
+	<input type="submit" name="fm_form_submit" id="fm_form_submit" class="button-postuler" value="Valider" >
 	<input type="hidden" name="<?php echo $form_items['entreprise_postule']?>" value="<?php echo $entreprise->titre;?>">
 	<input type="hidden" name="<?php echo $form_items['ref_postule']?>" value="<?php echo $reference;?>">
 	<input type="hidden" name="fm_nonce" id="fm_nonce" value="<?php echo wp_create_nonce('fm-nonce');?>" />
