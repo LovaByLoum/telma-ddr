@@ -394,7 +394,7 @@ jQuery( function( $ ){
             },
             "passwrdConfirm" : {
                 required : "La confirmation mot de passe est requis.",
-                equalTo : "Il n'est pas identique au mot de passe."
+                equalTo : "Les mots de passe ne sont pas identiques."
             },
             "nom" : {
                 required : "Le nom est requis.",
