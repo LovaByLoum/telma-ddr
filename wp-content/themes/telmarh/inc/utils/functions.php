@@ -665,6 +665,24 @@ function telmarh_ew_user_approve_approve_user( $user_id ){
 	}
 
 }
+function telmarh_remove_page_template() {
+    global $pagenow;
+    if ( in_array( $pagenow, array( 'post-new.php', 'post.php') ) && get_post_type() == 'page' ) { ?>
+        <script type="text/javascript">
+            (function(jQuery){
+	            jQuery(document).ready(function(){
+		            jQuery('#page_template option[value="template-fullwidth.php"]').remove();
+		            jQuery('#page_template option[value="template-left-sidebar.php"]').remove();
+		            jQuery('#page_template option[value="template-projects.php"]').remove();
+		            jQuery('#page_template option[value="template-services.php"]').remove();
+		            jQuery('#page_template option[value="template-testimonials.php"]').remove();
+                })
+            })(jQuery)
+        </script>
+    <?php
+    }
+}
+add_action('admin_footer', 'telmarh_remove_page_template', 10);
 
 
 
