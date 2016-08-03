@@ -424,7 +424,7 @@ jQuery( function( $ ){
                 valueNotEquals : "l'année d'expérience est requis."
             },
             "num_phone" :{
-                number : "La numéro de téléphone est invalide (entier uniquement)"
+                number : "La numéro de téléphone est invalide (entier uniquement)."
             },
             "titre_exp_prof" : {
                 required : "Le titre est requis."
@@ -621,6 +621,9 @@ jQuery( function( $ ){
                     required : true,
                     email : true
                 },
+                "text-5791c4629e06d" : {
+                    number : true
+                },
                 "file-5791c48e104c8" : {
                     required : true,
                     extension : "pdf|rtf|docx|doc"
@@ -637,17 +640,20 @@ jQuery( function( $ ){
                 "text-5791c435dbe6d" : {
                     required : "Le prénom est requis."
                 },
+                "text-5791c4629e06d" : {
+                    number : "La numéro de téléphone est invalide (entier uniquement)."
+                },
                 "text-5791c44862170" : {
                     required : "L'adresse email est requis.",
                     email : "L'adresse email n'est pas valide."
                 },
                 "file-5791c48e104c8" : {
                     required : "Le CV est requis.",
-                    extension : "Le format n'est pas valide( seulement pdf,rtf,docx et doc )."
+                    extension : "Le format n'est pas valide ( seulement pdf, rtf, docx et doc )."
                 },
                 "file-5791c4b7d5a8f" : {
                     required : "La lettre de motivation est requise.",
-                    extension : "Le format n'est pas valide( seulement pdf,rtf,docx et doc )."
+                    extension : "Le format n'est pas valide ( seulement pdf, rtf, docx et doc )."
                 }
             }
         });

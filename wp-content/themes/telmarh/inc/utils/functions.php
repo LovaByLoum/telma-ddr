@@ -657,7 +657,7 @@ remove_action( "new_user_approve_approve_user", array($obj, "approve_user" ) );
 add_action( "new_user_approve_approve_user", "telmarh_ew_user_approve_approve_user" );
 function telmarh_ew_user_approve_approve_user( $user_id ){
 	$user = new WP_User( $user_id );
-	if ( in_array( $user->roles[0], array( "subscriber" )  ) ){
+	if ( in_array( $user->roles[0], array( USER_ROLE_CANDIDAT )  ) ){
 		update_user_meta( $user->ID, 'pw_user_status', 'approved' );
 	} else {
 		$objApprove = pw_new_user_approve();
