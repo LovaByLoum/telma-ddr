@@ -2,7 +2,7 @@
 Contributors: joharyjoox
 Tags: admin, search, filter, post
 Requires at least: 3.0
-Tested up to: 3.8
+Tested up to: 4.4
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -37,9 +37,10 @@ This plugin don't add custom columns but add search and filters features on exis
 The plugin comes with various translations, please refer to the [WordPress Codex](http://codex.wordpress.org/Installing_WordPress_in_Your_Language "Installing WordPress in Your Language") for more information about activating the translation. If you want to help to translate the plugin to your language, please have a look at the .po file which contains all definitions and may be used with a [gettext](http://www.gnu.org/software/gettext/) editor like [Poedit](http://www.poedit.net/) (Windows) or plugin for WordPress [Localization](http://wordpress.org/extend/plugins/codestyling-localization/).
 
 == Screenshots ==
-1. Archive link in your post type list page using post status, row action and bulk action features
-2. Visible in quick edit form and post status metabox, also an widget to list archived post
-3. Archive page manager to configure archived post visibility and purge via cron
+1. Admin page
+2. Configure columns
+3. Search adn filter features
+3. Specific search and filter fields
 
 == Changelog ==
 = 1.0.0 =

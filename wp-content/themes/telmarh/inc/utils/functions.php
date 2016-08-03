@@ -374,6 +374,7 @@ add_filter( 'login_headertitle', 'telmarh_login_logo_url_title' );
 add_filter('manage_edit-' . JM_POSTTYPE_OFFRE . '_columns', 'telmarh_manage_candidature_columns',10);
 function telmarh_manage_candidature_columns( $columns ){
 	$columns['reference'] = "Réference";
+	$columns['author'] = "Auteur";
 
 	return $columns;
 }

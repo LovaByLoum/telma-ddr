@@ -7,10 +7,13 @@ global $wpdb;
 $posts_types = get_post_types();
 wp_enqueue_script( 'accordion' );
 
-if( isset( $_POST["acssubmit"] ) ) {
+if( isset( $_POST["acssubmit"] )  && current_user_can( 'manage_options' ) ) {
   unset($_POST["acssubmit"]);
-  update_option( 'jpress_acs_options', $_POST );
-  jpress_refresh_transient();
+  $post_data = jpress_sanitize_all( $_POST );
+  if ( isset( $post_data['enable'] ) && isset( $post_data['type'] ) && isset( $post_data['field'] ) && isset( $post_data['display'] ) && isset( $post_data['operator'] ) ){
+    update_option( 'jpress_acs_options', $post_data );
+    jpress_refresh_transient();
+  }
 }
 
 $acs_options = get_option( 'jpress_acs_options' );
@@ -80,7 +83,7 @@ foreach ( $posts_types as $pt ):
     </div>
 
     <div class="inside">
-      <label><input type="checkbox" name="enable[]" value="<?php echo $pt;?>" <?php if ( isset( $acs_options['enable'] ) && in_array( $pt, $acs_options['enable'] ) ) { echo 'checked'; }?>>  <?php echo __("Enable Admin Column Search", "jpress-admin-column-search" );?></label><br><br>
+      <label><input type="checkbox" name="enable[]" value="<?php echo esc_attr( $pt );?>" <?php if ( isset( $acs_options['enable'] ) && in_array( $pt, $acs_options['enable'] ) ) { echo 'checked'; }?>>  <?php echo __("Enable Admin Column Search", "jpress-admin-column-search" );?></label><br><br>
 
       <div id="side-sortables" class="acs-accordeon accordion-container">
         <ul class="outer-border">
