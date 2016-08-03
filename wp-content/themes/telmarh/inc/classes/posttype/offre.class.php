@@ -378,9 +378,19 @@ class COffre
 			$offre = JM_Offre::getById( $data['parent_post_id'] );
 			$dataHtml .= '<li><strong>Offre :</strong><a href="' . get_permalink( $offre->id ) . '" title="' . $offre->titre . '">' . $offre->titre . '</a></li>';
 			$elementOffre = '<a href="' . get_permalink( $offre->id ) . '" title="' . $offre->titre . '">' . $offre->titre . '</a>';
+			if ( $formId == FORMULAIRE_POSTULER_OFFRE ){
+				$user = get_user_by( "email", $data[CPage::fm_get_unique_name_by_nickname("email_postule", $formId)] );
+				if ( in_array( $user->roles[0], array( USER_ROLE_CANDIDAT ) )  ){
+					if ( get_user_meta( $user->ID, "status_user", true ) == CANDIDAT_BLACKLIST ){
+						$dataHtml .= '<li><strong>Statut de la candidat :</strong> Blacklist</li>';
+					}
+				}
+			}
+
 			foreach ( $form['items'] as $field ){
 				if ( in_array( $field['type'], array( "text", "textarea" )  ) ) {
-					$dataHtml .= '<li><strong>' . $field['label'] . ' :</strong>' . $data[$field['unique_name']] . '</li>' ;
+					$label = ( $field['type'] == "textarea" ) ? "Son Message" : $field['label'];
+					$dataHtml .= '<li><strong>' . $label . ' :</strong>' . $data[$field['unique_name']] . '</li>' ;
 				} else {
 					$elt = unserialize( $data[$field['unique_name']] );
 					$dataHtml .= '<li><strong>' . $field['label'] . ' :</strong><a href="' . $elt['upload_url'] . $elt['filename'] . '" title="' . $field['label'] . '">' . $elt['filename'] . '</a></li>';

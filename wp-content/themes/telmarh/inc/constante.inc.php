@@ -84,4 +84,10 @@ define ( "FORMULAIRE_CANDIDATURE_SPONTANEE", 2 );
 //slug approved
 define ( "SLUG_META_APPROVED_USER", "pw_user_status" );
 
+//define role candidat
+define( "USER_ROLE_CANDIDAT", "subscriber" );
+
+//status blacklist
+define( "CANDIDAT_BLACKLIST", "blacklist" );
+
 

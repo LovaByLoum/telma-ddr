@@ -495,7 +495,7 @@ function telmarh_inscription_user(){
 				'first_name'        => $nom,
 				'last_name'         => $prenom,
 				'display_name'      => $prenom . '  ' . $nom,
-				'role'              => 'subscriber'
+				'role'              => USER_ROLE_CANDIDAT
 			);
 			$userId = wp_insert_user( $args );
 			wp_set_password( $password, $userId );
