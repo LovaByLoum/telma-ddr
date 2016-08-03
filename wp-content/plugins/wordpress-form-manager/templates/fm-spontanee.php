@@ -75,19 +75,19 @@ endwhile;
         <div class="head-accordion">
             <div class="col-1-2 form-field">
 				<label for="nom">Nom<span class="required">*</span></label>
-                <input type="text" autocomplete="off" placeholder="Nom" name="<?php echo $form_items['nom_spontanee'];?>" id="nom" value="<?php echo $user->nom;?>" <?php if ( is_user_logged_in() ) :?>readonly<?php endif;?>>
+                <input type="text" autocomplete="off" placeholder="Nom" name="<?php echo $form_items['nom_spontanee'];?>" id="nom" value="<?php echo $user->nom;?>" <?php if ( is_user_logged_in() && !empty( $user->nom ) ) :?>readonly<?php endif;?>>
             </div>
             <div class="col-1-2 form-field">
                 <label for="prenom">Prénom <span class="required">*</span></label>
-                <input type="text" autocomplete="off" placeholder="Prénom" name="<?php echo $form_items['prenom_spontanee'];?>" id="prenom" value="<?php echo $user->prenom;?>" <?php if ( is_user_logged_in() ) :?>readonly<?php endif;?>>
+                <input type="text" autocomplete="off" placeholder="Prénom" name="<?php echo $form_items['prenom_spontanee'];?>" id="prenom" value="<?php echo $user->prenom;?>" <?php if ( is_user_logged_in() && !empty( $user->prenom ) ) :?>readonly<?php endif;?>>
             </div>
 	        <div class="col-1-2 form-field">
 		        <label for="email">Adresse email <span class="required">*</span></label>
-                <input type="text" autocomplete="off" placeholder="Email" name="<?php echo $form_items['email_spontanee'];?>" id="email" value="<?php echo $user->email;?>" <?php if ( is_user_logged_in() ) :?>readonly<?php endif;?>>
+                <input type="text" autocomplete="off" placeholder="Email" name="<?php echo $form_items['email_spontanee'];?>" id="email" value="<?php echo $user->email;?>" <?php if ( is_user_logged_in() && !empty( $user->email ) ) :?>readonly<?php endif;?>>
 	        </div>
 	        <div class="col-1-2 form-field">
 		        <label for="email">Numéro de téléphone</label>
-                <input type="text" autocomplete="off" placeholder="Numéro de téléphone" name="<?php echo $form_items['num_phone_spontanee'];?>" id="phone" value="">
+                <input type="text" autocomplete="off" placeholder="Numéro de téléphone" name="<?php echo $form_items['num_phone_spontanee'];?>" id="phone" value="<?php echo ( !empty( $user->phone_number ) )? $user->phone_number : "";?>" <?php if ( is_user_logged_in() && !empty( $user->phone_number ) ) :?>readonly<?php endif;?>>
 	        </div>
         </div>
     </div>

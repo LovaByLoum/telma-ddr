@@ -47,13 +47,14 @@ class CUser {
     $user = get_user_by('id',$uid);
     $element = new stdClass();
     //traitement des données
-    $element->id          =   $user->data->ID;
-    $element->nom         =   get_user_meta( $user->data->ID, "last_name", true );
-    $element->prenom      =   get_user_meta( $user->data->ID, "first_name", true );
-    $element->email       =   $user->data->user_email;
-    $element->pseudo      =   $user->data->user_login;
-    $element->role        =   $user->roles[0];
-    $element->register    =   mysql2date( get_option( 'date_format' ), $user->data->user_registered );
+    $element->id                =   $user->data->ID;
+    $element->nom               =   get_user_meta( $user->data->ID, "last_name", true );
+    $element->prenom            =   get_user_meta( $user->data->ID, "first_name", true );
+    $element->email             =   $user->data->user_email;
+    $element->pseudo            =   $user->data->user_login;
+    $element->role              =   $user->roles[0];
+    $element->register          =   mysql2date( get_option( 'date_format' ), $user->data->user_registered );
+	$element->phone_number      =   get_user_meta( $user->ID, "num_phone_user", true );
 
 
     //...
