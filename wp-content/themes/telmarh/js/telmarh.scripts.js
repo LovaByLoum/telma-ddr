@@ -410,7 +410,7 @@ jQuery( function( $ ){
                 required : "L'adresse est requis."
             },
             "email" : {
-                required : "L'adresse email est requis.",
+                required : "L'adresse email est requise.",
                 mailExistUser : "Cette adresse mail est déjà utilisée.",
                 email : "L'adresse email n'est pas valide."
             },
@@ -644,7 +644,7 @@ jQuery( function( $ ){
                     number : "La numéro de téléphone est invalide (entier uniquement)."
                 },
                 "text-5791c44862170" : {
-                    required : "L'adresse email est requis.",
+                    required : "L'adresse email est requise.",
                     email : "L'adresse email n'est pas valide."
                 },
                 "file-5791c48e104c8" : {
