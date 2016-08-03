@@ -104,18 +104,20 @@ endwhile;
 				<input type="hidden" name="MAX_FILE_SIZE" value="10240000">
 				<input name="<?php echo $form_items['cv_spontanee'];?>" id="fileCv" type="file" class="inputfile">
 				<label for="fileCv" class="input-file-trigger"><span>Mon CV *</span></label>
+				<em>(.doc, .rtf, .pdf, .docx)</em>
 				<span class="file-return cv"></span>
 			</div>
 			<div class="col-1-2">
 				<input type="hidden" name="MAX_FILE_SIZE" value="10240000">
 				<input name="<?php echo $form_items['lm_spontanee'];?>" id="fileLm" type="file" class="inputfile">
 				<label for="fileLm" class="input-file-trigger"><span>Ma lettre de motivation *</span></label>
+				<em>(.doc, .rtf, .pdf, .docx)</em>
 				<span class="file-return lm"></span>
 
 			</div>
 		</div>
 	</div>
-	<input type="submit" name="fm_form_submit" id="fm_form_submit" class="submit" value="Valider" >
+	<input type="submit" name="fm_form_submit" id="fm_form_submit" class="button-spontanne" value="Valider" >
 	<input type="hidden" name="fm_nonce" id="fm_nonce" value="<?php echo wp_create_nonce('fm-nonce');?>" />
 	<input type="hidden" name="fm_nonce" id="fm_nonce" value="<?php echo wp_create_nonce('fm-nonce');?>" />
 	<input type="hidden" name="fm_id" id="fm_id" value="<?php echo $fm_display->currentFormInfo['ID'];?>" />
