@@ -28,7 +28,7 @@ define('DB_USER', 'neov');
 define('DB_PASSWORD', 'neov123');
 
 /** Adresse de l'hébergement MySQL. */
-define('DB_HOST', '192.168.183.122');
+define('DB_HOST', '192.168.183.122:3132');
 
 /** Jeu de caractères à utiliser par la base de données lors de la création des tables. */
 define('DB_CHARSET', 'utf8');
