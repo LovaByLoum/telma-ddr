@@ -23,7 +23,7 @@ get_header(); ?>
 			        </p>
 				</div><!-- .page-content -->
 				<p class="btn">
-		          <a href="<?php echo $siteurl; ?>" title="Retour" class="submit_link button--wapasha button--round-l"><?php echo __('Retour','telmarh');?></a>
+		          <a href="<?php echo home_url(); ?>" title="Retour" class="submit_link button--wapasha button--round-l"><?php echo __('Retour','telmarh');?></a>
 		        </p>
 			</section><!-- .error-404 -->
 
