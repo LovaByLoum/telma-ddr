@@ -791,7 +791,7 @@ function telmarh_pre_user_query( $user_search )
 		    if ( $view_users ) {
 		        // Get the list of admin IDs
 		        $args = array(
-		            'role__in' => array( JM_ROLE_RESPONSABLE_RH, "administrator", "webmaster", "editor", "author" ),
+		            'role__in' => array( JM_ROLE_RESPONSABLE_RH, USER_ROLE_ADMINISTRATOR, USER_ROLE_WEBMASTER, "editor", "author" ),
 		        );
 		        $user_query = new WP_User_Query( $args );
 		        $admins = $user_query->get_results();
@@ -816,6 +816,43 @@ function telmarh_pre_user_query( $user_search )
 
 		     // Re-add the hook
 		    add_action( 'pre_user_query', 'telmarh_pre_user_query' );
+	} elseif( in_array( $user->roles[0], array( USER_ROLE_WEBMASTER ) ) ) {
+		$user->get_role_caps();
+	    $where = 'WHERE 1=1';
+
+	    // Temporarily remove this hook otherwise we might be stuck in an infinite loop
+	    remove_action( 'pre_user_query', 'telmarh_pre_user_query' );
+
+	    // View adminstrators? (Remember: this is capability defined by you!)
+	    $view_users = in_array( 'list_users', $user->allcaps );
+	    if ( $view_users ) {
+	        // Get the list of admin IDs
+	        $args = array(
+	            'role__in' => array( "administrator" ),
+	        );
+	        $user_query = new WP_User_Query( $args );
+	        $admins = $user_query->get_results();
+	        $admin_ids = array( );
+	        foreach ( $admins as $admin ) {
+	            $admin_ids[] = $admin->id;
+	        }
+
+	        $where .= ' AND '.$wpdb->users.'.ID NOT IN ('.implode(',', $admin_ids).')';
+	    }
+
+	    // Repeat block above for other capabilities you define,
+	    // i.e. hide users not everybody should see
+	    // ...
+
+	    // Modify original WP_User_Query
+	    $user_search->query_where = str_replace(
+	        'WHERE 1=1',
+	        $where,
+	        $user_search->query_where
+	    );
+
+	     // Re-add the hook
+	    add_action( 'pre_user_query', 'telmarh_pre_user_query' );
 	}
 
 }
@@ -908,4 +945,22 @@ function telmarh_connection(){
 
 	}
 
+}
+add_action("admin_menu", "telmarh_restrict_to_edit_user");
+function telmarh_restrict_to_edit_user() {
+	global $pagenow, $current_user;
+	if ( in_array( $pagenow, array( "user-edit.php" ) ) && isset( $_GET['user_id'] ) && !empty( $_GET['user_id'] ) ){
+		$userEdit = get_user_by( "id", intval( $_GET['user_id'] ) );
+		if ( in_array( $current_user->roles[0], array( USER_ROLE_WEBMASTER, JM_ROLE_RESPONSABLE_RH ) ) ){
+			if ( in_array( $userEdit->roles[0], array( USER_ROLE_ADMINISTRATOR ) ) ){
+				wp_die( "Vous n'avez pas acces a cette modification. Veuillez consultez votre administrateur" );
+			}
+		}
+
+		if ( in_array( $current_user->roles[0], array( JM_ROLE_RESPONSABLE_RH ) ) ){
+			if ( $current_user->ID != $userEdit->ID  && in_array( $userEdit->roles[0], array( JM_ROLE_RESPONSABLE_RH ) ) ){
+				wp_die( "Vous n'avez pas acces a cette modification. Veuillez consultez votre administrateur" );
+			}
+		}
+	}
 }

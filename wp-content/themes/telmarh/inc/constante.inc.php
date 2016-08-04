@@ -86,6 +86,9 @@ define ( "SLUG_META_APPROVED_USER", "pw_user_status" );
 
 //define role candidat
 define( "USER_ROLE_CANDIDAT", "subscriber" );
+//define role webmaster
+define( "USER_ROLE_WEBMASTER", "webmaster" );
+define( "USER_ROLE_ADMINISTRATOR", "administrator" );
 
 //status blacklist
 define( "CANDIDAT_BLACKLIST", "blacklist" );
