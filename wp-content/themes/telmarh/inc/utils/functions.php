@@ -449,8 +449,7 @@ function wpse_enqueue_datepicker() {
     wp_enqueue_script( 'jquery-ui-datepicker' );
 
     // You need styling for the datepicker. For simplicity I've linked to Google's hosted jQuery UI CSS.
-	$protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
-    wp_register_style( 'jquery-ui', $protocol . 'code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css' );
+    wp_register_style( 'jquery-ui', get_template_directory_uri() . '/css/jquery-ui.css' );
     wp_enqueue_style( 'jquery-ui' );
 }
 add_action( 'wp_enqueue_scripts', 'wpse_enqueue_datepicker' );

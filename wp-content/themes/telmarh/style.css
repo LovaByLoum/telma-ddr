@@ -2081,7 +2081,11 @@ aside.homepage p.separator span{
 #home-hero .telmarh-hero-content-container a.submit_link:focus, a.submit_link:focus{
     outline: none;
 }
-.submit_link.button--wapasha, .inset .button-primary, #fm-form-1 .button-postuler, #fm-form-2 .button-spontanne {
+.submit_link.button--wapasha,
+.inset .button-primary,
+#fm-form-1 .button-postuler,
+#fm-form-2 .button-spontanne
+#nous_contacter .btn_contacter{
     background-color: #28b1ff;
     color: #fff;
 	/*-webkit-transition: background-color 0.3s, color 0.3s;*/
@@ -2091,7 +2095,11 @@ aside.homepage p.separator span{
 	background: #28b1ff;
 	color: #fff;
 }
-.button--wapasha::before, .inset .button-primary::before, #fm-form-1 .button-postuler::before, #fm-form-2 .button-spontanne::before {
+.button--wapasha::before,
+.inset .button-primary::before,
+#fm-form-1 .button-postuler::before,
+#fm-form-2 .button-spontanne::before,
+#nous_contacter .btn_contacter::before{
 	content: '';
 	position: absolute;
 	top: 0;
@@ -2112,7 +2120,11 @@ aside.homepage p.separator span{
 .button--wapasha.button--inverted::before {
 	border-color: #28b1ff;
 }
-.submit_link.button--wapasha:hover, .inset .button-primary:hover, #fm-form-1 .button-postuler:hover, #fm-form-2 .button-spontanne:hover {
+.submit_link.button--wapasha:hover,
+.inset .button-primary:hover,
+#fm-form-1 .button-postuler:hover,
+#fm-form-2 .button-spontanne:hover,
+#nous_contacter .btn_contacter:hover{
 	background-color: #fff;
 	color: #28b1ff!important;
 }
@@ -2120,7 +2132,11 @@ aside.homepage p.separator span{
 	background-color: #37474f;
 	color: #7986cb;
 }
-.button--wapasha:hover::before, .inset .button-primary:hover::before, #fm-form-1 .button-postuler:hover::before, #fm-form-2 .button-spontanne:hover::before {
+.button--wapasha:hover::before,
+.inset .button-primary:hover::before,
+#fm-form-1 .button-postuler:hover::before,
+#fm-form-2 .button-spontanne:hover::before,
+#nous_contacter .btn_contacter:hover::before{
 	-webkit-transform: scale3d(1, 1, 1);
 	transform: scale3d(1, 1, 1);
 	opacity: 1;
@@ -2546,7 +2562,7 @@ input[type="text"]:hover,input[type="Password"]:hover,#active ,textarea:hover, s
     background:#EAEEF1!important;
     margin-top: 0;
 }
-.comment-form .form-field label, #fm-form-1 .form-field label, #fm-form-2 .form-field > label {
+.comment-form .form-field label, #fm-form-1 .form-field label, #fm-form-2 .form-field > label, #nous_contacter .form-field > label {
     font-weight: 300;
     clear: both;
     margin-top: 0;
@@ -2575,7 +2591,10 @@ input[type="text"]:hover,input[type="Password"]:hover,#active ,textarea:hover, s
 #fm-form-1 .form-field h4 > span.required,
 #fm-form-2 .form-field label > span.required,
 .comment-form .form-field h5 > span.required,
-.comment-form .form-field span.error   {
+.comment-form .form-field span.error,
+#nous_contacter .form-field span.error,
+#nous_contacter .form-field h5 > span.required,
+#nous_contacter .form-field label > span.required{
     color :#FF0000;
 }
 
@@ -2614,7 +2633,10 @@ input[type="text"]:hover,input[type="Password"]:hover,#active ,textarea:hover, s
 .inset .login-submit.link-inscript a::before {
     border: 1px solid #28b1ff;
 }
-#fm-form-1 .col-1-2 input[type=text], #fm-form-2 .col-1-2 input[type=text] {
+#fm-form-1 .col-1-2 input[type=text],
+#fm-form-2 .col-1-2 input[type=text],
+#nous_contacter .col-1-2 input[type=text],
+#nous_contacter .col-1-1 textarea{
     width: 100%;
 }
 #fm-form-1 .col-1-1 .list-parent {
@@ -2637,7 +2659,9 @@ input[type="text"]:hover,input[type="Password"]:hover,#active ,textarea:hover, s
     position: absolute;
     z-index: -1;
 }
-#fm-form-1 .button-postuler, #fm-form-2 .button-spontanne{
+#fm-form-1 .button-postuler,
+#fm-form-2 .button-spontanne,
+#nous_contacter .btn_contacter{
     margin: 20px 0;
     background-color: #28b1ff;
     color: #fff;

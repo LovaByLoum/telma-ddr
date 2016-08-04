@@ -193,7 +193,7 @@ function telmarh_scripts() {
 	if( $body_font ) {
 		wp_enqueue_style( 'telmarh-body-fonts', '//fonts.googleapis.com/css?family='. $body_font ); 	
 	} else {
-		wp_enqueue_style( 'telmarh-source-body', '//fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,400italic,700,600');  
+		wp_enqueue_style( 'telmarh-source-body', get_template_directory_uri() . '/css/font_telmarh.css');
 	}
 
 	wp_enqueue_script( 'telmarh-navigation', get_template_directory_uri() . '/js/navigation.js', array(), '20120206', true );

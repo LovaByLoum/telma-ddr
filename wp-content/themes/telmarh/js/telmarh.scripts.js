@@ -687,6 +687,50 @@ jQuery( function( $ ){
         });
     }
 
+    if ( jQuery("#nous_contacter").length > 0 ){
+        jQuery("#nous_contacter").validate({
+            ignore : "",
+            errorElement : "span",
+            errorClass : "error",
+            rules : {
+                "name" : {
+                    required : true
+                },
+                "surname" : {
+                    required : true
+                },
+                "email" : {
+                    required : true,
+                    email : true
+                },
+                "num_phone" : {
+                    number  : true
+                },
+                "message" : {
+                    required : true
+                }
+            },
+            messages : {
+                "name" : {
+                    required : "Le nom est requis."
+                },
+                "surname" : {
+                    required : "Le prénom est requis."
+                },
+                "email" : {
+                    required : "L'adresse email est requise.",
+                    email : "L'adresse email n'est pas valide."
+                },
+                "num_phone" : {
+                    number : "La numéro de téléphone est invalide (entier uniquement)."
+                },
+                "message" : {
+                    required : "Le message est requis."
+                }
+            }
+        });
+    }
+
 });
 
 jQuery.validator.addMethod("mailExistUser", function( value, element, arg ){
