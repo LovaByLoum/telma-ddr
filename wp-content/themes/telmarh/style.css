@@ -2702,3 +2702,10 @@ body.page-template-page-postuler-offre .entry-content + p, body.page-template-pa
     min-width: 100px;
     text-align: center;
 }
+.not-found .page-content  p {
+    font-size: 26px;
+    margin-top: 1.5em;
+}
+.error-404.not-found{
+    min-height: 340px;
+}
