@@ -184,17 +184,16 @@ function telmarh_scripts() {
 	
 	$headings_font = esc_html(get_theme_mod('headings_fonts'));
 	$body_font = esc_html(get_theme_mod('body_fonts'));
-	
-	if( $headings_font ) {
-		wp_enqueue_style( 'telmarh-headings-fonts', '//fonts.googleapis.com/css?family='. $headings_font );	
-	} else {
-		wp_enqueue_style( 'telmarh-source-sans', '//fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,400italic,700,600');   
-	}	
-	if( $body_font ) {
-		wp_enqueue_style( 'telmarh-body-fonts', '//fonts.googleapis.com/css?family='. $body_font ); 	
-	} else {
+//	if( $headings_font ) {
+//		wp_enqueue_style( 'telmarh-headings-fonts', '//fonts.googleapis.com/css?family='. $headings_font );
+//	} else {
+		wp_enqueue_style( 'telmarh-source-sans', get_template_directory_uri() . '/css/font_telmarh.css');
+//	}
+//	if( $body_font ) {
+//		wp_enqueue_style( 'telmarh-body-fonts', '//fonts.googleapis.com/css?family='. $body_font );
+//	} else {
 		wp_enqueue_style( 'telmarh-source-body', get_template_directory_uri() . '/css/font_telmarh.css');
-	}
+	//}
 
 	wp_enqueue_script( 'telmarh-navigation', get_template_directory_uri() . '/js/navigation.js', array(), '20120206', true );
 
