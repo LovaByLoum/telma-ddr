@@ -29,8 +29,7 @@ SetEnvIf HOST "localhost" SERVER_ENV_LOCAL !SERVER_ENV_RECETTE !SERVER_ENV_PREPR
 SetEnvIf HOST "telma-interface-recrutement-recette[.]mg[.]netapsys[.]fr" !SERVER_ENV_LOCAL SERVER_ENV_RECETTE !SERVER_ENV_PREPROD !SERVER_ENV_PROD
 SetEnvIf HOST "telma-interface-recrutement-recette[.]netapsys[.]fr" !SERVER_ENV_LOCAL SERVER_ENV_RECETTE !SERVER_ENV_PREPROD !SERVER_ENV_PROD
 SetEnvIf HOST "tsgt02lv" !SERVER_ENV_LOCAL SERVER_ENV_RECETTE !SERVER_ENV_PREPROD !SERVER_ENV_PROD
-SetEnvIf HOST "telma-interface-recrutement-recette[.]netapsys[.]fr" !SERVER_ENV_LOCAL SERVER_ENV_RECETTE !SERVER_ENV_PREPROD !SERVER_ENV_PROD
-SetEnvIf HOST "preprod[.]telma-ressources-humaines[.]netapsys[.]fr" !SERVER_ENV_LOCAL !SERVER_ENV_RECETTE SERVER_ENV_PREPROD !SERVER_ENV_PROD
+
 
 
 Order deny,allow
@@ -46,7 +45,6 @@ SetEnvIf HOST "localhost" PROJECT_BASE_PATH=/projets/telmarh/srcs/
 SetEnvIf HOST "telma-interface-recrutement-recette[.]mg[.]netapsys[.]fr" PROJECT_BASE_PATH=/
 SetEnvIf HOST "telma-interface-recrutement-recette[.]netapsys[.]fr" PROJECT_BASE_PATH=/
 SetEnvIf HOST "tsgt02lv" PROJECT_BASE_PATH=/jobopportunity/
-SetEnvIf HOST "preprod[.]telma-ressources-humaines[.]netapsys[.]fr" PROJECT_BASE_PATH=/
 
 <IfModule mod_rewrite.c>
 RewriteEngine On
