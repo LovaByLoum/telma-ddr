@@ -65,6 +65,35 @@ $telmarh_options_settings = array(
 			'description'   => 'token : <ul><li><strong>lien vers l\'offre :</strong>[offre:url]</li><li><strong>la soumission :</strong>[soubmission:data]</li><li><strong>le site url :</strong>[site:name]</li></ul>'
 		)
 	),
+	'Formulaire de contact' => array(
+		'email_send_contact' => array(
+			'label'     => 'Email d\'envoie contact',
+			'type'      => 'text',
+		),
+		'subjet_mail_user' => array(
+			'label'         => 'Sujet email utilisateur',
+			'type'          => 'text',
+		),
+		'content_mail_user' => array(
+			'label'         => 'Contenu du message',
+			'type'          => 'textarea',
+			'description'   => 'token : <ul><li><strong>la soumission :</strong>[soubmission:data]</li><li><strong>le site url :</strong>[site:name]</li></ul>'
+		),
+		'subjet_mail_admin' => array(
+			'label'         => 'Sujet email administrateur',
+			'type'          => 'text',
+		),
+		'content_mail_admin' => array(
+			'label'         => 'Contenu du message',
+			'type'          => 'textarea',
+			'description'   => 'token : <ul><li><strong>la soumission :</strong>[soubmission:data]</li><li><strong>le site url :</strong>[site:name]</li></ul>'
+		),
+		'option_reponse_form' => array(
+			'label'         => 'Texte apres la validation du formulaire',
+			'type'          => 'textarea'
+		)
+
+	),
 	'Option champs inscription' => array(
 		'list_domaine_etude' => array(
 			'label'             => 'Liste des domaines d\'etude',

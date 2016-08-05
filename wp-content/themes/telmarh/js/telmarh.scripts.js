@@ -693,13 +693,13 @@ jQuery( function( $ ){
             errorElement : "span",
             errorClass : "error",
             rules : {
-                "name" : {
+                "nom_contact" : {
                     required : true
                 },
-                "surname" : {
+                "surname_contact" : {
                     required : true
                 },
-                "email" : {
+                "email_contact" : {
                     required : true,
                     email : true
                 },
@@ -711,13 +711,13 @@ jQuery( function( $ ){
                 }
             },
             messages : {
-                "name" : {
+                "nom_contact" : {
                     required : "Le nom est requis."
                 },
-                "surname" : {
+                "surname_contact" : {
                     required : "Le prénom est requis."
                 },
-                "email" : {
+                "email_contact" : {
                     required : "L'adresse email est requise.",
                     email : "L'adresse email n'est pas valide."
                 },

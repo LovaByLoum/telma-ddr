@@ -390,97 +390,97 @@ function telmarh_inscription_user(){
 		$descExpPgt         = ( isset( $_POST['desc_exp_pgt'] ) && !empty( $_POST['desc_exp_pgt'] ) ) ? strip_tags( $_POST['desc_exp_pgt'] ) : "";
 		$localisationExpPgt = ( isset( $_POST['localisation_pgt'] ) && !empty( $_POST['localisation_pgt'] ) ) ? strip_tags( $_POST['localisation_pgt'] ) : "";
 		//test login
-		if ( !empty( $login ) ) $msg .= "<li>Le login est requis.</li>";
+		if ( empty( $login ) ) $msg .= "<li>Le login est requis.</li>";
 		//test mdp
-		if ( !empty( $password ) ) $msg .="<li>Le mot de passe est requis.</li>";
+		if ( empty( $password ) ) $msg .="<li>Le mot de passe est requis.</li>";
 		//test nom
-		if ( !empty( $nom ) ) $msg .= "<li>Le nom est requis.</li>";
+		if ( empty( $nom ) ) $msg .= "<li>Le nom est requis.</li>";
 		//test prenom
-		if ( !empty( $prenom ) ) $msg .= "<li>Le prénom est requis.</li>";
+		if ( empty( $prenom ) ) $msg .= "<li>Le prénom est requis.</li>";
 		//test date de naissance
-		if ( !empty( $birthday ) ) $msg .= "<li>La date de naissance est requise.</li>";
+		if ( empty( $birthday ) ) $msg .= "<li>La date de naissance est requise.</li>";
 		//test adresse
-		if ( !empty( $adresse ) ) $msg .= "<li>L'adresse est requise.</li>";
+		if ( empty( $adresse ) ) $msg .= "<li>L'adresse est requise.</li>";
 		//test N° Téléphone
-		if ( !empty( $numPhone) ) $msg .= "<li>La numéro du téléphone est requise.</li>";
+		if ( empty( $numPhone) ) $msg .= "<li>La numéro du téléphone est requise.</li>";
 		//test email
-		if ( !empty( $email) ) $msg .= "<li>L'adresse email est requis.</li>";
+		if ( empty( $email) ) $msg .= "<li>L'adresse email est requis.</li>";
 		//test email
-		if ( !empty( $niveauEtude) ) $msg .= "<li>Le niveau d'etude est requis.</li>";
+		if ( empty( $niveauEtude) ) $msg .= "<li>Le niveau d'etude est requis.</li>";
 		//en poste
 		if ( $enPoste == 1 ){
-			if ( !empty( $fonction ) ) $msg .= "<li>La fonction est requise.</li>";
+			if ( empty( $fonction ) ) $msg .= "<li>La fonction est requise.</li>";
 		}
 		//permis de conduire
 		if ( $permis == 1 ){
-			if ( !empty( $catPermis ) ) $msg .= "<li>La catégorie de permis est requise.</li>";
+			if ( empty( $catPermis ) ) $msg .= "<li>La catégorie de permis est requise.</li>";
 		}
 		// date de disponibilite
-		if ( !empty($dateDispo ) ) $msg .= "<li>La date de disponibilité est requise.</li>";
+		if ( empty($dateDispo ) ) $msg .= "<li>La date de disponibilité est requise.</li>";
 
 		// année d'experience
 		if ( $anneeExperience == "0" ) $msg .= "<li>L'année d'expérience professionnelle est requise.</li>";
 
 		//années experience autre
 		if ( $niveauEtude == "autre" ) {
-			if ( !empty( $autreNivEtude ) ) $msg .= "<li>Autre niveau d'étude est requise.</li>";
+			if ( empty( $autreNivEtude ) ) $msg .= "<li>Autre niveau d'étude est requise.</li>";
 		}
 
 		// titre experience professionnelle
-		if ( !empty( $titreExpProf ) ) $msg .= "<li>Le titre de l'expérience professionnelle est requis</li>";
+		if ( empty( $titreExpProf ) ) $msg .= "<li>Le titre de l'expérience professionnelle est requis</li>";
 
 		//titre formation professionnelle
-		if ( !empty( $titreExpFor ) ) $msg .= "<li>Le titre de la formation professionnelle est requis</li>";
+		if ( empty( $titreExpFor ) ) $msg .= "<li>Le titre de la formation professionnelle est requis</li>";
 
 		//projet
 		if ( $isProjet == "1" ){
-			if ( !empty( $titreExpPgt ) ) $msg .= "<li>Le titre du projet est requis.</li>";
+			if ( empty( $titreExpPgt ) ) $msg .= "<li>Le titre du projet est requis.</li>";
 		}
 
 		// date de debut experience professionnelle
-		if ( !empty( $dbExpProf ) ) $msg .= "<li>La date de début de l'expérience professionnelle est requise</li>";
+		if ( empty( $dbExpProf ) ) $msg .= "<li>La date de début de l'expérience professionnelle est requise</li>";
 
 		//date de debut formation professionnelle
-		if ( !empty( $dbExpFor ) ) $msg .= "<li>La date de début  du formation professionnelle est requise</li>";
+		if ( empty( $dbExpFor ) ) $msg .= "<li>La date de début  du formation professionnelle est requise</li>";
 
 		//projet
 		if ( $isProjet == 1 ){
-			if ( !empty( $dbExpPgt ) ) $msg .= "<li>La date de début  du projet est requise.</li>";
+			if ( empty( $dbExpPgt ) ) $msg .= "<li>La date de début  du projet est requise.</li>";
 		}
 
 		// date de fin experience professionnelle
-		if ( !empty( $dfExpProf ) ) $msg .= "<li>La date de fin de l'expérience professionnelle est requise</li>";
+		if ( empty( $dfExpProf ) ) $msg .= "<li>La date de fin de l'expérience professionnelle est requise</li>";
 
 		//date de fin formation professionnelle
-		if ( !empty( $dfExpFor ) ) $msg .= "<li>La date de fin  du formation professionnelle est requise</li>";
+		if ( empty( $dfExpFor ) ) $msg .= "<li>La date de fin  du formation professionnelle est requise</li>";
 
 		//projet
 		if ( $isProjet == 1 ){
-			if ( !empty( $dfExpPgt ) ) $msg .= "<li>La date de fin  du projet est requise.</li>";
+			if ( empty( $dfExpPgt ) ) $msg .= "<li>La date de fin  du projet est requise.</li>";
 		}
 
 		// organisme experience professionnelle
-		if ( !empty( $organismeExpProf ) ) $msg .= "<li>Organisme ou Entreprise de l'expérience professionnelle est requise</li>";
+		if ( empty( $organismeExpProf ) ) $msg .= "<li>Organisme ou Entreprise de l'expérience professionnelle est requise</li>";
 
 		//date de fin formation professionnelle
-		if ( !empty( $organismeExpFor ) ) $msg .= "<li>Organisme ou Entreprise de la formation professionnelle est requise</li>";
+		if ( empty( $organismeExpFor ) ) $msg .= "<li>Organisme ou Entreprise de la formation professionnelle est requise</li>";
 
 		//projet
 		if ( $isProjet == "1" ){
-			if ( !empty( $organismeExpPgt ) ) $msg .= "<li>Organisme ou Entreprise  du projet est requise.</li>";
+			if ( empty( $organismeExpPgt ) ) $msg .= "<li>Organisme ou Entreprise  du projet est requise.</li>";
 		}
 
 		// organisme experience professionnelle
-		if ( !empty( $descExpProf ) ) $msg .= "<li>La description de l'expérience professionnelle est requise</li>";
+		if ( empty( $descExpProf ) ) $msg .= "<li>La description de l'expérience professionnelle est requise</li>";
 
 		//date de fin formation professionnelle
-		if ( !empty( $descExpFor ) ) $msg .= "<li>La description de la formation professionnelle est requise</li>";
+		if ( empty( $descExpFor ) ) $msg .= "<li>La description de la formation professionnelle est requise</li>";
 
 		//projet
 		if ( $isProjet == "1" ){
-			if ( !empty( $descExpPgt ) ) $msg .= "<li>La description du projet est requise.</li>";
+			if ( empty( $descExpPgt ) ) $msg .= "<li>La description du projet est requise.</li>";
 		}
-		if ( !empty( $msg ) ){
+		if ( empty( $msg ) ){
 			//create user
 			$obj = pw_new_user_approve();
 			remove_action( "user_register", array( $obj , 'add_user_status') );
@@ -963,3 +963,55 @@ function telmarh_restrict_to_edit_user() {
 		}
 	}
 }
+
+add_action("init", "telmarh_init_nous_contacter");
+function telmarh_init_nous_contacter(){
+	global $telmarh_options;
+	$msg = "";
+	$error = 0;
+	if ( isset( $_POST['wp_nonce_contact'] ) && !empty( $_POST['wp_nonce_contact'] ) && wp_verify_nonce( $_POST['wp_nonce_contact'], "wp_nonce_contact" ) ){
+		$name       = ( isset( $_POST['nom_contact'] ) && !empty( $_POST['nom_contact'] ) ) ? $_POST['nom_contact'] : "";
+		$surname    = ( isset( $_POST['surname_contact'] ) && !empty( $_POST['surname_contact'] ) ) ? $_POST['surname_contact'] : "";
+		$email      = ( isset( $_POST['email_contact'] ) && !empty( $_POST['email_contact'] ) ) ? $_POST['email_contact'] : "";
+		$num_phone  = ( isset( $_POST['num_phone'] ) && !empty( $_POST['num_phone'] ) ) ? $_POST['num_phone'] : "";
+		$message    = ( isset( $_POST['message'] ) && !empty( $_POST['message'] ) ) ? $_POST['message'] : "";
+		if ( empty( $name ) ) $msg .= '<li><span>Le nom est requis.</span></li>';
+		if ( empty( $surname ) ) $msg .= '<li><span>Le prénom est requis.</span></li>';
+		if ( empty( $email ) ) $msg .= '<li><span>L\'adresse email est requise.</span></li>';
+		if ( !empty( $email ) && !filter_var($email, FILTER_VALIDATE_EMAIL) ) $msg .= '<li><span>L\'adresse email n\'est pas valide.</span></li>';
+		if ( empty( $message ) ) $msg .= '<li>Le message est requis.</li>';
+		if ( !empty( $num_phone ) && !is_numeric( $num_phone ) ) $msg .= '<li><span>La numéro de téléphone est invalide (entier uniquement).</span></li>';
+		if ( empty( $msg ) ){
+			$blogname       = wp_specialchars_decode(get_option('blogname'), ENT_QUOTES);
+			$email_admin    = $telmarh_options['email_send_contact'];
+			$subjet_user    = $telmarh_options['subjet_mail_user'];
+			$subjet_admin   = $telmarh_options['subjet_mail_admin'];
+			$siteName       = get_bloginfo( "name" );
+			$data_user      = '	<ul>
+									<li><strong>Nom : </strong>' . $name . '</li>
+									<li><strong>Prénom : </strong>' . $surname . '</li>
+									<li><strong>Adresse email : </strong>' . $email . '</li>
+									<li><strong>Numéro de téléphone  : </strong>' . $num_phone . '</li>
+									<li><strong>Message  : </strong>' . $message . '</li>
+								</ul>';
+
+			$tobereplaced   = array('[soubmission:data]', '[site:name]');
+		    $replacement    = array( $data_user, $siteName );
+			$content_user   = str_replace($tobereplaced, $replacement, $telmarh_options['content_mail_user']);
+			$content_admin  = str_replace($tobereplaced, $replacement, $telmarh_options['content_mail_admin']);
+			telmarh_send_mail( $email_admin, $subjet_admin, $content_admin, $blogname );
+			telmarh_send_mail( $email, $subjet_user, $content_user, $blogname );
+			$error = 0;
+		} else {
+			$error = 1;
+		}
+	} else {
+		$error =  1;
+		$msg .= (isset(  $_POST['wp_nonce_contact']  ) && !empty( $_POST['wp_nonce_contact'] ) ) ? "<li><span>Veuillez recharger la page</span></li>" : "";
+	}
+	$_POST['error'] = array(
+		'error' => $error,
+		'msg'   => $msg
+	);
+}
+add_filter( 'nonce_life', function () { return MINUTE_IN_SECONDS; } );
