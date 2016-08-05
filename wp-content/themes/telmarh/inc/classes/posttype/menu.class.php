@@ -68,7 +68,7 @@ class CMenu
 	}
 
 	public static function renderMenuFooter() {
-		global $telmarh_options;
+		global $telmarh_options, $post;
 		$html = '';
 		$html .= '<ul class="menu-footer clearfix">';
 		$menuFooterElement = self::getMenuhierarchy( SLUG_MENU_FOOTER );
@@ -119,12 +119,13 @@ class CMenu
 			}
 		}
 		if ( isset( $telmarh_options['description_footer'] ) && !empty( $telmarh_options['description_footer'] ) ) {
+			$pageNousContacter =  ( is_object( wp_get_post_by_template( "page-nous_contacter.php", "" ) ) ) ?  wp_get_post_by_template( "page-nous_contacter.php", "" ) : $post;;
 			$html .= '<li class="col-1-' . $menuCount . '">';
 			$html .= '<a href="javascript:;" title="Suivez-nous">Suivez-nous</a>';
 			$html .= '  <div class="site-info">
   							' . apply_filters("the_content", $telmarh_options['description_footer']) . '
   							<p class="contact">
-  							    <a href="#" class="submit_link button--wapasha button--round-l " title="Nous contacter">
+  							    <a href="' . get_permalink( $pageNousContacter->ID ) . '" class="submit_link button--wapasha button--round-l " title="Nous contacter">
                                     Nous contacter
                                 </a>
   							</p>
