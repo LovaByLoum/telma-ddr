@@ -969,49 +969,51 @@ function telmarh_init_nous_contacter(){
 	global $telmarh_options;
 	$msg = "";
 	$error = 0;
-	if ( isset( $_POST['wp_nonce_contact'] ) && !empty( $_POST['wp_nonce_contact'] ) && wp_verify_nonce( $_POST['wp_nonce_contact'], "wp_nonce_contact" ) ){
-		$name       = ( isset( $_POST['nom_contact'] ) && !empty( $_POST['nom_contact'] ) ) ? $_POST['nom_contact'] : "";
-		$surname    = ( isset( $_POST['surname_contact'] ) && !empty( $_POST['surname_contact'] ) ) ? $_POST['surname_contact'] : "";
-		$email      = ( isset( $_POST['email_contact'] ) && !empty( $_POST['email_contact'] ) ) ? $_POST['email_contact'] : "";
-		$num_phone  = ( isset( $_POST['num_phone'] ) && !empty( $_POST['num_phone'] ) ) ? $_POST['num_phone'] : "";
-		$message    = ( isset( $_POST['message'] ) && !empty( $_POST['message'] ) ) ? $_POST['message'] : "";
-		if ( empty( $name ) ) $msg .= '<li><span>Le nom est requis.</span></li>';
-		if ( empty( $surname ) ) $msg .= '<li><span>Le prénom est requis.</span></li>';
-		if ( empty( $email ) ) $msg .= '<li><span>L\'adresse email est requise.</span></li>';
-		if ( !empty( $email ) && !filter_var($email, FILTER_VALIDATE_EMAIL) ) $msg .= '<li><span>L\'adresse email n\'est pas valide.</span></li>';
-		if ( empty( $message ) ) $msg .= '<li>Le message est requis.</li>';
-		if ( !empty( $num_phone ) && !is_numeric( $num_phone ) ) $msg .= '<li><span>La numéro de téléphone est invalide (entier uniquement).</span></li>';
-		if ( empty( $msg ) ){
-			$blogname       = wp_specialchars_decode(get_option('blogname'), ENT_QUOTES);
-			$email_admin    = $telmarh_options['email_send_contact'];
-			$subjet_user    = $telmarh_options['subjet_mail_user'];
-			$subjet_admin   = $telmarh_options['subjet_mail_admin'];
-			$siteName       = get_bloginfo( "name" );
-			$data_user      = '	<ul>
-									<li><strong>Nom : </strong>' . $name . '</li>
-									<li><strong>Prénom : </strong>' . $surname . '</li>
-									<li><strong>Adresse email : </strong>' . $email . '</li>
-									<li><strong>Numéro de téléphone  : </strong>' . $num_phone . '</li>
-									<li><strong>Message  : </strong>' . $message . '</li>
-								</ul>';
+	if ( is_page_template( "page-nous_contacter.php" ) ){
+		if ( isset( $_POST['wp_nonce_contact'] ) && !empty( $_POST['wp_nonce_contact'] ) && wp_verify_nonce( $_POST['wp_nonce_contact'], "wp_nonce_contact" ) ){
+			$name       = ( isset( $_POST['nom_contact'] ) && !empty( $_POST['nom_contact'] ) ) ? $_POST['nom_contact'] : "";
+			$surname    = ( isset( $_POST['surname_contact'] ) && !empty( $_POST['surname_contact'] ) ) ? $_POST['surname_contact'] : "";
+			$email      = ( isset( $_POST['email_contact'] ) && !empty( $_POST['email_contact'] ) ) ? $_POST['email_contact'] : "";
+			$num_phone  = ( isset( $_POST['num_phone'] ) && !empty( $_POST['num_phone'] ) ) ? $_POST['num_phone'] : "";
+			$message    = ( isset( $_POST['message'] ) && !empty( $_POST['message'] ) ) ? $_POST['message'] : "";
+			if ( empty( $name ) ) $msg .= '<li><span>Le nom est requis.</span></li>';
+			if ( empty( $surname ) ) $msg .= '<li><span>Le prénom est requis.</span></li>';
+			if ( empty( $email ) ) $msg .= '<li><span>L\'adresse email est requise.</span></li>';
+			if ( !empty( $email ) && !filter_var($email, FILTER_VALIDATE_EMAIL) ) $msg .= '<li><span>L\'adresse email n\'est pas valide.</span></li>';
+			if ( empty( $message ) ) $msg .= '<li>Le message est requis.</li>';
+			if ( !empty( $num_phone ) && !is_numeric( $num_phone ) ) $msg .= '<li><span>La numéro de téléphone est invalide (entier uniquement).</span></li>';
+			if ( empty( $msg ) ){
+				$blogname       = wp_specialchars_decode(get_option('blogname'), ENT_QUOTES);
+				$email_admin    = $telmarh_options['email_send_contact'];
+				$subjet_user    = $telmarh_options['subjet_mail_user'];
+				$subjet_admin   = $telmarh_options['subjet_mail_admin'];
+				$siteName       = get_bloginfo( "name" );
+				$data_user      = '	<ul>
+										<li><strong>Nom : </strong>' . $name . '</li>
+										<li><strong>Prénom : </strong>' . $surname . '</li>
+										<li><strong>Adresse email : </strong>' . $email . '</li>
+										<li><strong>Numéro de téléphone  : </strong>' . $num_phone . '</li>
+										<li><strong>Message  : </strong>' . $message . '</li>
+									</ul>';
 
-			$tobereplaced   = array('[soubmission:data]', '[site:name]');
-		    $replacement    = array( $data_user, $siteName );
-			$content_user   = str_replace($tobereplaced, $replacement, $telmarh_options['content_mail_user']);
-			$content_admin  = str_replace($tobereplaced, $replacement, $telmarh_options['content_mail_admin']);
-			telmarh_send_mail( $email_admin, $subjet_admin, $content_admin, $blogname );
-			telmarh_send_mail( $email, $subjet_user, $content_user, $blogname );
-			$error = 0;
+				$tobereplaced   = array('[soubmission:data]', '[site:name]');
+			    $replacement    = array( $data_user, $siteName );
+				$content_user   = str_replace($tobereplaced, $replacement, $telmarh_options['content_mail_user']);
+				$content_admin  = str_replace($tobereplaced, $replacement, $telmarh_options['content_mail_admin']);
+				telmarh_send_mail( $email_admin, $subjet_admin, $content_admin, $blogname );
+				telmarh_send_mail( $email, $subjet_user, $content_user, $blogname );
+				$error = 0;
+			} else {
+				$error = 1;
+			}
 		} else {
-			$error = 1;
+			$error =  1;
+			$msg .= (isset(  $_POST['wp_nonce_contact']  ) && !empty( $_POST['wp_nonce_contact'] ) ) ? "<li><span>Veuillez recharger la page</span></li>" : "";
 		}
-	} else {
-		$error =  1;
-		$msg .= (isset(  $_POST['wp_nonce_contact']  ) && !empty( $_POST['wp_nonce_contact'] ) ) ? "<li><span>Veuillez recharger la page</span></li>" : "";
+		$_POST['error'] = array(
+			'error' => $error,
+			'msg'   => $msg
+		);
 	}
-	$_POST['error'] = array(
-		'error' => $error,
-		'msg'   => $msg
-	);
 }
 add_filter( 'nonce_life', function () { return MINUTE_IN_SECONDS; } );
