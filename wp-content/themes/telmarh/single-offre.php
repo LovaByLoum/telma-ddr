@@ -142,10 +142,10 @@ get_header(); ?>
 	                    </h3>
 						<ul>
 							<?php if ( isset( $society->titre )  && !empty( $society->titre ) ):?>
-								<li><strong>Nom de l'entreprise :</strong>&nbsp;<?php echo $society->titre;?></li>
+								<li><strong>Nom de l'entreprise :</br></strong>&nbsp;&nbsp;<?php echo $society->titre;?></li>
 							<?php endif;?>
 							<?php if ( isset( $offre->localisation )  && !empty( $offre->localisation ) ):?>
-								<li><strong>Région :</strong>&nbsp;
+								<li><strong>Région :</br></strong>&nbsp;
 									<?php   $i = 1;
 											$glue = ', ';
 											foreach ( $offre->localisation as $term ){
@@ -156,13 +156,13 @@ get_header(); ?>
 								</li>
 							<?php endif;?>
 							<?php if ( isset( $offre->date )  && !empty( $offre->date ) ):?>
-								<li><strong>Date de publication :</strong>&nbsp;<?php echo COffre::dateLongueText( $offre->date );?></li>
+								<li><strong>Date de publication :</br></strong>&nbsp;&nbsp;<?php echo COffre::dateLongueText( $offre->date );?></li>
 							<?php endif;?>
 							<?php if ( isset( $offre->expire )  && !empty( $offre->expire ) ):?>
-								<li><strong>Date d'expiration :</strong>&nbsp;<?php echo COffre::dateLongueText( $offre->expire );?></li>
+								<li><strong>Date d'expiration :</br></strong>&nbsp;&nbsp;<?php echo COffre::dateLongueText( $offre->expire );?></li>
 							<?php endif;?>
 							<?php if ( isset( $offre->{JM_TAXONOMIE_DEPARTEMENT} )  && !empty( $offre->{JM_TAXONOMIE_DEPARTEMENT} ) && count( $offre->{JM_TAXONOMIE_DEPARTEMENT} ) > 0 ):?>
-								<li><strong>Domaine de métier :</strong>&nbsp;
+								<li><strong>Domaine de métier :</br></strong>&nbsp;&nbsp;
 							<?php   $i = 1;
 									$glue = ', ';
 									foreach ( $offre->{JM_TAXONOMIE_DEPARTEMENT} as $term ){
@@ -173,7 +173,7 @@ get_header(); ?>
 								</li>
 							<?php endif;?>
 							<?php if ( isset( $offre->{JM_TAXONOMIE_TYPE_CONTRAT} )  && !empty( $offre->{JM_TAXONOMIE_TYPE_CONTRAT} ) ):?>
-								<li><strong>Type de contrat :</strong>&nbsp;
+								<li><strong>Type de contrat :</strong></br>&nbsp;
 									<?php   $i = 1;
 											$glue = ', ';
 											foreach ( $offre->{JM_TAXONOMIE_TYPE_CONTRAT} as $term ){
