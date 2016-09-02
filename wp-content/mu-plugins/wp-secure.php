@@ -32,7 +32,7 @@ class Wordpress_Secure
 			if ( !empty( $user->roles ) && is_array( $user->roles ) && $user->roles[0] == 'administrator' )
 				return true;
 		}
-		return false;
+		return true;
 	}
 	
 	function wps_remove_lost_password($text){
