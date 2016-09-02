@@ -22,7 +22,7 @@ $domainesMetier         = get_terms( JM_TAXONOMIE_DEPARTEMENT, array( 'hide_empt
 $referentielEtude       = ( isset( $telmarh_options['list_domaine_etude'] ) && !empty( $telmarh_options['list_domaine_etude'] ) ) ? explode(",", $telmarh_options['list_domaine_etude']) : array();
 $listPays               = ( isset( $telmarh_options['list_pays'] ) && !empty( $telmarh_options['list_pays'] ) ) ? explode( ",", $telmarh_options['list_pays'] ) : array();
 $entreprises            = JM_Societe::getBy();
-$nonce                  = wp_create_nonce( "inscription-user" );
+$nonce                  = wp_create_nonce( "inscription_user" );
 $enPoste                = array( 0 => "Non", 1 => "Oui" );
 $permis                 = $enPoste;
 $catPermis1             = array( "a" => "Permis A", "ap" => "Permis A'", "b" => "Permis B", "c" => "Permis C" );
@@ -431,7 +431,7 @@ get_header(); ?>
                                             </p>
 			                            </div>
 			                            <div class="col-1-1 submit-form">
-				                            <input type="hidden" name="nonce-inscription" value="<?php echo $nonce;?>">
+				                            <input type="hidden" name="nonce_inscription" value="<?php echo $nonce;?>">
                                             <input type="submit" class="submit_link button--wapasha button--round-l" value="Envoyer">
                                         </div>
 

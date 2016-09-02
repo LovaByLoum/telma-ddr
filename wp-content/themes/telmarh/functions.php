@@ -349,7 +349,7 @@ function telmarh_image_upload($post) {
  */
 function telmarh_inscription_user(){
 	$msg = "";
-	if ( isset( $_POST['nonce-inscription'] ) && !empty( $_POST['nonce-inscription'] ) && wp_verify_nonce( $_POST['nonce-inscription'], "inscription-user" ) ){
+	if ( isset( $_POST['nonce_inscription'] ) && !empty( $_POST['nonce_inscription'] ) && wp_verify_nonce( $_POST['nonce_inscription'], "inscription_user" ) ){
 		$login              = ( isset( $_POST['login'] ) && !empty( $_POST['login'] ) ) ? strip_tags( $_POST['login'] ) : "";
 		$password           = ( isset( $_POST['passwrd'] ) && !empty( $_POST['passwrd'] ) ) ? strip_tags( $_POST['passwrd'] ) : "";
 		$nom                = ( isset( $_POST['nom'] ) && !empty( $_POST['nom'] ) ) ? strip_tags( $_POST['nom'] ) : "";
@@ -401,9 +401,8 @@ function telmarh_inscription_user(){
 		if ( empty( $birthday ) ) $msg .= "<li>La date de naissance est requise.</li>";
 		//test adresse
 		if ( empty( $adresse ) ) $msg .= "<li>L'adresse est requise.</li>";
-		//test N° Téléphone
-		if ( empty( $numPhone) ) $msg .= "<li>La numéro du téléphone est requise.</li>";
-		//test email
+
+
 		if ( empty( $email) ) $msg .= "<li>L'adresse email est requis.</li>";
 		//test email
 		if ( empty( $niveauEtude) ) $msg .= "<li>Le niveau d'etude est requis.</li>";
