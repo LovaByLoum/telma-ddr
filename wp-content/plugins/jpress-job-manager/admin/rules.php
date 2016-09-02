@@ -23,7 +23,7 @@ function jpress_jm_profile_personal_options($profile){
                         <label>Votre compte peut gérer les offres rattachés à la Entreprise : </label>
                     </th>
                     <td>
-                        <?php if( in_array( $current_user->roles[0], array( 'administrator' ) ) ):
+                        <?php if( in_array( $current_user->roles[0], array( 'administrator', 'webmaster' ) ) ):
                             $societes = JM_Societe::getBy();
                             ?>
                             <select class="chosen-select" name="jpress_jm_soc_filter">
