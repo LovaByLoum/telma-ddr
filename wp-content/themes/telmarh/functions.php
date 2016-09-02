@@ -503,6 +503,7 @@ function telmarh_inscription_user(){
 			add_user_meta( $userId, 'adresse_user', $adresse );
 			add_user_meta( $userId, 'num_phone_user', $numPhone );
 			add_user_meta( $userId, 'niveau_etude_user', $niveauEtude );
+            if ( $niveauEtude == "autre" )add_user_meta( $userId, 'autre_niveau_user', $autreNivEtude );
 			add_user_meta( $userId, 'domaine_etude_user', sanitize_title($domaineEtude) );
 			add_user_meta( $userId, 'mobilite_user', $mobilite );
 			add_user_meta( $userId, 'en_poste_user', $enPoste );
@@ -1015,4 +1016,19 @@ function telmarh_init_nous_contacter(){
 		);
 	}
 }
-add_filter( 'nonce_life', function () { return MINUTE_IN_SECONDS; } );
+add_filter( 'acf/load_field/name=niveau_etude_user', 'telmarh_custom_value_niveau_etude' );
+function telmarh_custom_value_niveau_etude($field){
+    $terms = get_terms( JM_TAXONOMIE_NIVEAU_ETUDE, array( 'hide_empty' => false ) );
+    $field['choices'] = array();
+    foreach ( $terms as $term ) {
+        $data[$term->term_id] = $term->name;
+    }
+    $data['autre'] = "Autre";
+    $field['choices'] = $data;
+
+    return $field;
+}
+
+
+
+

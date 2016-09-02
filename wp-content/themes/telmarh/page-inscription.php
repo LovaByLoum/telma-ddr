@@ -111,7 +111,7 @@ get_header(); ?>
 				                            <div class="content-accordion">
 					                            <div class="col-1-1">
 						                            <div class="col-1-3 form-field">
-                                                        <h5>Niveau d'étude <span class="required">*</span></h5>
+                                                        <h5>Niveau d'études <span class="required">*</span></h5>
                                                         <div class="select">
                                                         <select name="niveau_etude">
                                                             <option value="0">Sélectionnez</option>
@@ -120,7 +120,7 @@ get_header(); ?>
                                                                     <option value="<?php echo $term->term_id;?>" <?php if ( $_POST['niveau_etude'] == $term->term_id ):?>selected="selected" <?php endif;?> ><?php echo $term->name;?></option>
                                                                 <?php endforeach;?>
                                                             <?php endif;?>
-	                                                        <option value="autre" <?php if ( $_POST['niveau_etude'] == "autre" ):?>selected="selected" <?php endif;?> >Autres</option>
+	                                                        <option value="autre" <?php if ( $_POST['niveau_etude'] == "autre" ):?>selected="selected" <?php endif;?> >Autre</option>
                                                         </select>
                                                         <div class="select__arrow"></div>
                                                         </div>
