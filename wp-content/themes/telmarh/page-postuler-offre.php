@@ -32,7 +32,7 @@ get_header(); ?>
 								<?php if ( isset( $post->post_title ) && !empty( $post->post_title ) ):?>
 									<header class="entry-header">
 			                            <h1 class="entry-title">
-				                            Postulé à l'offre
+                                            Postuler à l'offre
 				                            <a href="<?php echo get_permalink( $offre->id );?>">&quot;<?php echo $offre->titre;?>&quot;</a>
 			                            </h1>
 			                            <!-- .entry-meta -->
