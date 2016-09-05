@@ -161,7 +161,7 @@ get_header(); ?>
                                                     </p>
                                                     <p class="col-1-3 form-field post-required" <?php if ( isset( $_POST['en_poste'] ) && $_POST['en_poste'] == 1 ):?>style="display: block;" <?php endif;?>>
 	                                                    <label for="fonction">Fonction dans l'entreprise <span class="required">*</span></label>
-                                                        <input type="text" autocomplete="off" name="fonction_user" placeholder="Fonction *" id="fonction" value="<?php echo $_POST['fonction_user'];?>"/>
+                                                        <input type="text" autocomplete="off" name="fonction_user" placeholder="Fonction" id="fonction" value="<?php echo $_POST['fonction_user'];?>"/>
                                                     </p>
 					                            </div>
 												<div class="col-1-1">
