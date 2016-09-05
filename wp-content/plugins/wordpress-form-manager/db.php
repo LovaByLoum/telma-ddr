@@ -973,15 +973,15 @@ class fm_db_class{
 							'user' => 'User',
 							'user_ip' => 'IP Address',
 							'post_id' => 'Post ID',
+							'parent_post_id' => 'parent',
 							'unique_id' => 'Unique Identifier',
 							);
 		
 		$formInfo = $this->getForm($formID);
 		$metaFields = $this->getFormItems($formID, 1);	
 		$formInfo['items'] = array_merge($formInfo['items'], $metaFields);
-		
+
 		//remove fields that need to be ignored
-		
 		foreach($baseFields as $k=>$f){
 			if(in_array($k, $ignoreFields)) unset($baseFields[$k]);
 		}
@@ -989,7 +989,7 @@ class fm_db_class{
 			if(in_array($item['unique_name'], $ignoreFields)) unset($formInfo['items'][$k]);
 		}
 		
-		//remove fields that are not in the result	
+		//remove fields that are not in the result
 		$results = $this->get_results($query);
 		$firstRow = reset( $results );
 		
@@ -1013,13 +1013,17 @@ class fm_db_class{
 		
 		$data = array();
 		$data[] = $titleRow;
-		
 		$row = $firstRow;
 		do{
 			$newRow = array();
 			foreach($baseFields as $k=>$f){
 				if(isset($row[$k])){
-					$newRow[$k] = $row[$k];
+                    if ( $k == "parent_post_id" ){
+                        $newRow[$k] = get_the_title( $row[$k] );
+                    } else {
+                        $newRow[$k] = $row[$k];
+                    }
+
 				}
 			}
 			foreach($formInfo['items'] as $item){		
