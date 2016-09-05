@@ -95,11 +95,6 @@ $telmarh_options_settings = array(
 
 	),
 	'Option champs inscription' => array(
-		'list_domaine_etude' => array(
-			'label'             => 'Liste des domaines d\'etude',
-			'type'              => 'text',
-			'description'       => 'Séparer les valeurs par un virgule (ex : Informatique,Gestion,Communication)'
-		),
 		'list_pays' => array(
 			'label'             => 'Liste des pays',
 			'type'              => 'text',

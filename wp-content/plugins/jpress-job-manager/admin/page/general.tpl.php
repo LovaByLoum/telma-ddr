@@ -99,6 +99,12 @@ $options = get_option( JM_OPTIONS );
                              Niveau d'étude
                          </label>
                      </fieldset>
+                     <fieldset>
+                         <label for="<?php echo JM_TAXONOMIE_DOMAINE_ETUDE;?>">
+                             <input name="tax[]" type="checkbox" id="<?php echo JM_TAXONOMIE_DOMAINE_ETUDE;?>" value="<?php echo JM_TAXONOMIE_DOMAINE_ETUDE;?>" <?php if( jpress_jm_is_in_options( JM_TAXONOMIE_DOMAINE_ETUDE, 'tax' ) ) :?>checked<?php endif;?>>
+                             Domaines d'étude
+                         </label>
+                     </fieldset>
                  </td>
              </tr>
 

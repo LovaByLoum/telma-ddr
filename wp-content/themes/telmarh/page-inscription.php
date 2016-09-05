@@ -19,7 +19,7 @@ $localisation           = get_terms( JM_TAXONOMIE_LOCALISATION,array( 'hide_empt
 $criticites             = get_terms( JM_TAXONOMIE_CRITICITE, array( 'hide_empty' => false ) );
 $niveauEtudes           = get_terms( JM_TAXONOMIE_NIVEAU_ETUDE, array( 'hide_empty' => false ) );
 $domainesMetier         = get_terms( JM_TAXONOMIE_DEPARTEMENT, array( 'hide_empty' => false ) );
-$referentielEtude       = ( isset( $telmarh_options['list_domaine_etude'] ) && !empty( $telmarh_options['list_domaine_etude'] ) ) ? explode(",", $telmarh_options['list_domaine_etude']) : array();
+$referentielEtude       = get_terms( JM_TAXONOMIE_DOMAINE_ETUDE, array( 'hide_empty' => false ) );
 $listPays               = ( isset( $telmarh_options['list_pays'] ) && !empty( $telmarh_options['list_pays'] ) ) ? explode( ",", $telmarh_options['list_pays'] ) : array();
 $entreprises            = JM_Societe::getBy();
 $nonce                  = wp_create_nonce( "inscription_user" );
@@ -135,8 +135,8 @@ get_header(); ?>
                                                         <select name="ref_etude">
                                                             <option value="0">Sélectionnez</option>
                                                             <?php if ( !empty( $referentielEtude ) && count( $referentielEtude ) > 0 ):?>
-                                                                <?php foreach ( $referentielEtude as $element ):?>
-                                                                    <option value="<?php echo $element;?>" <?php if ( $_POST['ref_etude'] == $element ):?>selected="selected" <?php endif;?>><?php echo $element;?></option>
+                                                                <?php foreach ( $referentielEtude as $term ):?>
+                                                                    <option value="<?php echo $term->term_id;?>" <?php if ( $_POST['ref_etude'] == $term->term_id ):?>selected="selected" <?php endif;?>><?php echo $term->name;?></option>
                                                                 <?php endforeach;?>
                                                             <?php endif;?>
                                                         </select>

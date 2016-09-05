@@ -11,6 +11,7 @@ $idEntreprise = ( isset( $offre->societe_associe ) && !empty( $offre->societe_as
 $society = ( intval( $idEntreprise ) > 0 ) ? JM_Societe::getById( $idEntreprise ) : "";
 $postOffes = ( is_object( wp_get_post_by_template( "offres.php" ) ) ) ?  wp_get_post_by_template( "offres.php" ) : $post;
 $competenceRequis = COffre::getCompetenceRequis( $post->ID );
+$domaineEtude = COffre::getCompetenceRequis( $post->ID, JM_TAXONOMIE_DOMAINE_ETUDE );
 $pageInscription = wp_get_post_by_template( "page-inscription.php", "" );
 $pagePostuleOffre = wp_get_post_by_template( "page-postuler-offre.php", "" );
 $linkPostule = ( is_user_logged_in() ) ? get_permalink( $pagePostuleOffre->ID ) ."?po=" . $post->ID : "javascript:;";
@@ -196,7 +197,7 @@ get_header(); ?>
 							<?php if ( isset( $offre->{JM_TAXONOMIE_NIVEAU_ETUDE} )  && !empty( $offre->{JM_TAXONOMIE_NIVEAU_ETUDE} ) ):?>
 								<li><i class="fa fa-check-square-o"></i>&nbsp;&nbsp;<?php echo $offre->{JM_TAXONOMIE_NIVEAU_ETUDE}[0]->name;?></li>
 							<?php endif;?>
-							<?php if ( isset( $offre->{JM_TAXONOMIE_COMPETENCE_REQUISES} )  && !empty( $offre->{JM_TAXONOMIE_COMPETENCE_REQUISES} ) ):?>
+							<?php if ( isset( $offre->{JM_TAXONOMIE_COMPETENCE_REQUISES} )  && !empty( $offre->{JM_TAXONOMIE_COMPETENCE_REQUISES} ) ): ?>
 								<?php foreach( $competenceRequis[0] as $parent ): ?>
 								<li><i class="fa fa-check-square-o"></i>&nbsp;&nbsp;
 									<?php echo $parent['name'] ;?>
@@ -221,6 +222,31 @@ get_header(); ?>
 								</li>
 								<?php endforeach;?>
 							<?php endif;?>
+                            <?php if ( !empty( $domaineEtude ) && count( $domaineEtude ) > 0 ):?>
+                                <?php foreach( $domaineEtude[0] as $parent ): ?>
+                                    <li><i class="fa fa-check-square-o"></i>&nbsp;&nbsp;
+                                        <?php echo $parent['name'] ;?>
+                                        <?php if ( isset( $domaineEtude[$parent['id']][0] ) && !empty( $domaineEtude[$parent['id']][0] ) ):?>
+                                            <ul>
+                                                <?php foreach( $domaineEtude[$parent['id']][0] as $firstChild ):?>
+                                                    <li>&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-circle-right"></i>
+                                                        <?php echo $firstChild['name'];?>
+                                                        <?php if ( isset( $domaineEtude[$parent['id']][$firstChild['id']][0] ) && !empty( $domaineEtude[$parent['id']][$firstChild['id']][0] ) ):?>
+                                                            <ul>
+                                                                <?php foreach( $domaineEtude[$parent['id']][$firstChild['id']][0] as $secondChild ):?>
+                                                                    <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-fighter-jet"></i>
+                                                                        <?php echo $secondChild['name'];?>
+                                                                    </li>
+                                                                <?php endforeach;?>
+                                                            </ul>
+                                                        <?php endif;?>
+                                                    </li>
+                                                <?php endforeach;?>
+                                            </ul>
+                                        <?php endif;?>
+                                    </li>
+                                <?php endforeach;?>
+                            <?php endif;?>
 							<?php if ( isset( $offreElment->autreProfil ) && !empty( $offreElment->autreProfil ) && count( $offreElment->autreProfil ) ) :?>
 								<?php foreach( $offreElment->autreProfil as $profil ):?>
 									<li><i class="fa fa-check-square-o"></i>&nbsp;&nbsp;<?php echo $profil[FIELD_PROFIL_ELEMENT];?></li>
