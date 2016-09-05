@@ -313,17 +313,17 @@ class COffre
 		public static function getCompetenceRequis( $pid = 0 , $taxonomie = JM_TAXONOMIE_COMPETENCE_REQUISES  ){
 			$hierarchyTerm = array();
 			if ( $pid ){
-				$competenceRequis = wp_get_post_terms( $pid, $taxonomie );
+				$competenceRequis = wp_get_post_terms( $pid, $taxonomie  );
 			} else {
 				$competenceRequis = get_terms( $taxonomie, array( 'hide_empty' => false ) );
 			}
 			if ( !empty( $competenceRequis ) && count( $competenceRequis ) ){
 				foreach ( $competenceRequis as $key => $term ){
 					if ( $term->parent == 0 ) {
-						$hierarchyTerm[0][] = array(
-							'id'    => $term->term_id,
-							'name'  => $term->name,
-						);
+                        $hierarchyTerm[0][] = array(
+                            'id'    => $term->term_id,
+                            'name'  => $term->name,
+                        );
 					}
 				}
 				if ( isset( $hierarchyTerm[0] ) && !empty( $hierarchyTerm[0] ) ) {
@@ -363,7 +363,6 @@ class COffre
 					}
 				}
 			}
-
 			return $hierarchyTerm;
 		}
 
@@ -382,7 +381,7 @@ class COffre
 				$user = get_user_by( "email", $data[CPage::fm_get_unique_name_by_nickname("email_postule", $formId)] );
 				if ( in_array( $user->roles[0], array( USER_ROLE_CANDIDAT ) )  ){
 					if ( get_user_meta( $user->ID, "status_user", true ) == CANDIDAT_BLACKLIST ){
-						$dataHtml .= '<li><strong>Statut de la candidat :</strong> Blacklist</li>';
+						$dataHtml .= '<li><strong>Statut sur le candidat :</strong> Blacklist</li>';
 					}
 				}
 			}

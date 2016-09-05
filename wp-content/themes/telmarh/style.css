@@ -2740,3 +2740,7 @@ body.page-template-page-nous_contacter .content-area p.response{
 #nous_contacter ul li span{
     color: #ff0000;
 }
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default{
+    text-align: center
+;
+}
