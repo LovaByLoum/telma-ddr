@@ -488,8 +488,28 @@ jQuery( function( $ ){
                 jQuery('.' + classChild).eq(0).attr('checked', true);
             }
         });
+        //remove checked radio if not checked parent
+        jQuery( "input.parent-infos").change(function(){
+            var _this = jQuery(this);
+            var classChild = _this.data("class");
+            if ( !_this.is(":checked") ){
+                jQuery('.' + classChild).removeAttr('checked');
+            } else {
+                jQuery('.' + classChild).eq(0).attr('checked', true);
+            }
+        });
+
         //active parent is checked box
         jQuery("input.anglais","input.francais", "input.malagasy" ).change(function(){
+            var _this = jQuery(this);
+            var _class = _this.attr("class");
+            if ( jQuery('input[data-class =' + _class + ']').is(":checked")  ){
+                //nothing
+            } else {
+                jQuery('input[data-class =' + _class + ']').attr("checked", true);
+            }
+        });
+        jQuery(".list-parent.informatique ul li input[type='radio']" ).change(function(){
             var _this = jQuery(this);
             var _class = _this.attr("class");
             if ( jQuery('input[data-class =' + _class + ']').is(":checked")  ){
@@ -512,9 +532,9 @@ jQuery( function( $ ){
             },
             errorPlacement: function(error, element) {
                 if(element.attr("name") == "compInfo[]" ) {
-                    error.insertAfter(jQuery(".latest"));
+                    error.insertAfter(jQuery(".list-parent.informatique"));
                 } else if( element.attr("name") == "langue[]" ){
-                    error.insertAfter(jQuery(".list-parent"));
+                    error.insertAfter(jQuery(".list-parent.langue"));
                 } else if( element.attr("name") == "file-57864af3474de" ){
                     error.insertAfter(jQuery(".cv"));
                 } else if( element.attr("name") == "file-57864b273eb37" ){

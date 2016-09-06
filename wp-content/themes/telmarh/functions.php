@@ -706,6 +706,12 @@ function telmarh_custom_validate_php_form( $postDataSend ){
 				foreach ( $postDataSend['compInfo'] as $termId ){
 					$term = get_term_by( "id", $termId, JM_TAXONOMIE_COMPETENCE_REQUISES );
 					$competenceInfo .= $term->name;
+                    if ( isset( $postDataSend[$term->slug] ) && !empty( $postDataSend[$term->slug] ) ) {
+                        foreach ( $postDataSend[$term->slug] as $termChildId ){
+                            $termChild = get_term_by( "id", $termChildId, JM_TAXONOMIE_COMPETENCE_REQUISES );
+                            $competenceInfo .= " ( " . $termChild->name . " ) ";
+                        }
+                    }
 					if ( ( count( $postDataSend['compInfo'] ) - 1 ) == $i  ) { $competenceInfo .= " et "; $i++; }
 					if ( count( $postDataSend['compInfo'] ) > $i )  { $competenceInfo .= $glue; $i++; }
 				}
