@@ -1035,7 +1035,6 @@ function telmarh_custom_value_niveau_etude($field){
     return $field;
 }
 
-
 add_filter( "posts_search", "telmarh_posts_search", 10, 2 );
 function telmarh_posts_search( $sql, $query   ){
     global $wpdb;
@@ -1059,4 +1058,17 @@ function telmarh_posts_join( $sql, $query   ){
         return " INNER JOIN {$wpdb->postmeta} ON ({$wpdb->posts}.ID = {$wpdb->postmeta}.post_id) ";
     }
     return $sql;
+}
+
+add_filter('editable_roles','exclude_editor_role', 10 );
+function exclude_editor_role($roles) {
+    if ( current_user_can( JM_ROLE_RESPONSABLE_RH ) ){
+        $arrayUnset = array(
+            "administrator", "author", "editor", "responsable_rh", "contributor", "webmaster"
+        );
+        foreach ( $arrayUnset as $role ){
+            unset( $roles[$role] );
+        }
+    }
+    return $roles;
 }
