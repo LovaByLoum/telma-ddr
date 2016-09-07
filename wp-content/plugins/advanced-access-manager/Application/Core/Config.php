@@ -61,7 +61,7 @@ class AAM_Core_Config {
             $value = self::readConfigPress($option, $default);
         }
         
-        return $value;
+        return apply_filters('aam-filter-config-get', $value, $option);
     }
     
     /**

@@ -91,7 +91,7 @@ class AAM_Backend_Feature_Utility  extends AAM_Backend_Feature_Abstract {
         
         AAM_Backend_Feature::registerFeature((object) array(
             'uid'        => 'utilities',
-            'position'   => 30,
+            'position'   => 100,
             'title'      => __('Utilities', AAM_KEY),
             'capability' => $cap,
             'subjects'   => array(

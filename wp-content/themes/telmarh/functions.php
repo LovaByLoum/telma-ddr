@@ -1036,5 +1036,27 @@ function telmarh_custom_value_niveau_etude($field){
 }
 
 
+add_filter( "posts_search", "telmarh_posts_search", 10, 2 );
+function telmarh_posts_search( $sql, $query   ){
+    global $wpdb;
+    if ( isset($query->query_vars['query_name']) && $query->query_vars['query_name'] == 'offre_search_ajax' && isset( $query->query_vars['s'] ) && !empty( $query->query_vars['s'] ) ){
+        return "AND (
+                        {$wpdb->posts}.post_title LIKE '%" . $query->query_vars['s'] . "%'
+                        OR {$wpdb->posts}.post_excerpt LIKE '%" . $query->query_vars['s'] . "%'
+                        OR {$wpdb->posts}.post_content LIKE '%" . $query->query_vars['s'] . "%'
+                        OR ( {$wpdb->postmeta}.meta_key = 'missions_principales_offre' AND CAST({$wpdb->postmeta}.meta_value AS CHAR) LIKE '%" . $query->query_vars['s'] . "%' )
+                        OR ( {$wpdb->postmeta}.meta_key = 'qualites_requises_offre' AND CAST({$wpdb->postmeta}.meta_value AS CHAR) LIKE '%" . $query->query_vars['s'] . "%' )
+                        OR ( {$wpdb->postmeta}.meta_key = 'responsabilites_offre' AND CAST({$wpdb->postmeta}.meta_value AS CHAR) LIKE '%" . $query->query_vars['s'] . "%' )
+                    )";
+    }
+    return $sql;
+}
 
-
+add_filter( "posts_join", "telmarh_posts_join", 10, 2 );
+function telmarh_posts_join( $sql, $query   ){
+    global $wpdb;
+    if ( isset($query->query_vars['query_name']) && $query->query_vars['query_name'] == 'offre_search_ajax' && isset( $query->query_vars['s'] ) && !empty( $query->query_vars['s'] ) ){
+        return " INNER JOIN {$wpdb->postmeta} ON ({$wpdb->posts}.ID = {$wpdb->postmeta}.post_id) ";
+    }
+    return $sql;
+}

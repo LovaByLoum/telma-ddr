@@ -173,6 +173,8 @@ class AAM_Backend_Feature_Metabox extends AAM_Backend_Feature_Abstract {
      * @return type
      */
     public function getMetaboxList() {
+        global $wp_post_types;
+        
         $cache   = AAM_Core_API::getOption('aam_metabox_cache', array());
         $subject = AAM_Backend_View::getSubject();
         
@@ -185,6 +187,14 @@ class AAM_Backend_Feature_Metabox extends AAM_Backend_Feature_Abstract {
             }
         } else {
             $response = $cache;
+        }
+        
+        //filter non-existing metaboxes
+        foreach(array_keys($response) as $id) {
+            if (!in_array($id, array('dashboard', 'widgets')) 
+                    && empty($wp_post_types[$id])) {
+                unset($response[$id]);
+            }
         }
         
         return $response;

@@ -24,7 +24,7 @@
             <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active"><a href="#premium-extensions" aria-controls="premium-extensions" role="tab" data-toggle="tab"><i class='icon-basket'></i> <?php echo __('Premium', AAM_KEY); ?></a></li>
                 <li role="presentation"><a href="#free-extensions" aria-controls="free-extensions" role="tab" data-toggle="tab"><i class='icon-download-cloud'></i> <?php echo __('Free', AAM_KEY); ?></a></li>
-                <li role="presentation"><a href="#useful-plugins" aria-controls="help-plugins" role="tab" data-toggle="tab"><i class='icon-thumbs-up-alt'></i> <?php echo __('Userful Plugins', AAM_KEY); ?></a></li>
+                <li role="presentation"><a href="#useful-plugins" aria-controls="help-plugins" role="tab" data-toggle="tab"><i class='icon-thumbs-up-alt'></i> <?php echo __('Useful Plugins', AAM_KEY); ?></a></li>
             </ul>
 
             <!-- Tab panes -->
@@ -35,7 +35,7 @@
                             <?php foreach ($this->getProductList('commercial') as $product) { ?>
                                 <tr>
                                     <td>
-                                        <span class='aam-setting-title'><?php echo $product['title'], ' - ' . ($product['cost'] . ' <small>' . $product['currency'] . '</small>'); ?></span>
+                                        <span class='aam-setting-title'><?php echo $product['title'], (!empty($product['new']) ? ' <span class="badge">NEW</span> ' : ''), (!empty($product['version']) ? ' <small class="text-muted">v' . $product['version'] . '</small>' : ''), ' - ' . ($product['price']); ?></span>
                                         <p class="aam-extension-description">
                                             <?php echo $product['description']; ?>
                                         </p>
@@ -60,7 +60,7 @@
                             <?php foreach ($this->getProductList('GNU') as $product) { ?>
                                 <tr>
                                     <td>
-                                        <span class='aam-setting-title'><?php echo $product['title'], ' - ' . ('<span class="text-success">' . __('Free', AAM_KEY) . '</span>'); ?></span>
+                                        <span class='aam-setting-title'><?php echo $product['title'], (!empty($product['version']) ? ' <small class="text-muted">v' . $product['version'] . '</small>' : ''), ' - ' . ('<span class="text-success">' . __('Free', AAM_KEY) . '</span>'); ?></span>
                                         <p class="aam-extension-description">
                                             <?php echo $product['description']; ?>
                                         </p>
@@ -144,7 +144,7 @@
                         <p>
                             <?php echo __('Insert license key that you recieved after the payment (find the email example below). It might take up to 2 hours to process the payment. Please remember that license key is limited only to one life domain.', AAM_KEY); ?>
                             <br /> <br />
-                            <img src="http://vasyltech.com/img/email-confirmation.jpg" class="img-responsive" />
+                            <img src="https://vasyltech.com/img/email-confirmation.jpg" class="img-responsive" />
                         </p>
                     </div>
                     <div class="modal-footer">
@@ -154,5 +154,4 @@
             </div>
         </div>
     </div>
-    <?php
-}
+<?php }

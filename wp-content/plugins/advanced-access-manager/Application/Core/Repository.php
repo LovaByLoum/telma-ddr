@@ -228,6 +228,17 @@ class AAM_Core_Repository {
     
     /**
      * 
+     * @param type $title
+     * @return type
+     */
+    public function getExtensionVersion($title) {
+        $const = str_replace(' ', '_', strtoupper($title));
+        
+        return (defined($const) ? constant($const) : '');
+    }
+    
+    /**
+     * 
      * @param type $slug
      * 
      * @return type

@@ -35,68 +35,6 @@ class AAM_Backend_Feature_Post extends AAM_Backend_Feature_Abstract {
     }
     
     /**
-     * Get breadcrumb for a post or term
-     * 
-     * @return string
-     * 
-     * @access public
-     */
-    public function getBreadcrumb() {
-        $type = AAM_Core_Request::post('type');
-
-        if ($type == 'term') {
-            $breadcrub = $this->renderTermBreadcrumb();
-        } else {
-            $breadcrub = $this->renderPostBreadcrumb();
-        }
-
-        return json_encode(array(
-                'status' => 'success',
-                'breadcrumb' => ($breadcrub ? $breadcrub : __('Base Level', AAM_KEY))
-        ));
-    }
-
-    /**
-     * Render term breadcrumb
-     * 
-     * @return string
-     * 
-     * @access protected
-     */
-    protected function renderTermBreadcrumb() {
-        list($term, $taxonomy) = explode('|', AAM_Core_Request::post('id'));
-        $ancestors = array_reverse(get_ancestors($term, $taxonomy, 'taxonomy'));
-        
-        $breadcrumb = array();
-        foreach ($ancestors as $id) {
-            $breadcrumb[] = get_term($id, $taxonomy)->name;
-        }
-
-        return implode(' &Gt; ', $breadcrumb);
-    }
-
-    /**
-     * Render post breadcrumb
-     * 
-     * @return string
-     * 
-     * @access protected
-     */
-    protected function renderPostBreadcrumb() {
-        $post  = get_post(AAM_Core_Request::post('id'));
-        $terms = wp_get_object_terms($post->ID, get_object_taxonomies($post));
-        
-        $breadcrumb = array();
-        foreach ($terms as $term) {
-            if (is_taxonomy_hierarchical($term->taxonomy)) {
-                $breadcrumb[] = $term->name;
-            }
-        }
-
-        return implode('; ', $breadcrumb);
-    }
-
-    /**
      * Retrieve list of registered post types
      * 
      * @return array
@@ -293,7 +231,7 @@ class AAM_Backend_Feature_Post extends AAM_Backend_Feature_Abstract {
      * @global type $wpdb
      * @return type
      */
-    protected function checkLimit() {
+    public static function checkLimit() {
         global $wpdb;
         
         $limit = apply_filters('aam-post-limit', 0);
@@ -322,6 +260,20 @@ class AAM_Backend_Feature_Post extends AAM_Backend_Feature_Abstract {
      */
     public static function getTemplate() {
         return 'object/post.phtml';
+    }
+    
+    /**
+     * 
+     * @return type
+     */
+    public function getCurrentPost() {
+        $id = intval(AAM_Core_Request::post('oid'));
+        
+        if ($id) {
+            $post = get_post($id);
+        }
+        
+        return (isset($post) ? $post : null);
     }
 
     /**

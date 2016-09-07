@@ -26,7 +26,7 @@ class AAM_Backend_Feature_Role {
     public function __construct() {
         $cap = AAM_Core_Config::get('page.capability', 'administrator');
         if (!AAM::getUser()->hasCapability($cap)) {
-            Throw new Exception(__('Accedd Denied', AAM_KEY));
+            Throw new Exception(__('Access Denied', AAM_KEY));
         }
     }
 
@@ -47,23 +47,25 @@ class AAM_Backend_Feature_Role {
         $filtered = $this->fetchRoleList();
 
         $response = array(
-            'recordsTotal' => count(get_editable_roles()),
+            'recordsTotal'    => count(get_editable_roles()),
             'recordsFiltered' => count($filtered),
-            'draw' => AAM_Core_Request::request('draw'),
-            'data' => array(),
+            'draw'            => AAM_Core_Request::request('draw'),
+            'data'            => array(),
         );
         
-        foreach ($filtered as $role => $data) {
-            $uc = (isset($stats[$role]) ? $stats[$role] : 0);
+        foreach ($filtered as $id => $data) {
+            $uc    = (isset($stats[$id]) ? $stats[$id] : 0);
+            $allow = current_user_can('delete_users');
+            
             $response['data'][] = array(
-                $role,
+                $id,
                 $uc,
                 translate_user_role($data['name']),
-                'manage,edit' . ($uc || !current_user_can('delete_users') ? ',no-delete' : ',delete')
+                'manage,edit' . ($uc || !$allow ? ',no-delete' : ',delete')
             );
         }
 
-        return json_encode($response);
+        return json_encode(apply_filters('aam-get-role-list-filter', $response));
     }
     
     /**
@@ -86,10 +88,13 @@ class AAM_Backend_Feature_Role {
         $response = array();
          
         //filter by name
-        $search = trim(AAM_Core_Request::request('search.value'));
-        $roles = get_editable_roles();
+        $search  = trim(AAM_Core_Request::request('search.value'));
+        $exclude = trim(AAM_Core_Request::request('exclude'));
+        
+        $roles   = get_editable_roles();
         foreach ($roles as $id => $role) {
-            if (!$search || preg_match('/^' . $search . '/i', $role['name'])) {
+            $match = preg_match('/^' . $search . '/i', $role['name']);
+            if (($exclude != $id) && (!$search || $match)) {
                 $response[$id] = $role;
             }
         }
@@ -105,22 +110,20 @@ class AAM_Backend_Feature_Role {
      * @access public
      */
     public function add() {
-        $name = sanitize_text_field(AAM_Core_Request::post('name'));
-        $roles = new WP_Roles;
+        $name    = sanitize_text_field(AAM_Core_Request::post('name'));
+        $roles   = AAM_Core_API::getRoles();
         $role_id = strtolower($name);
+        
         //if inherited role is set get capabilities from it
-        $parent = trim(AAM_Core_Request::post('inherit'));
-        if ($parent && $roles->get_role($parent)){
-            $caps = $roles->get_role($parent)->capabilities;
-        } else {
-            $caps = array();
-        }
+        $parent = $roles->get_role(trim(AAM_Core_Request::post('inherit')));
+        $caps   = ($parent ? $parent->capabilities : array());
 
-        if ($roles->add_role($role_id, $name, $caps)) {
+        if ($role = $roles->add_role($role_id, $name, $caps)) {
             $response = array(
                 'status' => 'success',
-                'role' => $role_id
+                'role'   => $role_id
             );
+            do_action('aam-post-add-role-action', $role, $parent);
         } else {
             $response = array('status' => 'failure');
         }
@@ -136,13 +139,12 @@ class AAM_Backend_Feature_Role {
      * @access public
      */
     public function edit() {
-        $result = AAM_Backend_View::getSubject()->update(
-                trim(AAM_Core_Request::post('name'))
-        );
+        $role    = AAM_Backend_View::getSubject();
+        $role->update(trim(AAM_Core_Request::post('name')));
         
-        return json_encode(
-                array('status' => ($result ? 'success' : 'failure'))
-        );
+        do_action('aam-post-update-role-action', $role);
+        
+        return json_encode(array('status' => 'success'));
     }
 
     /**

@@ -5,7 +5,7 @@
             <div class="row">
                 <div class="col-xs-12">
                     <p class="aam-info">
-                        <?php echo AAM_Backend_View_Helper::preparePhrase('You are not allowed to assign or create a new capability that does not belong to [' . implode(' or ', $this->getUserRoles($subject->roles)) . '] role. You may consider to creating a new role with desired list of capabilities and assign user to it.', 'strong'); ?>
+                        <?php echo sprintf(AAM_Backend_View_Helper::preparePhrase('You are not allowed to assign or create a new capability that does not belong to [%s] role. You may consider to creating a new role with desired list of capabilities and assign user to it.', 'strong'), implode(' , ', $this->getUserRoles($subject->roles))); ?>
                     </p>
                 </div>
             </div>
@@ -71,7 +71,7 @@
                             <label for="capability-id"><?php echo __('Capability', AAM_KEY); ?><span class="aam-asterix">*</span></label>
                             <input type="text" class="form-control" id="capability-id" placeholder="<?php echo __('Enter Capability', AAM_KEY); ?>" />
                         </div>
-                        <p class="aam-info aam-hint"><?php echo AAM_Backend_View_Helper::preparePhrase(__('[Please notice!] Capability will be updated for all roles. Any functionality that depends on current Capability may not work properly.', AAM_KEY), 'strong'); ?></p>
+                        <p class="aam-info aam-hint"><?php echo AAM_Backend_View_Helper::preparePhrase('[Please notice!] Capability will be updated for all roles. Any functionality that depends on current Capability may not work properly.', 'strong'); ?></p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-warning" id="update-capability-btn"><?php echo __('Update', AAM_KEY); ?></button>

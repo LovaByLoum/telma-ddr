@@ -48,6 +48,17 @@ class AAM_Core_Object_Post extends AAM_Core_Object {
             $this->read();
         }
     }
+    
+    /**
+     * 
+     * @param type $name
+     * @return type
+     */
+    public function __get($name) {
+        $post = $this->getPost();
+        
+        return (property_exists($post, $name) ? $post->$name : null);
+    }
 
     /**
      * Read the Post AAM Metadata
@@ -73,14 +84,16 @@ class AAM_Core_Object_Post extends AAM_Core_Object {
                 $option = get_post_meta($this->getPost()->ID, $opname, true);
             }
             
-            //try to inherit from terms or default first - AAM Plus Package or any
-            //other extension that use this filter
-            $option = apply_filters('aam-post-access-filter', $option, $this);
-
             //try to inherit from parent
             if (empty($option)) {
                 $option = $subject->inheritFromParent('post', $this->getPost()->ID);
                 $this->setInherited(empty($option) ? null : 'role');
+            }
+            
+            //try to inherit from terms or default settings - AAM Plus Package or any
+            //other extension that use this filter
+            if (empty($option)) {
+                $option = apply_filters('aam-post-access-filter', $option, $this);
             }
         }
         
@@ -165,7 +178,7 @@ class AAM_Core_Object_Post extends AAM_Core_Object {
     public function has($action) {
         $option = $this->getOption();
 
-        return !empty($option[$action]);
+        return (isset($option[$action]) && $option[$action]);
     }
 
     /**

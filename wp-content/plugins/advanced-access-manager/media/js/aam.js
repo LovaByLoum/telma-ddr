@@ -23,6 +23,7 @@
          * Different UI hooks
          */
         this.hooks = {};
+        
     }
 
     /**
@@ -56,7 +57,7 @@
             }
         }
     };
-
+    
     /**
      * Initialize the AAM
      * 

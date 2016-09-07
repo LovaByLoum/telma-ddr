@@ -107,7 +107,7 @@ class AAM_Backend_Feature_Extension extends AAM_Backend_Feature_Abstract {
         } else {
             $response = json_encode(array(
                 'status' => 'failure', 
-                'error' => __('License key is missing.', AAM_KEY)
+                'error'  => __('License key is missing.', AAM_KEY)
             ));
         }
         
@@ -201,7 +201,7 @@ class AAM_Backend_Feature_Extension extends AAM_Backend_Feature_Abstract {
             }
         }
         
-        return $count;
+        return ($count ? $count : 'NEW');
     }
 
 }

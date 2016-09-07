@@ -30,29 +30,6 @@ class AAM_Backend_Feature_Contact extends AAM_Backend_Feature_Abstract {
     }
     
     /**
-     * Update the extension
-     * 
-     * @return string
-     * 
-     * @access public
-     */
-    public function update() {
-        $extension = AAM_Core_Request::post('extension');
-        
-        $list = AAM_Core_API::getOption('aam-extension-license', array());
-        if (isset($list[$extension])) {
-            $response = $this->install($list[$extension]);
-        } else {
-            $response = json_encode(array(
-                'status' => 'failure', 
-                'error'  => __('License key is missing.', AAM_KEY)
-            ));
-        }
-        
-        return $response;
-    }
-    
-    /**
      * Register Contact/Hire feature
      * 
      * @return void

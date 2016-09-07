@@ -1,12 +1,7 @@
 <?php if (defined('AAM_KEY')) { ?>
     <div class="row">
         <div class="col-xs-12">
-            <p class="aam-info">
-                <?php echo AAM_Backend_View_Helper::preparePhrase('Managing default access to categories (terms) is available in [AAM Plus Package] only. But you can still manage access to individual posts, pages or custom post types. Consider to purchase [AAM Plus Package] extension.', 'b', 'b'); ?>
-            </p>
-            
-            <img src="http://vasyltech.com/img/aam-term-access-form.jpg" class="img-responsive" />
+            <p class="aam-notification" data-dynamic-post-label="<?php echo AAM_Backend_View_Helper::preparePhrase('Manage access to %s is available with [AAM Plus Package] extension only. With this feature you can define default access to all child posts that belong to %s. Consider to purchase [AAM Plus Package] extension.', 'b', 'b'); ?>"></p>
         </div>
     </div>
-<?php
-}
+<?php }

@@ -9,81 +9,105 @@
 
 return array(
     array(
-        'title' => 'AAM Plus Package',
-        'id' => 'AAM Plus Package',
-        'type' => 'commercial',
-        'cost'  => '$30',
-        'currency' => 'USD',
-        'description' => __('Setup access to unlimited number of posts, pages or custom post types as well as define default access to ALL posts, pages, custom post types, categories or custom taxonomies.', AAM_KEY),
-        'storeURL' => 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=FGAHULDEFZV4U',
-        'status' => AAM_Core_Repository::getInstance()->extensionStatus('AAM Plus Package')
+        'title'       => '<span class="aam-highlight">AAM Plus Package</span>',
+        'id'          => 'AAM Plus Package',
+        'type'        => 'commercial',
+        'price'       => '$30 <small>USD</small>',
+        'description' => 'Our best selling extension that allows you to manage access to unlimited number of posts, pages or custom post types and define default access to ALL posts, pages, custom post types, categories or custom taxonomies. <a href="https://vasyltech.com/blog/manage-access-to-posts-and-pages" target="_blank">Read more.</a>',
+        'storeURL'    => 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=FGAHULDEFZV4U',
+        'status'      => AAM_Core_Repository::getInstance()->extensionStatus('AAM Plus Package'),
+        'version'     => AAM_Core_Repository::getInstance()->getExtensionVersion('AAM Plus Package')
     ),
     array(
-        'title' => 'AAM Role Filter',
-        'id' => 'AAM Role Filter',
-        'type' => 'commercial',
-        'cost'  => '$5',
-        'currency' => 'USD',
-        'description' => __('More advanced user and role administration. Based on user capabilities level, filter list of roles that user can manage. Also prevent from editing, promoting or deleting higher level users.', AAM_KEY),
-        'storeURL' => 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=G9V4BT3T8WJSN',
-        'status' => AAM_Core_Repository::getInstance()->extensionStatus('AAM Role Filter')
+        'title'       => 'AAM Redirect',
+        'id'          => 'AAM Redirect',
+        'type'        => 'commercial',
+        'price'       => '$20 <small>USD</small>',
+        'new'         => true,
+        'description' => 'Define custom redirect or "Access Denied" message for each role, individual user or visitors. <a href="http://vasyltech.com/blog/aam-redirect-extension" target="_blank">Read more.</a>',
+        'storeURL'    => 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QAM3P45X6PKUU',
+        'status'      => AAM_Core_Repository::getInstance()->extensionStatus('AAM Redirect'),
+        'version'     => AAM_Core_Repository::getInstance()->getExtensionVersion('AAM Redirect')
     ),
     array(
-        'title' => 'AAM Support',
-        'id' => 'AAM Support',
-        'type' => 'commercial',
-        'cost'  => '$50',
-        'currency' => 'USD',
-        'description' => AAM_Backend_View_Helper::preparePhrase('Highest priority technical support (within 1 business day). Need help or not sure how to use AAM? We will carefully analyze your objectives, educate and help you to archive your goals with existing AAM functionality or we will put $50 toward custom development if necessary. [Otherwise money back guaranteed!]', 'strong'),
-        'storeURL' => 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ZM8BAAN8CE3M4',
-        'status' => 'download'
+        'title'       => 'AAM Content Teaser',
+        'id'          => 'AAM Content Teaser',
+        'type'        => 'commercial',
+        'price'       => '$10 <small>USD</small>',
+        'new'         => true,
+        'description' => 'Define custom teaser message for each role, individual user or visitors. <a href="http://vasyltech.com/blog/aam-content-teaser" target="_blank">Read more.</a>',
+        'storeURL'    => 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=3NG4CZX3WEH7L',
+        'status'      => AAM_Core_Repository::getInstance()->extensionStatus('AAM Content Teaser'),
+        'version'     => AAM_Core_Repository::getInstance()->getExtensionVersion('AAM Content Teaser')
     ),
     array(
-        'title' => 'AAM Dev License',
-        'id' => 'AAM Development License',
-        'type' => 'commercial',
-        'cost'  => '$150',
-        'currency' => 'USD',
-        'description' => __('Development license gives you an ability to download all the available extensions and use them up to 5 life domains.', AAM_KEY),
-        'storeURL' => 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ZX9RCWU6BTE52',
-        'status' => AAM_Core_Repository::getInstance()->extensionStatus('AAM Development License')
+        'title'       => 'AAM Role Hierarchy',
+        'id'          => 'AAM Role Hierarchy',
+        'type'        => 'commercial',
+        'price'       => '$15 <small>USD</small>',
+        'new'         => true,
+        'description' => 'Create complex role hierarchy and automatically inherit access settings from parent roles. <a href="https://vasyltech.com/blog/aam-role-hierarchy" target="_blank">Read more.</a>',
+        'storeURL'    => 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=K8DMZ66SAW8VG',
+        'status'      => AAM_Core_Repository::getInstance()->extensionStatus('AAM Role Hierarchy'),
+        'version'     => AAM_Core_Repository::getInstance()->getExtensionVersion('AAM Role Hierarchy')
     ),
     array(
-        'title' => 'AAM Multisite',
-        'id' => 'AAM Multisite',
-        'type' => 'GNU',
-        'license' => 'AAMMULTISITE',
-        'description' => __('Convenient way to navigate between different sites in the Network Admin Panel. This extension adds additional widget to the AAM page that allows to switch between different sites.', AAM_KEY),
-        'status' => AAM_Core_Repository::getInstance()->extensionStatus('AAM Multisite')
+        'title'       => 'AAM Role Filter',
+        'id'          => 'AAM Role Filter',
+        'type'        => 'commercial',
+        'price'       => '$5 <small>USD</small>',
+        'description' => 'More advanced user and role administration. Based on user capabilities level, filter list of roles that user can manage. Also prevent from editing, promoting or deleting higher level users.',
+        'storeURL'    => 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=G9V4BT3T8WJSN',
+        'status'      => AAM_Core_Repository::getInstance()->extensionStatus('AAM Role Filter'),
+        'version'     => AAM_Core_Repository::getInstance()->getExtensionVersion('AAM Role Filter')
+    ),
+     array(
+        'title'       => 'AAM Complete Package',
+        'id'          => 'AAM Complete Package',
+        'type'        => 'commercial',
+        'price'       => '$70 <small>USD</small>',
+        'description' => 'Get list of all available premium extensions in one package and <strong>save $10 USD</strong>.',
+        'storeURL'    => 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=THJWEJR3URR8L',
+        'status'      => AAM_Core_Repository::getInstance()->extensionStatus('AAM Complete Package'),
+        'version'     => AAM_Core_Repository::getInstance()->getExtensionVersion('AAM Complete Package')
     ),
     array(
-        'title' => 'AAM Post Filter',
-        'id' => 'AAM Post Filter',
-        'type' => 'GNU',
-        'license'  => 'AAMPOSTFILTER',
-        'description' => AAM_Backend_View_Helper::preparePhrase('[WARNING!] Please use with caution. This is a supportive exension for the post access option [List]. It adds additional post filtering to fix the issue with large amount of post. [Turned on caching] is strongly recommended.', 'strong', 'strong', 'strong'),
-        'status' => AAM_Core_Repository::getInstance()->extensionStatus('AAM Post Filter')
+        'title'       => 'AAM Multisite',
+        'id'          => 'AAM Multisite',
+        'type'        => 'GNU',
+        'license'     => 'AAMMULTISITE',
+        'description' => 'Convenient way to navigate between different sites in the Network Admin Panel.',
+        'status'      => AAM_Core_Repository::getInstance()->extensionStatus('AAM Multisite'),
+        'version'     => AAM_Core_Repository::getInstance()->getExtensionVersion('AAM Multisite')
     ),
     array(
-        'title' => 'AAM Skeleton Extension',
-        'id' => 'AAM Skeleton Extension',
-        'type' => 'GNU',
-        'license' => 'SKELETONEXT',
-        'description' => __('Skeleton for custom AAM extension. Please find all necessary documentation inside the source code.', AAM_KEY),
-        'status' => AAM_Core_Repository::getInstance()->extensionStatus('AAM Skeleton Extension')
+        'title'       => 'AAM Post Filter',
+        'id'          => 'AAM Post Filter',
+        'type'        => 'GNU',
+        'license'     => 'AAMPOSTFILTER',
+        'description' => AAM_Backend_View_Helper::preparePhrase('[WARNING!] Please use with caution. This is a supportive exension for the post access option [LIST]. It adds additional post filtering to fix the issue with large amount of posts.', 'strong', 'strong'),
+        'status'      => AAM_Core_Repository::getInstance()->extensionStatus('AAM Post Filter'),
+        'version'     => AAM_Core_Repository::getInstance()->getExtensionVersion('AAM Post Filter')
     ),
     array(
-        'title' => 'CodePinch',
-        'id' => 'WP Error Fix',
-        'type' => 'plugin',
-        'description' => __('Our patent-pending technology provides solutions to PHP errors within hours, preventing costly maintenance time and keeping your WordPress site error.', AAM_KEY),
-        'status' => AAM_Core_Repository::getInstance()->pluginStatus('WP Error Fix')
+        'title'       => 'CodePinch',
+        'id'          => 'WP Error Fix',
+        'type'        => 'plugin',
+        'description' => '<span class="aam-highlight">Highly recommended!</span> Patent-pending technology that provides solutions to PHP errors within hours, preventing costly maintenance time and keeping your WordPress site error. <a href="http://codepinch.io" target="_blank">Read more.</a>',
+        'status'      => AAM_Core_Repository::getInstance()->pluginStatus('WP Error Fix')
     ),
     array(
-        'title' => 'User Switching',
-        'id' => 'User Switching',
-        'type' => 'plugin',
-        'description' => __('Instant switching between user accounts in WordPress.', AAM_KEY),
-        'status' => AAM_Core_Repository::getInstance()->pluginStatus('User Switching')
+        'title'       => 'ConfigPress',
+        'id'          => 'ConfigPress',
+        'type'        => 'plugin',
+        'description' => 'Development tool with an easy way to manage all your website custom settings. <a href="https://vasyltech.com/config-press" target="_blank">Read more.</a>',
+        'status'      => AAM_Core_Repository::getInstance()->pluginStatus('ConfigPress')
+    ),
+    array(
+        'title'       => 'User Switching',
+        'id'          => 'User Switching',
+        'type'        => 'plugin',
+        'description' => 'Instant switching between user accounts in WordPress.',
+        'status'      => AAM_Core_Repository::getInstance()->pluginStatus('User Switching')
     )
 );

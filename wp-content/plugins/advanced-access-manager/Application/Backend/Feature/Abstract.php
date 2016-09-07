@@ -26,7 +26,7 @@ abstract class AAM_Backend_Feature_Abstract {
     public function __construct() {
         $cap = AAM_Core_Config::get($this->getAccessOption(), 'administrator');
         if (!AAM::getUser()->hasCapability($cap)) {
-            Throw new Exception(__('Accedd Denied', AAM_KEY));
+            Throw new Exception(__('Access Denied', AAM_KEY));
         }
     }
     

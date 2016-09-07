@@ -35,6 +35,7 @@ class AAM_Frontend_Manager {
         if (AAM_Core_Config::get('frontend-access-control', true)) {
             //control WordPress frontend
             add_action('wp', array($this, 'wp'), 999);
+            add_action('404_template', array($this, 'themeRedirect'), 999);
             //filter navigation pages & taxonomies
             add_filter('get_pages', array($this, 'getPages'));
             add_filter('wp_get_nav_menu_items', array($this, 'getNavigationMenu'));
@@ -46,6 +47,10 @@ class AAM_Frontend_Manager {
             add_filter('wp_authenticate_user', array($this, 'authenticate'), 1, 2);
             //add post filter for LIST restriction
             add_filter('the_posts', array($this, 'thePosts'), 999, 2);
+            //filter post content
+            add_filter('the_content', array($this, 'theContent'), 999);
+            //admin bar
+            $this->checkAdminBar();
         }
     }
 
@@ -60,20 +65,61 @@ class AAM_Frontend_Manager {
     public function wp() {
         global $post;
 
-        $user = AAM::getUser();
         if ((is_single() || is_page()) && is_object($post)) {
-            $object = $user->getObject('post', $post->ID);
-            $read   = $object->has('frontend.read');
-            $others = $object->has('frontend.read_others');
-            
-            if ($read || ($others && !$this->isAuthor($post))) {
-                AAM_Core_API::reject();
-            }
-            //trigger any action that is listeting 
-            do_action('aam-wp-action', $object);
+            $this->checkPostReadAccess($post);
         }
     }
+    
+    /**
+     * Theme redirect
+     * 
+     * Super important function that cover the 404 redirect that triggered by theme
+     * when page is not found. This covers the scenario when page is restricted from
+     * listing and read.
+     * 
+     * @global type $wp_query
+     * 
+     * @param type $template
+     * 
+     * @return string
+     * 
+     * @access public
+     */
+    public function themeRedirect($template) {
+        global $wp_query;
+        
+        $object = (isset($wp_query->queried_object) ? $wp_query->queried_object : 0);
+        if ($object && is_a($object, 'WP_Post')) {
+            $this->checkPostReadAccess($object);
+        }
+        
+        return $template;
+    }
+    
+    /**
+     * Check post read access
+     * 
+     * @param WP_Post $post
+     * 
+     * @return void
+     * 
+     * @access protected
+     */
+    protected function checkPostReadAccess($post) {
+        $object = AAM::getUser()->getObject('post', $post->ID);
+        $read   = $object->has('frontend.read');
+        $others = $object->has('frontend.read_others');
 
+        if ($read || ($others && !$this->isAuthor($post))) {
+            AAM_Core_API::reject(
+                'frontend', 
+                array('object' => $object, 'action' => 'frontend.read')
+            );
+        }
+        //trigger any action that is listeting 
+        do_action('aam-wp-action', $object);
+    }
+    
     /**
      * Filter Pages that should be excluded in frontend
      *
@@ -159,6 +205,25 @@ class AAM_Frontend_Manager {
 
         return $open;
     }
+    
+    /**
+     * Check admin bar
+     * 
+     * Make sure that current user can see admin bar
+     * 
+     * @return void
+     * 
+     * @access public
+     */
+    public function checkAdminBar() {
+        $caps = AAM_Core_API::getAllCapabilities();
+        
+        if (isset($caps['show_admin_bar'])) {
+            if (!AAM::getUser()->hasCapability('show_admin_bar')) {
+                show_admin_bar(false);
+            }
+        }
+    }
 
     /**
      * Control User Block flag
@@ -212,6 +277,41 @@ class AAM_Frontend_Manager {
         }
 
         return $filtered;
+    }
+    
+    /**
+     * 
+     * @global WP_Post $post
+     * @param type $content
+     * 
+     * @return string
+     * 
+     * @access public
+     */
+    public function theContent($content) {
+        global $post;
+        
+        $object = AAM::getUser()->getObject('post', $post->ID);
+       
+        if ($object->has('frontend.limit')) {
+            $message = apply_filters(
+                'aam-filter-teaser-option', 
+                AAM_Core_Config::get("frontend.teaser.message"),
+                "frontend.teaser.message",
+                AAM::getUser()
+            );
+            $excerpt = apply_filters(
+                'aam-filter-teaser-option', 
+                AAM_Core_Config::get("frontend.teaser.excerpt"),
+                "frontend.teaser.excerpt",
+                AAM::getUser()
+            );
+            
+            $content  = (intval($excerpt) ? $post->post_excerpt : '');
+            $content .= stripslashes($message);
+        }
+        
+        return $content;
     }
     
     /**

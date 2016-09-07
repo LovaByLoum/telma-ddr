@@ -21,13 +21,12 @@
                                     <p class="text-larger"><?php echo __('Appreciate your interest in Advanced Access Manager (aka AAM). With strong knowledge and experience in WordPress, AAM becomes a very powerful tool to manage access to your frontend and backend.', AAM_KEY); ?></p>
                                     <p class="text-larger"><span class="aam-highlight"><?php echo __('Please notice!', AAM_KEY); ?></span> <?php echo AAM_Backend_View_Helper::preparePhrase('Power comes with responsibility. Make sure that you have enough knowledge in WordPress Roles & Capabilities because AAM is very closely intergrated with WordPress core. It is also very important [to have backup of your database before you start working with AAM] (there is no need to backup your files, AAM does not modify any physical files on your server and never did).', 'b'); ?></p>
                                     <p class="text-larger"><?php echo __('AAM was thoroughly tested on the fresh installation of WordPress and in the latest versions of Chrome, Safari, IE and Firefox. If you have any issues, the most typical case is the conflict with other plugins or themes.', AAM_KEY); ?></p>
-                                    <p class="text-larger"><?php echo sprintf(__('Also check our %sIntroduction to AAM%s so you know where to start.', AAM_KEY), '<a href="http://vasyltech.com/blog/introduction-to-aam" target="_blank">', '</a>'); ?></p>
+                                    <p class="text-larger"><?php echo sprintf(__('Also check our %sIntroduction to AAM%s so you know where to start.', AAM_KEY), '<a href="https://vasyltech.com/blog/introduction-to-aam" target="_blank">', '</a>'); ?></p>
                                 </div>
                                 
                                 <div class="aam-info aam-social">
-                                    <a target="_blank" href="http://vasyltech.com/advanced-access-manager"><i class="icon-home"></i></a>
-                                    <a target="_blank" href="http://twitter.com/vasyltech"><i class="icon-twitter"></i></a>
-                                    <a target="_blank" href="https://github.com/VasylTech/advanced-access-manager"><i class="icon-github"></i></a>
+                                    <a target="_blank" href="https://vasyltech.com/advanced-access-manager"><i class="icon-home"></i></a>
+                                    <a target="_blank" href="https://twitter.com/vasyltech"><i class="icon-twitter"></i></a>
                                     <a target="_blank" href="https://www.facebook.com/vasyltech"><i class="icon-facebook"></i></a>
                                     <a target="_blank" href="https://wordpress.org/support/view/plugin-reviews/advanced-access-manager"><i class="icon-star"></i></a>
                                 </div>
@@ -56,6 +55,7 @@
                     </div>
                 </div>
                 <?php } ?>
+                
                 <div class="metabox-holder">
                     <?php do_action('aam-sidebar-ui-action', 'top'); ?>
 
@@ -94,15 +94,10 @@
                                                     </div>
                                                     <div class="modal-body">
                                                         <div class="form-group">
-                                                            <label for="new-role-name"><?php echo __('Role Name', AAM_KEY); ?><span class="aam-asterix">*</span></label>
-                                                            <input type="text" class="form-control" id="new-role-name" placeholder="<?php echo __('Enter Role Name', AAM_KEY); ?>" />
+                                                            <label><?php echo __('Role Name', AAM_KEY); ?><span class="aam-asterix">*</span></label>
+                                                            <input type="text" class="form-control" name="name" placeholder="<?php echo __('Enter Role Name', AAM_KEY); ?>" />
                                                         </div>
-                                                        <div class="form-group">
-                                                            <label for="inherit-role-list"><?php echo __('Inherit Capabilities From', AAM_KEY); ?></label>
-                                                            <select class="form-control" id="inherit-role-list">
-                                                                <option value=""><?php echo __('Select Role', AAM_KEY); ?></option>
-                                                            </select>
-                                                        </div>
+                                                        <?php echo apply_filters('aam-add-role-ui-filter', AAM_Backend_View::getInstance()->loadPartial('role-inheritance.phtml')); ?>
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-success" id="add-role-btn"><?php echo __('Create', AAM_KEY); ?></button>
@@ -122,8 +117,9 @@
                                                     <div class="modal-body">
                                                         <div class="form-group">
                                                             <label for="new-role-name"><?php echo __('Role Name', AAM_KEY); ?></label>
-                                                            <input type="text" class="form-control" id="edit-role-name" placeholder="<?php echo __('Enter Role Name', AAM_KEY); ?>" />
+                                                            <input type="text" class="form-control" id="edit-role-name" placeholder="<?php echo __('Enter Role Name', AAM_KEY); ?>" name="name" />
                                                         </div>
+                                                        <?php do_action('aam-edit-role-ui-action'); ?>
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-success" id="edit-role-btn"><?php echo __('Update', AAM_KEY); ?></button>
@@ -231,8 +227,22 @@
                     </div>
                     <?php do_action('aam-sidebar-ui-action', 'bottom'); ?>
                 </div>
+                
+                <?php if (!AAM_Backend_View_CodePinch::installed()) { ?>
+                <div class="metabox-holder">
+                    <div class="postbox">
+                        <div class="inside text-center">
+                            <div class="inner-sm">
+                                <p class="text-muted text-larger"><?php echo sprintf(AAM_Backend_View_Helper::preparePhrase('Help to improve AAM by installing free CodePinch plugin [(%sread more%s)]', 'small'), '<a href="https://wordpress.org/plugins/wp-error-fix/" target="-blank">', '</a>'); ?></p>
+                                <a href="<?php echo AAM_Backend_View_CodePinch::getURL(); ?>" class="btn btn-lg btn-primary">
+                                    <img src="http://codepinch.io/frontend/img/codepinch-icon.svg" /> Install CodePinch
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <?php } ?>
             </div>
         </div>
     </div>
-    <?php
-}
+<?php }

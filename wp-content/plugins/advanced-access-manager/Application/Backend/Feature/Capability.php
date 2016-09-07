@@ -63,7 +63,7 @@ class AAM_Backend_Feature_Capability extends AAM_Backend_Feature_Abstract {
                 $response['data'][] = array(
                     $cap,
                     $this->getGroup($cap),
-                    AAM_Backend_View_Helper::getHumanText($cap),
+                    $cap,
                     $this->prepareActionList($cap)
                 );
             }

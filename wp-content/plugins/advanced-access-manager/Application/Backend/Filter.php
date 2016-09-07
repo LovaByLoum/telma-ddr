@@ -38,6 +38,9 @@ class AAM_Backend_Filter {
         //manager WordPress metaboxes
         add_action("in_admin_header", array($this, 'metaboxes'), 999);
         
+        //control admin area
+        add_action('admin_init', array($this, 'adminInit'));
+        
         //post restrictions
         add_filter('page_row_actions', array($this, 'postRowActions'), 10, 2);
         add_filter('post_row_actions', array($this, 'postRowActions'), 10, 2);
@@ -55,12 +58,46 @@ class AAM_Backend_Filter {
         //some additional filter for user capabilities
         add_filter('user_has_cap', array($this, 'checkUserCap'), 999, 4);
         
-        //user profile update action
-        add_action('profile_update', array($this, 'profileUpdate'));
-
         //screen options & contextual help hooks
         add_filter('screen_options_show_screen', array($this, 'screenOptions'));
         add_filter('contextual_help', array($this, 'helpOptions'), 10, 3);
+    }
+    
+    /**
+     * Control Admin Area access
+     *
+     * @return void
+     *
+     * @access public
+     * @since  3.3
+     */
+    public function adminInit() {
+        global $plugin_page;
+
+        //compile menu
+        if (empty($plugin_page)){
+            $menu     = basename(AAM_Core_Request::server('SCRIPT_NAME'));
+            
+            $taxonomy = AAM_Core_Request::get('taxonomy');
+            $postType = AAM_Core_Request::get('post_type');
+            $page     = AAM_Core_Request::get('page');
+            
+            if (!empty($taxonomy)) {
+                $menu .= '?taxonomy=' . $taxonomy;
+            } elseif (!empty($postType)) {
+                $menu .= '?post_type=' . $postType;
+            } elseif (!empty($page)) {
+                $menu .= '?page=' . $page;
+            }
+        } else {
+            $menu = $plugin_page;
+        }
+        
+        $object = AAM::getUser()->getObject('menu');
+
+        if ($object->has($menu)) {
+            AAM_Core_API::reject('backend', array('object' => $object, 'id' => $menu));
+        }
     }
 
     /**
@@ -98,10 +135,7 @@ class AAM_Backend_Filter {
             $screen = '';
         }
 
-        if (AAM_Core_Request::get('init') == 'metabox') {
-            $model = new AAM_Backend_Feature_Metabox;
-            $model->initialize($screen);
-        } else {
+        if (AAM_Core_Request::get('init') != 'metabox') {
             AAM::getUser()->getObject('metabox')->filterBackend($screen);
         }
     }
@@ -155,9 +189,12 @@ class AAM_Backend_Filter {
         global $post;
         
         if (is_a($post, 'WP_Post')) {
-            $user = AAM::getUser();
-            if ($user->getObject('post', $post->ID)->has('backend.edit')) {
-                AAM_Core_API::reject();
+            $object = AAM::getUser()->getObject('post', $post->ID);
+            if ($object->has('backend.edit')) {
+                AAM_Core_API::reject(
+                        'backend', 
+                        array('object' => $object, 'action' => 'backend.edit')
+                );
             }
         }
     }
@@ -172,14 +209,14 @@ class AAM_Backend_Filter {
      * @access public
      */
     public function getPost() {
+        $post = null;
+        
         if (get_post()) {
             $post = get_post();
         } elseif ($post_id = AAM_Core_Request::get('post')) {
             $post = get_post($post_id);
         } elseif ($post_id = AAM_Core_Request::get('post_ID')) {
             $post = get_post($post_id);
-        } else {
-            $post = null;
         }
 
         return $post;
@@ -195,7 +232,13 @@ class AAM_Backend_Filter {
      * @access public
      */
     public function backendDie($function) {
-        AAM_Core_API::reject('backend', $function);
+        if (AAM_Core_Config::get('access-denied-handler', true)) {
+            AAM_Core_API::reject(
+                'backend', array('callback' => $function, 'skip-die' => true)
+            );
+        }
+        
+        return $function;
     }
 
     /**
@@ -281,22 +324,6 @@ class AAM_Backend_Filter {
         }
         
         return $allCaps;
-    }
-    
-    /**
-     * Profile update hook
-     * 
-     * Clear user cache if profile updated
-     * 
-     * @param int   $user_id
-     * 
-     * @return void
-     * 
-     * @access public
-     */
-    public function profileUpdate($user_id) {
-        $subject = new AAM_Core_Subject_User($user_id);
-        $subject->deleteOption('cache');
     }
     
     /**

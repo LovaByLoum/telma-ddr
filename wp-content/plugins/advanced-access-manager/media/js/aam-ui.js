@@ -36,22 +36,26 @@
             data: {
                 action: 'aam',
                 sub_action: 'Role.getList',
-                _ajax_nonce: aamLocal.nonce
+                _ajax_nonce: aamLocal.nonce,
+                exclude: aam.getSubject().id
             },
             beforeSend: function () {
-                $('#inherit-role-list').html(
+                $('.inherit-role-list').html(
                     '<option value="">' + aam.__('Loading...') + '</option>'
                 );
             },
             success: function (response) {
-                $('#inherit-role-list').html(
+                $('.inherit-role-list').html(
                     '<option value="">' + aam.__('Select Role') + '</option>'
                 );
                 for (var i in response) {
-                    $('#inherit-role-list').append(
+                    $('.inherit-role-list').append(
                         '<option value="' + i + '">' + response[i].name + '</option>'
                     );
                 }
+                aam.triggerHook('post-get-role-list', {
+                   list : response
+               });
             }
         });
     }
@@ -59,7 +63,7 @@
     //initialize the role list table
     $('#role-list').DataTable({
         autoWidth: false,
-        ordering: true,
+        ordering: false,
         dom: 'ftrip',
         pagingType: 'simple',
         processing: true,
@@ -74,8 +78,7 @@
             }
         },
         columnDefs: [
-            {visible: false, targets: [0, 1]},
-            {sorting: false, targets: [0, 1, 3]}
+            {visible: false, targets: [0, 1]}
         ],
         language: {
             search: '_INPUT_',
@@ -90,14 +93,7 @@
             }).html('<i class="icon-plus"></i> ' + aam.__('Create'))
             .bind('click', function (event) {
                 event.preventDefault();
-
-                //clear add role form first
-                $('#new-role-name', '#add-role-modal').val('');
-                fetchRoleList();
-
-                $('#add-role-modal').modal('show').on('shown.bs.modal', function (e) {
-                    $('#new-role-name', '#add-role-modal').focus();
-                });
+                $('#add-role-modal').modal('show');
             });
 
             $('.dataTables_filter', '#role-list_wrapper').append(create);
@@ -123,25 +119,29 @@
                 switch (action) {
                     case 'manage':
                         $(container).append($('<i/>', {
-                            'class': 'aam-row-action icon-cog text-info'
+                            'class': 'aam-row-action icon-cog ' + (isCurrent(data[0]) ? 'text-muted': 'text-info')
                         }).bind('click', function () {
-                            aam.setSubject('role', data[0], data[2]);
-                            $('td:eq(0) span', row).replaceWith(
-                                    '<strong>' + data[2] + '</strong>'
-                                    );
-                            $('i.icon-cog', container).attr(
+                            if (!$(this).prop('disabled')) {
+                                $(this).prop('disabled', true);
+                                var title = $('td:eq(0) span', row).html();
+                                aam.setSubject('role', data[0], title);
+                                $('td:eq(0) span', row).replaceWith(
+                                    '<strong>' + title + '</strong>'
+                                );
+                                $('i.icon-cog', container).attr(
                                     'class', 'aam-row-action icon-spin4 animate-spin'
-                                    );
-                            aam.fetchContent();
-                            $('i.icon-spin4', container).attr(
-                                    'class', 'aam-row-action icon-cog text-info'
-                                    );
-                            //Show add capability that may be hidden after manager user
-                            $('#add-capability').show();
+                                );
+                                aam.fetchContent();
+                                $('i.icon-spin4', container).attr(
+                                    'class', 'aam-row-action icon-cog text-muted'
+                                );
+                                //Show add capability that may be hidden after manager user
+                                $('#add-capability').show();
+                            }
                         }).attr({
                             'data-toggle': "tooltip",
                             'title': aam.__('Manage Role')
-                        }));
+                        }).prop('disabled', (isCurrent(data[0]) ? true: false)));
                         break;
 
                     case 'edit':
@@ -150,9 +150,9 @@
                         }).bind('click', function () {
                             $('#edit-role-btn').data('role', data[0]);
                             $('#edit-role-name').val(data[2]);
-                            $('#edit-role-modal').modal('show').on('shown.bs.modal', function () {
-                                $('#edit-role-name').focus();
-                            });
+                            $('#edit-role-modal').modal('show');
+                            //TODO - Rerwite JavaScript to support $.aam 
+                            $.aamEditRole = data;
                         }).attr({
                             'data-toggle': "tooltip",
                             'title': aam.__('Edit Role Name')
@@ -191,7 +191,27 @@
                 }
             });
             $('td:eq(1)', row).html(container);
+            
+            aam.triggerHook('decorate-role-row', {
+                row : row,
+                data: data
+            });
         }
+    });
+    
+    $('#add-role-modal').on('shown.bs.modal', function (e) {
+        fetchRoleList();
+        //TODO - Rerwite JavaScript to support $.aam 
+        $.aamEditRole = null;
+                            
+        //clear add role form first
+        $('input[name="name"]', '#add-role-modal').val('');
+        $('input[name="name"]', '#add-role-modal').focus();
+    });
+    
+    $('#edit-role-modal').on('shown.bs.modal', function (e) {
+        fetchRoleList();
+        $('input[name="name"]', '#edit-role-modal').focus();
     });
 
     //add role button
@@ -200,22 +220,27 @@
 
         var _this = this;
 
-        $('#new-role-name', '#add-role-modal').parent().removeClass('has-error');
+        $('input[name="name"]', '#add-role-modal').parent().removeClass('has-error');
 
-        var name = $.trim($('#new-role-name', '#add-role-modal').val());
-        var inherit = $.trim($('#inherit-role-list', '#add-role-modal').val());
+        var data = {
+            action: 'aam',
+            sub_action: 'Role.add',
+            _ajax_nonce: aamLocal.nonce
+        };
+        
+        $('input,select', '#add-role-modal .modal-body').each(function() {
+            if ($(this).attr('type') === 'checkbox') {
+                data[$(this).attr('name')] = $(this).prop('checked') ? 1 : 0;
+            } else {
+                data[$(this).attr('name')] = $.trim($(this).val());
+            }
+        });
 
-        if (name) {
+        if (data.name) {
             $.ajax(aamLocal.ajaxurl, {
                 type: 'POST',
                 dataType: 'json',
-                data: {
-                    action: 'aam',
-                    sub_action: 'Role.add',
-                    _ajax_nonce: aamLocal.nonce,
-                    name: name,
-                    inherit: inherit
-                },
+                data: data,
                 beforeSend: function () {
                     $(_this).text(aam.__('Saving...')).attr('disabled', true);
                 },
@@ -226,7 +251,7 @@
                     } else {
                         aam.notification(
                                 'danger', aam.__('Failed to add new role')
-                                );
+                        );
                     }
                 },
                 error: function () {
@@ -237,7 +262,7 @@
                 }
             });
         } else {
-            $('#new-role-name').focus().parent().addClass('has-error');
+            $('input,select', '#add-role-modal .modal-body').focus().parent().addClass('has-error');
         }
     });
 
@@ -246,20 +271,24 @@
         var _this = this;
 
         $('#edit-role-name').parent().removeClass('has-error');
-        var name = $.trim($('#edit-role-name').val());
+        
+        var data = {
+            action: 'aam',
+            sub_action: 'Role.edit',
+            _ajax_nonce: aamLocal.nonce,
+            subject: 'role',
+            subjectId: $(_this).data('role')
+        };
+        
+        $('input,select', '#edit-role-modal .modal-body').each(function() {
+            data[$(this).attr('name')] = $.trim($(this).val());
+        });
 
-        if (name) {
+        if (data.name) {
             $.ajax(aamLocal.ajaxurl, {
                 type: 'POST',
                 dataType: 'json',
-                data: {
-                    action: 'aam',
-                    sub_action: 'Role.edit',
-                    _ajax_nonce: aamLocal.nonce,
-                    subject: 'role',
-                    subjectId: $(_this).data('role'),
-                    name: name
-                },
+                data: data,
                 beforeSend: function () {
                     $(_this).text(aam.__('Saving...')).attr('disabled', true);
                 },
@@ -325,6 +354,8 @@
         $('tbody tr', '#role-list').each(function () {
             if ($('strong', $(this)).length) {
                 var highlight = $('strong', $(this));
+                $('.icon-cog', $(this)).toggleClass('text-muted text-info');
+                $('.icon-cog', $(this)).prop('disabled', false);
                 highlight.replaceWith($('<span/>').text(highlight.text()));
             }
         });
@@ -465,21 +496,24 @@
                 switch (action) {
                     case 'manage':
                         $(container).append($('<i/>', {
-                            'class': 'aam-row-action icon-cog text-info'
+                            'class': 'aam-row-action icon-cog ' + (isCurrent(data[0]) ? 'text-muted': 'text-info')
                         }).bind('click', function () {
-                            aam.setSubject('user', data[0], data[2]);
-                            $('td:eq(0) span', row).replaceWith(
+                            if (!$(this).prop('disabled')) {
+                                $(this).prop('disabled', true);
+                                aam.setSubject('user', data[0], data[2]);
+                                $('td:eq(0) span', row).replaceWith(
                                     '<strong>' + data[2] + '</strong>'
-                                    );
-                            $('i.icon-cog', container).attr('class', 'aam-row-action icon-spin4 animate-spin');
-                            aam.fetchContent();
-                            $('i.icon-spin4', container).attr('class', 'aam-row-action icon-cog text-info');
-                            //make sure that there is no way user add's new capability
-                            $('#add-capability').hide();
+                                );
+                                $('i.icon-cog', container).attr('class', 'aam-row-action icon-spin4 animate-spin');
+                                aam.fetchContent();
+                                $('i.icon-spin4', container).attr('class', 'aam-row-action icon-cog text-muted');
+                                //make sure that there is no way user add's new capability
+                                $('#add-capability').hide();
+                            }
                         }).attr({
                             'data-toggle': "tooltip",
                             'title': aam.__('Manage User')
-                        }));
+                        })).prop('disabled', (isCurrent(data[0]) ? true: false));
                         break;
 
                     case 'no-manage':
@@ -575,6 +609,8 @@
         $('tbody tr', '#user-list').each(function () {
             if ($('strong', $(this)).length) {
                 var highlight = $('strong', $(this));
+                $('.icon-cog', $(this)).toggleClass('text-muted text-info');
+                $('.icon-cog', $(this)).prop('disabled', false);
                 highlight.replaceWith('<span>' + highlight.text() + '</span>');
             }
         });
@@ -652,11 +688,11 @@
                         });
                         $('.aam-bordered', target).append(
                                 $('<div/>', {'class': 'aam-lock'})
-                                );
+                        );
                         $(this).removeClass('btn-danger').addClass('btn-primary');
                         $(this).html(
                                 '<i class="icon-eye"></i>' + aam.__('Show Menu')
-                                );
+                        );
                         //add menu restricted indicator
                         var ind = $('<i/>', {
                             'class': 'aam-panel-title-icon icon-eye-off text-danger'
@@ -671,7 +707,7 @@
                         $(this).removeClass('btn-primary').addClass('btn-danger');
                         $(this).html(
                                 '<i class="icon-eye-off"></i>' + aam.__('Restrict Menu')
-                                );
+                        );
                         $('.panel-title .icon-eye-off', target + '-heading').remove();
                     }
                 } else {
@@ -976,6 +1012,10 @@
                 }
             });
         });
+        
+        $('#add-capability-modal').on('shown.bs.modal', function (e) {
+            $('#new-capability-name').val('');
+        });
 
         $('#add-capability').bind('click', function (event) {
             event.preventDefault();
@@ -1008,7 +1048,7 @@
                         } else {
                             aam.notification(
                                     'danger', aam.__('Failed to add new capability')
-                                    );
+                            );
                         }
                     },
                     error: function () {
@@ -1260,6 +1300,12 @@
                 $(btn).attr('class', 'aam-row-action text-info icon-cog');
             }
         });
+        
+        //update dynamic labels
+        var marker = '<b>' + $('.aam-post-breadcrumb span').text() + '</b>';
+        $('[data-dynamic-post-label]').each(function() {
+            $(this).html($(this).attr('data-dynamic-post-label').replace(/%s/g, marker));
+        });
     }
 
     /**
@@ -1301,7 +1347,7 @@
 
         return result;
     }
-
+    
     /**
      * 
      * @returns {undefined}
@@ -1316,6 +1362,7 @@
             ordering: false,
             pagingType: 'simple',
             serverSide: false,
+            stateSave: true,
             ajax: {
                 url: aamLocal.ajaxurl,
                 type: 'POST',
@@ -1393,43 +1440,6 @@
                     $('td:eq(1)', row).html(data[3]);
                 }
 
-                //add breadcrumb but only if not a type
-                if (data[2] !== 'type') {
-                    queue.push(function () {
-                        $.ajax(aamLocal.ajaxurl, {
-                            type: 'POST',
-                            dataType: 'json',
-                            data: {
-                                action: 'aam',
-                                sub_action: 'Post.getBreadcrumb',
-                                _ajax_nonce: aamLocal.nonce,
-                                type: data[2],
-                                id: data[0]
-                            },
-                            success: function (response) {
-                                if (response.status === 'success') {
-                                    $('td:eq(1) span', row).html(
-                                            response.breadcrumb
-                                            );
-                                }
-                            },
-                            error: function () {
-                                $('td:eq(1) span', row).html(aam.__('Failed'));
-                            },
-                            complete: function () {
-                                if (queue.length) {
-                                    queue.pop().call();
-                                }
-                            }
-                        });
-                    });
-                    $('td:eq(1)', row).append(
-                            $('<span/>', {'class': 'aam-row-subtitle'}).text(
-                            aam.__('Loading...')
-                            )
-                            );
-                }
-
                 //update the actions
                 var actions = data[4].split(',');
 
@@ -1446,18 +1456,20 @@
                                 'data-toggle': "tooltip",
                                 'title': aam.__('Drill-Down')
                             }));
+                            $('.tooltip').remove();
                             break;
                             
                         case 'manage':
                             $(container).append($('<i/>', {
                                 'class': 'aam-row-action text-info icon-cog'
                             }).bind('click', function () {
-                                loadAccessForm(data[2], data[0], $(this));
                                 addBreadcrumbLevel('edit', data[2], data[3]);
+                                loadAccessForm(data[2], data[0], $(this));
                             }).attr({
                                 'data-toggle': "tooltip",
                                 'title': aam.__('Manage Access')
                             }));
+                            $('.tooltip').remove();
                             break;
 
                         case 'edit' :
@@ -1539,12 +1551,138 @@
             $('.aam-post-breadcrumb span:last').remove();
             $('#post-overwritten, #post-inherited').addClass('hidden');
         });
+        
+        //load referenced post
+        if ($('#load-post').val()) {
+            loadAccessForm('post', $('#load-post').val());
+        }
     }
 
     aam.addHook('init', initialize);
 
 })(jQuery);
 
+/**
+ * Redirect Interface
+ * 
+ * @param {jQuery} $
+ * 
+ * @returns {void}
+ */
+(function ($) {
+
+    /**
+     * 
+     * @param {type} param
+     * @param {type} value
+     * @returns {undefined}
+     */
+    function save(param, value) {
+        $.ajax(aamLocal.ajaxurl, {
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                action: 'aam',
+                sub_action: 'Redirect.save',
+                _ajax_nonce: aamLocal.nonce,
+                subject: aam.getSubject().type,
+                subjectId: aam.getSubject().id,
+                param: param,
+                value: value
+            },
+            error: function () {
+                aam.notification('danger', aam.__('Application error'));
+            }
+        });
+    }
+    /**
+     * 
+     * @returns {undefined}
+     */
+    function initialize() {
+        var container = '#redirect-content';
+        
+        $('input[type="radio"]', container).each(function () {
+            $(this).bind('click', function () {
+                //hide group
+                $('.' + $(this).data('group')).hide();
+                
+                //show the specific one
+                $($(this).data('action')).show();
+                
+                //save redirect type
+                save($(this).attr('name'), $(this).val());
+            });
+        });
+        
+        $('input[type="text"],select,textarea', container).each(function () {
+            $(this).bind('change', function () {
+                //save redirect type
+                save($(this).attr('name'), $(this).val());
+            });
+        });
+    }
+
+    aam.addHook('init', initialize);
+
+})(jQuery);
+
+/**
+ * Teaser Interface
+ * 
+ * @param {jQuery} $
+ * 
+ * @returns {void}
+ */
+(function ($) {
+
+    /**
+     * 
+     * @param {type} param
+     * @param {type} value
+     * @returns {undefined}
+     */
+    function save(param, value) {
+        $.ajax(aamLocal.ajaxurl, {
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                action: 'aam',
+                sub_action: 'Teaser.save',
+                _ajax_nonce: aamLocal.nonce,
+                subject: aam.getSubject().type,
+                subjectId: aam.getSubject().id,
+                param: param,
+                value: value
+            },
+            error: function () {
+                aam.notification('danger', aam.__('Application error'));
+            }
+        });
+    }
+    /**
+     * 
+     * @returns {undefined}
+     */
+    function initialize() {
+        var container = '#teaser-content';
+        
+        $('input, textarea', container).each(function () {
+            $(this).bind('change', function () {
+                if ($(this).is('input[type="checkbox"]')) {
+                    var val = $(this).prop('checked') ? $(this).val() : 0;
+                } else {
+                    val = $.trim($(this).val());
+                }
+                //save redirect type
+                save($(this).attr('name'), val);
+            });
+        });
+    }
+
+    aam.addHook('init', initialize);
+
+})(jQuery);
 
 /**
  * Extensions Interface
@@ -1753,11 +1891,16 @@
             });
         });
         
+        var item = $('li:eq(0)', '#feature-list');
+        
         if (location.hash !== '') {
-            $('li[data-feature="' + location.hash.substr(1) + '"]', '#feature-list').trigger('click');
-        } else {
-            $('li:eq(0)', '#feature-list').trigger('click');
+            var hash = location.hash.substr(1);
+            if ($('li[data-feature="' + hash + '"]', '#feature-list').length) {
+                item = $('li[data-feature="' + hash + '"]', '#feature-list');
+            }
         }
+        
+        item.trigger('click');
     }
 
     /**
@@ -1765,6 +1908,9 @@
      * @returns {undefined}
      */
     aam.fetchContent = function () {
+        //referred object ID like post, page or any custom post type
+        var object = window.location.search.match(/&oid\=([^&]*)/);
+        
         $.ajax(aamLocal.url.site, {
             type: 'POST',
             dataType: 'html',
@@ -1773,12 +1919,13 @@
                 action: 'aamc',
                 _ajax_nonce: aamLocal.nonce,
                 subject: this.getSubject().type,
-                subjectId: this.getSubject().id
+                subjectId: this.getSubject().id,
+                oid: object ? object[1] : null
             },
             beforeSend: function () {
                 var loader = $('<div/>', {'class': 'aam-loading'}).html(
                         '<i class="icon-spin4 animate-spin"></i>'
-                        );
+                );
                 $('#aam-content').html(loader);
             },
             success: function (response) {

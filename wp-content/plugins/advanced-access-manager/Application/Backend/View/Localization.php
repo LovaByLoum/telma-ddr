@@ -49,6 +49,5 @@ return array(
     'Edit User' => __('Edit User', AAM_KEY),
     'Lock User' => __('Lock User', AAM_KEY),
     'Unlock User' => __('Unlock User', AAM_KEY),
-    'Javascript error detected during the page load. AAM may not function properly.' => __('Javascript error detected during the page load. AAM may not function properly.', AAM_KEY),
     'Failed to grand capability - WordPress policy' => __('Failed to grand capability - WordPress policy', AAM_KEY),
 );

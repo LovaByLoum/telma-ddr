@@ -187,29 +187,77 @@ final class AAM_Core_API {
      *
      * Redirect or die the execution based on ConfigPress settings
      * 
-     * @param string   $area
-     * @param callback $callback
+     * @param string $area
+     * @param array  $args
      *
      * @return void
      *
      * @access public
      */
-    public static function reject($area = 'frontend', $callback = null) {
-        $redirect = AAM_Core_Config::get("{$area}.access.deny.redirect");
-        $message  = AAM_Core_Config::get(
-                "{$area}.access.deny.message", __('Access Denied', AAM_KEY)
+    public static function reject($area = 'frontend', $args = array()) {
+        $type = apply_filters(
+                'aam-filter-redirect-option', 
+                AAM_Core_Config::get("{$area}.redirect.type"),
+                "{$area}.redirect.type",
+                AAM::getUser()
         );
-
+        
+        if (!empty($type)) {
+            $redirect = apply_filters(
+                'aam-filter-redirect-option',
+                AAM_Core_Config::get("{$area}.redirect.{$type}"),
+                "{$area}.redirect.{$type}",
+                AAM::getUser()
+            );
+        } else {
+            $redirect = AAM_Core_Config::get("{$area}.access.deny.redirect");
+        }
+        
+        self::redirect($redirect, $area, $args);
+    }
+    
+    /**
+     * 
+     * @param type $redirect
+     * @param type $area
+     * @param type $args
+     */
+    protected static function redirect($redirect, $area , $args) {
         if (filter_var($redirect, FILTER_VALIDATE_URL)) {
             wp_redirect($redirect);
-        } elseif (is_int($redirect)) {
+        } elseif (preg_match('/^[\d]+$/', $redirect)) {
             wp_redirect(get_post_permalink($redirect));
-        } elseif (!empty($callback)) {
-            call_user_func($callback, $message, '', array());
-        } else {
-            wp_die($message);
+        } elseif (is_callable($redirect)) {
+            call_user_func($redirect, $args);
+        } elseif (!empty($args['callback']) && is_callable($args['callback'])) {
+            $message = self::getDenyMessage($area);
+            call_user_func($args['callback'], $message, '', array());
+        } elseif (empty($args['skip-die'])) {
+            wp_die(self::getDenyMessage($area));
         }
         exit;
+    }
+    
+    /**
+     * 
+     * @param type $area
+     * @return type
+     */
+    protected static function getDenyMessage($area) {
+        $message = apply_filters(
+                'aam-filter-redirect-option', 
+                AAM_Core_Config::get("{$area}.redirect.message"),
+                "{$area}.redirect.message",
+                AAM::getUser()
+        );
+        
+        if (empty($message)) { //Support ConfigPress setup
+            $message = AAM_Core_Config::get(
+                    "{$area}.access.deny.message", __('Access Denied', AAM_KEY)
+            );
+        }
+        
+        return stripslashes($message);
     }
     
     /**

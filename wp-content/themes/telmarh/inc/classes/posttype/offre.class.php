@@ -149,15 +149,16 @@ class COffre
 
 	public static function getItemsCallback( $offset, $limit, $filters, $sorting ){
 		$paged =  intval($offset/$limit +1);
-		$args = array(
-			'post_type'   => JM_POSTTYPE_OFFRE,
-			'post_status' => 'publish',
-			'posts_per_page' => $limit,
-			'paged' => $paged,
-			'order'       => 'DESC',
-			'orderby'     => ( isset( $filters['order-criteria'] ) && !empty( $filters['order-criteria'] ) && $filters['order-criteria'] != "date"  ) ? "meta_value_num" : "date",
-			'fields'      => 'ids',
-		);
+        $args = array(
+            'post_type'      => JM_POSTTYPE_OFFRE,
+            'post_status'    => 'publish',
+            'posts_per_page' => $limit,
+            'paged'          => $paged,
+            'order'          => 'DESC',
+            'orderby'        => ( isset( $filters['order-criteria'] ) && !empty( $filters['order-criteria'] ) && $filters['order-criteria'] != "date" ) ? "meta_value_num" : "date",
+            'fields'         => 'ids',
+            'query_name'     => 'offre_search_ajax'
+        );
 		$args['meta_query'] = array();
 		if ( isset( $filters['order-criteria'] ) && !empty( $filters['order-criteria'] ) && $filters['order-criteria'] != "date" ){
 			$args['meta_key'] = $filters['order-criteria'];

@@ -3,9 +3,9 @@
 /**
   Plugin Name: Advanced Access Manager
   Description: Manage User and Role Access to WordPress Backend and Frontend.
-  Version: 3.4.1
+  Version: 3.7.6
   Author: Vasyl Martyniuk <vasyl@vasyltech.com>
-  Author URI: http://www.vasyltech.com
+  Author URI: https://www.vasyltech.com
 
   -------
   LICENSE: This file is subject to the terms and conditions defined in
@@ -56,17 +56,6 @@ class AAM {
         
         //load AAM core config
         AAM_Core_Config::bootstrap();
-        
-        //load all installed extension
-        //TODO - Remove in Aug 2017
-        AAM_Core_Repository::getInstance()->load();
-        
-        //bootstrap the correct interface
-        if (is_admin()) {
-            AAM_Backend_Manager::bootstrap();
-        } else {
-            AAM_Frontend_Manager::bootstrap();
-        }
     }
 
     /**
@@ -126,6 +115,20 @@ class AAM {
             
             //load AAM cache
             AAM_Core_Cache::bootstrap();
+            
+            //load all installed extension
+            //TODO - Remove in Aug 2017
+            AAM_Core_Repository::getInstance()->load();
+
+            //bootstrap the correct interface
+            if (is_admin()) {
+                AAM_Backend_Manager::bootstrap();
+            } else {
+                AAM_Frontend_Manager::bootstrap();
+            }
+            
+            //load media control
+            AAM_Core_Media::bootstrap();
         }
 
         return self::$_instance;
