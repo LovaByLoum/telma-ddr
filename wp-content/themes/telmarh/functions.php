@@ -1072,3 +1072,27 @@ function exclude_editor_role($roles) {
     }
     return $roles;
 }
+add_filter( 'post_row_actions', 'remove_row_actions', 10, 1 );
+
+function remove_row_actions( $actions )
+{
+    if( current_user_can( JM_ROLE_RESPONSABLE_RH ) && get_post_type() === JM_POSTTYPE_OFFRE )
+        unset($actions['inline hide-if-no-js']);
+    return $actions;
+}
+add_action("admin_head", "telmarh_admin_head_hide_list");
+function telmarh_admin_head_hide_list(){
+    global $current_user;
+    $script ="";
+    if ( in_array( $current_user->roles[0], array( JM_ROLE_RESPONSABLE_RH ) )  ) {
+        $script .="<style> ul.subsubsub .all,
+                    ul.subsubsub .publish,
+                    ul.subsubsub .sticky,
+                    ul.subsubsub .trash,
+                    ul.subsubsub .draft,
+                    ul.subsubsub .pending,
+                    ul.subsubsub .expired{display:none;}
+                   </style> ";
+    }
+    echo $script;
+}
