@@ -366,8 +366,9 @@ class COffre
 			}
 			return $hierarchyTerm;
 		}
-    public static function getCompetenceInfosByPostId( $pid ){
+    public static function getCompetenceRequiredByPostId( $pid ){
         $dataElement = array();
+        $dataLangue = array();
         $competenceRequis = wp_get_post_terms( $pid, JM_TAXONOMIE_COMPETENCE_REQUISES  );
         foreach ( $competenceRequis as $term ){
             if ( $term->parent == ID_TAXONOMIE_INFORMATIQUE ){
@@ -387,10 +388,30 @@ class COffre
                          );
                      }
                 }
+            } elseif ( $term->parent == ID_TAXONOMIE_LINGUISTIQUES ){
+                $dataLangue[0][] = array(
+                    'id'        => $term->term_id,
+                    'slug'      => $term->slug,
+                    'label'     => $term->name
+                );
+                $termChilds = get_term_children( $term->term_id, JM_TAXONOMIE_COMPETENCE_REQUISES );
+                if ( !empty( $termChilds ) && count( $termChilds ) > 0 ){
+                    foreach ( $termChilds as $child ){
+                        $termChild = get_term( $child );
+                        $dataLangue[$term->term_id][] = array(
+                            'id'    => $termChild->term_id,
+                            'slug'  => $termChild->slug,
+                            'label' => $termChild->name
+                        );
+                    }
+                }
             }
         }
 
-        return $dataElement;
+        return array(
+            'infos' => $dataElement,
+            'langue' => $dataLangue
+        );
 
     }
 

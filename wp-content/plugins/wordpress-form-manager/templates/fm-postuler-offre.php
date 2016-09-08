@@ -65,10 +65,11 @@ while(fm_form_have_items()): fm_form_the_item();
     $form_required[fm_form_the_nickname()] = fm_form_is_required();
 endwhile;
 $termCompetence = COffre::getCompetenceRequis(0);
-$termLinguistiques = $termCompetence[ID_TAXONOMIE_LINGUISTIQUES];
 $user = CUser::getById( $current_user->ID );
 $postID = ( isset($_GET['po'] ) && !empty( $_GET['po'] ) ) ? $_GET['po'] : 0;
-$termInformatiques = COffre::getCompetenceInfosByPostId( $postID );
+$competencesRequired = COffre::getCompetenceRequiredByPostId( $postID );
+$termLinguistiques = ( isset( $competencesRequired['langue'] ) && !empty( $competencesRequired['langue'] ) ) ? $competencesRequired['langue'] : array();
+$termInformatiques = ( isset( $competencesRequired['infos'] ) && !empty( $competencesRequired['infos'] ) ) ? $competencesRequired['infos'] : array();
 $entrepriseId = get_post_meta( $postID, JM_META_SOCIETE_OFFRE_RELATION, true);
 $entreprise = JM_Societe::getById( $entrepriseId );
 $reference = get_post_meta( $postID, REFERENCE_OFFRE, true );
@@ -132,18 +133,18 @@ $reference = get_post_meta( $postID, REFERENCE_OFFRE, true );
 	        <h4 class="head-accordion open">Compétences linguistiques <span class="required">*</span></h4>
 	        <?php if ( !empty( $termLinguistiques ) && count( $termLinguistiques ) > 0 ):?>
 		        <ul class="list-parent langue">
-		        <?php foreach ( $termLinguistiques[0] as $termParent ) :?>
+		        <?php foreach ( $termLinguistiques[0] as $termParent ) : ?>
 			        <li>
-			        <label class="control control--checkbox"><?php echo $termParent['name'];?>
-		                <input type="checkbox"  value="<?php echo $termParent['id'];?>" name="langue[]" class="parent" data-class="<?php echo sanitize_title( $termParent['name'] );?>">
+			        <label class="control control--checkbox"><?php echo $termParent['label'];?>
+		                <input type="checkbox"  value="<?php echo $termParent['id'];?>" name="langue[]" class="parent" data-class="<?php echo $termParent['slug'];?>">
 		                <div class="control__indicator"></div>
 		            </label>
 			        <?php if ( isset( $termLinguistiques[$termParent['id']] ) && !empty( $termLinguistiques[$termParent['id']] ) && count( $termLinguistiques[$termParent['id']] ) > 0 ) :?>
 				        <ul class="list-children">
-				        <?php foreach ( $termLinguistiques[$termParent['id']][0] as $termChild ):?>
+				        <?php foreach ( $termLinguistiques[$termParent['id']] as $termChild ):?>
 					        <li>
-						        <label class="control control--checkbox"><?php echo $termChild['name'];?>
-		                            <input type="checkbox"  value="<?php echo $termChild['id'];?>" name="<?php echo sanitize_title( $termParent['name'] );?>[]" class="<?php echo sanitize_title( $termParent['name'] );?>">
+						        <label class="control control--checkbox"><?php echo $termChild['label'];?>
+		                            <input type="checkbox"  value="<?php echo $termChild['id'];?>" name="<?php echo sanitize_title( $termParent['name'] );?>[]" class="<?php echo $termParent['slug'];?>">
 		                            <div class="control__indicator"></div>
 		                        </label>
 					        </li>
