@@ -363,7 +363,7 @@ get_header(); ?>
 	                                        </p>
 			                            </div>
 			                            <div class="control-group">
-				                            <h4 class="head-accordion">Projets personnels, professionnels </h4>
+				                            <h4 class="head-accordion">Projets personnels, professionnels (ingéniorat ou autres)</h4>
 				                            <div class="col-1-1 form-field">
 	                                            <h5>Projets</h5>
 	                                            <label class="control control--radio">Non
