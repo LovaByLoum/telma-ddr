@@ -306,10 +306,10 @@ get_header(); ?>
                                             </p>
 			                            </div>
 			                            <div class="control-group">
-				                            <h4 class="head-accordion">Formations <span class="required">*</span></h4>
+				                            <h4 class="head-accordion">Etudes et formations <span class="required">*</span></h4>
 				                            <div id="formation-repeat" class="content-accordion sample formation">
 					                            <div class="col-1-1 number">
-						                            <h5>Formation n°<span>1</span></h5>
+						                            <h5>Etude et formation n°<span>1</span></h5>
 					                            </div>
 					                            <div class="col-1-1 add-element">
                                                     <a href="javascript:;" class="deleteFormation" title="En savoir plus">
