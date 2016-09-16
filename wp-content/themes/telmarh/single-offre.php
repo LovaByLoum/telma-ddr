@@ -184,17 +184,6 @@ get_header(); ?>
 											}?>
 								</li>
 							<?php endif;?>
-                            <?php if ( isset( $offre->niveau_etude ) && !empty( $offre->niveau_etude ) ):?>
-                                <li><strong>Niveau d'étude :</br></strong>&nbsp;&nbsp;
-                                    <?php   $i = 1;
-                                    $glue = ', ';
-                                    foreach ( $offre->niveau_etude as $term ){
-                                        echo $term->name;
-                                        if ( ( count( $offre->niveau_etude ) - 1 ) == $i  ) { echo " et "; $i++; }
-                                        if ( count( $offre->niveau_etude ) > $i )  { echo $glue; $i++; }
-                                    }?>
-                                </li>
-                            <?php endif;?>
                             <?php if ( isset( $domaineEtude ) && !empty( $domaineEtude ) ):?>
                                 <li><strong>Domaine d'étude :</br></strong>&nbsp;&nbsp;
                                     <?php   $i = 1;
