@@ -261,11 +261,11 @@ get_header(); ?>
 					                            </div>
 												<div class="col-1-1">
 													<p class="col-1-3 form-field">
-														<label for="titre_exp_prof">Titre de l'experience <span class="required">*</span></label>
+														<label for="titre_exp_prof">Titre de l'expérience <span class="required">*</span></label>
 	                                                    <input type="text" autocomplete="off" placeholder="Titre de l'experience" name="titre_exp_prof" id="titre_exp_prof" value="<?php echo $_POST['titre_exp_prof'];?>">
 	                                                </p>
 	                                                <p class="col-1-3 form-field">
-		                                                <label for="db_exp_prof">Date de debut <span class="required">*</span></label>
+		                                                <label for="db_exp_prof">Date de début <span class="required">*</span></label>
 	                                                    <input type="text" autocomplete="off" class="datepicker" placeholder="jour/mois/année" readonly name="db_exp_prof" id="db_exp_prof" value="<?php echo $_POST['db_exp_prof'];?>">
 	                                                </p>
 	                                                <p class="col-1-3 form-field">
@@ -318,11 +318,11 @@ get_header(); ?>
                                                 </div>
 												<div class="col-1-1">
 													<p class="col-1-3 form-field">
-														<label for="titre_exp_for">Titre de l'experience <span class="required">*</span></label>
+														<label for="titre_exp_for">Titre de l'expérience <span class="required">*</span></label>
 	                                                    <input type="text" autocomplete="off" placeholder="Titre de l'experience" name="titre_exp_for" id="titre_exp_for" value="<?php echo $_POST['titre_exp_for'];?>">
 	                                                </p>
 	                                                <p class="col-1-3 form-field">
-		                                                <label for="db_exp_for">Date de debut <span class="required">*</span></label>
+		                                                <label for="db_exp_for">Date de début <span class="required">*</span></label>
 	                                                    <input type="text" autocomplete="off" class="datepicker" placeholder="jour/mois/année" readonly name="db_exp_for" id="db_exp_for" value="<?php echo $_POST['db_exp_for'];?>">
 	                                                </p>
 	                                                <p class="col-1-3 form-field">
@@ -386,11 +386,11 @@ get_header(); ?>
                                                 </div>
 												<div class="col-1-1">
 													<p class="col-1-3 form-field">
-														<label for="titre_exp_pgt">Titre de l'experience <span class="required">*</span></label>
+														<label for="titre_exp_pgt">Titre de l'expérience <span class="required">*</span></label>
 	                                                    <input type="text" autocomplete="off" placeholder="Titre de l'experience" name="titre_exp_pgt" id="titre_exp_pgt" value="<?php echo $_POST['titre_exp_pgt'];?>">
 	                                                </p>
 	                                                <p class="col-1-3 form-field">
-		                                                <label for="db_exp_pgt">Date de debut <span class="required">*</span></label>
+		                                                <label for="db_exp_pgt">Date de début <span class="required">*</span></label>
 	                                                    <input type="text" autocomplete="off" class="datepicker" placeholder="jour/mois/année" readonly name="db_exp_pgt" id="db_exp_pgt" value="<?php echo $_POST['db_exp_pgt'];?>">
 	                                                </p>
 	                                                <p class="col-1-3 form-field">
