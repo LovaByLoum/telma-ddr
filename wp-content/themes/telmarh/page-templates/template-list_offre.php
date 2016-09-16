@@ -166,7 +166,7 @@ $recherche = ( isset( $_GET['sof'] ) && !empty( $_GET['sof'] ) ) ? $_GET['sof'] 
                     </aside>
 	                <aside class="widget">
 		                <div class="control-group">
-                            <h5 class="head-accordion <?php if ( empty( $anneeExpDefault ) ):?>open<?php endif;?>">Année d'experience</h5>
+                            <h5 class="head-accordion <?php if ( empty( $anneeExpDefault ) ):?>open<?php endif;?>">Années d'expérience</h5>
 							<div class="content-accordion <?php if ( !empty( $anneeExpDefault ) ):?>open<?php endif;?>">
 								<?php if ( !empty( $anneeExperiences ) && count( $anneeExperiences ) > 0 ):
 	                                    foreach ( $anneeExperiences as $term ):?>
