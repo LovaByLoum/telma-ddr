@@ -437,7 +437,11 @@ class COffre
 
 			foreach ( $form['items'] as $field ){
 				if ( in_array( $field['type'], array( "text", "textarea" )  ) ) {
-					$label = ( $field['type'] == "textarea" ) ? "Son Message" : $field['label'];
+                    if ( $formId == FORMULAIRE_POSTULER_OFFRE ) {
+                        $label = ( $field['type'] == "textarea" ) ? "Ses Motivations" : $field['label'];
+                    } else {
+                        $label = ( $field['type'] == "textarea" ) ? "Son Message" : $field['label'];
+                    }
 					$dataHtml .= '<li><strong>' . $label . ' :</strong>' . $data[$field['unique_name']] . '</li>' ;
 				} else {
 					$elt = unserialize( $data[$field['unique_name']] );

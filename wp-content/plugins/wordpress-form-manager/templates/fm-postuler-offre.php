@@ -160,8 +160,8 @@ $reference = get_post_meta( $postID, REFERENCE_OFFRE, true );
     </div>
 	<div class="control-group">
 		<div class="col-1-1 form-field">
-			<h4 class="head-accordion open">Votre message <span class="required">*</span></h4>
-			<textarea name="<?php echo $form_items['message_postule'];?>" placeholder="Votre message"></textarea>
+			<h4 class="head-accordion open">Vos motivations <span class="required">*</span></h4>
+			<textarea name="<?php echo $form_items['message_postule'];?>" placeholder="Vos motivations"></textarea>
 		</div>
 	</div>
 	<div class="control-group">
