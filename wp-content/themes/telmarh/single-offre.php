@@ -184,27 +184,6 @@ get_header(); ?>
 											}?>
 								</li>
 							<?php endif;?>
-                            <?php if ( isset( $domaineEtude ) && !empty( $domaineEtude ) ):?>
-                                <li><strong>Domaine d'étude :</br></strong>&nbsp;&nbsp;
-                                    <?php   $i = 1;
-                                    $glue = ', ';
-                                    foreach ( $domaineEtude[0] as $parent ){
-                                        echo $parent['name'];
-                                        if ( isset( $domaineEtude[$parent['id']][0] ) && !empty( $domaineEtude[$parent['id']][0] ) ){
-                                            $i = 1;
-                                            echo ' ( ';
-                                            foreach( $domaineEtude[$parent['id']][0] as $firstChild ){
-                                                echo $firstChild['name'];
-                                                if ( ( count( $domaineEtude[$parent['id']][0] ) - 1 ) == $i  ) { echo " et "; $i++; }
-                                                if ( count( $domaineEtude[$parent['id']][0] ) > $i )  { echo $glue; $i++; }
-                                            }
-                                            echo ' ) ';
-                                        }
-                                        if ( ( count( $domaineEtude[0] ) - 1 ) == $i  ) { echo " et "; $i++; }
-                                        if ( count( $domaineEtude[0] ) > $i )  { echo $glue; $i++; }
-                                    }?>
-                                </li>
-                            <?php endif;?>
 						</ul>
                     </aside>
                     <aside class="widget widget_recent_entries">
@@ -218,6 +197,31 @@ get_header(); ?>
 							<?php if ( isset( $offre->{JM_TAXONOMIE_NIVEAU_ETUDE} )  && !empty( $offre->{JM_TAXONOMIE_NIVEAU_ETUDE} ) ):?>
 								<li><i class="fa fa-check-square-o"></i>&nbsp;&nbsp;<?php echo $offre->{JM_TAXONOMIE_NIVEAU_ETUDE}[0]->name;?></li>
 							<?php endif;?>
+                            <?php if ( isset( $domaineEtude )  && !empty( $domaineEtude ) ):?>
+                                <?php  foreach ( $domaineEtude[0] as $parent ): ?>
+                                    <li><i class="fa fa-check-square-o"></i>&nbsp;&nbsp;
+                                        <?php echo $parent['name'] ;?>
+                                        <?php if ( isset( $domaineEtude[$parent['id']][0] ) && !empty( $domaineEtude[$parent['id']][0] ) ):?>
+                                            <ul>
+                                                <?php foreach( $domaineEtude[$parent['id']][0] as $firstChild ):?>
+                                                    <li>&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-circle-right"></i>
+                                                        <?php echo $firstChild['name'];?>
+                                                        <?php if ( isset( $domaineEtude[$parent['id']][$firstChild['id']][0] ) && !empty( $domaineEtude[$parent['id']][$firstChild['id']][0] ) ):?>
+                                                            <ul>
+                                                                <?php foreach( $domaineEtude[$parent['id']][$firstChild['id']][0] as $secondChild ):?>
+                                                                    <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-fighter-jet"></i>
+                                                                        <?php echo $secondChild['name'];?>
+                                                                    </li>
+                                                                <?php endforeach;?>
+                                                            </ul>
+                                                        <?php endif;?>
+                                                    </li>
+                                                <?php endforeach;?>
+                                            </ul>
+                                        <?php endif;?>
+                                    </li>
+                                <?php endforeach;?>
+                            <?php endif;?>
 							<?php if ( isset( $offre->{JM_TAXONOMIE_COMPETENCE_REQUISES} )  && !empty( $offre->{JM_TAXONOMIE_COMPETENCE_REQUISES} ) ): ?>
 								<?php foreach( $competenceRequis[0] as $parent ): ?>
 								<li><i class="fa fa-check-square-o"></i>&nbsp;&nbsp;
