@@ -124,7 +124,7 @@ $recherche = ( isset( $_GET['sof'] ) && !empty( $_GET['sof'] ) ) ? $_GET['sof'] 
                 <div class="widget-area">
 	                <aside class="widget">
 		                <div class="control-group">
-							<h5>Triér par :</h5>
+							<h5>Trier par :</h5>
 			                <div class="select">
 				                <select class="order-criteria" data-filter="order-criteria">
 									<option value="date">Date de publication</option>
