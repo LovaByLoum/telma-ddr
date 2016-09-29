@@ -213,6 +213,7 @@ class CUser {
 				$tobereplaced   = array('[offre:url]', '[soubmission:data]', '[site:name]');
 			    $replacement    = array( $data['offre'], $data['html'], $siteName );
 				$content        = str_replace($tobereplaced, $replacement, $content);
+                $sujet          = str_replace($tobereplaced, $replacement, $sujet);
 				telmarh_send_mail( $email, $sujet, $content, $blogname );
 				$wpdb->update( self::$_tableNameEmail, array( 'envoyer' => 1, 'date_envoi' => date('Y-m-d H:i:s')), array( 'id' => $line->id ) );
 			}
