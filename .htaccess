@@ -44,7 +44,7 @@ Satisfy any
 SetEnvIf HOST "localhost" PROJECT_BASE_PATH=/projets/telmarh/srcs/
 SetEnvIf HOST "telma-interface-recrutement-recette[.]mg[.]netapsys[.]fr" PROJECT_BASE_PATH=/
 SetEnvIf HOST "telma-interface-recrutement-recette[.]netapsys[.]fr" PROJECT_BASE_PATH=/
-SetEnvIf HOST "tsgt02lv" PROJECT_BASE_PATH=/jobopportunity/
+SetEnvIf HOST "tsgt02lv" PROJECT_BASE_PATH=/axian/
 
 <IfModule mod_rewrite.c>
 RewriteEngine On
@@ -53,14 +53,3 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule . %{ENV:PROJECT_BASE_PATH}index.php [L]
 </IfModule>
 
-# BEGIN WordPress
-<IfModule mod_rewrite.c>
-RewriteEngine On
-RewriteBase /projets/telmarh/srcs/
-RewriteRule ^index\.php$ - [L]
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule . /projets/telmarh/srcs/index.php [L]
-</IfModule>
-
-# END WordPress
