@@ -70,6 +70,7 @@ get_header(); ?>
 	                                </div>
 	                            </div>
 		                        <input type="hidden" name="wp_nonce_contact" value="<?php echo $nonce;?>">
+		                        <input type="hidden" name="action" value="wp_nous_contacter">
 		                        <input type="submit" name="telmarh_init_nous_contacter" class="btn_contacter" value="Valider">
 	                        </form>
 							<?php endif;?>

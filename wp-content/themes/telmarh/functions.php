@@ -974,8 +974,8 @@ add_action("init", "telmarh_init_nous_contacter");
 function telmarh_init_nous_contacter(){
 	global $telmarh_options;
 	$msg = "";
-	$error = 0;
-	if ( is_page_template( "page-nous_contacter.php" ) ){
+	$error = array();
+	if ( isset( $_POST['action'] ) && $_POST['action'] == "wp_nous_contacter" ){
 		if ( isset( $_POST['wp_nonce_contact'] ) && !empty( $_POST['wp_nonce_contact'] ) && wp_verify_nonce( $_POST['wp_nonce_contact'], "wp_nonce_contact" ) ){
 			$name       = ( isset( $_POST['nom_contact'] ) && !empty( $_POST['nom_contact'] ) ) ? $_POST['nom_contact'] : "";
 			$surname    = ( isset( $_POST['surname_contact'] ) && !empty( $_POST['surname_contact'] ) ) ? $_POST['surname_contact'] : "";
