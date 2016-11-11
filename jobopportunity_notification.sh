@@ -5,7 +5,7 @@ then
 elif ( echo $HOSTNAME | egrep -i '^telma\.net$' > /dev/null)
 then
     wget https://$HOSTNAME/axianpreprod/wp-cron.php --no-check-certificate -O /dev/null
-elif ( echo $HOSTNAME | egrep -i '^www.telma.net$' > /dev/null )
+elif ( echo $HOSTNAME | egrep -i '^www\.telma\.net$' > /dev/null )
 then
     wget https://$HOSTNAME/axianpreprod/wp-cron.php --no-check-certificate -O /dev/null
 elif ( echo $HOSTNAME | egrep -i '^tapq237lv$' > /dev/null )
