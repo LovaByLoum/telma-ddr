@@ -429,7 +429,7 @@ function telmarh_inscription_user(){
 		if ( empty( $titreExpProf ) ) $msg .= "<li>Le titre de l'expérience professionnelle est requis</li>";
 
 		//titre formation professionnelle
-		if ( empty( $titreExpFor ) ) $msg .= "<li>Le titre de la formation professionnelle est requis</li>";
+		if ( empty( $titreExpFor ) ) $msg .= "<li>Intitulé de la formation est requis</li>";
 
 		//projet
 		if ( $isProjet == "1" ){
@@ -462,7 +462,7 @@ function telmarh_inscription_user(){
 		if ( empty( $organismeExpProf ) ) $msg .= "<li>Organisme ou Entreprise de l'expérience professionnelle est requise</li>";
 
 		//date de fin formation professionnelle
-		if ( empty( $organismeExpFor ) ) $msg .= "<li>Organisme ou Entreprise de la formation professionnelle est requise</li>";
+		if ( empty( $organismeExpFor ) ) $msg .= "<li>Ecole / Université / Organisme de formation  est requise</li>";
 
 		//projet
 		if ( $isProjet == "1" ){

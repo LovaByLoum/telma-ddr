@@ -318,8 +318,8 @@ get_header(); ?>
                                                 </div>
 												<div class="col-1-1">
 													<p class="col-1-3 form-field">
-														<label for="titre_exp_for">Titre de l'expérience <span class="required">*</span></label>
-	                                                    <input type="text" autocomplete="off" placeholder="Titre de l'experience" name="titre_exp_for" id="titre_exp_for" value="<?php echo $_POST['titre_exp_for'];?>">
+														<label for="titre_exp_for">Intitulé de la formation <span class="required">*</span></label>
+	                                                    <input type="text" autocomplete="off" placeholder="Intitulé de la formation" name="titre_exp_for" id="titre_exp_for" value="<?php echo $_POST['titre_exp_for'];?>">
 	                                                </p>
 	                                                <p class="col-1-3 form-field">
 		                                                <label for="db_exp_for">Date de début <span class="required">*</span></label>
@@ -332,8 +332,8 @@ get_header(); ?>
 												</div>
 												<div class="col-1-1">
 													<p class="col-1-3 form-field">
-														<label for="organisme_exp_for">Organisme / Entreprise <span class="required">*</span></label>
-														<input type="text" autocomplete="off" placeholder="Organisme / Entreprise " name="organisme_exp_for" id="organisme_exp_for" value="<?php echo $_POST['organisme_exp_for'];?>">
+														<label for="organisme_exp_for">Ecole / Université / Organisme de formation<span class="required">*</span></label>
+														<input type="text" autocomplete="off" placeholder="Ecole / Université / Organisme de formation…" name="organisme_exp_for" id="organisme_exp_for" value="<?php echo $_POST['organisme_exp_for'];?>">
                                                     </p>
 													<p class="col-1-3 form-field">
 														<label for="desc_exp_for">Description <span class="required">*</span></label>
