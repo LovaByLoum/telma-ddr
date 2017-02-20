@@ -628,7 +628,8 @@ function telmarh_send_mail( $email, $subjet_mail, $msg, $blogname )
 	ob_end_clean();
 	$header = 'From: ' . $blogname . ' <noreply@' . $_SERVER['HTTP_HOST'] . '>';
 	add_filter( 'wp_mail_content_type', 'set_html_content_type' );
-	@wp_mail( $email, $subjet_mail, $output, $header );
+	$result = wp_mail( $email, $subjet_mail, $output, $header );
+        return $result;
 }
 
 /**
@@ -907,7 +908,7 @@ if (!wp_next_scheduled('my_one_day_action')) {
 }
 
 //for cron job task
-add_action('my_dix_minute_action', array(CUser, 'send_notifications'));
+add_action('my_dix_minute_action', array(CUser, 'clear_cron_tasks'));
 add_action('my_one_day_action', array(CUser, 'purge_list_email'));
 
 add_filter( "fm_change_nickname_to_label", "telmarh_fm_change_nickname_to_label", 10, 1 );
@@ -1095,4 +1096,16 @@ function telmarh_admin_head_hide_list(){
                    </style> ";
     }
     echo $script;
+}
+
+
+if (!function_exists('write_log')) {
+    ini_set( 'error_log', WP_CONTENT_DIR . '/cron.log' );
+    function write_log ( $log )  {
+            if ( is_array( $log ) || is_object( $log ) ) {
+                error_log( print_r( $log, true ) );
+            } else {
+                error_log( $log );
+            }
+    }
 }

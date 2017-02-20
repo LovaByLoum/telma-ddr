@@ -199,24 +199,45 @@ class CUser {
 	}
 
 	public static function send_notifications ( $lot = 100 ){
-		global $wpdb, $telmarh_options;
-		$emails = $wpdb->get_results( $sql = "SELECT * FROM " .  self::$_tableNameEmail . " WHERE envoyer = 0  ORDER BY id ASC LIMIT " . $lot  );
-	    $sujet = ( isset( $telmarh_options['subjet_mail_gt'] ) && !empty( $telmarh_options['subjet_mail_gt'] ) ) ? $telmarh_options['subjet_mail_gt'] : "";
+		global $wpdb, $telmarh_options;  
+                global $ts_mail_errors;
+                global $phpmailer;
+            
+            $emails = $wpdb->get_results( $sql = "SELECT * FROM " .  self::$_tableNameEmail . " WHERE envoyer = 0  ORDER BY id ASC LIMIT " . $lot  );
+            write_log( 'recuperation adresses mails pour envoi de notifications ok ' );
+	    $sujet = ( isset( $telmarh_options['subjet_mail_gt'] ) && !empty( $telmarh_options['subjet_mail_gt'] ) ) ? $telmarh_options['subjet_mail_gt'] : ""; 
 	    $content = ( isset( $telmarh_options['content_mail_gt'] ) && !empty( $telmarh_options['content_mail_gt'] ) ) ?  $telmarh_options['content_mail_gt'] : "";
 	    $blogname = wp_specialchars_decode(get_option('blogname'), ENT_QUOTES);
-		if ( !empty( $emails ) ){
+            $date_format = get_option( 'date_format' );
+            $time_format = get_option( 'time_format' );
+            $error_log_message = 'Debut envoi mail: ' . $sujet . '. Ce ' . date("d-m-Y H:i:s");
+            
+            	if ( !empty( $emails ) ){
+                    write_log( $error_log_message );
 			foreach ( $emails as $line ){
 				$email          = $line->email;
 				$dataUniqueId   = $line->element;
 				$siteName       = get_bloginfo( "name" );
 				$data           = COffre::getElementFormInFosByUniqueId( FORMULAIRE_POSTULER_OFFRE, $dataUniqueId );
 				$tobereplaced   = array('[offre:url]', '[soubmission:data]', '[site:name]');
-			    $replacement    = array( $data['offre'], $data['html'], $siteName );
+                                $replacement    = array( $data['offre'], $data['html'], $siteName );
 				$content        = str_replace($tobereplaced, $replacement, $content);
-                $sujet          = str_replace($tobereplaced, $replacement, $sujet);
-				telmarh_send_mail( $email, strip_tags( $sujet ), $content, $blogname );
-				$wpdb->update( self::$_tableNameEmail, array( 'envoyer' => 1, 'date_envoi' => date('Y-m-d H:i:s')), array( 'id' => $line->id ) );
+                                $sujet          = str_replace($tobereplaced, $replacement, $sujet);
+				$result = telmarh_send_mail( $email, strip_tags( $sujet ), $content, $blogname );
+                                //$result = wp_mail($sendto, $subject, $content, $headers);
+                                if (!$result) {                                    
+                                    if (!isset($ts_mail_errors)) $ts_mail_errors = array();
+                                    if (isset($phpmailer)) {
+                                        $ts_mail_errors[] = $phpmailer->ErrorInfo;
+                                    }                                    
+                                }else{
+                                    write_log( 'Envoi mail ok pour '.$email );
+                                }
+                                $wpdb->update( self::$_tableNameEmail, array( 'envoyer' => 1, 'date_envoi' => date('Y-m-d H:i:s')), array( 'id' => $line->id ) );
 			}
+                   if (isset($ts_mail_errors))     
+                        write_log( $ts_mail_errors );				      
+                  write_log( 'Fin envoi mail' . '. Ce ' . date("d-m-Y H:i:s") );      
 		}
 
 	}
@@ -233,10 +254,19 @@ class CUser {
 	            ORDER BY date_envoi ASC LIMIT {$lot}";
 		$ids = $wpdb->get_col( $sql );
 		if ( !empty( $ids ) ) {
+                        write_log( 'Debut purge liste mails ' . '. Ce ' . date("d-m-Y H:i:s"));
 			foreach ( $ids as $id ) {
 				$wpdb->delete( self::$_tableNameEmail, array( 'id' => $id ) );
 			}
+                        write_log( 'Fin purge liste mails ' . '. Ce ' . date("d-m-Y H:i:s"));
 		}
+	}
+        
+        public static function clear_cron_tasks (  ){
+		global $wpdb;
+                write_log( 'vider taches cron dans la table wp_options ' );
+		if( update_option( 'cron' , '' ) )
+                   self::send_notifications();
 	}
 
 
