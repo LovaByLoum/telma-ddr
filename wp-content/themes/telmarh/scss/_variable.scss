@@ -1,0 +1,30 @@
+// Path configuration
+$imagePath               : '../images/';
+$imageDesign             : '../images/design/';
+
+// Font configuration
+$fontPath                : '../fonts/';
+$fontBasic               : Arial, sans-serif;
+
+
+//Queries
+$min360                  :"only screen and (min-width: 360px)";
+$min376                  :"only screen and (min-width: 376px)";
+$min414                  :"only screen and (min-width: 414px)";
+$min480                  :"only screen and (min-width: 480px)";
+$min568                  :"only screen and (min-width: 568px)";
+$min640                  :"only screen and (min-width: 640px)";
+$min668                  :"only screen and (min-width: 668px)";
+$min736                  :"only screen and (min-width: 736px)";
+$min768                  :"only screen and (min-width: 768px)";
+$min1024                 :"only screen and (min-width: 1024px)";
+$min1200                 :"only screen and (min-width: 1200px)";
+
+$max359                  :"only screen and (max-width: 359px)";
+$max479                  :"only screen and (max-width: 479px)";
+$max639                  :"only screen and (max-width: 639px)";
+$max735                  :"only screen and (max-width: 735px)";
+$max767                  :"only screen and (max-width: 767px)";
+$max959                  :"only screen and (max-width: 959px)";
+$max1023                 :"only screen and (max-width: 1023px)";
+$max1199                 :"only screen and (max-width: 1199px)";
