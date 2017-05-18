@@ -270,7 +270,8 @@ class CUser {
         
         public static function clear_cron_tasks (  ){
 		global $wpdb;
-                write_log( 'vider taches cron dans la table wp_options ' );
+            set_time_limit(0);
+                write_log( 'Debut du lancement cron pour envoyé les mails ' );
                 self::send_notifications();
 	}
 
