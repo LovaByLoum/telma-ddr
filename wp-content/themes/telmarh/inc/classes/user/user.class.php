@@ -225,7 +225,7 @@ class CUser {
                     $sujet = str_replace($tobereplaced, $replacement, $sujet);
                     $error_log_message = 'Debut envoi mail: ' . strip_tags($sujet) . '. Ce ' . date("d-m-Y H:i:s");
                     write_log($error_log_message);
-                    $result = telmarh_send_mail($email . "qDSdQD", strip_tags($sujet), $content, $blogname);
+                    $result = telmarh_send_mail($email, strip_tags($sujet), $content, $blogname);
                     //$result = wp_mail($sendto, $subject, $content, $headers);
                     //$result = wp_mail($sendto, $subject, $content, $headers);
                     if (!$result) {
