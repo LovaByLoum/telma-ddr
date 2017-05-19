@@ -104,7 +104,7 @@ Nicolas Gallagher and Jonathan Neal http://necolas.github.com/normalize.css/
 1.0 Normalize
 --------------------------------------------------------------*/
 html {
-	font-family: sans-serif;
+	font-family: arial, sans-serif;
 	-webkit-text-size-adjust: 100%;
 	-ms-text-size-adjust:     100%;
 	overflow-x: hidden;
@@ -868,7 +868,7 @@ h1.site-title a { color:#efefef; }
 }
 
 .widget-area {
-	padding-left: 20px;
+	/* padding-left: 20px; */
 }
 
 .sidebar-left {
@@ -934,12 +934,13 @@ h1.site-title a { color:#efefef; }
 
 #page-entry-content, #blog-entry-content, #page-right-entry-content {
     position: relative;
-	max-width: 1240px;
+	max-width: 1024px;
+	/* max-width: 1240px; */
 	margin: 0 auto;
 	padding-bottom: 20px;
 }
 
-#page-entry-content:before, #blog-entry-content:before {
+/*#page-entry-content:before, #blog-entry-content:before {
     background-color: #ccc;
     content: "";
     height: 100%;
@@ -947,7 +948,7 @@ h1.site-title a { color:#efefef; }
     right: 25%;
     top: 0;
     width: 1px;
-}
+}*/
 
 #page-right-entry-content:before {
     background-color: #ccc;
@@ -1622,7 +1623,8 @@ section .telmarh-panel {
 	margin:0 auto;
 	text-align: center;
 	width: 100%;
-	max-width: 1240px;
+	max-width: 1024px;
+	/*max-width: 1240px;*/
 	min-width: 855px;
 	margin: 0 auto;
 	overflow: hidden;  
@@ -1634,7 +1636,8 @@ section .telmarh-panel {
 	padding: 40px 0; 
 	text-align: center;
 	width: 100%;
-	max-width: 1240px;
+	max-width: 1024px;
+	/*max-width: 1240px;*/
 	min-width: 855px;
 	margin: 0 auto;
 	overflow: hidden;  
@@ -1661,7 +1664,8 @@ body {
 
 [class*='col-'] {
 	float: left;
-	padding-right: 40px; /* column-space */
+	padding-right: 25px; /* column-space */
+	/*padding-right: 40px;*/ /* column-space */
 	
 }
 
@@ -1673,7 +1677,8 @@ body {
 
 .grid {
 	width: 100%;
-	max-width: 1240px;
+	max-width: 974px;
+	/* max-width: 1240px; */
 	min-width: 855px;
 	margin: 0 auto;
 	overflow: hidden;
@@ -1699,7 +1704,8 @@ body {
 
 .grid-pad {
 	padding-top: 20px;
-	padding-left: 40px; /* grid-space to left */
+	padding-left: 25px; /* grid-space to left */
+	/*padding-left: 40px;*/ /* grid-space to left */
 	padding-right: 0px; /* grid-space to right: (grid-space-left - column-space) e.g. 20px-20px=0 */
 }
 
