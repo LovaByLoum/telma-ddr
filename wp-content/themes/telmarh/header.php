@@ -21,67 +21,26 @@
 <body <?php body_class(); ?>>
 <div id="page" class="hfeed site">
 	<a class="skip-link screen-reader-text" href="#content"><?php _e( 'Skip to content', 'telmarh' ); ?></a>
-
-	<header id="masthead" class="site-header" role="banner">
-    	<div class="grid grid-pad header-overflow">
-			<div class="site-branding">
-        		<div>
-            
-				<?php if ( get_theme_mod( 'telmarh_logo_page' ) ) : ?>
-    				
-                    <div class="site-title">
-                    
-       					<a href='<?php echo esc_url( home_url( '/' ) ); ?>' title='<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>' rel='home'>
-                        	<img src='<?php echo esc_url( get_theme_mod( 'telmarh_logo_page' ) ); ?>'
-							
-								<?php if ( get_theme_mod( 'logo_size' ) ) : ?>
-                            	
-                                	width="<?php echo esc_attr( get_theme_mod( 'logo_size', __( '165', 'telmarh' ) )); ?>"
-								
-								<?php endif; ?> 
-                                
-                                alt="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>">
-                        </a>
-                        
-    				</div><!-- site-logo -->
-                    
-				<?php else : ?>
-                
-    				<hgroup>
-       					<h1 class='site-title'>
-                        	<a href='<?php echo esc_url( home_url( '/' ) ); ?>' title='<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>' rel='home'><?php bloginfo( 'name' ); ?></a>
-                        </h1> 
-    				</hgroup>
-                    
-				<?php endif; ?>
-            
-            	</div> 
-			</div><!-- .site-branding -->
-        
-        
-			<div class="navigation-container">
-				<nav id="site-navigation" class="main-navigation" role="navigation">
-            		<button class="toggle-menu menu-right push-body">
-						<?php echo esc_html( get_theme_mod( 'telmarh_menu_name', __( 'Menu', 'telmarh' )  )); ?>
-                	</button>
-					<?php wp_nav_menu( array( 'theme_location' => 'primary' ) ); ?>
-				</nav><!-- #site-navigation -->
-        	</div>
-            
+    <header id="header" role="banner">
+        <div class="nav-left">
+            <button class="bt-toggle" data-toggle="open" aria-controls="header" aria-expanded="false"></button>
+            <a href="#" class="logo" title="Axian"><img src="<?php echo get_template_directory_uri(); ?>/images/logo.svg" alt="Axian - Let's grow together"></a>
+            <nav class="navigation  nav-close">
+                <div class="nav-td">
+                    <?php wp_nav_menu( array( 'theme_location' => 'primary' ) ); ?>
+                </div>
+            </nav>
         </div>
-	</header><!-- #masthead -->
-    
-    <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right">
-        <h3><i class="fa fa-close"></i> <?php _e( 'Close', 'telmarh' ); ?> <?php echo esc_html( get_theme_mod( 'telmarh_menu_name', __( 'Menu', 'telmarh' )  )); ?></h3>
-        <?php wp_nav_menu( array( 'theme_location' => 'primary' ) ); ?>
-	</nav>
-	<?php $error = ( isset( $_POST['errors'] ) && !empty( $_POST['errors'] ) ) ? $_POST['errors'] : "";?>
-	<div id="login-user" class="login" <?php if ( !empty($error) ) :?>style="display: block;"<?php endif;?>>
-		<?php 	if ( !is_user_logged_in() ) :?>
-						<div class="inset">
-							<?php include("tpl/connexion.tpl.php");?>
-						</div>
-			<?php   endif;?>
-	</div>
+        <div class="nav-right">
+            <a href="#" title="Se connecter" class="btn-login"><i class="fa fa-sign-in"></i> Se connecter</a>
+            <div id="login-user" class="login  nav-close" <?php if ( !empty($error) ) :?>style="display: block;"<?php endif;?>>
+                <?php 	if ( !is_user_logged_in() ) :?>
+                    <div class="inset">
+                        <?php include("tpl/connexion.tpl.php");?>
+                    </div>
+                <?php   endif;?>
+            </div>
+        </div>
+    </header>
 
 	<div id="content" class="site-content">

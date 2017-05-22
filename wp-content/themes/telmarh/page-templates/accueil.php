@@ -18,7 +18,8 @@ $blocPartenaires = CPage::getAllpartnerHp( $post->ID );
 $blocTestimonial = CPage::getAllElementTestimonialHp( $post->ID );
 $postOffes = ( is_object( wp_get_post_by_template( "offres.php" ) ) ) ?  wp_get_post_by_template( "offres.php" ) : $post;
 $offresUrgent = COffre::getOffreUrgent();
-get_header('home'); ?>
+// get_header('home');
+get_header(); ?>
      <section id="home-hero">
 
      	<div class="telmarh-hero-bg" style="background-image: url('<?php echo $imageBackground;?>');"></div>
