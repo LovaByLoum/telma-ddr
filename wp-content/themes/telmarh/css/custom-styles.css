@@ -37,8 +37,6 @@ header#header:after { border-top: 90px solid #d30630; border-right: calc(100vw) 
 
 body { font-family: arial, sans-serif; }
 
-#masthead { display: none; }
-
 .top-listing-offer { margin-bottom: 40px; text-align: center; }
 @media only screen and (min-width: 992px) { .top-listing-offer h1, .top-listing-offer aside { display: inline-block; vertical-align: middle; } }
 .top-listing-offer h1 { color: #c80f2d; font-size: 48px; line-height: 100%; margin-bottom: 0; text-transform: uppercase; }
