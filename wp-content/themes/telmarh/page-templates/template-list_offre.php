@@ -216,30 +216,6 @@ $recherche = ( isset( $_GET['sof'] ) && !empty( $_GET['sof'] ) ) ? $_GET['sof'] 
                     </nav>
                 <!--liste offre-->
             </div>
-            
         </div>
     </div>
 </section>
-<section id="page-entry-content" class="listing-offer">
-    <div class="grid grid-pad">
-        <div class="col-9-12">
-            <div id="primary" class="content-area">
-                <main id="main" class="site-main" role="main">
-                    <article class="page type-page status-publish hentry">
-                        <div id="pl-64">
-                            <div class="panel-grid" id="pg-64-0">
-                                <div class="panel-grid-cell" id="pgc-64-0-0">
-                                    
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-                </main><!-- #main -->
-			</div><!-- #primary -->
-        </div><!-- col-9-12 -->
-
-        <div class="col-3-12">
-            
-        </div><!-- col-3-12 -->
-    </div><!-- grid -->
-</section><!-- page-entry-content -->
