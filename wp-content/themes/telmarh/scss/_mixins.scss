@@ -1,0 +1,9 @@
+@import '_variable.scss';
+
+@mixin browserCss($prop, $value) {
+    -webkit-#{$prop}: $value;
+    -moz-#{$prop}: $value;
+    -o-#{$prop}: $value;
+    #{$prop}: $value;
+}
+

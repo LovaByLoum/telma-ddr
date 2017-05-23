@@ -930,3 +930,38 @@ function showPreviewImage_click(event) {
         reader.readAsDataURL(f); // `f` : current `File` object
     }(i)); // `i` : `n` within immediately invoked function expression
 }
+
+// From new template
+
+jQuery( function( $ ){
+
+    $(document).ready(function() {
+        // open menu
+        $('.bt-toggle').click ( function () {
+            $(this).toggleClass('opened');
+            $('.navigation').toggleClass('nav-close');
+            $('body').toggleClass('nav-opened');
+        });
+
+        // open close login
+        var hoverLogin = false;
+
+        $('#login-user').hover ( function (){
+            hoverLogin = true;
+        }, function () {
+            hoverLogin = false;
+        });
+
+        $('.btn-login').click ( function () {
+            $('#login-user').slideToggle ();
+            return false;
+        });
+
+        $(document).click ( function () {
+            if ( (hoverLogin == false) && $('#login-user').is(':visible') ) {
+                $('#login-user').slideUp ();
+            }
+        })
+    });
+
+});

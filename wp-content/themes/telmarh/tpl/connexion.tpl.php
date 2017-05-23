@@ -27,12 +27,12 @@ $linkRedirect = ( $is_offre ) ? get_permalink( $pagePostule->ID ) ."?po=" . $pos
 	<?php endif;?>
 	<p class="login-username data-error">
 		<label for="user_login">Identifiant ou adresse de messagerie</label>
-		<input type="text" name="custom_log" id="user_login" class="input <?php if ( !empty( $error ) && isset( $error['invalid_username'] ) && !empty( $error['invalid_username'] ) ):?>error<?php endif;?>" value="<?php echo $_POST['custom_log'];?>" size="20">
+		<input type="text" name="custom_log" id="user_login" class="input_text <?php if ( !empty( $error ) && isset( $error['invalid_username'] ) && !empty( $error['invalid_username'] ) ):?>error<?php endif;?>" value="<?php echo $_POST['custom_log'];?>" size="20">
 	</p>
 
 	<p class="login-password">
 		<label for="user_pass">Mot de passe</label>
-		<input type="password" name="custom_pwd" id="user_pass" class="input <?php if ( !empty( $error ) && isset( $error['incorrect_password'] ) && !empty( $error['incorrect_password'] ) ):?>error<?php endif;?>" value="<?php echo $_POST['custom_pwd'];?>" size="20">
+		<input type="password" name="custom_pwd" id="user_pass" class="input_text <?php if ( !empty( $error ) && isset( $error['incorrect_password'] ) && !empty( $error['incorrect_password'] ) ):?>error<?php endif;?>" value="<?php echo $_POST['custom_pwd'];?>" size="20">
 	</p>
 
 	<p class="login-remember">
@@ -47,13 +47,14 @@ $linkRedirect = ( $is_offre ) ? get_permalink( $pagePostule->ID ) ."?po=" . $pos
 		<input type="submit" name="telmarh_connection" id="wp-submit" class="button-primary" value="Se connecter">
 	</p>
 
-	<p class="login-submit">
+	<p class="login-links">
+
+        <a href="<?php echo get_permalink( $pageInscription->ID );?>" class="signup" title="S'inscrire">
+            S'inscrire
+        </a>
 		<a href="<?php echo $linkLostPassword;?>" class="lostpassword"
 		   title="Mot de passe oublié">
 			Mot de passe oublié
-		</a>
-		<a href="<?php echo get_permalink( $pageInscription->ID );?>" class="lostpassword" title="S'inscrire">
-			S'inscrire
 		</a>
 	</p>
 
