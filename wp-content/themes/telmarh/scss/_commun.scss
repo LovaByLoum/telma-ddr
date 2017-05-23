@@ -67,7 +67,7 @@ header#header {
 
             &.nav-close {
                 // display: none;
-                top: -100%;
+                top: -200%;
             }
 
             .nav-td {
@@ -87,11 +87,13 @@ header#header {
                     padding: 5px 0;
 
                     a {
-                        font-size: 30px;
+                        // font-size: 30px;
+                        font-size: 25px;
                         color: #fff;
                         text-transform: uppercase;
                         display: block;
-                        padding: 24px 0;
+                        padding: 14px 0;
+                        // padding: 24px 0;
 
                         &:hover {
                             background-color: #f8093a;
