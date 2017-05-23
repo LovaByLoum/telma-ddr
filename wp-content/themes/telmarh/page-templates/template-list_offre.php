@@ -41,71 +41,7 @@ $recherche = ( isset( $_GET['sof'] ) && !empty( $_GET['sof'] ) ) ? $_GET['sof'] 
 <section id="page-entry-content" class="listing-offer">
     <div class="container">
         <div class="row">
-            <div class="col-sm-9">
-                <!--liste offre-->
-                    <?php $object = new WP_Pagination_Loading('offre-pagination-box');
-                        //configuration
-                        //set list or table view
-                        $object->setListView('div');
-                        //number of item on first load
-                        $object->setItemPerPage($nbrAffichage);
-                        //container class
-                        $object->setContainerClasses('wrapper');
-                        //item classes
-                        $object->setItemClasses('post type-post status-publish format-standard has-post-thumbnail hentry');
-                        //set function callback for customize item template
-                        $object->setRenderItemCallback(array(COffre, 'renderItemCallback'));
-                        //set function callback for getting items by offset, limit, filter and sort, must return array('posts', 'count')
-                        $object->setGetItemsCallback(array(COffre, 'getItemsCallback'));
-                        //add class to retrieve sorting element
-                        //$object->addSorting('order-criteria');
-                        //add class to retrieve filter element
-                        $object->addFilter('recherche');
-                        if ( !empty( $recherche ) ) {
-                            $object->setOnLoadFilter( array( 'recherche' => $recherche ) );
-                        }
-                        $object->addFilter('order-criteria');
-                        if ( !empty( $entrepriseDefault ) ){
-                            $object->setOnLoadFilter( array( 'entreprise' => $entrepriseDefault ) );
-                        }
-                        $object->addFilter('entreprise');
-                        if ( !empty( $criticiteDefault ) ){
-                            $object->setOnLoadFilter( array( JM_TAXONOMIE_CRITICITE => $criticiteDefault ) );
-                        }
-                        $object->addFilter(JM_TAXONOMIE_CRITICITE);
-                        if ( !empty( $domaineDefault ) ) {
-                            $object->setOnLoadFilter( array( JM_TAXONOMIE_DEPARTEMENT => $domaineDefault ) );
-                        }
-                        $object->addFilter(JM_TAXONOMIE_DEPARTEMENT);
-                        if ( !empty( $anneeExpDefault ) ) {
-                            $object->setOnLoadFilter( array( JM_TAXONOMIE_ANNEE_EXPERIENCE => $anneeExpDefault ) );
-                        }
-                        $object->addFilter(JM_TAXONOMIE_ANNEE_EXPERIENCE);
-                        if ( !empty( $typeContratDefault ) ){
-                            $object->setOnLoadFilter( array( JM_TAXONOMIE_TYPE_CONTRAT => $typeContratDefault ) );
-                        }
-                        $object->addFilter(JM_TAXONOMIE_TYPE_CONTRAT);
-                        if ( !empty( $localisationDefault ) ){
-                            $object->setOnLoadFilter( array( JM_TAXONOMIE_LOCALISATION => $localisationDefault ) );
-                        }
-                        $object->addFilter(JM_TAXONOMIE_LOCALISATION);
-                        $object->configPagination(array('prev_text'=>"Page précédente", 'next_text'=>"Page suivante", "always_show" => false, "dotleft_text" => "&nbsp;", "dotright_text"=> "&nbsp;", "last_text" => "", "first_text" => "", "num_pages" => 7 ));
-
-                        //display pagination loading box
-                        $object->displayItems();
-                        if ( !empty( $recherche ) ) {
-                            $object->setOnLoadFilter( array( 'recherche' => $recherche ) );
-                        }
-                        //display the pagination loading button
-                    ?>
-                    <nav class="pagination-bloc hidden-xs hidden-sm">
-                        <?php
-                            $object->displayPaginationLoadButton();
-                        ?>
-                    </nav>
-                <!--liste offre-->
-            </div>
-            <div class="col-sm-3">
+            <div class="col-lg-3 push-lg-9">
                 <div class="widget-area widget-filters">
                     <aside class="widget">
                         <div class="control-group">
@@ -211,11 +147,76 @@ $recherche = ( isset( $_GET['sof'] ) && !empty( $_GET['sof'] ) ) ? $_GET['sof'] 
                     </aside>
                     <aside class="widget">
                         <p class="reset">
-                            <a href="<?php echo get_permalink( $post->ID );?>" title="Réinitialiser" class="submit_link button--wapasha button--round-l">Réinitialiser</a>
+                            <a href="<?php echo get_permalink( $post->ID );?>" title="Réinitialiser" class="submit_link">Réinitialiser</a>
                         </p>
                     </aside>
                 </div>
             </div>
+            <div class="col-lg-9 pull-lg-3">
+                <!--liste offre-->
+                    <?php $object = new WP_Pagination_Loading('offre-pagination-box');
+                        //configuration
+                        //set list or table view
+                        $object->setListView('div');
+                        //number of item on first load
+                        $object->setItemPerPage($nbrAffichage);
+                        //container class
+                        $object->setContainerClasses('wrapper');
+                        //item classes
+                        $object->setItemClasses('post type-post status-publish format-standard has-post-thumbnail hentry');
+                        //set function callback for customize item template
+                        $object->setRenderItemCallback(array(COffre, 'renderItemCallback'));
+                        //set function callback for getting items by offset, limit, filter and sort, must return array('posts', 'count')
+                        $object->setGetItemsCallback(array(COffre, 'getItemsCallback'));
+                        //add class to retrieve sorting element
+                        //$object->addSorting('order-criteria');
+                        //add class to retrieve filter element
+                        $object->addFilter('recherche');
+                        if ( !empty( $recherche ) ) {
+                            $object->setOnLoadFilter( array( 'recherche' => $recherche ) );
+                        }
+                        $object->addFilter('order-criteria');
+                        if ( !empty( $entrepriseDefault ) ){
+                            $object->setOnLoadFilter( array( 'entreprise' => $entrepriseDefault ) );
+                        }
+                        $object->addFilter('entreprise');
+                        if ( !empty( $criticiteDefault ) ){
+                            $object->setOnLoadFilter( array( JM_TAXONOMIE_CRITICITE => $criticiteDefault ) );
+                        }
+                        $object->addFilter(JM_TAXONOMIE_CRITICITE);
+                        if ( !empty( $domaineDefault ) ) {
+                            $object->setOnLoadFilter( array( JM_TAXONOMIE_DEPARTEMENT => $domaineDefault ) );
+                        }
+                        $object->addFilter(JM_TAXONOMIE_DEPARTEMENT);
+                        if ( !empty( $anneeExpDefault ) ) {
+                            $object->setOnLoadFilter( array( JM_TAXONOMIE_ANNEE_EXPERIENCE => $anneeExpDefault ) );
+                        }
+                        $object->addFilter(JM_TAXONOMIE_ANNEE_EXPERIENCE);
+                        if ( !empty( $typeContratDefault ) ){
+                            $object->setOnLoadFilter( array( JM_TAXONOMIE_TYPE_CONTRAT => $typeContratDefault ) );
+                        }
+                        $object->addFilter(JM_TAXONOMIE_TYPE_CONTRAT);
+                        if ( !empty( $localisationDefault ) ){
+                            $object->setOnLoadFilter( array( JM_TAXONOMIE_LOCALISATION => $localisationDefault ) );
+                        }
+                        $object->addFilter(JM_TAXONOMIE_LOCALISATION);
+                        $object->configPagination(array('prev_text'=>"Page précédente", 'next_text'=>"Page suivante", "always_show" => false, "dotleft_text" => "&nbsp;", "dotright_text"=> "&nbsp;", "last_text" => "", "first_text" => "", "num_pages" => 7 ));
+
+                        //display pagination loading box
+                        $object->displayItems();
+                        if ( !empty( $recherche ) ) {
+                            $object->setOnLoadFilter( array( 'recherche' => $recherche ) );
+                        }
+                        //display the pagination loading button
+                    ?>
+                    <nav class="pagination-bloc hidden-xs hidden-sm">
+                        <?php
+                            $object->displayPaginationLoadButton();
+                        ?>
+                    </nav>
+                <!--liste offre-->
+            </div>
+            
         </div>
     </div>
 </section>
