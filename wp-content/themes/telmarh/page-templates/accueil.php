@@ -10,52 +10,104 @@
  */
 global $post;
 
+//var_dump($post);die;
+
 $description = ( isset( $post->texte_descriptif_hp ) && !empty( $post->texte_descriptif_hp ) ) ? $post->texte_descriptif_hp : "";
 list( $image ) = ( isset( $post->image_background_hp ) && !empty( $post->image_background_hp ) ) ? wp_get_attachment_image_src( $post->image_background_hp, "full" ) : array();
 $imageBackground = ( isset( $image ) && !empty( $image ) ) ? $image : get_template_directory_uri() . '/images/design/bldr.jpg';
-$blocService = CPage::getAllElementServiceHp( $post->ID );
-$blocPartenaires = CPage::getAllpartnerHp( $post->ID );
-$blocTestimonial = CPage::getAllElementTestimonialHp( $post->ID );
-$postOffes = ( is_object( wp_get_post_by_template( "offres.php" ) ) ) ?  wp_get_post_by_template( "offres.php" ) : $post;
+
 $offresUrgent = COffre::getOffreUrgent();
-// get_header('home');
-get_header(); ?>
+
+$blocConnecterPicto = get_field( "picto_connecter","option" );
+$blocConnecterTitre = get_field( "titre_connecter","option" );
+$blocConnecterImage = get_field( "image_connecter","option" );
+$blocConnecterLien = get_field( "lien_connecter","option" );
+
+$blocRecherchePicto = get_field( "picto_recherche","option" );
+$blocRechercheTitre = get_field( "titre_recherche","option" );
+$blocRechercheImage = get_field( "image_recherche","option" );
+$blocRechercheLien = get_field( "titre_recherche","option" );
+
+$blocDecouvrirPicto = get_field( "picto_decouvrir","option" );
+$blocDecouvrirTitre = get_field( "titre_decouvrir","option" );
+$blocDecouvrirImage = get_field( "image_decouvrir","option" );
+$blocDecouvrirLien = get_field( "lien_decouvrir","option" );
+
+$blocContacterPicto = get_field( "picto_contacter","option" );
+$blocContacterTitre = get_field( "titre_contacter","option" );
+$blocContacterImage = get_field( "image_contacter","option" );
+$blocContacterLien = get_field( "lient_contacter","option" );
+
+// image pour block connecter
+list( $imageConnecter ) = ( isset( $blocConnecterImage ) && !empty( $blocConnecterImage ) ) ? wp_get_attachment_image_src( $blocConnecterImage, "full" ) : array();
+list( $pictoConnecter ) = ( isset( $blocConnecterPicto ) && !empty( $blocConnecterPicto ) ) ? wp_get_attachment_image_src( $blocConnecterPicto, "full" ) : array();
+$imgBlocConnecter = $imageConnecter;
+$pictoBlocConnecter = $pictoConnecter;
+
+// image pour block recherche
+list( $imageRecherche ) = ( isset( $blocRechercheImage ) && !empty( $blocRechercheImage ) ) ? wp_get_attachment_image_src( $blocRechercheImage, "full" ) : array();
+list( $pictoRecherche ) = ( isset( $blocRecherchePicto ) && !empty( $blocRecherchePicto ) ) ? wp_get_attachment_image_src( $blocRecherchePicto, "full" ) : array();
+$imgBlocRecherche = $imageRecherche;
+$pictoBlocRecherche = $pictoRecherche;
+
+// image pour block découvrir
+list( $imageDecouvrir ) = ( isset( $blocDecouvrirImage ) && !empty( $blocDecouvrirImage ) ) ? wp_get_attachment_image_src( $blocDecouvrirImage, "full" ) : array();
+list( $pictoDecouvrir ) = ( isset( $blocDecouvrirPicto ) && !empty( $blocDecouvrirPicto ) ) ? wp_get_attachment_image_src( $blocDecouvrirPicto, "full" ) : array();
+$imgBlocDecouvrir = $imageDecouvrir;
+$pictoBlocDecouvir = $pictoDecouvrir;
+
+// image pour block contatcer
+list( $imageContacter ) = ( isset( $blocConnecterImage ) && !empty( $blocConnecterImage ) ) ? wp_get_attachment_image_src( $blocConnecterImage, "full" ) : array();
+list( $pictoContacter ) = ( isset( $blocContacterPicto ) && !empty( $blocContacterPicto ) ) ? wp_get_attachment_image_src( $blocContacterPicto, "full" ) : array();
+$imgBlocContacter = $imageContacter;
+$pictoBlocContacter = $pictoContacter;
+
+get_header('home'); ?>
      <section id="home-hero">
-
      	<div class="telmarh-hero-bg" style="background-image: url('<?php echo $imageBackground;?>');"></div>
-
         <div class="telmarh-hero-content-container">
             <div class="telmarh-hero-content">
                 <h1 class="animate-plus animate-init" data-animations="fadeInDown" data-animation-delay="0.5s">
 					<?php echo $description;?>
                 </h1>
-	            <aside class="widget widget_search homepage">
-	            <form role="search" method="get" class="search-form" action="<?php echo get_permalink( $postOffes->ID );?>" autocomplete="off">
-                    <label>
-                    <span class="screen-reader-text">Search for:</span>
-                    <input class="search-field offre" placeholder="Rechercher une offre …" value="" name="sof" type="search">
-                    </label>
-                    <input class="search-submit" value="Search" type="submit">
-                </form>
-                <p class="separator">
-                    <span>ou</span>
-                </p>
-	            </aside>
+				<!--block connecter-->
+				<p><img src="<?php print_r($pictoBlocConnecter); ?>" class="" width="" height=""></p>
+				<a href="<?php print_r($blocConnecterLien); ?>">
+					<p>
+						<?php print_r($blocConnecterTitre); ?>
+						<img src="<?php print_r($imgBlocConnecter); ?>" class="" width="" height="">
+					</p>
+				</a>
 
-	            <p class="animate-plus animate-init link_formation" data-animations="fadeInUp" data-animation-delay="1.5s">
-                    <a href="<?php echo get_permalink( $postOffes->ID );?>" class="submit_link button--wapasha button--round-l">
-	                    <span>
-		                    Accéder directement aux offres
-                        </span>
-                    </a>
-                </p>
-	            <h2 class="animate-plus animate-init" data-animations="fadeIn" data-animation-delay="1s">
-                    <?php echo apply_filters("the_content", $post->post_content)?>
-                </h2>
-        	</div>
+				<!--block Recheche-->
+				<p><img src="<?php print_r($pictoBlocRecherche); ?>" class=" " width="" height=""></p>
+				<a href="<?php print_r($blocRechercheLien); ?>">
+					<p>
+						<?php print_r($blocRechercheTitre); ?>
+						<img src="<?php print_r($imgBlocRecherche); ?>" class=" " width="" height="">
+					</p>
+				</a>
+
+				<!--block Découvrir-->
+				<p><img src="<?php print_r($pictoBlocDecouvir); ?>" class=" " width="" height=""></p>
+				<a href="<?php print_r($blocDecouvrirLien); ?>">
+					<p>
+						<?php print_r($blocDecouvrirTitre); ?>
+						<img src="<?php print_r($imgBlocDecouvrir); ?>" class=" " width="" height="">
+					</p>
+				</a>
+
+				<!--block connecter-->
+				<p><img src="<?php print_r($pictoBlocContacter); ?>" class=" " width="" height=""></p>
+				<a href="<?php print_r($blocContacterLien); ?>">
+					<p>
+						<?php print_r($blocContacterTitre); ?>
+						<img src="<?php print_r($imgBlocContacter); ?>" class=" " width="" height="">
+					</p>
+				</a>
+			</div>
     	</div>
     </section>
-	<section>
 
 	<section id="home-content">
         <div class="grid-home grid-home-pad">
@@ -121,107 +173,6 @@ get_header(); ?>
 													<?php endif;?>
 												</section>
 											</div>
-										</div>
-									</div>
-									<?php endif;?>
-									<?php if ( isset( $blocPartenaires ) && !empty( $blocPartenaires ) ):?>
-									<div class="panel-grid" id="pg-636-6">
-										<div  class="panel-row-style">
-											<div class="panel-grid-cell" id="pgc-636-6-0">
-												<section id="home-clients" class="clients">
-													<?php if ( isset( $blocPartenaires['titre'] ) && !empty( $blocPartenaires['titre'] ) ):?>
-													<div class="grid grid-pad">
-														<div class="col-1-1">
-															<h3 class="widget-title">
-																<?php echo $blocPartenaires['titre'];?>
-															</h3>
-														</div>
-													</div>
-													<?php  endif;?>
-													<?php if ( isset( $blocPartenaires['element'] ) && !empty( $blocPartenaires['element'] ) ):?>
-													<div class="grid grid-pad">
-														<div class="col-1-1">
-															<div class="client-carousel slick-initialized slick-slider">
-																<div tabindex="0" aria-live="polite"
-																     class="slick-list draggable">
-																	<div class="slick-track">
-																		<?php foreach ( $blocPartenaires['element'] as $slider ):?>
-																		<div>
-																			<?php if ( isset( $slider->imageUrl ) && !empty( $slider->imageUrl ) ):?>
-																				<a href="<?php echo $slider->link;?>" title="<?php echo $slider->name;?>">
-																			<div class="client-container">
-																					<img
-																					src="<?php echo $slider->imageUrl;?>"
-																					class="attachment-post-thumbnail size-post-thumbnail wp-post-image"
-																				    <?php if ( isset( $slider->imageTronque ) && !empty( $slider->imageTronque ) ):?>
-																					    width="<?php echo $slider->imageTronque[0];?>"
-																					    height="<?php echo $slider->imageTronque[1];?>"
-																					<?php endif;?>
-																					>
-																			</div>
-																				</a>
-																			<?php endif;?>
-																		</div>
-																		<?php endforeach;?>
-																	</div>
-																</div>
-															</div>
-														</div>
-													</div >
-													<?php endif;?>
-												</section>
-											</div>
-										</div>
-									</div>
-									<?php endif;?>
-									<?php if ( !empty( $blocTestimonial ) && count( $blocTestimonial ) > 0 ):?>
-									<div class="panel-grid" id="pg-636-5">
-										<div class="panel-grid-cell" id="pgc-636-5-0">
-											<section id="home-testimonials" class="testimonials">
-												<?php if ( isset( $blocTestimonial['titre'] ) && !empty( $blocTestimonial['titre'] ) ):?>
-												<div class="grid grid-pad">
-													<div class="col-1-1">
-														<h3 class="widget-title">
-															<?php echo $blocTestimonial['titre'];?>
-														</h3>
-													</div>
-												</div>
-												<?php endif;?>
-												<?php if ( isset( $blocTestimonial['element'] ) && !empty( $blocTestimonial['element'] ) ):?>
-												<div class="grid grid-pad overflow">
-													<?php foreach ( $blocTestimonial['element'] as $data ):?>
-													<div class="col-1-3 tri-clear">
-														<div class="testimonial">
-															<?php if ( isset( $data->imageUrl ) && !empty( $data->imageUrl )  ):?>
-															<img
-																src="<?php echo $data->imageUrl;?>"
-																class="testimonial-img wp-post-image"
-															    <?php if ( isset( $data->imageTronque ) && !empty( $data->imageTronque ) ):?>
-															    width="<?php echo $data->imageTronque[0];?>"
-															    height="<?php echo $data->imageTronque[1];?>"
-															    style="<?php echo $data->imageTronque[2];?>"
-																<?php  endif;?>
-																>
-															<?php endif;?>
-															<?php if ( isset( $data->desc ) && !empty( $data->desc ) ):?>
-																<p>
-																	<?php echo $data->desc;?>
-																</p>
-															<?php endif;?>
-															<?php if ( isset( $data->auteur ) && !empty( $data->auteur ) ):?>
-																<h3><?php echo $data->auteur;?></h3>
-															<?php endif;?>
-															<?php if ( isset( $data->profession ) && !empty( $data->profession ) ):?>
-																<h4><?php echo $data->profession;?></h4>
-															<?php endif;?>
-														</div>
-													</div>
-													<?php endforeach;?>
-												</div>
-												<?php endif;?>
-											</section>
-
-
 										</div>
 									</div>
 									<?php endif;?>
