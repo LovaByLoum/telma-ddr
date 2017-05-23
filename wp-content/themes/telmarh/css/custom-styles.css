@@ -30,7 +30,7 @@ header#header .nav-right .login form .login-links { font-size: 14px; margin-bott
 header#header .nav-right .login form .login-links a { color: #646469; }
 header#header .nav-right .login form .login-links a.signup { float: right; }
 header#header .nav-right .login form .error { font-size: 13px; color: #f00; }
-header#header:after { border-top: 90px solid #d30630; border-right: calc(100vw) solid transparent; border-top-color: #d30630; content: ""; display: block; height: 0; position: absolute; left: 0; top: 0; z-index: 1; }
+header#header:after { border-top: 90px solid #d30630; border-right: calc(100vw) solid transparent; content: ""; display: block; height: 0; position: absolute; left: 0; top: 0; z-index: 1; }
 .home header#header:after { border-right: calc(40vw) solid transparent; }
 
 .site-footer:after { border-bottom: 90px solid #d30630; border-left: calc(40vw) solid transparent; width: 0; height: 0; content: ""; display: block; float: right; }

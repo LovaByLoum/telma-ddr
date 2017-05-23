@@ -62,7 +62,7 @@ list( $pictoContacter ) = ( isset( $blocContacterPicto ) && !empty( $blocContact
 $imgBlocContacter = $imageContacter;
 $pictoBlocContacter = $pictoContacter;
 
-get_header('home'); ?>
+get_header(); ?>
      <section id="home-hero">
      	<div class="telmarh-hero-bg" style="background-image: url('<?php echo $imageBackground;?>');"></div>
         <div class="telmarh-hero-content-container">
