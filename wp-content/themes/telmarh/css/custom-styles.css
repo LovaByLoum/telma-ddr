@@ -35,8 +35,6 @@ header#header:after { border-top: 90px solid #d30630; border-right: calc(100vw) 
 
 .site-footer:after { border-bottom: 90px solid #d30630; border-left: calc(40vw) solid transparent; width: 0; height: 0; content: ""; display: block; float: right; }
 
-body { font-family: arial, sans-serif; }
-
 .top-listing-offer { margin-bottom: 20px; text-align: center; }
 @media only screen and (min-width: 992px) { .top-listing-offer { margin-bottom: 40px; } }
 @media only screen and (min-width: 992px) { .top-listing-offer h1, .top-listing-offer aside { display: inline-block; vertical-align: middle; } }
@@ -95,3 +93,33 @@ body { font-family: arial, sans-serif; }
 .widget-filters .control { margin-bottom: 10px; }
 .widget-filters .reset { text-align: center; color: #fff; font-family: 'tahoma'; font-size: 18px; margin: 0; padding: 10px 0; }
 .widget-filters .reset a { color: inherit; }
+
+.single-offer .candidature-spontanne-link { font-size: 14px; }
+.single-offer .candidature-spontanne-link a { color: #c80f2d; text-decoration: underline; }
+.single-offer h1 { color: #c80f2d; font-family: 'arial'; font-size: 30px; text-transform: uppercase; }
+.single-offer h2 { color: #646469; font-size: 18px; font-weight: 700; line-height: 125%; }
+.single-offer h3 { color: #646469; font-size: 14px; line-height: 125%; }
+.single-offer ul, .single-offer li { list-style: none; }
+.single-offer ul { padding: 0; }
+.single-offer li { color: #646469; font-size: 14px; line-height: 125%; }
+.single-offer .retour-offre-link { font-size: 12px; }
+@media only screen and (min-width: 480px) { .single-offer .retour-offre-link { font-size: 14px; } }
+.single-offer .retour-offre-link a { background: url(../images/design/icon-return.png) left center no-repeat; color: #646469; display: inline-block; line-height: 1.8em; padding-left: 26px; }
+.single-offer .main-content .status-offre { border: 1px solid #d9d9d9; display: inline-block; margin-bottom: 10px; padding: 6px 5px; }
+@media only screen and (min-width: 768px) { .single-offer .main-content .status-offre { display: block; margin-bottom: 0; } }
+.single-offer .main-content .status-offre p { color: #646469; font-size: 14px; margin: 0; text-align: center; }
+.single-offer .main-desc { border: 1px solid #d9d9d9; padding: 10px 20px; }
+.single-offer .status-publish p { color: #646469; font-size: 14px; line-height: 125%; }
+.single-offer .status-publish figure { margin-bottom: 0; text-align: center; }
+@media only screen and (min-width: 640px) { .single-offer .status-publish figure { float: left; margin-right: 10px; } }
+.single-offer .status-publish figure img { height: auto; max-width: 100%; vertical-align: top; }
+.single-offer .testimonial { margin-bottom: 20px; }
+.single-offer .testimonial p { margin-bottom: 0; }
+.single-offer .single-offre-left { text-align: center; }
+@media only screen and (min-width: 992px) { .single-offer .single-offre-left { text-align: right; } }
+.single-offer .single-offre-left a { display: inline-block; background-color: #e57e75; color: #fff; font-size: 18px; padding: 10px 5px; text-align: center; }
+.single-offer .single-offre-left a:hover { text-decoration: none; }
+.single-offer .widget-profil .widget_recent_entries { padding: 0 15px; }
+.single-offer .widget-profil li ul { padding-left: 10px; }
+.single-offer .widget-profil li ul li:before { content: '-'; padding-right: 5px; }
+.single-offer .widget-profil li ul li ul { padding-left: 20px; }
