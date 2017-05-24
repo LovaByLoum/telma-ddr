@@ -1,5 +1,12 @@
-// registration-form
-.registration-form {
+.form-page{
+    h1 {
+        border-bottom: 1px solid #cdcdcd;
+        color: #c80f2d;
+        font-size: 30px;
+        margin-bottom: 10px;
+        padding-bottom: 10px;
+        text-transform: uppercase;
+    }
     header {
         margin-bottom: 10px;
         p {
@@ -14,19 +21,24 @@
             }
         }
     }
+}
+// registration-form
+.registration-form {
     h1 {
-        border-bottom: 1px solid #cdcdcd;
-        color: #c80f2d;
-        font-size: 18px;
-        margin-bottom: 10px;
-        padding-bottom: 10px;
-        text-transform: uppercase;
     }
     .main-content {
-
     }
-
 }
+// contact-form
+.contact-form {
+    textarea {
+        min-height: 160px;
+    }
+    .form-layout .control-group {
+        border-bottom: none;
+    }
+}
+
 .form-layout {
     .control-group {
         //background-color: #ff5;
@@ -35,10 +47,57 @@
         @include browserCss('box-shadow', none);
         margin-bottom: 10px;
         padding: 0;
+        .niveau-required, .post-required, .permis-required, .projet-required { display: none; }
+        .content-accordio {
+            border-bottom: 1px solid #cdcdcd;
+            margin-bottom: 10px;
+        }
+        .sample {
+            .remove-element {
+                display: none;
+            }
+        }
+        .number {
+            h5 {
+                overflow: hidden;
+            }
+        }
+        .action-element {
+            color: #646469;
+            font-size: 14px;
+            line-height: 125%;
+            * { outline: none; }
+            a {
+                color: inherit;
+                text-decoration: none;
+                &:hover {
+                    color: #c80f2d;
+                    text-decoration: underline;
+                }
+            }
+            i {
+                font-size: 16px;
+                margin-right: 10px;
+                vertical-align: middle;
+            }
+        }
+        .remove-element {
+            float: right;
+            margin-left: 20px;
+        }
+        .add-element {
+            text-align: right;
+            margin-bottom: 10px;
+        }
     }
     h4 {
         color: #646469;
         font-size: 18px;
+        line-height: 125%;
+    }
+    h5 {
+        color: #646469;
+        font-size: 16px;
         line-height: 125%;
     }
     label {
@@ -94,15 +153,34 @@
                 }
             }
         }
+        .error {
+            font-size: 12px;
+            line-height: 125%;
+            color: #f00;
+            &.form-control {
+                border-color: #f00;
+                color: #646469;
+                font-size: 14px;
+                &::-webkit-input-placeholder {color: #f00; }
+                &::-moz-placeholder {color: #f00; }
+                &:-ms-input-placeholder {color: #f00; }
+                &:-moz-placeholder {color: #f00; }
+            }
+        }
+        .select select {
+            &.error {
+                border-color: #f00;
+            }
+        }
     }
     .datepicker {
         background-color: #fff;
     }
-    .checkbox-list {
-        padding: 0;
-        li {
-            list-style: none;
-        }
+    .control {
+        line-height: 1.45em;
+        margin-bottom: 10px;
+        &:last-of-type { margin-bottom: 0; }
+        &:focus { outline: none; }
     }
     .radio-item {
         span {
@@ -110,47 +188,179 @@
             vertical-align: middle;
         }
         input {
-                &:checked  {
-                    ~ .control__indicator {
-                        background-color: #dbdbdb;
-                    }
+            &:checked  {
+                ~ .control__indicator {
+                    background-color: #fff;
                 }
             }
-        .control__indicator {
-            height: 15px;
-            top: 0;
-            width: 15px;
-            height: 11px;
-            left: 2px;
-            top: 2px;
-            width: 11px;
         }
-
-        /* .control__indicator {
+        .control__indicator {
+            background-color: #fff;
             border: 1px solid #dbdbdb;
-            height: 15px;
             top: 0;
-            width: 15px;
             &:after {
-                background: #fff;
-                height: 14px;
-                width: 14px;
+                background-color: #c80f2d;
+                height: 6px;
+                line-height: 100%;
+                left: 6px;
+                top: 6px;
+                width: 6px;
             }
         }
         .control {
+            &:hover {
+                input {
+                    &:not([disabled]) {
+                        &:checked {
+                            ~ .control__indicator {
+                                background-color: #fff;
+                                border-color: #c80f2d;
+                                
+                            }
+                        }
+                    }
+                    ~ .control__indicator {
+                        background-color: #fff;
+                        border-color: #c80f2d;
+                    }
+                }
+            }
             input {
+                &:focus {
+                    ~ .control__indicator {
+                        background-color: #fff;
+                    }
+                }
                 &:checked {
-                    &~ .control__indicator {
-        
+                    &:focus {
+                        ~ .control__indicator {
+                            background-color: #fff;
+                        }
                     }
                 }
             }
         }
-        
-        
-        .control:hover input:not([disabled]):checked ~ .control__indicator, 
-        .control input:checked:focus ~ .control__indicator {
-            background-color: #dbdbdb;
-        } */
+        &:focus { outline: none; }
+        * {
+            &:focus { outline: none; }
+        }
+    }
+    .checkbox-item {
+        input {
+            &:checked  {
+                ~ .control__indicator {
+                    background-color: #c80f2d;
+                    border-color: #c80f2d;
+                }
+            }
+            &.error {
+                ~ .control__indicator {
+                    border-color: #f00;
+                }
+            }
+        }
+        .control__indicator {
+            background-color: #fff;
+            border: 1px solid #dbdbdb;
+            top: 0;
+            &:after {
+                border: none;
+                color: #fff;
+                content: "\f00c";
+                font-family: 'FontAwesome';
+                font-size: 16px;
+                height: inherit;
+                line-height: 100%;
+                left: 1px;
+                @include browserCss('transform', rotate(0));
+                top: 1px;
+                width: inherit;
+            }
+        }
+        .control {
+            &:hover {
+                .control__indicator {
+                    background-color: #c80f2d;
+                    border-color: #c80f2d;
+                    &:after {
+                        display: block;
+                    }
+                }
+                input {
+                    &:checked {
+                        ~ .control__indicator {
+                            background-color: #c80f2d;
+                        }
+                    }
+                }
+            }
+            input {
+                &:focus {
+                    ~ .control__indicator {
+                        // background-color: #fff;
+                        // border: 1px solid #dbdbdb;
+                    }
+                }
+            }
+        }
+        &:focus { outline: none; }
+        * {
+            &:focus { outline: none; }
+        }
+    }
+    .checkbox-list {
+        margin-bottom: 0;
+        padding: 0;
+        li {
+            list-style: none;
+            margin-bottom: 10px;
+            &:last-child { margin-bottom: 0; }
+        }
+    }
+    .submit-form {
+        .submit-button {
+            background-color: #e57e75;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            font-size: 18px;
+            height: 48px;
+            min-width: 138px;
+            padding: 10px 10px;
+            text-align: center;
+            text-transform: uppercase;
+            &:focus {
+                background-color: #c80f2d;
+                outline: none;
+            }
+            &:hover {
+                background-color: #c80f2d;
+            }
+        }
+    }
+    .result-submit {
+        p {
+            color: #646469;
+            font-family: arial;
+            font-size: 14px;
+            line-height: 125%;
+            a {
+                &:hover { text-decoration: underline; }
+            }
+        }
+    }
+}
+.page {
+    .ui-widget {
+        color: #646469;
+        font-family: arial;
+        font-size: 14px;
+    }
+    .ui-state-default, 
+    .ui-widget-content .ui-state-default, 
+    .ui-widget-header .ui-state-default {
+        color: #646469;
+        font-family: arial;
+        font-size: 14px;
     }
 }
