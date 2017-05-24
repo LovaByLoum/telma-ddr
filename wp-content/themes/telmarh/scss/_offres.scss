@@ -1,6 +1,4 @@
-body {
-    font-family : arial, sans-serif;
-}
+
 header#header {
     //display: none;
 }
@@ -297,3 +295,142 @@ header#header {
 }
 
 // detail offre
+.single-offer {
+    .candidature-spontanne-link{
+        font-size: 14px;
+        a {
+            color: #c80f2d;
+            text-decoration: underline;
+        }
+    }
+    h1 {
+        color: #c80f2d;
+        font-family: 'arial';
+        font-size: 30px;
+        text-transform: uppercase;
+    }
+    h2 {
+        color: #646469;
+        font-size: 18px;
+        font-weight: 700;
+        line-height: 125%;
+    }
+    h3 {
+        color: #646469;
+        font-size: 14px;
+        line-height: 125%;
+    }
+    ul, li  {
+        list-style: none;
+    }
+    ul {
+        padding: 0;
+    }
+    li {
+        color: #646469;
+        font-size: 14px;
+        line-height: 125%;
+    }
+    .retour-offre-link {
+        font-size: 12px;
+        @media #{$min480} {
+            font-size: 14px;
+        }
+        a {
+            background: url(#{$imageDesign}icon-return.png) left center no-repeat;
+            color: #646469;
+            display: inline-block;
+            line-height: 1.8em;
+            padding-left: 26px;
+        }
+    }
+    .main-content {
+        .status-offre {
+            border: 1px solid #d9d9d9;
+            display: inline-block;
+            margin-bottom: 10px;
+            padding: 6px 5px;
+            @media #{$min768} {
+                display: block;
+                margin-bottom: 0;
+            }
+            p {
+                
+                color: #646469;
+                font-size: 14px;
+                margin: 0;
+                text-align: center;
+            }
+        }
+    }
+    .main-desc {
+        border: 1px solid #d9d9d9;
+        padding: 10px 20px;
+    }
+    .caracteristique-bloc {
+    }
+    .status-publish {
+        p {
+            color: #646469;
+            font-size: 14px;
+            line-height: 125%;
+        }
+        figure {
+            margin-bottom: 0;
+            text-align: center;
+            @media #{$min640} {
+                float: left;
+                margin-right: 10px;
+            }
+            img {
+                height: auto;
+                max-width: 100%;
+                vertical-align: top;
+            }
+        }
+    }
+    .testimonial {
+        margin-bottom: 20px;
+        p {
+            margin-bottom: 0;
+        }
+    }
+    .single-offre-left {
+        text-align: center;
+        @media #{$min992} {
+            text-align: right;
+        }
+        a {
+            display: inline-block;
+            background-color: #e57e75;
+            color: #fff;
+            font-size: 18px;
+            padding: 10px 5px;
+            text-align: center;
+            &:hover {
+                text-decoration: none;
+            }
+        }
+    }
+    .widget-profil {
+        .widget_recent_entries {
+            padding: 0 15px;
+        }
+        li {
+            ul {
+                padding-left: 10px;
+                li {
+                    &:before {
+                        content: '-';
+                        padding-right: 5px;
+                    }
+                    ul{
+                        padding-left: 20px;
+                    }
+                }
+            }
+        }
+
+    }
+
+}
