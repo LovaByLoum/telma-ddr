@@ -158,20 +158,35 @@ header#header:after { border-top: 90px solid #d30630; border-right: calc(100vw) 
 .single-offer .single-offre-left { text-align: center; }
 @media only screen and (min-width: 992px) { .single-offer .single-offre-left { text-align: right; } }
 .single-offer .single-offre-left a { display: inline-block; background-color: #e57e75; color: #fff; font-size: 18px; padding: 10px 5px; text-align: center; }
-.single-offer .single-offre-left a:hover { text-decoration: none; }
+.single-offer .single-offre-left a:hover { background-color: #c80f2d; text-decoration: none; }
 .single-offer .widget-profil .widget_recent_entries { padding: 0 15px; }
 .single-offer .widget-profil li ul { padding-left: 10px; }
 .single-offer .widget-profil li ul li:before { content: '-'; padding-right: 5px; }
 .single-offer .widget-profil li ul li ul { padding-left: 20px; }
 
-.registration-form header { margin-bottom: 10px; }
-.registration-form header p { color: #646469; font-size: 14px; line-height: 125%; }
-.registration-form header p:last-child { margin-bottom: 0; }
-.registration-form header p:empty { display: none; }
-.registration-form h1 { border-bottom: 1px solid #cdcdcd; color: #c80f2d; font-size: 18px; margin-bottom: 10px; padding-bottom: 10px; text-transform: uppercase; }
+.form-page h1 { border-bottom: 1px solid #cdcdcd; color: #c80f2d; font-size: 30px; margin-bottom: 10px; padding-bottom: 10px; text-transform: uppercase; }
+.form-page header { margin-bottom: 10px; }
+.form-page header p { color: #646469; font-size: 14px; line-height: 125%; }
+.form-page header p:last-child { margin-bottom: 0; }
+.form-page header p:empty { display: none; }
+
+.contact-form textarea { min-height: 160px; }
+.contact-form .form-layout .control-group { border-bottom: none; }
 
 .form-layout .control-group { border-bottom: 1px solid #cdcdcd; -webkit-border-radius: 0; -moz-border-radius: 0; -o-border-radius: 0; border-radius: 0; -webkit-box-shadow: none; -moz-box-shadow: none; -o-box-shadow: none; box-shadow: none; margin-bottom: 10px; padding: 0; }
+.form-layout .control-group .niveau-required, .form-layout .control-group .post-required, .form-layout .control-group .permis-required, .form-layout .control-group .projet-required { display: none; }
+.form-layout .control-group .content-accordio { border-bottom: 1px solid #cdcdcd; margin-bottom: 10px; }
+.form-layout .control-group .sample .remove-element { display: none; }
+.form-layout .control-group .number h5 { overflow: hidden; }
+.form-layout .control-group .action-element { color: #646469; font-size: 14px; line-height: 125%; }
+.form-layout .control-group .action-element * { outline: none; }
+.form-layout .control-group .action-element a { color: inherit; text-decoration: none; }
+.form-layout .control-group .action-element a:hover { color: #c80f2d; text-decoration: underline; }
+.form-layout .control-group .action-element i { font-size: 16px; margin-right: 10px; vertical-align: middle; }
+.form-layout .control-group .remove-element { float: right; margin-left: 20px; }
+.form-layout .control-group .add-element { text-align: right; margin-bottom: 10px; }
 .form-layout h4 { color: #646469; font-size: 18px; line-height: 125%; }
+.form-layout h5 { color: #646469; font-size: 16px; line-height: 125%; }
 .form-layout label { color: #646469; font-size: 14px; line-height: 125%; }
 .form-layout .form-control { border: 1px solid #d9d9d9; -webkit-border-radius: 0; -moz-border-radius: 0; -o-border-radius: 0; border-radius: 0; color: #646469; font-size: 14px; }
 .form-layout .form-group .required { color: #f00; }
@@ -182,19 +197,44 @@ header#header:after { border-top: 90px solid #d30630; border-right: calc(100vw) 
 .form-layout .form-group .select .select__arrow { border: none; }
 .form-layout .form-group .select .select__arrow { background-color: #fff; border: none; height: 36px; line-height: 36px; right: 1px; text-align: center; top: 1px; width: 36px; z-index: 2; }
 .form-layout .form-group .select .select__arrow i { color: #646469; font-size: 20px; line-height: 1.2; vertical-align: middle; }
+.form-layout .form-group .error { font-size: 12px; line-height: 125%; color: #f00; }
+.form-layout .form-group .error.form-control { border-color: #f00; color: #646469; font-size: 14px; }
+.form-layout .form-group .error.form-control::-webkit-input-placeholder { color: #f00; }
+.form-layout .form-group .error.form-control::-moz-placeholder { color: #f00; }
+.form-layout .form-group .error.form-control:-ms-input-placeholder { color: #f00; }
+.form-layout .form-group .error.form-control:-moz-placeholder { color: #f00; }
+.form-layout .form-group .select select.error { border-color: #f00; }
 .form-layout .datepicker { background-color: #fff; }
-.form-layout .checkbox-list { padding: 0; }
-.form-layout .checkbox-list li { list-style: none; }
-.form-layout .radio-item { /* .control__indicator { border: 1px solid #dbdbdb; height: 15px; top: 0; width: 15px; &:after { background: #fff; height: 14px; width: 14px; }
-}
-.control { input { &:checked { &~ .control__indicator {
- } } }
-}
-
-
-.control:hover input:not([disabled]):checked ~ .control__indicator, 
-.control input:checked:focus ~ .control__indicator { background-color: #dbdbdb;
-} */ }
+.form-layout .control { line-height: 1.45em; margin-bottom: 10px; }
+.form-layout .control:last-of-type { margin-bottom: 0; }
+.form-layout .control:focus { outline: none; }
 .form-layout .radio-item span { display: inline-block; vertical-align: middle; }
-.form-layout .radio-item input:checked ~ .control__indicator { background-color: #dbdbdb; }
-.form-layout .radio-item .control__indicator { height: 15px; top: 0; width: 15px; height: 11px; left: 2px; top: 2px; width: 11px; }
+.form-layout .radio-item input:checked ~ .control__indicator { background-color: #fff; }
+.form-layout .radio-item .control__indicator { background-color: #fff; border: 1px solid #dbdbdb; top: 0; }
+.form-layout .radio-item .control__indicator:after { background-color: #c80f2d; height: 6px; line-height: 100%; left: 6px; top: 6px; width: 6px; }
+.form-layout .radio-item .control:hover input:not([disabled]):checked ~ .control__indicator { background-color: #fff; border-color: #c80f2d; }
+.form-layout .radio-item .control:hover input ~ .control__indicator { background-color: #fff; border-color: #c80f2d; }
+.form-layout .radio-item .control input:focus ~ .control__indicator { background-color: #fff; }
+.form-layout .radio-item .control input:checked:focus ~ .control__indicator { background-color: #fff; }
+.form-layout .radio-item:focus { outline: none; }
+.form-layout .radio-item *:focus { outline: none; }
+.form-layout .checkbox-item input:checked ~ .control__indicator { background-color: #c80f2d; border-color: #c80f2d; }
+.form-layout .checkbox-item input.error ~ .control__indicator { border-color: #f00; }
+.form-layout .checkbox-item .control__indicator { background-color: #fff; border: 1px solid #dbdbdb; top: 0; }
+.form-layout .checkbox-item .control__indicator:after { border: none; color: #fff; content: "\f00c"; font-family: 'FontAwesome'; font-size: 16px; height: inherit; line-height: 100%; left: 1px; -webkit-transform: rotate(0); -moz-transform: rotate(0); -o-transform: rotate(0); transform: rotate(0); top: 1px; width: inherit; }
+.form-layout .checkbox-item .control:hover .control__indicator { background-color: #c80f2d; border-color: #c80f2d; }
+.form-layout .checkbox-item .control:hover .control__indicator:after { display: block; }
+.form-layout .checkbox-item .control:hover input:checked ~ .control__indicator { background-color: #c80f2d; }
+.form-layout .checkbox-item:focus { outline: none; }
+.form-layout .checkbox-item *:focus { outline: none; }
+.form-layout .checkbox-list { margin-bottom: 0; padding: 0; }
+.form-layout .checkbox-list li { list-style: none; margin-bottom: 10px; }
+.form-layout .checkbox-list li:last-child { margin-bottom: 0; }
+.form-layout .submit-form .submit-button { background-color: #e57e75; border: none; color: #fff; cursor: pointer; font-size: 18px; height: 48px; min-width: 138px; padding: 10px 10px; text-align: center; text-transform: uppercase; }
+.form-layout .submit-form .submit-button:focus { background-color: #c80f2d; outline: none; }
+.form-layout .submit-form .submit-button:hover { background-color: #c80f2d; }
+.form-layout .result-submit p { color: #646469; font-family: arial; font-size: 14px; line-height: 125%; }
+.form-layout .result-submit p a:hover { text-decoration: underline; }
+
+.page .ui-widget { color: #646469; font-family: arial; font-size: 14px; }
+.page .ui-state-default, .page .ui-widget-content .ui-state-default, .page .ui-widget-header .ui-state-default { color: #646469; font-family: arial; font-size: 14px; }
