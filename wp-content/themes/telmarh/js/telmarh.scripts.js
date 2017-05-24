@@ -853,7 +853,7 @@ function removeRules(rulesObj){
 }
 
 function setCollabsBlockTo(element, count, removevalue){
-    element.find('.col-1-1.number h5 > span').html(count+1);
+    element.find('.number h5 > span').html(count+1);
     //name
     element.find('[name]').each(function(){
         _name = jQuery(this).attr('name').match(/[a-zA-Z_-]+/);
