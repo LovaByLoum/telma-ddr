@@ -1,0 +1,151 @@
+.home-hero {
+    height: 385px;
+    background-position: center center;
+    background-size: cover;
+    margin-bottom: -210px;
+
+    .logo-home {
+        padding-top: 75px;
+        margin-left: calc(35vw);
+
+        @media (min-width: 576px) {
+            padding-top: 35px;
+        }
+
+        img {
+            width: 154px;
+            height: auto;
+
+            @media (min-width: 576px) {
+                width: auto;
+            }
+        }
+
+
+    }
+}
+
+.cards {
+    margin-right: -15px;
+    margin-left: -15px;
+
+    .card-item {
+        padding-top: 15px;
+        padding-bottom: 15px;
+
+
+
+        > div {
+            background-color: #e6e6e6;
+            background-size: cover;
+            background-position: center center;
+            padding: 15px;
+            opacity: 0;
+
+            a {
+                display: block;
+                padding: 15px;
+                width: 100%;
+                height: 100%;
+
+                &:hover {
+                    text-decoration: none;
+                    background-color: rgba( 0,0,0,0.3 );
+                }
+            }
+
+            p {
+                font-size: 18px;
+                color: #fff;
+                line-height: 1;
+
+                i {
+                    font-size: 36px;
+                }
+
+                @media (min-width: 576px) {
+                    font-size: 24px;
+                }
+            }
+        }
+    }
+
+    .connecter {
+        height: 480px;
+        margin-top: 160px;
+    }
+
+    .rechercher {
+        height: 290px;
+
+        @media (min-width: 768px) {
+            margin-top: 80px;
+        }
+    }
+
+    .decouvrir {
+        height: 240px;
+
+        @media (min-width: 992px) {
+            height: 370px;
+        }
+    }
+
+    .contacter {
+        height: 240px;
+    }
+}
+
+.job-last {
+    h3 {
+        font-size: 36px;
+        color: #c80f2d;
+        line-height: 1;
+        padding: 30px 0;
+
+        @media (min-width: 576px) {
+            font-size: 48px;
+        }
+    }
+    .job-item {
+        border-bottom: 1px solid #cdcdcd;
+        padding-top: 15px;
+
+        figure.right {
+            //float: right;
+            @media (min-width: 576px) {
+                order:1;
+            }
+        }
+
+        h5 {
+            font-size: 12px;
+            text-transform: uppercase;
+
+            a {
+                color: #d30630;
+            }
+
+            .label {
+                display: inline-block;
+                vertical-align: top;
+                padding: 0 3px;
+                font-size: 12px;
+                font-weight: 700;
+                line-height: 14px;
+                color: #fff;
+                background-color: #c80f2d;
+                text-transform: none;
+            }
+        }
+
+        p {
+            font-size: 12px;
+            margin-bottom: 10px;
+
+            .link-more {
+                color: #646469;
+            }
+        }
+    }
+}

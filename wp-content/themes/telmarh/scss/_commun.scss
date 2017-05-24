@@ -29,7 +29,7 @@ header#header {
 
         .bt-toggle {
             display: inline-block;
-            width: 48px; height: 48px;
+            width: 32px; height: 32px;
             border: none;
             background: url("../images/menu-btn.png") 0 0 no-repeat;
             vertical-align: middle;
@@ -37,9 +37,15 @@ header#header {
             z-index: 20;
             outline: none;
             cursor: pointer;
+            background-size: cover;
+
+
+            @media (min-width: 576px) {
+                width: 48px; height: 48px;
+            }
 
             &.opened {
-                background-position: -48px 0;
+                background-position: top right;
             }
         }
 
@@ -47,10 +53,14 @@ header#header {
             margin-left: 20px;
 
             img {
-                width: 100px;
+                width: 70px;
                 height: auto;
                 vertical-align: middle;
                 margin-top: 6px;
+
+                @media (min-width: 576px) {
+                    width: 100px;
+                }
             }
 
             .home & {
@@ -92,12 +102,17 @@ header#header {
 
                     a {
                         // font-size: 30px;
-                        font-size: 25px;
+                        font-size: 18px;
                         color: #fff;
                         text-transform: uppercase;
                         display: block;
-                        padding: 14px 0;
+                        padding: 7px 0;
                         // padding: 24px 0;
+
+                        @media (min-width: 576px) {
+                            font-size: 25px;
+                            padding: 14px 0;
+                        }
 
                         &:hover {
                             background-color: #f8093a;
@@ -115,8 +130,12 @@ header#header {
         z-index: 4;
 
         .btn-login {
-            font-size: 18px;
+            font-size: 14px;
             color: #646469;
+
+            @media (min-width: 576px) {
+                font-size: 18px;
+            }
 
             &:hover, &:focus, &:active {
                 text-decoration: none;
