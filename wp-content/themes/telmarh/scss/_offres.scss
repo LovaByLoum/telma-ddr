@@ -46,18 +46,10 @@ header#header {
             &:focus {
                 outline: none;
             }
-            &::-webkit-input-placeholder {
-                color: #fff;
-            }
-            &::-moz-placeholder {
-                color: #fff;
-            }
-            &:-ms-input-placeholder {
-                color: #fff;
-            }
-            &:-moz-placeholder {
-                color: #fff;
-            }
+            &::-webkit-input-placeholder {color: #fff; }
+            &::-moz-placeholder {color: #fff; }
+            &:-ms-input-placeholder {color: #fff; }
+            &:-moz-placeholder {color: #fff; }
         }
         .search-submit {
             display: none;
@@ -415,6 +407,7 @@ header#header {
             padding: 10px 5px;
             text-align: center;
             &:hover {
+                background-color: #c80f2d;
                 text-decoration: none;
             }
         }
