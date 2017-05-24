@@ -1,4 +1,6 @@
-
+.site-content {
+    padding-top: 90px;
+}
 header#header {
     //display: none;
 }
@@ -267,6 +269,7 @@ header#header {
         padding-bottom: 0;
     }
     .control__indicator {
+        background-color: #fff;
         top: 0;
         &:after {
             border: none;
@@ -280,6 +283,10 @@ header#header {
     }
     .control {
         margin-bottom: 10px;
+    }
+    .control:hover input ~ .control__indicator, 
+    .control input:focus ~ .control__indicator {
+        background-color: #fff;
     }
     .reset {
         text-align: center;
