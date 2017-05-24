@@ -7,6 +7,10 @@ body {
     }
 }
 
+.screen-reader-text {
+    display: none;
+}
+
 header#header {
     left: 0;
     position: fixed;

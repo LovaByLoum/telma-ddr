@@ -964,4 +964,13 @@ jQuery( function( $ ){
         })
     });
 
+    // cards sur la home
+    if ($('.cards').length > 0) {
+        $('.cards').packery({
+            // options
+            itemSelector: '.card-item',
+            gutter: 0
+        });
+    }
+
 });

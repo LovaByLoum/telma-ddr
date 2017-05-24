@@ -1,5 +1,7 @@
 body { background: #fff; font-family: 'arial', sans-serif; }
 
+.screen-reader-text { display: none; }
+
 header#header { left: 0; position: fixed; top: 0; width: 100%; z-index: 30; }
 header#header .nav-right, header#header .nav-left { position: relative; z-index: 5; padding: 15px; }
 header#header .nav-left { float: left; }
@@ -34,6 +36,15 @@ header#header:after { border-top: 90px solid #d30630; border-right: calc(100vw) 
 .home header#header:after { border-right: calc(40vw) solid transparent; }
 
 .site-footer:after { border-bottom: 90px solid #d30630; border-left: calc(40vw) solid transparent; width: 0; height: 0; content: ""; display: block; float: right; }
+
+.home-hero { height: 385px; background-position: center center; background-size: cover; margin-bottom: -210px; }
+.home-hero .logo-home { padding-top: 35px; margin-left: calc(35vw); }
+
+.cards .card-item { padding-top: 15px; padding-bottom: 15px; }
+.cards .connecter { height: 480px; background-color: #c00; margin-top: 160px; }
+.cards .rechercher { height: 290px; background-color: #c00; margin-top: 80px; }
+.cards .decouvrir { height: 370px; background-color: #c00; }
+.cards .contacter { height: 240px; background-color: #c00; }
 
 body { font-family: arial, sans-serif; }
 

@@ -205,9 +205,10 @@ function telmarh_scripts() {
 
 	wp_enqueue_script( 'telmarh-slick', get_template_directory_uri() . '/js/slick.js', array('jquery'), false, true );
 	
-	wp_enqueue_script( 'telmarh-added-panel', get_template_directory_uri() . '/js/panel-class.js', array('jquery'), false, true ); 
-	
-	if ( get_theme_mod('telmarh_sticky_active') != 1 ) { 
+	wp_enqueue_script( 'telmarh-added-panel', get_template_directory_uri() . '/js/panel-class.js', array('jquery'), false, true );
+    wp_enqueue_script( 'telmarh-packery', get_template_directory_uri() . '/js/packery.pkgd.min.js', array('jquery'), false, true );
+
+    if ( get_theme_mod('telmarh_sticky_active') != 1 ) {
 
 	wp_enqueue_style( 'telmarh-header-css', get_template_directory_uri() . '/css/headhesive.css' ); 
 	wp_enqueue_script( 'telmarh-headhesive', get_template_directory_uri() . '/js/headhesive.js', array('jquery'), false, true );

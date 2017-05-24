@@ -63,52 +63,63 @@ $imgBlocContacter = $imageContacter;
 $pictoBlocContacter = $pictoContacter;
 
 get_header(); ?>
-     <section id="home-hero">
-     	<div class="telmarh-hero-bg" style="background-image: url('<?php echo $imageBackground;?>');"></div>
-        <div class="telmarh-hero-content-container">
-            <div class="telmarh-hero-content">
-                <h1 class="animate-plus animate-init" data-animations="fadeInDown" data-animation-delay="0.5s">
-					<?php echo $description;?>
-                </h1>
-				<!--block connecter-->
-				<p><img src="<?php print_r($pictoBlocConnecter); ?>" class="" width="" height=""></p>
-				<a href="<?php print_r($blocConnecterLien); ?>">
-					<p>
-						<?php print_r($blocConnecterTitre); ?>
-						<img src="<?php print_r($imgBlocConnecter); ?>" class="" width="" height="">
-					</p>
-				</a>
-
-				<!--block Recheche-->
-				<p><img src="<?php print_r($pictoBlocRecherche); ?>" class=" " width="" height=""></p>
-				<a href="<?php print_r($blocRechercheLien); ?>">
-					<p>
-						<?php print_r($blocRechercheTitre); ?>
-						<img src="<?php print_r($imgBlocRecherche); ?>" class=" " width="" height="">
-					</p>
-				</a>
-
-				<!--block Découvrir-->
-				<p><img src="<?php print_r($pictoBlocDecouvir); ?>" class=" " width="" height=""></p>
-				<a href="<?php print_r($blocDecouvrirLien); ?>">
-					<p>
-						<?php print_r($blocDecouvrirTitre); ?>
-						<img src="<?php print_r($imgBlocDecouvrir); ?>" class=" " width="" height="">
-					</p>
-				</a>
-
-				<!--block connecter-->
-				<p><img src="<?php print_r($pictoBlocContacter); ?>" class=" " width="" height=""></p>
-				<a href="<?php print_r($blocContacterLien); ?>">
-					<p>
-						<?php print_r($blocContacterTitre); ?>
-						<img src="<?php print_r($imgBlocContacter); ?>" class=" " width="" height="">
-					</p>
-				</a>
-			</div>
-    	</div>
+<div class="home-hero"  style="background-image: url('<?php echo $imageBackground;?>');">
+    <h1 class="animate-plus animate-init logo-home" data-animations="fadeInDown" data-animation-delay="0.5s"><img src="<?php echo get_template_directory_uri(); ?>/images/logo-rgb.png" title="Axian - Let's grow together" /></h1>
+</div>
+<div class="container">
+    <section class="cards">
+        <div class="row">
+            <!--block connecter-->
+            <div class="col-sm-4 card-item ">
+                <div class="connecter">
+                    <p><img src="<?php print_r($pictoBlocConnecter); ?>" class="" width="" height=""></p>
+                    <a href="<?php print_r($blocConnecterLien); ?>">
+                        <p>
+                            <?php print_r($blocConnecterTitre); ?>
+                            <img src="<?php print_r($imgBlocConnecter); ?>" class="" width="" height="">
+                        </p>
+                    </a>
+                </div>
+            </div>
+            <!--block Recheche-->
+            <div class="col-sm-4 card-item">
+                <div class="rechercher">
+                    <p><img src="<?php print_r($pictoBlocRecherche); ?>" class=" " width="" height=""></p>
+                    <a href="<?php print_r($blocRechercheLien); ?>">
+                        <p>
+                            <?php print_r($blocRechercheTitre); ?>
+                            <img src="<?php print_r($imgBlocRecherche); ?>" class=" " width="" height="">
+                        </p>
+                    </a>
+                </div>
+            </div>
+            <!--block Découvrir-->
+            <div class="col-sm-4 card-item">
+                <div class="decouvrir">
+                    <p><img src="<?php print_r($pictoBlocDecouvir); ?>" class=" " width="" height=""></p>
+                    <a href="<?php print_r($blocDecouvrirLien); ?>">
+                        <p>
+                            <?php print_r($blocDecouvrirTitre); ?>
+                            <img src="<?php print_r($imgBlocDecouvrir); ?>" class=" " width="" height="">
+                        </p>
+                    </a>
+                </div>
+            </div>
+            <!--block contacter-->
+            <div class="col-sm-8 card-item">
+                <div class="contacter">
+                    <p><img src="<?php print_r($pictoBlocContacter); ?>" class=" " width="" height=""></p>
+                    <a href="<?php print_r($blocContacterLien); ?>">
+                        <p>
+                            <?php print_r($blocContacterTitre); ?>
+                            <img src="<?php print_r($imgBlocContacter); ?>" class=" " width="" height="">
+                        </p>
+                    </a>
+                </div>
+            </div>
+        </div>
     </section>
-
+</div>
 	<section id="home-content">
         <div class="grid-home grid-home-pad">
 			<div class="col-home">
