@@ -11,6 +11,8 @@
  */
 
 global $post;
+$idImage = get_post_thumbnail_id($post->ID);
+$image = wp_get_attachment_image_src( $idImage, "full" );
 get_header(); ?>
 
 <section id="page-full-entry-content">
@@ -25,9 +27,6 @@ get_header(); ?>
 	                	</header><!-- .entry-header -->
 
 	                	<div class="entry-content">
-			                <?php if ( has_post_thumbnail() ) : // check if the post has a Post Thumbnail assigned to it.?>
-			                	 <img src="<?php the_post_thumbnail_url("medium");?>" class="archive-img wp-post-image">
-		                     <?php endif;  ?>
 			                <?php if ( isset( $post->post_content ) && !empty( $post->post_content ) ):?>
 				                <?php echo $post->post_content;?>
 							<?php endif;?>

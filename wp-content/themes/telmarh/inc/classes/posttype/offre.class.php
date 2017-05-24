@@ -270,12 +270,14 @@ class COffre
 		$offres = JM_Offre::getBy( array( 'taxonomy' => JM_TAXONOMIE_CRITICITE, 'id' => ID_TAXONOMIE_CRITICITE_URGENT), null, 3 );
 		if ( !empty( $offres ) && count( $offres ) > 0 ){
 			foreach ( $offres as $offre ){
+				$societe = JM_Societe::getById( $offre->societe_associe );
 				$elt = new stdClass();
 				$elt->titre         = $offre->titre;
 				$elt->id            = $offre->id;
 				$elt->desc          = $offre->extrait;
 				$typeContrat        = "";
 				$nameEntreprise     = "";
+				$elt->logo			= ( isset( $societe->logo ) && !empty( $societe->logo ) ) ? $societe->logo : "";
 				if (  isset( $offre->{JM_TAXONOMIE_TYPE_CONTRAT} ) && !empty( $offre->{JM_TAXONOMIE_TYPE_CONTRAT} ) ){
 					$typeContrat = $offre->{JM_TAXONOMIE_TYPE_CONTRAT}[0]->name;
 				}

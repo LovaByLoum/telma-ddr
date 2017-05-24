@@ -111,73 +111,15 @@ get_header(); ?>
 						<article id="post-636" class="post-636 page type-page status-publish hentry">
 							<div class="home-entry-content">
 								<div id="pl-636">
-									<?php if ( !empty( $blocService ) ) :?>
-									<div class="panel-grid" id="pg-636-2">
-										<div  class="panel-row-style">
-											<div class="panel-grid-cell" id="pgc-636-2-0">
-												<section id="home-services" class="services">
-													<!--titre-->
-													<?php if ( isset( $blocService['titre'] ) ):?>
-														<div class="grid grid-pad">
-															<div class="col-1-1">
-																<h3 class="widget-title">
-																	<?php echo $blocService['titre'];?>
-																</h3>
-															</div>
-														</div>
-													<?php endif;?>
-													<!--titre-->
-													<!--elements-->
-													<?php if ( isset( $blocService['element'] ) && count( $blocService['element'] ) > 0 ):?>
-														<div class="grid grid-pad">
-															<?php foreach ( $blocService['element'] as $element ):
-																	$infosLink = ( isset($element->link ) && !empty( $element->link ) ) ? $element->link : array() ;
-																	$link = ( isset( $infosLink['link'] ) && !empty( $infosLink['link'] ) ) ? $infosLink['link'] : "";
-																	$label = ( isset( $infosLink['label'] ) && !empty( $infosLink['label'] ) ) ? $infosLink['label'] : $element->titre; ?>
-															<div class="col-1-3 tri-clear">
-																<div class="single-service">
-																	<?php if ( isset( $element->fontClass ) && !empty( $element->fontClass ) ):?>
-																		<a href="<?php echo $link;?>" title="<?php echo $label;?>">
-																			<i class="fa <?php echo $element->fontClass;?> service-icon"></i>
-																		</a>
-																	<?php endif;?>
-																	<?php if ( isset( $element->titre ) && !empty( $element->titre ) ): ?>
-																		<h3 class="service-title">
-																			<a href="<?php echo $link;?>" title="<?php echo $label;?>">
-																				<?php echo $element->titre;?>
-																			</a>
-																		</h3>
-																	<?php endif;?>
-																	<?php if ( isset( $element->description ) && !empty( $element->description ) ):?>
-																		<p>
-																			<?php echo $element->description;?>
-																		</p>
-																	<?php endif;?>
-																</div>
-															</div>
-															<?php endforeach;?>
-														</div>
-													<?php endif;?>
-													<!--elements-->
-													<?php if ( isset( $blocService['lien'] ) && !empty( $blocService['lien'] ) ):?>
-													<a href="<?php echo $blocService['lien'];?>"
-													   class="submit_link button--wapasha button--round-l">
-														<?php echo $blocService['text_bouton'];?>
-													</a>
-													<?php endif;?>
-												</section>
-											</div>
-										</div>
-									</div>
-									<?php endif;?>
-									<?php if ( !empty( $offresUrgent ) && count( $offresUrgent ) > 0 ):?>
+									<?php if ( !empty( $offresUrgent ) && count( $offresUrgent ) > 0 ):
+											$i = 1;?>
 									<div class="panel-grid" id="pg-636-7">
 										<div class="panel-grid-cell" id="pgc-636-7-0">
 											<section id="home-news" class="home-news-area">
 
 												<div class="grid grid-pad">
 													<div class="col-1-1">
-														<h3 class="widget-title">Les dernières offres urgentes</h3>
+														<h3 class="widget-title">Nos offres</h3>
 													</div>
 													<!-- col-1-1 -->
 												</div>
@@ -185,6 +127,10 @@ get_header(); ?>
 
 												<div class="grid grid-pad">
 													<?php foreach( $offresUrgent as $offre ):?>
+														<?php list($urlImage) = ( isset( $offre->logo ) && !empty( $offre->logo ) ) ? $offre->logo : array();?>
+															<?php if ( !empty( $urlImage ) && $i%2 == 1 ):?>
+																<img src="<?php echo $urlImage;?>"/>
+															<?php endif;?>
 													<div class="col-1-3 tri-clear">
 														<h5><a href="<?php echo get_permalink( $offre->id );?>" title="<?php echo $offre->titre;?>"><strong><?php echo $offre->titre;?></strong></a></h5>
 
@@ -201,9 +147,13 @@ get_header(); ?>
 														<a href="<?php echo get_permalink( $offre->id );?>" class="submit_link button--wapasha button--round-l" title="En savoir plus">
 															En savoir plus
 														</a>
+														<?php if ( !empty( $urlImage ) && $i%2 == 0 ):?>
+															<img src="<?php echo $urlImage;?>"/>
+														<?php endif;?>
 													</div>
 													<!-- col-1-3 -->
-													<?php endforeach;?>
+													<?php 	$i++;
+															endforeach;?>
 												</div>
 												<!-- grid -->
 
