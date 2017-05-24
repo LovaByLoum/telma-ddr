@@ -16,49 +16,45 @@ $imageBackground = ( isset( $image ) && !empty( $image ) ) ? $image : get_templa
 
 $offresUrgent = COffre::getOffreUrgent();
 
-$blocConnecterPicto = get_field( "picto_connecter","option" );
-$blocConnecterTitre = get_field( "titre_connecter","option" );
-$blocConnecterImage = get_field( "image_connecter","option" );
-$blocConnecterLien = get_field( "lien_connecter","option" );
+$blocConnecterPicto = get_field( "picto_connecter",$post->ID );
+$blocConnecterTitre = get_field( "titre_connecter",$post->ID );
+$blocConnecterImage = get_field( "image_connecter",$post->ID );
+$blocConnecterLien = get_field( "lien_connecter",$post->ID );
+$blocConnecterCouleur = get_field( "selection_couleur_connecter",$post->ID );
 
-$blocRecherchePicto = get_field( "picto_recherche","option" );
-$blocRechercheTitre = get_field( "titre_recherche","option" );
-$blocRechercheImage = get_field( "image_recherche","option" );
-$blocRechercheLien = get_field( "titre_recherche","option" );
+$blocRecherchePicto = get_field( "picto_recherche",$post->ID );
+$blocRechercheTitre = get_field( "titre_recherche",$post->ID );
+$blocRechercheImage = get_field( "image_recherche",$post->ID );
+$blocRechercheLien = get_field( "titre_recherche",$post->ID );
+$blocRechercheCouleur = get_field( "selection_couleur_recherche",$post->ID );
 
-$blocDecouvrirPicto = get_field( "picto_decouvrir","option" );
-$blocDecouvrirTitre = get_field( "titre_decouvrir","option" );
-$blocDecouvrirImage = get_field( "image_decouvrir","option" );
-$blocDecouvrirLien = get_field( "lien_decouvrir","option" );
+$blocDecouvrirPicto = get_field( "picto_decouvrir",$post->ID );
+$blocDecouvrirTitre = get_field( "titre_decouvrir",$post->ID );
+$blocDecouvrirImage = get_field( "image_decouvrir",$post->ID );
+$blocDecouvrirLien = get_field( "lien_decouvrir",$post->ID );
+$blocDecouvrirCouleur = get_field( "selection_couleur_decouvrir",$post->ID );
 
-$blocContacterPicto = get_field( "picto_contacter","option" );
-$blocContacterTitre = get_field( "titre_contacter","option" );
-$blocContacterImage = get_field( "image_contacter","option" );
-$blocContacterLien = get_field( "lient_contacter","option" );
+$blocContacterPicto = get_field( "picto_contacter",$post->ID );
+$blocContacterTitre = get_field( "titre_contacter",$post->ID );
+$blocContacterImage = get_field( "image_contacter",$post->ID );
+$blocContacterLien = get_field( "lient_contacter",$post->ID );
+$blocContacterCouleur = get_field( "selection_couleur_contacter",$post->ID );
 
 // image pour block connecter
 list( $imageConnecter ) = ( isset( $blocConnecterImage ) && !empty( $blocConnecterImage ) ) ? wp_get_attachment_image_src( $blocConnecterImage, "full" ) : array();
-list( $pictoConnecter ) = ( isset( $blocConnecterPicto ) && !empty( $blocConnecterPicto ) ) ? wp_get_attachment_image_src( $blocConnecterPicto, "full" ) : array();
 $imgBlocConnecter = $imageConnecter;
-$pictoBlocConnecter = $pictoConnecter;
 
 // image pour block recherche
 list( $imageRecherche ) = ( isset( $blocRechercheImage ) && !empty( $blocRechercheImage ) ) ? wp_get_attachment_image_src( $blocRechercheImage, "full" ) : array();
-list( $pictoRecherche ) = ( isset( $blocRecherchePicto ) && !empty( $blocRecherchePicto ) ) ? wp_get_attachment_image_src( $blocRecherchePicto, "full" ) : array();
 $imgBlocRecherche = $imageRecherche;
-$pictoBlocRecherche = $pictoRecherche;
 
 // image pour block découvrir
 list( $imageDecouvrir ) = ( isset( $blocDecouvrirImage ) && !empty( $blocDecouvrirImage ) ) ? wp_get_attachment_image_src( $blocDecouvrirImage, "full" ) : array();
-list( $pictoDecouvrir ) = ( isset( $blocDecouvrirPicto ) && !empty( $blocDecouvrirPicto ) ) ? wp_get_attachment_image_src( $blocDecouvrirPicto, "full" ) : array();
 $imgBlocDecouvrir = $imageDecouvrir;
-$pictoBlocDecouvir = $pictoDecouvrir;
 
 // image pour block contatcer
 list( $imageContacter ) = ( isset( $blocConnecterImage ) && !empty( $blocConnecterImage ) ) ? wp_get_attachment_image_src( $blocConnecterImage, "full" ) : array();
-list( $pictoContacter ) = ( isset( $blocContacterPicto ) && !empty( $blocContacterPicto ) ) ? wp_get_attachment_image_src( $blocContacterPicto, "full" ) : array();
 $imgBlocContacter = $imageContacter;
-$pictoBlocContacter = $pictoContacter;
 
 get_header(); ?>
      <section id="home-hero">
@@ -69,7 +65,7 @@ get_header(); ?>
 					<?php echo $description;?>
                 </h1>
 				<!--block connecter-->
-				<p><img src="<?php print_r($pictoBlocConnecter); ?>" class="" width="" height=""></p>
+				<p><i class="fa <?php echo $blocConnecterPicto; ?>"></i></p>
 				<a href="<?php print_r($blocConnecterLien); ?>">
 					<p>
 						<?php print_r($blocConnecterTitre); ?>
@@ -78,7 +74,7 @@ get_header(); ?>
 				</a>
 
 				<!--block Recheche-->
-				<p><img src="<?php print_r($pictoBlocRecherche); ?>" class=" " width="" height=""></p>
+				<p><i class="fa <?php echo $blocRecherchePicto; ?>"></i></p>
 				<a href="<?php print_r($blocRechercheLien); ?>">
 					<p>
 						<?php print_r($blocRechercheTitre); ?>
@@ -87,7 +83,7 @@ get_header(); ?>
 				</a>
 
 				<!--block Découvrir-->
-				<p><img src="<?php print_r($pictoBlocDecouvir); ?>" class=" " width="" height=""></p>
+				<p><i class="fa <?php echo $blocDecouvrirPicto; ?>"></i></p>
 				<a href="<?php print_r($blocDecouvrirLien); ?>">
 					<p>
 						<?php print_r($blocDecouvrirTitre); ?>
@@ -96,7 +92,7 @@ get_header(); ?>
 				</a>
 
 				<!--block connecter-->
-				<p><img src="<?php print_r($pictoBlocContacter); ?>" class=" " width="" height=""></p>
+				<p><i class="fa <?php echo $blocContacterPicto; ?>"></i></p>
 				<a href="<?php print_r($blocContacterLien); ?>">
 					<p>
 						<?php print_r($blocContacterTitre); ?>
