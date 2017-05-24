@@ -72,6 +72,8 @@ header#header:after { border-top: 90px solid #d30630; border-right: calc(100vw) 
 .job-last .job-item p { font-size: 12px; margin-bottom: 10px; }
 .job-last .job-item p .link-more { color: #646469; }
 
+.site-content { padding-top: 90px; }
+
 .top-listing-offer { margin-bottom: 20px; text-align: center; }
 @media only screen and (min-width: 992px) { .top-listing-offer { margin-bottom: 40px; } }
 @media only screen and (min-width: 992px) { .top-listing-offer h1, .top-listing-offer aside { display: inline-block; vertical-align: middle; } }
@@ -125,9 +127,10 @@ header#header:after { border-top: 90px solid #d30630; border-right: calc(100vw) 
 .widget-filters .select .select__arrow i { color: #646469; font-size: 20px; line-height: 1.2; vertical-align: middle; }
 .widget-filters .content-accordion { margin-top: 15px; }
 .widget-filters .control--checkbox { color: #fff; font-family: 'tahoma'; font-size: 18px; line-height: 20px; padding-bottom: 0; }
-.widget-filters .control__indicator { top: 0; }
+.widget-filters .control__indicator { background-color: #fff; top: 0; }
 .widget-filters .control__indicator:after { border: none; content: "\f00c"; font-family: 'FontAwesome'; height: auto; -webkit-transform: rotate(0); -moz-transform: rotate(0); -o-transform: rotate(0); transform: rotate(0); top: 1px; left: 1px; width: auto; }
 .widget-filters .control { margin-bottom: 10px; }
+.widget-filters .control:hover input ~ .control__indicator, .widget-filters .control input:focus ~ .control__indicator { background-color: #fff; }
 .widget-filters .reset { text-align: center; color: #fff; font-family: 'tahoma'; font-size: 18px; margin: 0; padding: 10px 0; }
 .widget-filters .reset a { color: inherit; }
 
@@ -160,3 +163,38 @@ header#header:after { border-top: 90px solid #d30630; border-right: calc(100vw) 
 .single-offer .widget-profil li ul { padding-left: 10px; }
 .single-offer .widget-profil li ul li:before { content: '-'; padding-right: 5px; }
 .single-offer .widget-profil li ul li ul { padding-left: 20px; }
+
+.registration-form header { margin-bottom: 10px; }
+.registration-form header p { color: #646469; font-size: 14px; line-height: 125%; }
+.registration-form header p:last-child { margin-bottom: 0; }
+.registration-form header p:empty { display: none; }
+.registration-form h1 { border-bottom: 1px solid #cdcdcd; color: #c80f2d; font-size: 18px; margin-bottom: 10px; padding-bottom: 10px; text-transform: uppercase; }
+
+.form-layout .control-group { border-bottom: 1px solid #cdcdcd; -webkit-border-radius: 0; -moz-border-radius: 0; -o-border-radius: 0; border-radius: 0; -webkit-box-shadow: none; -moz-box-shadow: none; -o-box-shadow: none; box-shadow: none; margin-bottom: 10px; padding: 0; }
+.form-layout h4 { color: #646469; font-size: 18px; line-height: 125%; }
+.form-layout label { color: #646469; font-size: 14px; line-height: 125%; }
+.form-layout .form-control { border: 1px solid #d9d9d9; -webkit-border-radius: 0; -moz-border-radius: 0; -o-border-radius: 0; border-radius: 0; color: #646469; font-size: 14px; }
+.form-layout .form-group .required { color: #f00; }
+.form-layout .form-group h5 { color: #646469; font-size: 14px; line-height: 125%; }
+.form-layout .form-group .select select { background-color: #fff; border: 1px solid #d9d9d9; color: #646469; }
+.form-layout .form-group .select select:hover, .form-layout .form-group .select select:focus { outline: none; }
+.form-layout .form-group .select select option { border: 1px solid #d9d9d9; }
+.form-layout .form-group .select .select__arrow { border: none; }
+.form-layout .form-group .select .select__arrow { background-color: #fff; border: none; height: 36px; line-height: 36px; right: 1px; text-align: center; top: 1px; width: 36px; z-index: 2; }
+.form-layout .form-group .select .select__arrow i { color: #646469; font-size: 20px; line-height: 1.2; vertical-align: middle; }
+.form-layout .datepicker { background-color: #fff; }
+.form-layout .checkbox-list { padding: 0; }
+.form-layout .checkbox-list li { list-style: none; }
+.form-layout .radio-item { /* .control__indicator { border: 1px solid #dbdbdb; height: 15px; top: 0; width: 15px; &:after { background: #fff; height: 14px; width: 14px; }
+}
+.control { input { &:checked { &~ .control__indicator {
+ } } }
+}
+
+
+.control:hover input:not([disabled]):checked ~ .control__indicator, 
+.control input:checked:focus ~ .control__indicator { background-color: #dbdbdb;
+} */ }
+.form-layout .radio-item span { display: inline-block; vertical-align: middle; }
+.form-layout .radio-item input:checked ~ .control__indicator { background-color: #dbdbdb; }
+.form-layout .radio-item .control__indicator { height: 15px; top: 0; width: 15px; height: 11px; left: 2px; top: 2px; width: 11px; }
