@@ -15,6 +15,7 @@ list( $image ) = ( isset( $post->image_background_hp ) && !empty( $post->image_b
 $imageBackground = ( isset( $image ) && !empty( $image ) ) ? $image : get_template_directory_uri() . '/images/design/bldr.jpg';
 
 $offresUrgent = COffre::getOffreUrgent();
+//var_dump($offresUrgent);die;
 
 $blocConnecterPicto = get_field( "picto_connecter",$post->ID );
 $blocConnecterTitre = get_field( "titre_connecter",$post->ID );
@@ -91,7 +92,6 @@ get_header(); ?>
                 <div class="decouvrir  animate-plus"  data-animations="bounceIn" data-animation-delay="1s"  style="background-image: url(<?php print_r($imgBlocDecouvrir); ?>); background-color: <?php print_r($blocContacterCouleur); ?>;">
                     <a href="<?php print_r($blocDecouvrirLien); ?>">
                         <p><i class="fa <?php echo $blocDecouvrirPicto; ?>"></i></p>
-
                         <p>
                             <?php print_r($blocDecouvrirTitre); ?>
                         </p>
@@ -103,7 +103,6 @@ get_header(); ?>
                 <div class="contacter  animate-plus"  data-animations="bounceIn" data-animation-delay="1.2s"  style="background-image: url(<?php print_r($imgBlocContacter); ?>); background-color: <?php print_r($blocDecouvrirCouleur); ?>;">
                     <a href="<?php print_r($blocContacterLien); ?>">
                     <p><i class="fa <?php echo $blocContacterPicto; ?>"></i></p>
-
                         <p>
                             <?php print_r($blocContacterTitre); ?>
                         </p>
@@ -121,7 +120,10 @@ get_header(); ?>
             foreach( $offresUrgent as $offre ){ ?>
                 <div class="job-item">
                     <div class="row">
-                        <figure class="col-sm-3 <?php if ( $count % 2  != 0 ) {?> right <?php }?>">figure</figure>
+                        <?php list($urlImage) = ( isset( $offre->logo ) && !empty( $offre->logo ) ) ? $offre->logo : array();?>
+                        <?php if ( !empty( $urlImage ) && $i%2 == 1 ):?>
+                            <figure class="col-sm-3 <?php if ( $count % 2  != 0 ) {?> right <?php }?>"><img src="<?php echo $urlImage;?>"/></figure>
+                        <?php endif;?>
                         <div class="col-sm-9">
                             <h5><a href="<?php echo get_permalink( $offre->id );?>" title="<?php echo $offre->titre;?>"><?php echo $offre->titre;?></a> <span class="label">urgent</span></h5>
                             <p class="summary">
