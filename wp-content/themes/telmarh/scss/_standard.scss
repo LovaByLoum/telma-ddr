@@ -1,0 +1,25 @@
+.page-standard {
+    padding: 0 0 90px;
+    h1 {
+        color: #c80f2d;
+        font-size: 25px;
+        margin-bottom: 10px;
+        padding-bottom: 10px;
+        text-transform: uppercase;
+        @media #{$min640} {
+            font-size: 30px;
+        }
+        a {
+            color: inherit;
+            text-decoration: underline;
+        }
+    }
+    header {
+        margin-bottom: 10px;
+        p {
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+    }
+}
