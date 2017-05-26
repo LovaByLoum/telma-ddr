@@ -17,6 +17,9 @@ $pagePostuleOffre = wp_get_post_by_template( "page-postuler-offre.php", "" );
 $linkPostule = ( is_user_logged_in() ) ? get_permalink( $pagePostuleOffre->ID ) ."?po=" . $post->ID : "javascript:;";
 get_header(); ?>
 <div class="listing-offer-page offer-page">
+    <figure class="alauneImg">
+        <img src="<?php echo get_template_directory_uri(); ?>/images/batiment.jpg" alt="">
+    </figure>
 	<section id="page-entry-content" class="single-offer">
         <header class="entry-header">
             <div class="container">
@@ -35,7 +38,7 @@ get_header(); ?>
                     <div class="col-md-2 col-xl-1">
                         <?php if ( isset( $offre->criticite ) && !empty( $offre->criticite ) && $offre->criticite[0]->term_id == ID_TAXONOMIE_CRITICITE_URGENT ) :?>
                             <div class="entry-meta status-offre">
-                                <p class="criticite-offre"><?php echo $offre->criticite[0]->name;?></p>
+                                <p class="criticite-offre urgent"><?php echo $offre->criticite[0]->name;?></p>
                             </div>
                         <?php  endif;?>
                         <!-- .entry-meta -->

@@ -9,6 +9,9 @@ $nbrAffichage = ( isset( $telmarh_options['nombre_atus'] ) && !empty( $telmarh_o
 $recherche = ( isset( $_GET['sof'] ) && !empty( $_GET['sof'] ) ) ? $_GET['sof'] : "";
 ?>
 <div class="listing-offer-page offer-page">
+    <figure class="alauneImg">
+        <img src="<?php echo get_template_directory_uri(); ?>/images/batiment.jpg" alt="">
+    </figure>
     <section class="top-listing-offer">
         <div class="container">
             <?php if ( isset( $postTitle ) && !empty( $postTitle ) ):?>
