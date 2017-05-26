@@ -194,6 +194,7 @@ header#header:after { border-top: 90px solid #d30630; border-right: calc(100vw) 
 .form-page { padding: 0 0 90px; }
 .form-page h1 { border-bottom: 1px solid #cdcdcd; color: #c80f2d; font-size: 25px; margin-bottom: 10px; padding-bottom: 10px; text-transform: uppercase; }
 @media only screen and (min-width: 640px) { .form-page h1 { font-size: 30px; } }
+.form-page h1 a { color: inherit; }
 .form-page header { margin-bottom: 10px; }
 .form-page header p:last-child { margin-bottom: 0; }
 
