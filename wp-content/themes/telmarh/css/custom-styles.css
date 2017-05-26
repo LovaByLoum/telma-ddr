@@ -76,7 +76,7 @@ header#header:after { border-top: 90px solid #d30630; border-right: calc(100vw) 
 .job-last .job-item p { font-size: 12px; margin-bottom: 10px; }
 .job-last .job-item p .link-more { color: #646469; }
 
-.offer-page { padding: 90px 0; }
+.offer-page { padding: 0 0 90px; }
 
 .pagination-loading-mask { min-height: 200px; }
 
@@ -119,6 +119,17 @@ header#header:after { border-top: 90px solid #d30630; border-right: calc(100vw) 
 .listing-offer .list-offres footer { line-height: 100%; text-align: right; }
 .listing-offer .list-offres footer .more-link { color: #646469; font-size: 12px; line-height: 125%; text-decoration: underline; }
 
+.pagination-bloc { text-align: center; }
+.pagination-bloc a { border: 1px solid #646469; color: #646469; font-size: 14px; line-height: 125%; margin: 0 5px; padding: 2px 5px; }
+.pagination-bloc a:hover, .pagination-bloc a:focus { background-color: #c80f2d; border-color: #c80f2d; color: #fff; outline: none; text-decoration: none; }
+.pagination-bloc a.active { border-color: #c80f2d; color: #c80f2d; font-weight: 700; }
+.pagination-bloc a.active:hover, .pagination-bloc a.active:focus { background: none; color: #c80f2d; }
+.pagination-bloc .previouspostslink, .pagination-bloc .nextpostslink { border: none; font-size: 0; height: 23px; text-indent: -9999px; }
+.pagination-bloc .previouspostslink:hover, .pagination-bloc .previouspostslink:focus, .pagination-bloc .nextpostslink:hover, .pagination-bloc .nextpostslink:focus { background: none; border: none; color: #c80f2d; outline: none; text-decoration: none; }
+.pagination-bloc .previouspostslink:before, .pagination-bloc .nextpostslink:before { font-family: 'FontAwesome'; font-size: 18px; line-height: 125%; }
+.pagination-bloc .previouspostslink:before { content: "\f104"; }
+.pagination-bloc .nextpostslink:before { content: "\f105"; }
+
 .widget-filters { background-color: #c80f2e; margin-bottom: 30px; }
 @media only screen and (min-width: 992px) { .widget-filters { margin-bottom: 0; } }
 .widget-filters .widget { padding: 0 20px; }
@@ -153,9 +164,11 @@ header#header:after { border-top: 90px solid #d30630; border-right: calc(100vw) 
 .single-offer .retour-offre-link { font-size: 12px; }
 @media only screen and (min-width: 480px) { .single-offer .retour-offre-link { font-size: 14px; } }
 .single-offer .retour-offre-link a { background: url(../images/design/icon-return.png) left center no-repeat; color: #646469; display: inline-block; line-height: 1.8em; padding-left: 26px; }
-.single-offer .main-content .status-offre { border: 1px solid #d9d9d9; display: inline-block; margin-bottom: 10px; padding: 6px 5px; }
+.single-offer .main-content .status-offre { display: inline-block; margin-bottom: 10px; }
 @media only screen and (min-width: 768px) { .single-offer .main-content .status-offre { display: block; margin-bottom: 0; } }
-.single-offer .main-content .status-offre p { color: #646469; font-size: 14px; margin: 0; text-align: center; }
+.single-offer .main-content .status-offre p { border-style: solid; border-width: 1px; font-size: 14px; margin: 0; padding: 6px 5px; padding: 6px 5px; text-align: center; }
+.single-offer .main-content .status-offre .urgent { background-color: #c80f2d; border-color: #c80f2d; color: #fff; }
+.single-offer .main-content .status-offre .no-urgent { border-color: #d9d9d9; color: #646469; }
 .single-offer .main-desc { border: 1px solid #d9d9d9; padding: 10px 20px; }
 .single-offer .status-publish p { color: #646469; font-size: 14px; line-height: 125%; }
 .single-offer .status-publish figure { margin-bottom: 0; text-align: center; }
@@ -172,18 +185,17 @@ header#header:after { border-top: 90px solid #d30630; border-right: calc(100vw) 
 .single-offer .widget-profil li ul li:before { content: '-'; padding-right: 5px; }
 .single-offer .widget-profil li ul li ul { padding-left: 20px; }
 
-.alauneImg { margin-bottom: 0; padding-bottom: 20px; }
-@media only screen and (min-width: 640px) { .alauneImg { padding-bottom: 40px; } }
-@media only screen and (min-width: 992px) { .alauneImg { padding-bottom: 80px; } }
+.alauneImg { margin-bottom: 0; margin-bottom: 20px; overflow: hidden; position: relative; }
+@media only screen and (min-width: 640px) { .alauneImg { margin-bottom: 40px; } }
+@media only screen and (min-width: 992px) { .alauneImg { margin-bottom: 80px; } }
 .alauneImg img { object-fit: cover; height: 100%; width: 100%; }
+.alauneImg:after { background-color: transparent; border: 0 solid transparent; border-right-width: 0px; border-left-width: 100vw; border-bottom: 45px solid #fff; bottom: 0; content: ''; display: block; height: 0; left: 0; position: absolute; width: 100%; z-index: 10; }
 
 .form-page { padding: 0 0 90px; }
 .form-page h1 { border-bottom: 1px solid #cdcdcd; color: #c80f2d; font-size: 25px; margin-bottom: 10px; padding-bottom: 10px; text-transform: uppercase; }
 @media only screen and (min-width: 640px) { .form-page h1 { font-size: 30px; } }
 .form-page header { margin-bottom: 10px; }
-.form-page header p { color: #646469; font-size: 14px; line-height: 125%; }
 .form-page header p:last-child { margin-bottom: 0; }
-.form-page header p:empty { display: none; }
 
 .contact-form textarea { min-height: 160px; }
 .contact-form .form-layout .control-group { border-bottom: none; }
