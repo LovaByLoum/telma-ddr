@@ -1,18 +1,33 @@
 .alauneImg {
     margin-bottom: 0;
-    padding-bottom: 20px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    position: relative;
     @media #{$min640} {
-        padding-bottom: 40px;
-    }
-    @media #{$min768} {
+        margin-bottom: 40px;
     }
     @media #{$min992} {
-        padding-bottom: 80px;
+        margin-bottom: 80px;
     }
     img {
         object-fit: cover;
         height: 100%;
         width: 100%;
+    }
+    &:after {
+        background-color: transparent;
+        border: 0 solid transparent;
+        border-right-width: 0px;
+        border-left-width: 100vw;
+        border-bottom: 45px solid #fff;
+        bottom: 0;
+        content: '';
+        display: block;
+        height: 0;
+        left: 0;
+        position: absolute;
+        width: 100%;
+        z-index: 10;
     }
 }
 .form-page {
@@ -31,14 +46,8 @@
     header {
         margin-bottom: 10px;
         p {
-            color: #646469;
-            font-size: 14px;
-            line-height: 125%;
             &:last-child {
                 margin-bottom: 0;
-            }
-            &:empty {
-                display: none;
             }
         }
     }
