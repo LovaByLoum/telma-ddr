@@ -258,13 +258,68 @@ header#header {
 
 #page {
     @media #{$min992} {
-        min-height: 96vh;
+        min-height: 98vh;
     }
 }
 .site-footer {
     background: transparent;
     bottom: 0;
     left: 0;
-    position: absolute;
+    position: fixed;
     width: 100%;
+}
+
+// 404
+.error-404 {
+    h1 {
+        color: #d30630;
+        font-size: 80px;
+        font-weight: 700;
+        text-align: center;
+        text-transform: uppercase;
+        span {
+            color: #fff;
+        }
+    }
+    .page-header {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 100%;
+        z-index: 5;
+    }
+    p {
+        text-align: center;
+        color: #fff;
+        font-size: 20px;
+        text-transform: uppercase;
+        font-weight: 700;
+    }
+    .btn {
+        display: block;
+        margin-top: 30px;
+        position: relative;
+        text-align: center;
+        z-index: 2;
+    }
+    .submit_link {
+        background-color: #e57e75;
+        color: #fff;
+        display: inline-block;
+        font-size: 20px;
+        font-weight: 700;
+        height: 51px;
+        line-height: 51px;
+        min-width: 240px;
+        text-align: center;
+        text-transform: uppercase;
+        &:focus {
+            background-color: #c80f2d;
+            outline: none;
+        }
+        &:hover {
+            background-color: #c80f2d;
+            text-decoration: none;
+        }
+    }
 }
