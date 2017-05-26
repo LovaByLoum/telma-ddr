@@ -1,5 +1,5 @@
 .offer-page {
-    padding: 90px 0;
+    padding: 0 0 90px;
 }
 
 .site-content {
@@ -180,6 +180,61 @@ header#header {
                 line-height: 125%;
                 text-decoration: underline;
             }
+        }
+    }
+}
+.pagination-bloc {
+    text-align: center;
+    a {
+        border: 1px solid #646469;
+        color: #646469;
+        font-size: 14px;
+        line-height: 125%;
+        margin: 0 5px;
+        padding: 2px 5px;
+        &:hover, &:focus {
+            background-color: #c80f2d;
+            border-color: #c80f2d;
+            color: #fff;
+            outline: none;
+            text-decoration: none;
+        }
+        &.active {
+            border-color: #c80f2d;
+            color: #c80f2d;
+            font-weight: 700;
+            &:hover, &:focus {
+                background: none;
+                color: #c80f2d;
+            }
+        }
+    }
+    .previouspostslink, .nextpostslink {
+        border: none;
+        font-size: 0;
+        height: 23px;
+        text-indent: -9999px;
+        &:hover, &:focus {
+            background:none;
+            border: none;
+            color: #c80f2d;
+            outline: none;
+            text-decoration: none;
+        }
+        &:before {
+            font-family: 'FontAwesome';
+            font-size: 18px;
+            line-height: 125%;
+        }
+    }
+    .previouspostslink {
+        &:before {
+            content: "\f104";
+        }
+    }
+    .nextpostslink {
+        &:before {
+            content: "\f105";
         }
     }
 }
@@ -370,20 +425,30 @@ header#header {
     }
     .main-content {
         .status-offre {
-            border: 1px solid #d9d9d9;
+            
             display: inline-block;
             margin-bottom: 10px;
-            padding: 6px 5px;
+            
             @media #{$min768} {
                 display: block;
                 margin-bottom: 0;
             }
             p {
-                
-                color: #646469;
+                border-style: solid;
+                border-width: 1px;
                 font-size: 14px;
                 margin: 0;
+                padding: 6px 5px;padding: 6px 5px;
                 text-align: center;
+            }
+            .urgent {
+                background-color: #c80f2d;
+                border-color: #c80f2d;
+                color: #fff;
+            }
+            .no-urgent {
+                border-color: #d9d9d9;
+                color: #646469;
             }
         }
     }
