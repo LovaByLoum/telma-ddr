@@ -394,7 +394,7 @@ function telmarh_login_enqueue_script()
             font-size: 14px;
           }
           .login #loginform input[type=checkbox], .login input[type=text] {
-            
+
           }
           .login #loginform input::-webkit-input-placeholder {color: #646469; }
           .login #loginform input::-moz-placeholder {color: #646469; }646469
@@ -432,7 +432,7 @@ function telmarh_login_enqueue_script()
             padding: 0 12px 12px;
           }
           #login #loginform p.submit .button:hover {
-            color: #c80f2d;
+            background-color: #c80f2d;
           }
           .login p#backtoblog, .login #nav {
             color: #646469;
