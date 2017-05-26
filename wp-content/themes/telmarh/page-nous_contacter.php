@@ -20,6 +20,9 @@ $idImage = get_post_thumbnail_id($post->ID);
 $image = wp_get_attachment_image_src( $idImage, "full" );
 get_header(); ?>
 <section id="page-full-entry-content" class="contact-form form-page">
+    <figure class="alauneImg">
+        <img src="<?php echo get_template_directory_uri(); ?>/images/batiment.png" alt="">
+    </figure>
     <header class="entry-header">
         <div class="container">
             <?php if ( isset( $post->post_title ) && !empty( $post->post_title ) ):?>
