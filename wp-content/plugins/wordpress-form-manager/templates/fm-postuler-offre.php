@@ -74,129 +74,147 @@ $entrepriseId = get_post_meta( $postID, JM_META_SOCIETE_OFFRE_RELATION, true);
 $entreprise = JM_Societe::getById( $entrepriseId );
 $reference = get_post_meta( $postID, REFERENCE_OFFRE, true );
 ?>
+<div class="form-layout">
 <form enctype="multipart/form-data" method="post" action="<?php echo $fm_display->currentFormOptions['action'];?>" name="fm-form-<?php echo $fm_display->currentFormInfo['ID'];?>" id="fm-form-<?php echo $fm_display->currentFormInfo['ID'];?>" autocomplete="on" novalidate="novalidate">
+    <!-- informations personnelles -->
 	<div class="control-group">
         <h4 class="head-accordion open">Informations personnelles</h4>
         <div class="head-accordion">
-            <div class="col-1-2 form-field">
-				<label for="nom">Nom <span class="required">*</span></label>
-                <input type="text" placeholder="Nom" name="<?php echo $form_items['name_postule'];?>" id="nom" value="<?php echo $user->nom;?>" readonly>
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label for="nom">Nom <span class="required">*</span></label>
+                    <input type="text" class="form-control" placeholder="Nom" name="<?php echo $form_items['name_postule'];?>" id="nom" value="<?php echo $user->nom;?>" readonly>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="prenom">Prénom <span class="required">*</span></label>
+                    <input type="text" class="form-control" placeholder="Prénom" name="<?php echo $form_items['prenom_postule'];?>" id="prenom" value="<?php echo $user->prenom;?>" readonly>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="email">Adresse email <span class="required">*</span></label>
+                    <input type="text" class="form-control" placeholder="Email" name="<?php echo $form_items['email_postule'];?>" id="email" value="<?php echo $user->email;?>" readonly>
+                </div>
             </div>
-            <div class="col-1-2 form-field">
-                <label for="prenom">Prénom <span class="required">*</span></label>
-                <input type="text" placeholder="Prénom" name="<?php echo $form_items['prenom_postule'];?>" id="prenom" value="<?php echo $user->prenom;?>" readonly>
-            </div>
-	        <div class="col-1-2 form-field">
-		        <label for="email">Adresse email <span class="required">*</span></label>
-                <input type="text" placeholder="Email" name="<?php echo $form_items['email_postule'];?>" id="email" value="<?php echo $user->email;?>" readonly>
-	        </div>
         </div>
     </div>
+    <!-- /informations personnelles -->
+    <!-- Compétences Informatiques -->
     <?php if ( !empty( $termInformatiques ) && count( $termInformatiques ) > 0 ):?>
 	<div class="control-group">
-		<div class="col-1-1 form-field">
-		    <div class="col-1-2">
-			<h4 class="head-accordion open">Compétences Informatiques <span class="required">*</span></h4>
-				<?php if ( !empty( $termInformatiques[0] ) && count( $termInformatiques[0] ) > 0 ) :
-						$i=1?>
-                    <ul class="list-parent informatique">
+        <div class="row">
+            <div class="form-group col-md-6">
+                <h4 class="head-accordion open">Compétences Informatiques <span class="required">*</span></h4>
+                <?php if ( !empty( $termInformatiques[0] ) && count( $termInformatiques[0] ) > 0 ) : $i=1?>
+                    <ul class="checkbox-item checkbox-list list-parent informatique">
                         <?php foreach ( $termInformatiques[0] as $term ):?>
                             <li>
-                                <label class="control control--checkbox <?php if ( count( $termInformatiques[0] ) == $i ):?>latest<?php endif;?>"  ><?php echo $term['label'];?>
-                                    <input type="checkbox"  value="<?php echo $term['id'];?>" name="compInfo[]" class="parent-infos" data-class="<?php echo $term['slug'];?>">
-                                    <div class="control__indicator"></div>
+                                <label class="control control--checkbox <?php if ( count( $termInformatiques[0] ) == $i ):?>latest<?php endif;?>" >
+                                    <input type="checkbox" value="<?php echo $term['id'];?>" name="compInfo[]" class="parent-infos" data-class="<?php echo $term['slug'];?>">
+                                    <span class="control__indicator"></span>
+                                    <span class="control__description"><?php echo $term['label'];?></span>
                                 </label>
                                 <?php if ( isset( $termInformatiques[$term['id']] ) && !empty( $termInformatiques[$term['id']] ) && count( $termInformatiques[$term['id']] ) > 0 ):?>
-                                <ul class="list-children">
+                                <ul class="list-children radio-item">
                                     <?php foreach ( $termInformatiques[$term['id']] as $termChild ): ?>
                                         <li>
-                                            <label class="control control--radio"><?php echo $termChild['label'];?>
-                                                <input type="radio"  value="<?php echo $termChild['id'];?>" name="<?php echo $term['slug'];?>[]" class="<?php echo $term['slug'] ;?>">
-                                                <div class="control__indicator"></div>
+                                            <label class="control control--radio">
+                                                <input type="radio" value="<?php echo $termChild['id'];?>" name="<?php echo $term['slug'];?>[]" class="<?php echo $term['slug'] ;?>">
+                                                <span class="control__indicator"></span>
+                                                <span class="control__description"><?php echo $termChild['label'];?></span>
                                             </label>
                                         </li>
                                     <?php endforeach;?>
                                 </ul>
                                 <?php endif;?>
                             </li>
-                        <?php   $i++;
-                                endforeach;?>
+                        <?php   $i++; endforeach;?>
                     </ul>
-				<?php endif;?>
-		    </div>
-		</div>
+                <?php endif;?>
+            </div>
+        </div>
 	</div>
     <?php endif;?>
+    <!-- /Compétences Informatiques -->
+    <!-- Compétences linguistiques -->
 	<div class="control-group">
-        <div class="col-1-1 form-field">
-	        <div class="col-1-2">
-	        <h4 class="head-accordion open">Compétences linguistiques <span class="required">*</span></h4>
-	        <?php if ( !empty( $termLinguistiques ) && count( $termLinguistiques ) > 0 ):?>
-		        <ul class="list-parent langue">
-		        <?php foreach ( $termLinguistiques[0] as $termParent ) : ?>
-			        <li>
-			        <label class="control control--checkbox"><?php echo $termParent['label'];?>
-		                <input type="checkbox"  value="<?php echo $termParent['id'];?>" name="langue[]" class="parent" data-class="<?php echo $termParent['slug'];?>">
-		                <div class="control__indicator"></div>
-		            </label>
-			        <?php if ( isset( $termLinguistiques[$termParent['id']] ) && !empty( $termLinguistiques[$termParent['id']] ) && count( $termLinguistiques[$termParent['id']] ) > 0 ) :?>
-				        <ul class="list-children">
-				        <?php foreach ( $termLinguistiques[$termParent['id']] as $termChild ):?>
-					        <li>
-						        <label class="control control--checkbox"><?php echo $termChild['label'];?>
-		                            <input type="checkbox"  value="<?php echo $termChild['id'];?>" name="<?php echo sanitize_title( $termParent['name'] );?>[]" class="<?php echo $termParent['slug'];?>">
-		                            <div class="control__indicator"></div>
-		                        </label>
-					        </li>
-				        <?php endforeach;?>
-				        </ul>
-			        <?php endif;?>
-			        </li>
-		        <?php endforeach;?>
-		        </ul>
-            <?php  endif;?>
-			</div>
+        <div class="row">
+            <div class="form-group col-md-6">
+                <h4 class="head-accordion open">Compétences linguistiques <span class="required">*</span></h4>
+                <?php if ( !empty( $termLinguistiques ) && count( $termLinguistiques ) > 0 ):?>
+                    <ul class="checkbox-item checkbox-list list-parent langue">
+                    <?php foreach ( $termLinguistiques[0] as $termParent ) : ?>
+                        <li>
+                            <label class="control control--checkbox">
+                                <input type="checkbox" value="<?php echo $termParent['id'];?>" name="langue[]" class="parent" data-class="<?php echo $termParent['slug'];?>">
+                                <span class="control__indicator"></span>
+                                <span class="control__description"><?php echo $termParent['label'];?></span>
+                            </label>
+                            <?php if ( isset( $termLinguistiques[$termParent['id']] ) && !empty( $termLinguistiques[$termParent['id']] ) && count( $termLinguistiques[$termParent['id']] ) > 0 ) :?>
+                                <ul class="list-children">
+                                <?php foreach ( $termLinguistiques[$termParent['id']] as $termChild ):?>
+                                    <li>
+                                        <label class="control control--checkbox">
+                                            <input type="checkbox" value="<?php echo $termChild['id'];?>" name="<?php echo sanitize_title( $termParent['name'] );?>[]" class="<?php echo $termParent['slug'];?>">
+                                            <span class="control__indicator"></span>
+                                            <span class="control__description"><?php echo $termChild['label'];?></span>
+                                        </label>
+                                    </li>
+                                <?php endforeach;?>
+                                </ul>
+                            <?php endif;?>
+                        </li>
+                    <?php endforeach;?>
+                    </ul>
+                <?php  endif;?>
+            </div>
         </div>
     </div>
+    <!-- /Compétences linguistiques -->
+    <!-- Vos motivations -->
 	<div class="control-group">
-		<div class="col-1-1 form-field">
+        <div class="form-group">
 			<h4 class="head-accordion open">Vos motivations <span class="required">*</span></h4>
-			<textarea name="<?php echo $form_items['message_postule'];?>" placeholder="Vos motivations"></textarea>
-		</div>
+			<textarea name="<?php echo $form_items['message_postule'];?>" class="textarea-field form-control"  placeholder="Vos motivations"></textarea>
+        </div>
 	</div>
+    <!-- /Vos motivations -->
+    <!-- Pièces jointes -->
 	<div class="control-group">
-		<div class="col-1-1">
-			<h4 class="head-accordion open">Pièces jointes </h4>
-			<div class="col-1-2">
-				<input type="hidden" name="MAX_FILE_SIZE" value="10240000">
-				<input name="<?php echo $form_items['cv_postule'];?>" id="fileCv" type="file" class="inputfile">
-				<label for="fileCv" class="input-file-trigger"><span>Mon CV *</span></label>
-				<em>(.doc, .rtf, .pdf, .docx)</em>
-				<span class="file-return cv"></span>
-			</div>
-			<div class="col-1-2">
-				<input type="hidden" name="MAX_FILE_SIZE" value="10240000">
-				<input name="<?php echo $form_items['lm_postule'];?>" id="fileLm" type="file" class="inputfile">
-				<label for="fileLm" class="input-file-trigger"><span>Ma lettre de motivation *</span></label>
-				<em>(.doc, .rtf, .pdf, .docx)</em>
-				<span class="file-return lm"></span>
-
-			</div>
-		</div>
+        <h4 class="head-accordion open">Pièces jointes</h4>
+        <div class="row">
+            <div class="form-group col-md-6">
+                <input type="hidden" name="MAX_FILE_SIZE" value="10240000">
+                <input name="<?php echo $form_items['cv_postule'];?>" id="fileCv" type="file" class="form-control inputfile">
+                <!-- <label for="fileCv" class="input-file-trigger"><span>Mon CV *</span></label> -->
+               <!--  <em>(.doc, .rtf, .pdf, .docx)</em> -->
+                <span class="file-return cv"></span>
+            </div>
+            <div class="form-group col-md-6">
+                <input type="hidden" name="MAX_FILE_SIZE" value="10240000">
+                <input name="<?php echo $form_items['lm_postule'];?>" id="fileLm" type="file" class="form-control inputfile">
+                <!-- <label for="fileLm" class="input-file-trigger"><span>Ma lettre de motivation *</span></label>
+                <em>(.doc, .rtf, .pdf, .docx)</em> -->
+                <span class="file-return lm"></span>
+            </div>
+        </div>
 	</div>
+    <!-- /Pièces jointes -->
+    <!-- Autres documents -->
 	<div class="control-group">
-		<div class="col-1-1">
-			<h4 class="head-accordion open">Autres documents </h4>
-			<div class="col-1-2">
-				<input type="hidden" name="MAX_FILE_SIZE" value="10240000">
-				<input name="<?php echo $form_items['autre_postule'];?>" id="fileAutre" type="file" class="inputfile">
-				<label for="fileAutre" class="input-file-trigger"><span>Autres documents</span></label>
-				<em>(.doc, .rtf, .pdf, .docx)</em>
-				<span class="file-return autre"></span>
-			</div>
-		</div>
+        <h4 class="head-accordion open">Autres documents</h4>
+        <div class="row">
+            <div class="form-group col-md-6">
+                <input type="hidden" name="MAX_FILE_SIZE" value="10240000">
+                <input name="<?php echo $form_items['autre_postule'];?>" id="fileAutre" type="file" class="form-control inputfile">
+                <!-- <label for="fileAutre" class="input-file-trigger"><span>Autres documents</span></label> -->
+                <!-- <em>(.doc, .rtf, .pdf, .docx)</em> -->
+                <span class="file-return autre"></span>
+            </div>
+        </div>
 	</div>
-	<input type="submit" name="fm_form_submit" id="fm_form_submit" class="button-postuler" value="Valider" >
+    <!-- /Autres documents -->
+    <div class="submit-form">
+        <input type="submit" name="fm_form_submit" id="fm_form_submit" class="button-postuler submit-button" value="Valider" >
+    </div>
 	<input type="hidden" name="<?php echo $form_items['entreprise_postule']?>" value="<?php echo $entreprise->titre;?>">
 	<input type="hidden" name="<?php echo $form_items['ref_postule']?>" value="<?php echo $reference;?>">
 	<input type="hidden" name="fm_nonce" id="fm_nonce" value="<?php echo wp_create_nonce('fm-nonce');?>" />
@@ -204,4 +222,5 @@ $reference = get_post_meta( $postID, REFERENCE_OFFRE, true );
 	<input type="hidden" name="fm_id" id="fm_id" value="<?php echo $fm_display->currentFormInfo['ID'];?>" />
 	<input type="hidden" name="fm_uniq_id" id="fm_uniq_id" value="fm-<?php echo uniqid();?>" />
 	<input type="hidden" name="fm_parent_post_id" id="fm_parent_post_id" value="<?php echo $postID;?>" />
-<?php echo fm_form_end(); ?>
+    <?php echo fm_form_end(); ?>
+</div>
