@@ -44,6 +44,7 @@
         }
         a {
             color: inherit;
+            text-decoration: underline;
         }
     }
     header {
@@ -65,7 +66,7 @@
 // contact-form
 .contact-form {
     textarea {
-        min-height: 160px;
+        //min-height: 160px;
     }
     .form-layout .control-group {
         border-bottom: none;
@@ -185,6 +186,9 @@
                     vertical-align: middle;
                 }
             }
+        }
+        .textarea-field {
+            min-height: 160px;
         }
         .error {
             color: #f00;
