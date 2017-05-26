@@ -33,7 +33,7 @@ $image = wp_get_attachment_image_src( $idImage, "full" );
 get_header(); ?>
     <section id="page-full-entry-content" class="registration-form form-page">
         <figure class="alauneImg">
-            <img src="<?php echo get_template_directory_uri(); ?>/images/batiment.png" alt="">
+            <img src="<?php echo get_template_directory_uri(); ?>/images/batiment.jpg" alt="">
         </figure>
         <header class="entry-header">
             <div class="container">
