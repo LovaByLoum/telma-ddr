@@ -202,6 +202,13 @@ header#header {
                         background-color: #e57e75;
                         padding: 0 15px;
                         border: none;
+                        &:focus {
+                            background-color: #c80f2d;
+                            outline: none;
+                        }
+                        &:hover {
+                            background-color: #c80f2d;
+                        }
                     }
                 }
 
