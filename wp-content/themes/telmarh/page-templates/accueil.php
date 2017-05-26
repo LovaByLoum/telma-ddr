@@ -113,14 +113,17 @@ get_header(); ?>
     </section>
     <section class="job-last">
         <!-- offres urgents -->
-        <?php if ( !empty( $offresUrgent ) && count( $offresUrgent ) > 0 ){ ?>
+        <?php if ( !empty( $offresUrgent ) && count( $offresUrgent ) > 0 ){
+            $i = 1;?>
             <h3 class="widget-title">NOS OFFRES <i class="fa fa-search"></i></h3>
             <?php
             $count = 0;
             foreach( $offresUrgent as $offre ){ ?>
                 <div class="job-item">
                     <div class="row">
-                        <?php list($urlImage) = ( isset( $offre->logo ) && !empty( $offre->logo ) ) ? $offre->logo : array();?>
+                        <?php $urlImage = $offre->logo[0]; //( isset( $offre->logo[0] ) && !empty( $offre->logo[0] ) ) ? $offre->logo[0] : array();
+                       // mp($urlImage);
+                        ?>
                         <?php if ( !empty( $urlImage ) && $i%2 == 1 ):?>
                             <figure class="col-sm-3 <?php if ( $count % 2  != 0 ) {?> right <?php }?>"><img src="<?php echo $urlImage;?>"/></figure>
                         <?php endif;?>
