@@ -1,2 +1,15 @@
-.entry-content p, .entry-content div { color: #646469; font-size: 14px; line-height: 125%; margin-bottom: 10px; }
+.entry-content h1 { color: #c80f2d; font-size: 25px; margin-bottom: 10px; text-transform: uppercase; }
+.entry-content h2 { color: #c80f2d; font-size: 18px; line-height: 125%; margin-bottom: 10px; text-transform: uppercase; }
+.entry-content h3 { color: #c80f2d; font-size: 16px; line-height: 125%; margin-bottom: 10px; }
+.entry-content h4 { color: #c80f2d; font-size: 14px; line-height: 125%; margin-bottom: 10px; }
+.entry-content h5 { color: #646469; font-size: 12px; line-height: 125%; margin-bottom: 10px; }
+.entry-content p, .entry-content div { color: #646469; font-size: 12px; line-height: 125%; margin-bottom: 10px; }
 .entry-content p:empty, .entry-content div:empty { display: none; }
+.entry-content ul, .entry-content ol { padding-left: 20px; }
+.entry-content ul li, .entry-content ol li { color: #646469; font-size: 12px; line-height: 125%; }
+.entry-content a.alignleft { float: left; margin-right: 10px; }
+.entry-content a.alignright { float: right; margin-left: 10px; }
+.entry-content blockquote { padding: 20px; position: relative; }
+.entry-content blockquote:before, .entry-content blockquote:after { color: #646469; font-family: 'FontAwesome'; font-size: 20px; position: absolute; }
+.entry-content blockquote:before { content: "\f10d"; left: 0; top: 0; }
+.entry-content blockquote:after { content: "\f10e"; bottom: 10px; right: 0; }

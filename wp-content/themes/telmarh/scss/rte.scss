@@ -1,12 +1,85 @@
 // all style rte
 .entry-content {
+    h1 {
+        color: #c80f2d;
+        font-size: 25px;
+        margin-bottom: 10px;
+        text-transform: uppercase;
+    }
+    h2 {
+        color: #c80f2d;
+        font-size: 18px;
+        line-height: 125%;
+        margin-bottom: 10px;
+        text-transform: uppercase;
+    }
+    h3 {
+        color: #c80f2d;
+        font-size: 16px;
+        line-height: 125%;
+        margin-bottom: 10px;
+    }
+    h4 {
+        color: #c80f2d;
+        font-size: 14px;
+        line-height: 125%;
+        margin-bottom: 10px;
+    }
+    h5 {
+        color: #646469;
+        font-size: 12px;
+        line-height: 125%;
+        margin-bottom: 10px;
+    }
     p, div {
         color: #646469;
-        font-size: 14px;
+        font-size: 12px;
         line-height: 125%;
         margin-bottom: 10px;
         &:empty {
             display: none;
+        }
+        a {
+        }
+    }
+    ul, ol {
+        padding-left: 20px;
+        li {
+            color: #646469;
+            font-size: 12px;
+            line-height: 125%;
+        }
+    }
+    a.alignleft {
+        float: left;
+        margin-right: 10px;
+    }
+    a.alignright {
+        float: right;
+        margin-left: 10px;
+    }
+
+    blockquote {
+        padding: 20px;
+        position: relative;
+        &:before, &:after {
+            color: #646469;
+            font-family: 'FontAwesome';
+            font-size: 20px;
+            position: absolute;
+        }
+        &:before {
+            content: "\f10d";
+            left: 0;
+            top: 0;
+        }
+        &:after {
+            content: "\f10e";
+            bottom: 10px;
+            right: 0;
+        }
+        p {
+            
         }
     }
 }
