@@ -25,21 +25,28 @@ $idImage = get_post_thumbnail_id($post->ID);
 $image = wp_get_attachment_image_src( $idImage, "full" );
 get_header(); ?>
 	<section id="page-full-entry-content">
+		<header class="entry-header">
+			<div class="container">
+				<?php if ( isset( $post->post_title ) && !empty( $post->post_title ) ):?>
+					<header class="entry-header">
+                        <h1 class="entry-title">
+                            Postuler à l'offre
+                            <a href="<?php echo get_permalink( $offre->id );?>">&quot;<?php echo $offre->titre;?>&quot;</a>
+                        </h1>
+                        <!-- .entry-meta -->
+                    </header>
+				<?php endif;?>
+			</div>
+		</header>
+
+
 	    <div class="grid grid-pad">
 		    <div class="col-1-1">
 	            <div id="primary" class="content-area">
 	                <main id="main" class="site-main" role="main">
 	                    <article class="status-publish hentry">
 	                        <div>
-								<?php if ( isset( $post->post_title ) && !empty( $post->post_title ) ):?>
-									<header class="entry-header">
-			                            <h1 class="entry-title">
-                                            Postuler à l'offre
-				                            <a href="<?php echo get_permalink( $offre->id );?>">&quot;<?php echo $offre->titre;?>&quot;</a>
-			                            </h1>
-			                            <!-- .entry-meta -->
-		                            </header>
-								<?php endif;?>
+								
 								<div class="entry-content">
 	                                <?php echo apply_filters("the_content", $post->post_content );?>
 	                            </div>
@@ -51,5 +58,4 @@ get_header(); ?>
 		    </div>
 		</div>
 	</section>
-
 <?php get_footer();
