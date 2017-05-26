@@ -113,9 +113,6 @@ get_header(); ?>
         </div>
     </section>
     <section class="job-last">
-        <?php if ( !empty( $blocService ) ) { ?>
-
-        <?php }?>
         <!-- offres urgents -->
         <?php if ( !empty( $offresUrgent ) && count( $offresUrgent ) > 0 ){ ?>
             <h3 class="widget-title">NOS OFFRES <i class="fa fa-search"></i></h3>
@@ -147,7 +144,6 @@ get_header(); ?>
                             </p>
                         </div>
                     </div>
-
                 </div>
             <?php $count ++; }?>
         <?php }?>

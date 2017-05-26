@@ -17,6 +17,7 @@ $version = '3.4';
  * @param array $contributors Contributors' data, associative by GitHub username.
  */
 function wpseo_display_contributors( $contributors ) {
+
 	foreach ( $contributors as $username => $dev ) {
 		echo '<li class="wp-person" id="wp-person-', $username, '">';
 		echo '<a href="https://github.com/', $username, '" class="web"><img src="//gravatar.com/avatar/', $dev->gravatar, '?s=60" class="gravatar" alt="">', $dev->name, '</a>';

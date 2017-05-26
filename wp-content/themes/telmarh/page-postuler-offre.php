@@ -21,6 +21,8 @@ if ( empty( $_POST ) ) {
 		wp_die( 'Vous n\'avez pas le droit d\'accèder à ce lien. Veuillez contactez l\'administrateur.' );
 	}
 }
+$idImage = get_post_thumbnail_id($post->ID);
+$image = wp_get_attachment_image_src( $idImage, "full" );
 get_header(); ?>
 	<section id="page-full-entry-content">
 	    <div class="grid grid-pad">
