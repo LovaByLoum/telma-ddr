@@ -42,6 +42,9 @@
         @media #{$min640} {
             font-size: 30px;
         }
+        a {
+            color: inherit;
+        }
     }
     header {
         margin-bottom: 10px;
