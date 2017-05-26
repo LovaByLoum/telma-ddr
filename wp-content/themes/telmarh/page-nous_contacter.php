@@ -71,7 +71,7 @@ get_header(); ?>
                             <div class="row">
                                 <div class="form-group col-md-6">
                                     <h5 class="head-accordion open">Votre Message <span class="required">*</span></h5>
-                                    <textarea name="message" class="form-control" placeholder="Votre message"><?php echo $_POST['message'];?></textarea>
+                                    <textarea name="message" class="textarea-field form-control" placeholder="Votre message"><?php echo $_POST['message'];?></textarea>
                                 </div>
                             </div>
                         </div>
