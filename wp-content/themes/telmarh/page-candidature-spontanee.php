@@ -13,6 +13,9 @@ $idImage = get_post_thumbnail_id($post->ID);
 $image = wp_get_attachment_image_src( $idImage, "full" );
 get_header(); ?>
 	<section id="page-full-entry-content" class="spontaneous-form form-page">
+		<figure class="alauneImg">
+            <img src="<?php echo get_template_directory_uri(); ?>/images/batiment.png" alt="">
+        </figure>
 		<header class="entry-header">
 			<div class="container">
 				<?php if ( isset( $post->post_title ) && !empty( $post->post_title ) ):?>
@@ -25,8 +28,8 @@ get_header(); ?>
 		</header>
 		<article class="content-area main-content" id="primary">
 	        <div class="status-publish hentry container">
-				<?php echo apply_filters('the_content','[form form-spontanee]');?>
 				<div class="form-layout">
+					<?php echo apply_filters('the_content','[form form-spontanee]');?>
 					<?php if ( isset( $_POST['error']['error']  ) && $_POST['error']['error'] == 1 && isset( $_POST['error']['msg'] ) && !empty( $_POST['error']['msg'] ) ): ?>
                         <ul><?php echo $_POST['error']['msg'];?></ul>
                     <?php  endif;?>
@@ -62,6 +65,19 @@ get_header(); ?>
                                 </div>
                             </div>
                         </div>
+                        <div class="control-group">
+                        	<h4 class="head-accordion open">Pièces jointes</h4>
+                        	<div class="head-accordion">
+                        		<div class="row">
+	                        		<div class="form-group file-item col-md-6">
+	                        			<input type="file" class="form-control" placeholder="Mon CV" name="Mon CV" id="mon_cv" value="<?php echo $name;?>" autocomplete="off">
+	                        		</div>
+	                        		<div class="form-group file-item col-md-6">
+	                        			<input type="file" class="form-control" placeholder="Ma lettre de motivation" name="Ma lettre de motivation" id="ma_lm" value="<?php echo $name;?>" autocomplete="off">
+	                        		</div>
+                        		</div>
+                        	</div>
+                        </div>
                         <input type="hidden" name="wp_nonce_contact" value="<?php echo $nonce;?>">
                         <input type="hidden" name="action" value="wp_nous_contacter">
                         <div class="submit-form">
@@ -71,22 +87,6 @@ get_header(); ?>
 				</div>
 	        </div>
         </article>
-
-	    <div class="grid grid-pad">
-		    <div class="col-1-1">
-	            <div id="primary" class="content-area">
-	                <main id="main" class="site-main" role="main">
-	                    <article class="status-publish hentry">
-	                        <div>
-								
-								
-		                        
-							</div>
-						</article>
-					</main>
-	            </div>
-		    </div>
-		</div>
 	</section>
 
 <?php get_footer();
