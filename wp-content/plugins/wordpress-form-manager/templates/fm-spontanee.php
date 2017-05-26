@@ -70,7 +70,7 @@ endwhile;
 ?>
 <div class="form-layout">
     <form enctype="multipart/form-data" method="post" action="<?php echo $fm_display->currentFormOptions['action'];?>" name="fm-form-<?php echo $fm_display->currentFormInfo['ID'];?>" id="fm-form-<?php echo $fm_display->currentFormInfo['ID'];?>" autocomplete="on" novalidate="novalidate">
-
+        <!-- Informations personnelles -->
     	<div class="control-group">
             <h4 class="head-accordion open">Informations personnelles</h4>
             <div class="head-accordion">
@@ -94,7 +94,9 @@ endwhile;
                 </div>
             </div>
         </div>
+        <!-- /Informations personnelles -->
 
+        <!-- Votre Message -->
     	<div class="control-group">
             <div class="row">
                 <div class="form-group col-md-6">
@@ -103,7 +105,9 @@ endwhile;
                 </div>
             </div>
     	</div>
+        <!-- /Votre Message -->
 
+        <!-- Pièces jointes -->
     	<div class="control-group">
             <h5 class="head-accordion open">Pièces jointes</h5>
             <div class="row">
@@ -123,9 +127,10 @@ endwhile;
                 </div>
             </div>
     	</div>
+        <!-- /Pièces jointes -->
 
         <div class="submit-form">
-            <input type="submit" name="fm_form_submit" id="fm_form_submit" class="button-spontanne" value="Valider">
+            <input type="submit" name="fm_form_submit" id="fm_form_submit" class="button-spontanne submit-button" value="Valider">
         </div>
     	
     	<input type="hidden" name="fm_nonce" id="fm_nonce" value="<?php echo wp_create_nonce('fm-nonce');?>" />
