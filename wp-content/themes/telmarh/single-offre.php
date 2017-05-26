@@ -16,6 +16,7 @@ $pageInscription = wp_get_post_by_template( "page-inscription.php", "" );
 $pagePostuleOffre = wp_get_post_by_template( "page-postuler-offre.php", "" );
 $linkPostule = ( is_user_logged_in() ) ? get_permalink( $pagePostuleOffre->ID ) ."?po=" . $post->ID : "javascript:;";
 get_header(); ?>
+<div class="listing-offer-page offer-page">
 	<section id="page-entry-content" class="single-offer">
         <header class="entry-header">
             <div class="container">
@@ -240,4 +241,5 @@ get_header(); ?>
             </div>
         </article>
 	</section>
+</div>
 <?php get_footer(); ?>
