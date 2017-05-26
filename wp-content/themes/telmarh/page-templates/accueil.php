@@ -78,7 +78,7 @@ get_header(); ?>
             </div>
             <!--block Recheche-->
             <div class="col-md-6  col-lg-4 card-item">
-                <div class="rechercher  animate-plus"  data-animations="bounceIn" data-animation-delay="0.8s" style="background-image: url(<?php print_r($imgBlocRecherche); ?>); background-color: <?php print_r($blocRechercheCouleur); ?>;">
+                <div class="rechercher  animate-plus"  data-animations="bounceIn" data-animation-delay="0.8s" style="background-color: <?php print_r($blocRechercheCouleur); ?>;">
                     <a href="<?php print_r($blocRechercheLien); ?>">
                         <p><i class="fa <?php echo $blocRecherchePicto; ?>"></i></p>
                         <p>

@@ -15,6 +15,7 @@ $domaineEtude = COffre::getCompetenceRequis( $post->ID, JM_TAXONOMIE_DOMAINE_ETU
 $pageInscription = wp_get_post_by_template( "page-inscription.php", "" );
 $pagePostuleOffre = wp_get_post_by_template( "page-postuler-offre.php", "" );
 $linkPostule = ( is_user_logged_in() ) ? get_permalink( $pagePostuleOffre->ID ) ."?po=" . $post->ID : "javascript:;";
+$postIdCandidature = wp_get_post_by_template("page-candidature-spontanee.php", "");
 get_header(); ?>
 <div class="listing-offer-page offer-page">
     <figure class="alauneImg">
@@ -23,7 +24,7 @@ get_header(); ?>
 	<section id="page-entry-content" class="single-offer">
         <header class="entry-header">
             <div class="container">
-                <p class="candidature-spontanne-link"><a href="#">Envoyer une candidature spontannée</a></p>
+                <p class="candidature-spontanne-link"><a href="<?php echo get_permalink($postIdCandidature->ID);?>">Envoyer une candidature spontannée</a></p>
                 <?php if ( isset( $offre->titre ) && !empty( $offre->titre ) ):?>
                     <h1 class="entry-title"><?php echo $offre->titre;?></h1>
                 <?php endif;?>
@@ -36,12 +37,16 @@ get_header(); ?>
             <div class="container">
                 <div class="row">
                     <div class="col-md-2 col-xl-1">
-                        <?php  if ( isset( $offre->criticite ) && !empty( $offre->criticite ) && $offre->criticite[0]->term_id == ID_TAXONOMIE_CRITICITE_URGENT ) :?>
+
                             <div class="entry-meta status-offre">
                             <!-- ajout class urgent et urgent -->
-                                <p class="criticite-offre urgent"><?php echo $offre->criticite[0]->name;?></p>
+                                <?php  if ( isset( $offre->criticite ) && !empty( $offre->criticite ) && $offre->criticite[0]->term_id == ID_TAXONOMIE_CRITICITE_URGENT ) :?>
+                                    <p class="criticite-offre urgent"><?php echo $offre->criticite[0]->name;?></p>
+                                <?php else:?>
+                                    <p class="criticite-offre no-urgent"><?php echo __("Non urgent", "telmarh");?></p>
+                                <?php  endif;?>
                             </div>
-                        <?php  endif;?>
+
                         <!-- .entry-meta -->
                     </div>
                     <div class="col-md-10 col-xl-11">

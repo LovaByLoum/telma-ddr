@@ -211,6 +211,8 @@ class COffre
 		            	$html .='<header class="entry-header">';
 			            	if ( $isUrgent ){
 								$html .= '<div class="labeled urgent">' . $offre->criticite[0]->name . '</div>';
+							} else{
+								$html .= '<div class="labeled no-urgent">' . __( "Non urgent", "telmarh" ) . '</div>';
 							}
 			                $html .='<h2 class="entry-title"><a href="' . get_permalink( $offre->id ) . '" title="' . $offre->titre . '"> ' . $offre->titre . '</a></h2>';
 			            	$html .='<div class="entry-meta">
