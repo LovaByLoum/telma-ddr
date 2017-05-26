@@ -1,0 +1,2 @@
+.entry-content p, .entry-content div { color: #646469; font-size: 14px; line-height: 125%; margin-bottom: 10px; }
+.entry-content p:empty, .entry-content div:empty { display: none; }

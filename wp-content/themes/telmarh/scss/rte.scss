@@ -1,0 +1,12 @@
+// all style rte
+.entry-content {
+    p, div {
+        color: #646469;
+        font-size: 14px;
+        line-height: 125%;
+        margin-bottom: 10px;
+        &:empty {
+            display: none;
+        }
+    }
+}

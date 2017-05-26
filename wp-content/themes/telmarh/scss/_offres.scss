@@ -1,5 +1,14 @@
+.offer-page {
+    padding: 0 0 90px;
+}
+
 .site-content {
-    padding-top: 90px;
+    // padding-bottom: 90px;
+    // padding-top: 90px;
+}
+
+.pagination-loading-mask {
+    min-height: 200px;
 }
 header#header {
     //display: none;
@@ -27,6 +36,7 @@ header#header {
             font-size: 48px;
         }
         @media #{$min992} {
+            margin-bottom: 0;
             margin-right: 5px;
         }
     }
@@ -46,18 +56,10 @@ header#header {
             &:focus {
                 outline: none;
             }
-            &::-webkit-input-placeholder {
-                color: #fff;
-            }
-            &::-moz-placeholder {
-                color: #fff;
-            }
-            &:-ms-input-placeholder {
-                color: #fff;
-            }
-            &:-moz-placeholder {
-                color: #fff;
-            }
+            &::-webkit-input-placeholder {color: #fff; }
+            &::-moz-placeholder {color: #fff; }
+            &:-ms-input-placeholder {color: #fff; }
+            &:-moz-placeholder {color: #fff; }
         }
         .search-submit {
             display: none;
@@ -181,6 +183,61 @@ header#header {
         }
     }
 }
+.pagination-bloc {
+    text-align: center;
+    a {
+        border: 1px solid #646469;
+        color: #646469;
+        font-size: 14px;
+        line-height: 125%;
+        margin: 0 5px;
+        padding: 2px 5px;
+        &:hover, &:focus {
+            background-color: #c80f2d;
+            border-color: #c80f2d;
+            color: #fff;
+            outline: none;
+            text-decoration: none;
+        }
+        &.active {
+            border-color: #c80f2d;
+            color: #c80f2d;
+            font-weight: 700;
+            &:hover, &:focus {
+                background: none;
+                color: #c80f2d;
+            }
+        }
+    }
+    .previouspostslink, .nextpostslink {
+        border: none;
+        font-size: 0;
+        height: 23px;
+        text-indent: -9999px;
+        &:hover, &:focus {
+            background:none;
+            border: none;
+            color: #c80f2d;
+            outline: none;
+            text-decoration: none;
+        }
+        &:before {
+            font-family: 'FontAwesome';
+            font-size: 18px;
+            line-height: 125%;
+        }
+    }
+    .previouspostslink {
+        &:before {
+            content: "\f104";
+        }
+    }
+    .nextpostslink {
+        &:before {
+            content: "\f105";
+        }
+    }
+}
 .widget-filters {
     background-color: #c80f2e;
     margin-bottom: 30px;
@@ -275,15 +332,30 @@ header#header {
             border: none;
             content: "\f00c";
             font-family: 'FontAwesome';
+            font-size: 16px;
             height: auto;
             @include browserCss ('transform', rotate(0));
-            top: 1px; left: 1px;
+            top: -1px; left: 1px;
             width: auto;
         }
     }
     .control {
         margin-bottom: 10px;
+        input {
+            &:checked {
+                ~.control__indicator {
+                    background-color: #c80f2e;
+                    border: 1px solid #fff;
+                }
+            }
+        }
     }
+    .control:hover input:not([disabled]):checked ~ .control__indicator, 
+    .control input:checked:focus ~ .control__indicator {
+        background-color: #c80f2e;
+    }
+
+    .control input:checked ~ .control__indicator
     .control:hover input ~ .control__indicator, 
     .control input:focus ~ .control__indicator {
         background-color: #fff;
@@ -353,20 +425,30 @@ header#header {
     }
     .main-content {
         .status-offre {
-            border: 1px solid #d9d9d9;
+            
             display: inline-block;
             margin-bottom: 10px;
-            padding: 6px 5px;
+            
             @media #{$min768} {
                 display: block;
                 margin-bottom: 0;
             }
             p {
-                
-                color: #646469;
+                border-style: solid;
+                border-width: 1px;
                 font-size: 14px;
                 margin: 0;
+                padding: 6px 5px;padding: 6px 5px;
                 text-align: center;
+            }
+            .urgent {
+                background-color: #c80f2d;
+                border-color: #c80f2d;
+                color: #fff;
+            }
+            .no-urgent {
+                border-color: #d9d9d9;
+                color: #646469;
             }
         }
     }
@@ -415,6 +497,7 @@ header#header {
             padding: 10px 5px;
             text-align: center;
             &:hover {
+                background-color: #c80f2d;
                 text-decoration: none;
             }
         }

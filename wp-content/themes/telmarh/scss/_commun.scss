@@ -12,6 +12,7 @@ body {
 }
 
 header#header {
+    height: 90px;
     left: 0;
     position: fixed;
     top: 0;
@@ -253,4 +254,17 @@ header#header {
         display: block;
         float: right;
     }
+}
+
+#page {
+    @media #{$min992} {
+        min-height: 96vh;
+    }
+}
+.site-footer {
+    background: transparent;
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    width: 100%;
 }
