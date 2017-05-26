@@ -50,15 +50,17 @@
             line-height: 125%;
         }
     }
-    a.alignleft {
+    .alignleft {
         float: left;
         margin-right: 10px;
     }
-    a.alignright {
+    .alignright {
         float: right;
         margin-left: 10px;
     }
-
+    hr {
+        background-color: #cdcdcd;
+    }
     blockquote {
         padding: 20px;
         position: relative;
