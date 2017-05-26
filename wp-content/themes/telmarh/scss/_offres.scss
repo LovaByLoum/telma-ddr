@@ -1,5 +1,14 @@
+.offer-page {
+    padding: 90px 0;
+}
+
 .site-content {
-    padding-top: 90px;
+    // padding-bottom: 90px;
+    // padding-top: 90px;
+}
+
+.pagination-loading-mask {
+    min-height: 200px;
 }
 header#header {
     //display: none;
@@ -27,6 +36,7 @@ header#header {
             font-size: 48px;
         }
         @media #{$min992} {
+            margin-bottom: 0;
             margin-right: 5px;
         }
     }
@@ -267,15 +277,30 @@ header#header {
             border: none;
             content: "\f00c";
             font-family: 'FontAwesome';
+            font-size: 16px;
             height: auto;
             @include browserCss ('transform', rotate(0));
-            top: 1px; left: 1px;
+            top: -1px; left: 1px;
             width: auto;
         }
     }
     .control {
         margin-bottom: 10px;
+        input {
+            &:checked {
+                ~.control__indicator {
+                    background-color: #c80f2e;
+                    border: 1px solid #fff;
+                }
+            }
+        }
     }
+    .control:hover input:not([disabled]):checked ~ .control__indicator, 
+    .control input:checked:focus ~ .control__indicator {
+        background-color: #c80f2e;
+    }
+
+    .control input:checked ~ .control__indicator
     .control:hover input ~ .control__indicator, 
     .control input:focus ~ .control__indicator {
         background-color: #fff;

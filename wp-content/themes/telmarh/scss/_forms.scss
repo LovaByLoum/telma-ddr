@@ -1,11 +1,32 @@
-.form-page{
+.alauneImg {
+    margin-bottom: 0;
+    padding-bottom: 20px;
+    @media #{$min640} {
+        padding-bottom: 40px;
+    }
+    @media #{$min768} {
+    }
+    @media #{$min992} {
+        padding-bottom: 80px;
+    }
+    img {
+        object-fit: cover;
+        height: 100%;
+        width: 100%;
+    }
+}
+.form-page {
+    padding: 0 0 90px;
     h1 {
         border-bottom: 1px solid #cdcdcd;
         color: #c80f2d;
-        font-size: 30px;
+        font-size: 25px;
         margin-bottom: 10px;
         padding-bottom: 10px;
         text-transform: uppercase;
+        @media #{$min640} {
+            font-size: 30px;
+        }
     }
     header {
         margin-bottom: 10px;
@@ -154,9 +175,9 @@
             }
         }
         .error {
+            color: #f00;
             font-size: 12px;
             line-height: 125%;
-            color: #f00;
             &.form-control {
                 border-color: #f00;
                 color: #646469;
@@ -315,6 +336,13 @@
             list-style: none;
             margin-bottom: 10px;
             &:last-child { margin-bottom: 0; }
+        }
+    }
+    .file-item {
+        .error {
+            color: #f00;
+            font-size: 12px;
+            line-height: 125%;
         }
     }
     .submit-form {
