@@ -36,10 +36,10 @@ get_header(); ?>
             <div class="container">
                 <div class="row">
                     <div class="col-md-2 col-xl-1">
-                        <?php if ( isset( $offre->criticite ) && !empty( $offre->criticite ) && $offre->criticite[0]->term_id == ID_TAXONOMIE_CRITICITE_URGENT ) :?>
+                        <?php  if ( isset( $offre->criticite ) && !empty( $offre->criticite ) && $offre->criticite[0]->term_id == ID_TAXONOMIE_CRITICITE_URGENT ) :?>
                             <div class="entry-meta status-offre">
-                            <!-- ajout class urgent et no-urgent -->
-                                <p class="criticite-offre no-urgent"><?php echo $offre->criticite[0]->name;?></p>
+                            <!-- ajout class urgent et urgent -->
+                                <p class="criticite-offre urgent"><?php echo $offre->criticite[0]->name;?></p>
                             </div>
                         <?php  endif;?>
                         <!-- .entry-meta -->
