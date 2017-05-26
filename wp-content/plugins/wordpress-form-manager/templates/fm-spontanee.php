@@ -68,58 +68,74 @@ while(fm_form_have_items()): fm_form_the_item();
 endwhile;
 
 ?>
-<form enctype="multipart/form-data" method="post" action="<?php echo $fm_display->currentFormOptions['action'];?>" name="fm-form-<?php echo $fm_display->currentFormInfo['ID'];?>" id="fm-form-<?php echo $fm_display->currentFormInfo['ID'];?>" autocomplete="on" novalidate="novalidate">
-
-	<div class="control-group">
-        <h4 class="head-accordion open">Informations personnelles</h4>
-        <div class="head-accordion">
-            <div class="col-1-2 form-field">
-				<label for="nom">Nom<span class="required">*</span></label>
-                <input type="text" autocomplete="off" placeholder="Nom" name="<?php echo $form_items['nom_spontanee'];?>" id="nom" value="<?php echo $user->nom;?>" <?php if ( is_user_logged_in() && !empty( $user->nom ) ) :?>readonly<?php endif;?>>
+<div class="form-layout">
+    <form enctype="multipart/form-data" method="post" action="<?php echo $fm_display->currentFormOptions['action'];?>" name="fm-form-<?php echo $fm_display->currentFormInfo['ID'];?>" id="fm-form-<?php echo $fm_display->currentFormInfo['ID'];?>" autocomplete="on" novalidate="novalidate">
+        <!-- Informations personnelles -->
+    	<div class="control-group">
+            <h4 class="head-accordion open">Informations personnelles</h4>
+            <div class="head-accordion">
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label for="nom">Nom<span class="required">*</span></label>
+                        <input type="text" autocomplete="off" class="form-control" placeholder="Nom" name="<?php echo $form_items['nom_spontanee'];?>" id="nom" value="<?php echo $user->nom;?>" <?php if ( is_user_logged_in() && !empty( $user->nom ) ) :?>readonly<?php endif;?>>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="prenom">Prénom <span class="required">*</span></label>
+                        <input type="text" autocomplete="off" class="form-control" placeholder="Prénom" name="<?php echo $form_items['prenom_spontanee'];?>" id="prenom" value="<?php echo $user->prenom;?>" <?php if ( is_user_logged_in() && !empty( $user->prenom ) ) :?>readonly<?php endif;?>>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="email">Adresse email <span class="required">*</span></label>
+                        <input type="text" autocomplete="off" class="form-control" placeholder="Email" name="<?php echo $form_items['email_spontanee'];?>" id="email" value="<?php echo $user->email;?>" <?php if ( is_user_logged_in() && !empty( $user->email ) ) :?>readonly<?php endif;?>>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="email">Numéro de téléphone</label>
+                        <input type="text" autocomplete="off" class="form-control" placeholder="Numéro de téléphone" name="<?php echo $form_items['num_phone_spontanee'];?>" id="phone" value="<?php echo ( !empty( $user->phone_number ) )? $user->phone_number : "";?>" <?php if ( is_user_logged_in() && !empty( $user->phone_number ) ) :?>readonly<?php endif;?>>
+                    </div>
+                </div>
             </div>
-            <div class="col-1-2 form-field">
-                <label for="prenom">Prénom <span class="required">*</span></label>
-                <input type="text" autocomplete="off" placeholder="Prénom" name="<?php echo $form_items['prenom_spontanee'];?>" id="prenom" value="<?php echo $user->prenom;?>" <?php if ( is_user_logged_in() && !empty( $user->prenom ) ) :?>readonly<?php endif;?>>
-            </div>
-	        <div class="col-1-2 form-field">
-		        <label for="email">Adresse email <span class="required">*</span></label>
-                <input type="text" autocomplete="off" placeholder="Email" name="<?php echo $form_items['email_spontanee'];?>" id="email" value="<?php echo $user->email;?>" <?php if ( is_user_logged_in() && !empty( $user->email ) ) :?>readonly<?php endif;?>>
-	        </div>
-	        <div class="col-1-2 form-field">
-		        <label for="email">Numéro de téléphone</label>
-                <input type="text" autocomplete="off" placeholder="Numéro de téléphone" name="<?php echo $form_items['num_phone_spontanee'];?>" id="phone" value="<?php echo ( !empty( $user->phone_number ) )? $user->phone_number : "";?>" <?php if ( is_user_logged_in() && !empty( $user->phone_number ) ) :?>readonly<?php endif;?>>
-	        </div>
         </div>
-    </div>
-	<div class="control-group">
-		<div class="col-1-1 form-field">
-			<h5 class="head-accordion open">Votre Message</h5>
-			<textarea name="<?php echo $form_items['message_spontanee'];?>" placeholder="Votre message"></textarea>
-		</div>
-	</div>
-	<div class="control-group">
-		<div class="col-1-1 form-field">
-			<h5 class="head-accordion open">Pièces jointes</h5>
-			<div class="col-1-2">
-				<input type="hidden" name="MAX_FILE_SIZE" value="10240000">
-				<input name="<?php echo $form_items['cv_spontanee'];?>" id="fileCv" type="file" class="inputfile">
-				<label for="fileCv" class="input-file-trigger"><span>Mon CV *</span></label>
-				<em>(.doc, .rtf, .pdf, .docx)</em>
-				<span class="file-return cv"></span>
-			</div>
-			<div class="col-1-2">
-				<input type="hidden" name="MAX_FILE_SIZE" value="10240000">
-				<input name="<?php echo $form_items['lm_spontanee'];?>" id="fileLm" type="file" class="inputfile">
-				<label for="fileLm" class="input-file-trigger"><span>Ma lettre de motivation *</span></label>
-				<em>(.doc, .rtf, .pdf, .docx)</em>
-				<span class="file-return lm"></span>
+        <!-- /Informations personnelles -->
 
-			</div>
-		</div>
-	</div>
-	<input type="submit" name="fm_form_submit" id="fm_form_submit" class="button-spontanne" value="Valider" >
-	<input type="hidden" name="fm_nonce" id="fm_nonce" value="<?php echo wp_create_nonce('fm-nonce');?>" />
-	<input type="hidden" name="fm_nonce" id="fm_nonce" value="<?php echo wp_create_nonce('fm-nonce');?>" />
-	<input type="hidden" name="fm_id" id="fm_id" value="<?php echo $fm_display->currentFormInfo['ID'];?>" />
-	<input type="hidden" name="fm_uniq_id" id="fm_uniq_id" value="fm-<?php echo uniqid();?>" />
-<?php echo fm_form_end(); ?>
+        <!-- Votre Message -->
+    	<div class="control-group">
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <h5 class="head-accordion open">Votre Message</h5>
+                    <textarea name="<?php echo $form_items['message_spontanee'];?>"  class="textarea-field form-control" placeholder="Votre message"></textarea>
+                </div>
+            </div>
+    	</div>
+        <!-- /Votre Message -->
+
+        <!-- Pièces jointes -->
+    	<div class="control-group">
+            <h5 class="head-accordion open">Pièces jointes</h5>
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <input type="hidden" name="MAX_FILE_SIZE" value="10240000">
+                    <input name="<?php echo $form_items['cv_spontanee'];?>" id="fileCv" type="file" class="form-control inputfile">
+                    <!-- <label for="fileCv" class="input-file-trigger"><span>Mon CV *</span></label> -->
+                    <!-- <em>(.doc, .rtf, .pdf, .docx)</em> -->
+                    <span class="file-return cv"></span>
+                </div>
+                <div class="form-group col-md-6">
+                    <input type="hidden" name="MAX_FILE_SIZE" value="10240000">
+                    <input name="<?php echo $form_items['lm_spontanee'];?>" id="fileLm" type="file" class="form-control inputfile">
+                    <!-- <label for="fileLm" class="input-file-trigger"><span>Ma lettre de motivation *</span></label> -->
+                    <!-- <em>(.doc, .rtf, .pdf, .docx)</em> -->
+                    <span class="file-return lm"></span>
+                </div>
+            </div>
+    	</div>
+        <!-- /Pièces jointes -->
+
+        <div class="submit-form">
+            <input type="submit" name="fm_form_submit" id="fm_form_submit" class="button-spontanne submit-button" value="Valider">
+        </div>
+    	
+    	<input type="hidden" name="fm_nonce" id="fm_nonce" value="<?php echo wp_create_nonce('fm-nonce');?>" />
+    	<input type="hidden" name="fm_nonce" id="fm_nonce" value="<?php echo wp_create_nonce('fm-nonce');?>" />
+    	<input type="hidden" name="fm_id" id="fm_id" value="<?php echo $fm_display->currentFormInfo['ID'];?>" />
+    	<input type="hidden" name="fm_uniq_id" id="fm_uniq_id" value="fm-<?php echo uniqid();?>" />
+    <?php echo fm_form_end(); ?>
+</form>

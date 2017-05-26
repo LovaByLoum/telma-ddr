@@ -19,7 +19,7 @@
 
 // ** Réglages MySQL - Votre hébergeur doit vous fournir ces informations. ** //
 /** Nom de la base de données de WordPress. */
-define('DB_NAME', 'telma_rh');
+define('DB_NAME', 'recrutement');
 
 /** Utilisateur de la base de données MySQL. */
 define('DB_USER', 'root');

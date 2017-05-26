@@ -853,7 +853,7 @@ function removeRules(rulesObj){
 }
 
 function setCollabsBlockTo(element, count, removevalue){
-    element.find('.col-1-1.number h5 > span').html(count+1);
+    element.find('.number h5 > span').html(count+1);
     //name
     element.find('[name]').each(function(){
         _name = jQuery(this).attr('name').match(/[a-zA-Z_-]+/);
@@ -930,3 +930,47 @@ function showPreviewImage_click(event) {
         reader.readAsDataURL(f); // `f` : current `File` object
     }(i)); // `i` : `n` within immediately invoked function expression
 }
+
+// From new template
+
+jQuery( function( $ ){
+
+    $(document).ready(function() {
+        // open menu
+        $('.bt-toggle').click ( function () {
+            $(this).toggleClass('opened');
+            $('.navigation').toggleClass('nav-close');
+            $('body').toggleClass('nav-opened');
+        });
+
+        // open close login
+        var hoverLogin = false;
+
+        $('#login-user').hover ( function (){
+            hoverLogin = true;
+        }, function () {
+            hoverLogin = false;
+        });
+
+        $('.btn-login').click ( function () {
+            $('#login-user').slideToggle ();
+            return false;
+        });
+
+        $(document).click ( function () {
+            if ( (hoverLogin == false) && $('#login-user').is(':visible') ) {
+                $('#login-user').slideUp ();
+            }
+        })
+    });
+
+    // cards sur la home
+    if ($('.cards').length > 0) {
+        $('.cards').packery({
+            // options
+            itemSelector: '.card-item',
+            gutter: 0
+        });
+    }
+
+});

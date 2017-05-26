@@ -1,17 +1,20 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Narisoa
- * Date: 01/08/2016
- * Time: 10:09
+ * Template Name: Page login
+ *
+ *
+ * @package WordPress
+ * @subpackage telmarh
+ * @since telmarh 1.0
+ * @author : Netapsys
  */
-global $post;
+global $post,$fmdb, $fm_globals;
 $pageInscription = wp_get_post_by_template( "page-inscription.php", "" );
 $linkLostPassword = wp_lostpassword_url();
 $pagePostule = wp_get_post_by_template( "page-postuler-offre.php", "" );
 $is_offre = ( $post->post_type == JM_POSTTYPE_OFFRE  && is_single( $post->ID ) ) ? true : false;
 $linkRedirect = ( $is_offre ) ? get_permalink( $pagePostule->ID ) ."?po=" . $post->ID : get_permalink( $post->ID );
-?>
+get_header();?>
 <form name="loginform" id="loginform" action="<?php echo $linkRedirect; ?>" method="post">
 	<?php if ( isset( $_POST['errors'] ) && !empty( $_POST['errors'] ) ):
 			$errors = $_POST['errors'];?>
@@ -26,7 +29,7 @@ $linkRedirect = ( $is_offre ) ? get_permalink( $pagePostule->ID ) ."?po=" . $pos
 		</p>
 	<?php endif;?>
 	<p class="login-username data-error">
-		<label for="user_login">Identifiant ou adresse de messagerie</label>
+		<label for="user_login">Identifiant ou adresse de messagerie </label>
 		<input type="text" name="custom_log" id="user_login" class="input_text <?php if ( !empty( $error ) && isset( $error['invalid_username'] ) && !empty( $error['invalid_username'] ) ):?>error<?php endif;?>" value="<?php echo $_POST['custom_log'];?>" size="20">
 	</p>
 
@@ -59,3 +62,4 @@ $linkRedirect = ( $is_offre ) ? get_permalink( $pagePostule->ID ) ."?po=" . $pos
 	</p>
 
 </form>
+<?php get_footer();

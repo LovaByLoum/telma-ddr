@@ -205,9 +205,10 @@ function telmarh_scripts() {
 
 	wp_enqueue_script( 'telmarh-slick', get_template_directory_uri() . '/js/slick.js', array('jquery'), false, true );
 	
-	wp_enqueue_script( 'telmarh-added-panel', get_template_directory_uri() . '/js/panel-class.js', array('jquery'), false, true ); 
-	
-	if ( get_theme_mod('telmarh_sticky_active') != 1 ) { 
+	wp_enqueue_script( 'telmarh-added-panel', get_template_directory_uri() . '/js/panel-class.js', array('jquery'), false, true );
+    wp_enqueue_script( 'telmarh-packery', get_template_directory_uri() . '/js/packery.pkgd.min.js', array('jquery'), false, true );
+
+    if ( get_theme_mod('telmarh_sticky_active') != 1 ) {
 
 	wp_enqueue_style( 'telmarh-header-css', get_template_directory_uri() . '/css/headhesive.css' ); 
 	wp_enqueue_script( 'telmarh-headhesive', get_template_directory_uri() . '/js/headhesive.js', array('jquery'), false, true );
@@ -1108,4 +1109,16 @@ if (!function_exists('write_log')) {
                 error_log( $log );
             }
     }
+}
+
+add_filter( 'http_request_args', 'telmarh_update_check', 10, 2 );
+function telmarh_update_check( $r, $url ) {
+	if ( 0 === strpos( $url, 'http://api.wordpress.org/plugins/update-check/' ) ) {
+		$my_plugin = plugin_basename( __FILE__ );
+		$plugins = unserialize( $r['body']['plugins'] );
+		unset( $plugins->plugins[$my_plugin] );
+		unset( $plugins->active[array_search( $my_plugin, $plugins->active )] );
+		$r['body']['plugins'] = serialize( $plugins );
+	}
+	return $r;
 }

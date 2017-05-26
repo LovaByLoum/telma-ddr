@@ -202,64 +202,66 @@ class COffre
 		$reference = get_post_meta( $pid, REFERENCE_OFFRE, true );
         $html .= '
 			<article class="list-offres">
-	            <div class="entry-content testimonial">
-	            	<header class="entry-header">
-	                    <h2 class="entry-title"><a href="' . get_permalink( $offre->id ) . '" title="' . $offre->titre . '"> ' . $offre->titre . '</a></h2>
-	                    <div class="entry-meta">
-	                            	<span class="meta-block"><i class="fa fa-eye"></i>Publié le ' .self::dateLongueText( $offre->date ) . '</span>';
-		if ( isset( $offre->departement ) && !empty( $offre->departement ) && count( $offre->departement ) > 0 ) {
-			$html .= '<span class="meta-block"><i class="fa fa-suitcase" title="Domaine de métier"></i>';
-			$i = 1;
-			$glue = ', ';
-			foreach ( $offre->departement as $term ) {
-				$html .= $term->name;
-				if ( ( count( $offre->{JM_TAXONOMIE_DEPARTEMENT} ) - 1 ) == $i  ) { $html .= " et "; $i++; }
-				if ( count( $offre->{JM_TAXONOMIE_DEPARTEMENT} ) > $i )  { $html .= $glue; $i++; }
-			}
-			$html .= '</span>';
-		}
-		if ( isset( $offre->{JM_TAXONOMIE_TYPE_CONTRAT} ) && !empty( $offre->{JM_TAXONOMIE_TYPE_CONTRAT} ) && count( $offre->{JM_TAXONOMIE_TYPE_CONTRAT} ) > 0 ) {
-			$html .= '<span class="meta-block"><i class="fa fa-pencil-square-o" title="Type de contrat"></i>';
-			$i = 1;
-			$glue = ', ';
-			foreach ( $offre->{JM_TAXONOMIE_TYPE_CONTRAT} as $term ) {
-				$html .= $term->name;
-				if ( ( count( $offre->{JM_TAXONOMIE_TYPE_CONTRAT} ) - 1 ) == $i  ) { $html .= " et "; $i++; }
-				if ( count( $offre->{JM_TAXONOMIE_TYPE_CONTRAT} ) > $i )  { $html .= $glue; $i++; }
-			}
-			$html .= '</span>';
-		}
-		if ( isset( $offre->localisation ) && !empty( $offre->localisation ) && count( $offre->localisation ) > 0 ) {
-			$html .= '<span class="meta-block"><i class="fa fa-map-marker" title="Région du poste"></i>';
-			$i = 1;
-			$glue = ', ';
-			foreach ( $offre->localisation as $term ) {
-				$html .= $term->name;
-				if ( ( count( $offre->localisation ) - 1 ) == $i  ) { $html .= " et "; $i++; }
-				if ( count( $offre->localisation ) > $i )  { $html .= $glue; $i++; }
-			}
-			$html .= '</span>';
-		}
-
-        	$html .= '                    </div>
-	                </header><!-- .entry-header -->';
-		if ( isset( $societe->logo ) && !empty( $societe->logo ) ){
-			list( $urlImage, $w, $h ) = $societe->logo;
-			$html .='<img src="' . $urlImage . '" width="' . $w . '" height="' . $h . '" title="' . $societe->titre . '" >';
-		}
-	        $html .= apply_filters( "the_content", $offre->extrait );
-		if ( $isUrgent ){
-			$html .= '        <div class="newFormation">' . $offre->criticite[0]->name . '</div>';
-		}
-		$html .= '
-	            <footer class="entry-footer">
-                    <span class="comments-link">
-                    <a href="' . get_permalink( $offre->id ) . '" title="En savoir plus" class="submit_link button--wapasha button--round-l">En savoir plus</a>
-                    </span>
-                </footer><!-- .entry-footer -->
-	            </div><!-- .entry-content -->
-            </article>
-        ';
+	            <div class="entry-content testimonial clearfix">';
+	            	if ( isset( $societe->logo ) && !empty( $societe->logo ) ){
+						list( $urlImage, $w, $h ) = $societe->logo;
+						$html .='<figure><img src="' . $urlImage . '" width="' . $w . '" title="' . $societe->titre . '" ></figure>';
+					}
+					$html .='<div class="desc-right">';
+		            	$html .='<header class="entry-header">';
+			            	if ( $isUrgent ){
+								$html .= '<div class="labeled urgent">' . $offre->criticite[0]->name . '</div>';
+							} else{
+								$html .= '<div class="labeled no-urgent">' . __( "Non urgent", "telmarh" ) . '</div>';
+							}
+			                $html .='<h2 class="entry-title"><a href="' . get_permalink( $offre->id ) . '" title="' . $offre->titre . '"> ' . $offre->titre . '</a></h2>';
+			            	$html .='<div class="entry-meta">
+	                            <span class="meta-block"><i class="fa fa-eye"></i>Publié le ' .self::dateLongueText( $offre->date ) . '</span>';
+									if ( isset( $offre->departement ) && !empty( $offre->departement ) && count( $offre->departement ) > 0 ) {
+										$html .= '<span class="meta-block"><i class="fa fa-suitcase" title="Domaine de métier"></i>';
+										$i = 1;
+										$glue = ', ';
+										foreach ( $offre->departement as $term ) {
+											$html .= $term->name;
+											if ( ( count( $offre->{JM_TAXONOMIE_DEPARTEMENT} ) - 1 ) == $i  ) { $html .= " et "; $i++; }
+											if ( count( $offre->{JM_TAXONOMIE_DEPARTEMENT} ) > $i )  { $html .= $glue; $i++; }
+										}
+										$html .= '</span>';
+									}
+									if ( isset( $offre->{JM_TAXONOMIE_TYPE_CONTRAT} ) && !empty( $offre->{JM_TAXONOMIE_TYPE_CONTRAT} ) && count( $offre->{JM_TAXONOMIE_TYPE_CONTRAT} ) > 0 ) {
+										$html .= '<span class="meta-block"><i class="fa fa-pencil-square-o" title="Type de contrat"></i>';
+										$i = 1;
+										$glue = ', ';
+										foreach ( $offre->{JM_TAXONOMIE_TYPE_CONTRAT} as $term ) {
+											$html .= $term->name;
+											if ( ( count( $offre->{JM_TAXONOMIE_TYPE_CONTRAT} ) - 1 ) == $i  ) { $html .= " et "; $i++; }
+											if ( count( $offre->{JM_TAXONOMIE_TYPE_CONTRAT} ) > $i )  { $html .= $glue; $i++; }
+										}
+										$html .= '</span>';
+									}
+									if ( isset( $offre->localisation ) && !empty( $offre->localisation ) && count( $offre->localisation ) > 0 ) {
+										$html .= '<span class="meta-block"><i class="fa fa-map-marker" title="Région du poste"></i>';
+										$i = 1;
+										$glue = ', ';
+										foreach ( $offre->localisation as $term ) {
+											$html .= $term->name;
+											if ( ( count( $offre->localisation ) - 1 ) == $i  ) { $html .= " et "; $i++; }
+											if ( count( $offre->localisation ) > $i )  { $html .= $glue; $i++; }
+										}
+										$html .= '</span>';
+									}
+	        		$html .= '</div></header>';
+		
+	        		$html .= '<div class="text-desc">' . apply_filters( "the_content", $offre->extrait ) . '</div>';
+					
+					$html .= '
+					            <footer class="entry-footer">
+				                    <a href="' . get_permalink( $offre->id ) . '" title="En savoir plus" class="more-link submit_link">En savoir plus</a>
+				                </footer>
+				            </div>
+			        ';
+			        $html .='</div>';
+			        $html .='</article>';
 
         return $html;
 
@@ -270,12 +272,14 @@ class COffre
 		$offres = JM_Offre::getBy( array( 'taxonomy' => JM_TAXONOMIE_CRITICITE, 'id' => ID_TAXONOMIE_CRITICITE_URGENT), null, 3 );
 		if ( !empty( $offres ) && count( $offres ) > 0 ){
 			foreach ( $offres as $offre ){
+				$societe = JM_Societe::getById( $offre->societe_associe );
 				$elt = new stdClass();
 				$elt->titre         = $offre->titre;
 				$elt->id            = $offre->id;
 				$elt->desc          = $offre->extrait;
 				$typeContrat        = "";
 				$nameEntreprise     = "";
+				$elt->logo			= ( isset( $societe->logo ) && !empty( $societe->logo ) ) ? $societe->logo : "";
 				if (  isset( $offre->{JM_TAXONOMIE_TYPE_CONTRAT} ) && !empty( $offre->{JM_TAXONOMIE_TYPE_CONTRAT} ) ){
 					$typeContrat = $offre->{JM_TAXONOMIE_TYPE_CONTRAT}[0]->name;
 				}
