@@ -26,7 +26,7 @@ $blocConnecterCouleur = get_field( "selection_couleur_connecter",$post->ID );
 $blocRecherchePicto = get_field( "picto_recherche",$post->ID );
 $blocRechercheTitre = get_field( "titre_recherche",$post->ID );
 $blocRechercheImage = get_field( "image_recherche",$post->ID );
-$blocRechercheLien = get_field( "titre_recherche",$post->ID );
+$blocRechercheLien = get_field( "lien_recherche",$post->ID );
 $blocRechercheCouleur = get_field( "selection_couleur_recherche",$post->ID );
 
 $blocDecouvrirPicto = get_field( "picto_decouvrir",$post->ID );
@@ -38,7 +38,7 @@ $blocDecouvrirCouleur = get_field( "selection_couleur_decouvrir",$post->ID );
 $blocContacterPicto = get_field( "picto_contacter",$post->ID );
 $blocContacterTitre = get_field( "titre_contacter",$post->ID );
 $blocContacterImage = get_field( "image_contacter",$post->ID );
-$blocContacterLien = get_field( "lient_contacter",$post->ID );
+$blocContacterLien = get_field( "lien_contacter",$post->ID );
 $blocContacterCouleur = get_field( "selection_couleur_contacter",$post->ID );
 
 // image pour block connecter
@@ -76,7 +76,7 @@ get_header(); ?>
             </div>
             <?php endif;?>
             <!--block Recheche-->
-            <?php if ( isset( $blocRechercheLien ) && !empty( $blocRechercheLien ) && isset( $blocRechercheTitre ) && !empty( $blocRechercheTitre ) && isset( $blocRechercheTitre ) && isset( $blocRecherchePicto ) && !empty( $blocRecherchePicto ) ):?>
+            <?php if ( isset( $blocRechercheLien ) && !empty( $blocRechercheLien ) && isset( $blocRechercheTitre ) && !empty( $blocRechercheTitre ) && isset( $blocRecherchePicto ) && !empty( $blocRecherchePicto ) ):?>
             <div class="col-md-6  col-lg-4 card-item">
                 <div class="rechercher  animate-plus"  data-animations="bounceIn" data-animation-delay="0.8s" style="background-color: <?php print_r($blocRechercheCouleur); ?>;">
                     <a href="<?php print_r($blocRechercheLien); ?>">
