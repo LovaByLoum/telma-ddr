@@ -359,6 +359,94 @@ function telmarh_login_enqueue_script()
 	            background-image: url(' . esc_url( $logo_image ) . ');
 	            padding-bottom: 30px;
 	        }
+          .login-action-login {
+            background-color: #fff;
+          }
+          body #login {
+            padding: 0;
+          }
+          #login .message {
+            border-left: none;
+            color: #c80f2d;
+            font-family: arial;
+            font-size: 14px;
+            -webkit-box-shadow: none;
+            -moz-box-shadow: none;
+            -o-box-shadow: none;
+            -ms-box-shadow: none;
+            box-shadow: none;
+          }
+          .login label {
+            color: #646469;
+            font-family: arial;
+            font-size: 14px;
+          }
+          .login #loginform {
+            -webkit-box-shadow: none
+            -moz-box-shadow: none;
+            -ms-box-shadow: none;
+            -o-z-box-shadow: none;
+            box-shadow: none;
+          }
+          .login #loginform .input, .login #loginform input[type=checkbox], .login input[type=text] {
+            color: #646469;
+            font-family: arial;
+            font-size: 14px;
+          }
+          .login #loginform input[type=checkbox], .login input[type=text] {
+
+          }
+          .login #loginform input::-webkit-input-placeholder {color: #646469; }
+          .login #loginform input::-moz-placeholder {color: #646469; }646469
+          .login #loginform input:-ms-input-placeholder {color: #646469; }
+          .login #loginform input:-moz-placeholder {color: #646469; }
+          .login #loginform .forgetmenot {
+            float: none;
+          }
+          .login #loginform .forgetmenot label {
+            color: #646469;
+            font-family: arial;
+            font-size: 14px;
+          }
+          #login #loginform p.submit .button {
+            background-color: #e57e75;
+            border: none;
+            -webkit-border-radius: 0
+            -moz-border-radius: 0;
+            -ms-border-radius: 0;
+            -o-border-radius: 0;
+            border-radius: 0;
+            -webkit-box-shadow: none
+            -moz-box-shadow: none;
+            -ms-box-shadow: none;
+            -o-z-box-shadow: none;
+            box-shadow: none;
+            -webkit-text-shadow: none
+            -moz-text-shadow: none;
+            -ms-text-shadow: none;
+            -o-text-shadow: none;
+            text-shadow: none;
+            font-size: 14px;
+            height: 37px;
+            line-height: 37px;
+            padding: 0 12px 12px;
+          }
+          #login #loginform p.submit .button:hover {
+            background-color: #c80f2d;
+          }
+          .login p#backtoblog, .login #nav {
+            color: #646469;
+            font-size: 12px;
+          }
+          .login p#nav a, .login p#backtoblog a {
+            color: #646469;
+          }
+          .login p#backtoblog a:hover, .login p#nav a:hover, .login h1 a:hover {
+            color: #c80f2d;
+          }
+          .login #backtoblog a:hover, .login #nav a:hover, .login h1 a:hover {
+            color: #c80f2d;
+          }
 	    </style>';
 	echo $style;
 }

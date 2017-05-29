@@ -32,6 +32,8 @@ header#header .nav-right .login form .input_text { width: 100%; line-height: 26p
 header#header .nav-right .login form .login-remember { margin-bottom: 25px; }
 header#header .nav-right .login form .login-submit { text-align: center; margin-bottom: 25px; }
 header#header .nav-right .login form .login-submit .button-primary { line-height: 30px; font-size: 14px; color: #fff; background-color: #e57e75; padding: 0 15px; border: none; }
+header#header .nav-right .login form .login-submit .button-primary:focus { background-color: #c80f2d; outline: none; }
+header#header .nav-right .login form .login-submit .button-primary:hover { background-color: #c80f2d; }
 header#header .nav-right .login form .login-links { font-size: 14px; margin-bottom: 0; }
 header#header .nav-right .login form .login-links a { color: #646469; }
 header#header .nav-right .login form .login-links a.signup { float: right; }
@@ -41,9 +43,20 @@ header#header:after { border-top: 90px solid #d30630; border-right: calc(100vw) 
 
 .site-footer:after { border-bottom: 90px solid #d30630; border-left: calc(40vw) solid transparent; width: 0; height: 0; content: ""; display: block; float: right; }
 
-@media only screen and (min-width: 992px) { #page { min-height: 96vh; } }
+@media only screen and (min-width: 992px) { #page { min-height: 98vh; } }
 
-.site-footer { background: transparent; bottom: 0; left: 0; position: absolute; width: 100%; }
+.site-footer { background: transparent; bottom: 0; left: 0; position: fixed; width: 100%; }
+
+.error-404 h1 { color: #d30630; font-size: 80px; font-weight: 700; text-align: center; text-transform: uppercase; }
+.error-404 h1 span { color: #fff; }
+.error-404 .page-header { position: absolute; top: 50%; left: 0; width: 100%; z-index: 5; }
+.error-404 p { text-align: center; color: #fff; font-size: 20px; text-transform: uppercase; font-weight: 700; }
+.error-404 .btn { display: block; margin-top: 30px; position: relative; text-align: center; z-index: 2; }
+.error-404 .submit_link { background-color: #e57e75; color: #fff; display: inline-block; font-size: 20px; font-weight: 700; height: 51px; line-height: 51px; min-width: 240px; text-align: center; text-transform: uppercase; }
+.error-404 .submit_link:focus { background-color: #c80f2d; outline: none; }
+.error-404 .submit_link:hover { background-color: #c80f2d; text-decoration: none; }
+
+.home { padding: 0 0 90px; }
 
 .home-hero { height: 385px; background-position: center center; background-size: cover; margin-bottom: -210px; }
 .home-hero .logo-home { padding-top: 75px; margin-left: calc(35vw); }
@@ -276,5 +289,3 @@ header#header:after { border-top: 90px solid #d30630; border-right: calc(100vw) 
 .page-standard h1 a { color: inherit; text-decoration: underline; }
 .page-standard header { margin-bottom: 10px; }
 .page-standard header p:last-child { margin-bottom: 0; }
-
-#login .message { border-left: none; color: #c80f2d; font-size: 14px; }
