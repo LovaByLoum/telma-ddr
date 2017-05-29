@@ -1,6 +1,16 @@
 @todo 1 : Mettre le bloc suivant au corbeille
-- Bloc best Client
-- Bloc Services – page d’accueil
-- Bloc Testimoniale
+-Cliquer sur le menu ACF
+-Mettre à la corbeille le Bloc best Client
+-Mettre à la corbeille le Bloc Services – page d’accueil
+-Mettre à la corbeille le Bloc Testimoniale
 
-@todo 2 : Importer le ACF dont le nom : : ACF-block-home.xml
+@todo 2 : Activer le module WordPress Importer 
+ -Cliquer sur le menu Extension
+ -Activer le plugin WordPress Importer
+
+@todo 3 : Importer le ACF dont le nom : : ACF-block-home.xml
+-Cliquer sur le menu Outils
+-Cliquer sur Importer
+-Choisir WordPress
+-Enfin importer le fichier
+
