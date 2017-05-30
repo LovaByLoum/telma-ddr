@@ -21,7 +21,11 @@ $image = wp_get_attachment_image_src( $idImage, "full" );
 get_header(); ?>
 <section id="page-full-entry-content" class="contact-form form-page">
     <figure class="alauneImg">
-        <img src="<?php echo get_template_directory_uri(); ?>/images/batiment.png" alt="">
+        <?php if ( isset( $image ) && !empty( $image ) ){?>
+            <img src="<?php echo $image; ?>" alt="">
+        <?php } else {?>
+            <img src="<?php echo get_template_directory_uri(); ?>/images/batiment.jpg" alt="">
+        <?php }?>
     </figure>
     <header class="entry-header">
         <div class="container">
