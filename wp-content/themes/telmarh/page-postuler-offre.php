@@ -26,8 +26,12 @@ $image = wp_get_attachment_image_src( $idImage, "full" );
 get_header(); ?>
 <section id="page-full-entry-content" class="postuler-form form-page">
 	<figure class="alauneImg">
-        <img src="<?php echo get_template_directory_uri(); ?>/images/batiment.jpg" alt="">
-    </figure>
+		<?php if ( isset( $image ) && !empty( $image ) ){?>
+			<img src="<?php echo $image; ?>" alt="">
+		<?php } else {?>
+			<img src="<?php echo get_template_directory_uri(); ?>/images/batiment.jpg" alt="">
+		<?php }?>
+	</figure>
 	<header class="entry-header">
 		<div class="container">
 			<?php if ( isset( $post->post_title ) && !empty( $post->post_title ) ):?>

@@ -29,11 +29,14 @@ $catPermis1             = array( "a" => "Permis A", "ap" => "Permis A'", "b" => 
 $catPermis2             = array( "d" => "Permis D", "e" => "Permis E", "f" => "Permis F" );
 $idImage = get_post_thumbnail_id($post->ID);
 $image = wp_get_attachment_image_src( $idImage, "full" );
-
 get_header(); ?>
 <section id="page-full-entry-content" class="registration-form form-page">
     <figure class="alauneImg">
-        <img src="<?php echo get_template_directory_uri(); ?>/images/batiment.jpg" alt="">
+        <?php if ( isset( $image ) && !empty( $image ) ){?>
+            <img src="<?php echo $image; ?>" alt="">
+        <?php } else {?>
+            <img src="<?php echo get_template_directory_uri(); ?>/images/batiment.jpg" alt="">
+        <?php }?>
     </figure>
     <header class="entry-header">
         <div class="container">
