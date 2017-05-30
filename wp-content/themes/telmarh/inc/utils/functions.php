@@ -771,5 +771,8 @@ function telmarh_remove_page_template() {
 }
 add_action('admin_footer', 'telmarh_remove_page_template', 10);
 
-
+add_filter("new_user_approve_welcome_message", "telmarh_new_user_approve_welcome_message");
+function telmarh_new_user_approve_welcome_message( $message ){
+    return "Bienvenue chez Portail de recrutement du Groupe AXIAN. Ce site est accessible uniquement aux utilisateurs agréés. Pour être approuvé, vous devez d'abord vous enregistrer.";
+}
 
