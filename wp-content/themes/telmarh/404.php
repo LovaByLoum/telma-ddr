@@ -6,29 +6,21 @@
  */
 
 get_header(); ?>
+<article class="error-404 not-found">
+	<figure class="alauneImg">
+        <img src="<?php echo get_template_directory_uri(); ?>/images/404-2000w.jpg" alt="">
+    </figure>
+	<header class="page-header">
+		<h1 class="page-title">404 <span>error</span></h1>
+		<p><?php echo __('Désolé, cette page est introuvable');?></p>
+	</header><!-- .page-header -->
 
-	<div class="grid grid-pad">
-	<div id="primary" class="content-area">
-		<main id="main" class="site-main" role="main">
-
-			<section class="error-404 not-found">
-				<header class="page-header">
-					<h1 class="page-title"><?php _e( 'Oops! That page can&rsquo;t be found.', 'telmarh' ); ?></h1>
-				</header><!-- .page-header -->
-
-				<div class="page-content">
-					<p>
-			          <strong><?php echo __('Cette page n’est malheureusement pas disponible.','telmarh');?></strong>
-			          <?php echo __('Le lien que vous avez suivi peut être incorrect ou la page peut avoir été supprimée.','telmarh');?>
-			        </p>
-				</div><!-- .page-content -->
-				<p class="btn">
-		          <a href="<?php echo home_url(); ?>" title="Retour" class="submit_link button--wapasha button--round-l"><?php echo __('Retour','telmarh');?></a>
-		        </p>
-			</section><!-- .error-404 -->
-
-		</main><!-- #main -->
-	</div><!-- #primary -->
-    </div><!-- grid -->
+	<div class="page-content">
+		
+	</div><!-- .page-content -->
+	<p class="btn">
+      <a href="<?php echo home_url(); ?>" title="Retour" class="submit_link"><?php echo __('Retour','telmarh');?></a>
+    </p>
+</article>
 
 <?php get_footer(); ?>
