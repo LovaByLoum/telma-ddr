@@ -56,6 +56,7 @@ $imgBlocDecouvrir = $imageDecouvrir;
 // image pour block contatcer
 list( $imageContacter ) = ( isset( $blocContacterImage ) && !empty( $blocContacterImage ) ) ? wp_get_attachment_image_src( $blocContacterImage, "full" ) : array();
 $imgBlocContacter = $imageContacter;
+$postOffes = ( is_object( wp_get_post_by_template( "offres.php" ) ) ) ?  wp_get_post_by_template( "offres.php" ) : $post;
 
 get_header(); ?>
 <div class="home-hero"  style="background-image: url('<?php echo $imageBackground;?>');">
@@ -114,7 +115,7 @@ get_header(); ?>
         <!-- offres urgents -->
         <?php if ( !empty( $offresUrgent ) && count( $offresUrgent ) > 0 ){
             $i = 1;?>
-            <h3 class="widget-title">NOS OFFRES <i class="fa fa-search"></i></h3>
+            <h3 class="widget-title"><a href="<?php echo get_permalink($postOffes->ID);?>" title="Nos dernières offres" style="color:#c80f2d;text-decoration: none;text-transform: uppercase;"> Nos dernières offres </a><i class="fa fa-search"></i></h3>
             <?php
             $count = 0;
             foreach( $offresUrgent as $offre ){ ?>
