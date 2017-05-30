@@ -890,7 +890,7 @@ function telmarh_fm_link_user( $col, $dbRow ){
  * cron pour le sendmail
  */
 add_filter("cron_schedules", "telmarh_add_scheduled_interval");
-function telmarh_add_scheduled_interval( $shedules ){
+function telmarh_add_scheduled_interval( $schedules ){
   $schedules['cinq_minute'] = array('interval'=>300, 'display'=>'Once 5 minute');
   $schedules['dix_minute'] = array('interval'=>600, 'display'=>'Once 10 minute');
   $schedules['one_day'] = array('interval'=>86400, 'display'=>'Once one Day');

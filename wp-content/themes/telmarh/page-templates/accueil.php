@@ -59,7 +59,7 @@ $imgBlocContacter = $imageContacter;
 
 get_header(); ?>
 <div class="home-hero"  style="background-image: url('<?php echo $imageBackground;?>');">
-    <h1 class="animate-plus animate-init logo-home" data-animations="fadeInDown" data-animation-delay="0.1s"><img src="<?php echo get_template_directory_uri(); ?>/images/logo-rgb.png" title="Axian - Let's grow together" /></h1>
+    <h1 class="animate-plus animate-init logo-home" data-animations="fadeInDown" data-animation-delay="0.1s"><img src="<?php echo esc_url( get_theme_mod( 'telmarh_logo' ) ); ?>" title="Axian - Let's grow together" /></h1>
 </div>
 <div class="container">
     <section class="cards">
