@@ -353,7 +353,7 @@ function telmarh_add_menu_items( $items, $args ){
 add_action("login_enqueue_scripts", "telmarh_login_enqueue_script");
 function telmarh_login_enqueue_script()
 {
-	$logo_image = get_theme_mod( 'telmarh_logo_page' );
+	$logo_image = get_theme_mod( 'telmarh_logo' );
 	$style = '<style type="text/css">
 	        #login h1 a, .login h1 a {
 	            background-image: url(' . esc_url( $logo_image ) . ');
