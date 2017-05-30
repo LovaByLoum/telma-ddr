@@ -355,9 +355,12 @@ function telmarh_login_enqueue_script()
 {
 	$logo_image = get_theme_mod( 'telmarh_logo' );
 	$style = '<style type="text/css">
+	        #login h1{
+	               padding-top: 30px;
+	        }
 	        #login h1 a, .login h1 a {
-	            background-image: url(' . esc_url( $logo_image ) . ');
-	            padding-bottom: 30px;
+	            background-image: url(' . get_template_directory_uri() . '/images/logo-rgb.png);
+	            padding-bottom: 10px;
 	        }
           .login-action-login {
             background-color: #fff;
