@@ -25,7 +25,7 @@
     <header id="header" role="banner">
         <div class="nav-left">
             <button class="bt-toggle" data-toggle="open" aria-controls="header" aria-expanded="false"></button>
-            <a href="<?php echo site_url(); ?>" class="logo" title="Axian"><img src="<?php echo get_template_directory_uri(); ?>/images/logo.svg" alt="Axian - Let's grow together"></a>
+            <a href="<?php echo site_url(); ?>" class="logo" title="Axian"><img src="<?php echo esc_url( get_theme_mod( 'telmarh_logo' ) ); ?>" alt="Axian - Let's grow together"></a>
             <nav class="navigation  nav-close">
                 <div class="nav-td">
                     <?php wp_nav_menu( array( 'theme_location' => 'primary' ) ); ?>
