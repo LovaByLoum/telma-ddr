@@ -201,7 +201,7 @@ header#header:after { border-top: 90px solid #d30630; border-right: calc(100vw) 
 .single-offer .widget-profil li ul li ul { padding-left: 20px; }
 
 .alauneImg { margin-bottom: 0; margin-bottom: 20px; overflow: hidden; position: relative; }
-@media only screen and (min-width: 640px) { .alauneImg { margin-bottom: 40px; } }
+@media only screen and (min-width: 640px) { .alauneImg { margin-bottom: 40px; max-height: 360px; } }
 @media only screen and (min-width: 992px) { .alauneImg { margin-bottom: 80px; } }
 .alauneImg img { object-fit: cover; height: 100%; width: 100%; }
 .alauneImg:after { background-color: transparent; border: 0 solid transparent; border-right-width: 0px; border-left-width: 100vw; border-bottom: 45px solid #fff; bottom: 0; content: ''; display: block; height: 0; left: 0; position: absolute; width: 100%; z-index: 10; }
@@ -237,7 +237,7 @@ header#header:after { border-top: 90px solid #d30630; border-right: calc(100vw) 
 .form-layout .form-group .select select:hover, .form-layout .form-group .select select:focus { outline: none; }
 .form-layout .form-group .select select option { border: 1px solid #d9d9d9; }
 .form-layout .form-group .select .select__arrow { border: none; }
-.form-layout .form-group .select .select__arrow { background-color: #fff; border: none; height: 36px; line-height: 36px; right: 1px; text-align: center; top: 1px; width: 36px; z-index: 2; }
+.form-layout .form-group .select .select__arrow { background-color: #fff; border: none; height: 36px; line-height: 36px; right: 1px; text-align: center; top: 1px; width: 36px; z-index: 0; }
 .form-layout .form-group .select .select__arrow i { color: #646469; font-size: 20px; line-height: 1.2; vertical-align: middle; }
 .form-layout .form-group .textarea-field { min-height: 160px; }
 .form-layout .form-group .error { color: #f00; font-size: 12px; line-height: 125%; }
