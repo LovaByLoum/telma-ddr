@@ -5,6 +5,7 @@
     position: relative;
     @media #{$min640} {
         margin-bottom: 40px;
+        max-height: 360px;
     }
     @media #{$min992} {
         margin-bottom: 80px;
@@ -178,7 +179,7 @@
                 text-align: center;
                 top: 1px;
                 width: 36px;
-                z-index: 2;
+                z-index: 0;
                 i {
                     color: #646469;
                     font-size: 20px;
