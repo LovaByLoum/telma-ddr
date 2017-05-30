@@ -237,7 +237,7 @@ header#header:after { border-top: 90px solid #d30630; border-right: calc(100vw) 
 .form-layout .form-group .select select:hover, .form-layout .form-group .select select:focus { outline: none; }
 .form-layout .form-group .select select option { border: 1px solid #d9d9d9; }
 .form-layout .form-group .select .select__arrow { border: none; }
-.form-layout .form-group .select .select__arrow { background-color: #fff; border: none; height: 36px; line-height: 36px; right: 1px; text-align: center; top: 1px; width: 36px; z-index: 2; }
+.form-layout .form-group .select .select__arrow { background-color: #fff; border: none; height: 36px; line-height: 36px; right: 1px; text-align: center; top: 1px; width: 36px; z-index: 0; }
 .form-layout .form-group .select .select__arrow i { color: #646469; font-size: 20px; line-height: 1.2; vertical-align: middle; }
 .form-layout .form-group .textarea-field { min-height: 160px; }
 .form-layout .form-group .error { color: #f00; font-size: 12px; line-height: 125%; }
