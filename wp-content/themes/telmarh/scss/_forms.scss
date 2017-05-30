@@ -5,6 +5,7 @@
     position: relative;
     @media #{$min640} {
         margin-bottom: 40px;
+        max-height: 360px;
     }
     @media #{$min992} {
         margin-bottom: 80px;
