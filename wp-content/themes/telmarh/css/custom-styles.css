@@ -80,9 +80,12 @@ header#header:after { border-top: 90px solid #d30630; border-right: calc(100vw) 
 .cards .contacter { height: 240px; }
 
 .job-last h3 { font-size: 36px; color: #c80f2d; line-height: 1; padding: 30px 0; }
-@media (min-width: 576px) { .job-last h3 { font-size: 48px; } }
+@media only screen and (min-width: 568px) { .job-last h3 { font-size: 48px; } }
 .job-last .job-item { border-bottom: 1px solid #cdcdcd; padding-top: 15px; }
-@media (min-width: 576px) { .job-last .job-item figure.right { order: 1; } }
+.job-last .job-item .img-show { margin-bottom: 10px; }
+@media only screen and (min-width: 568px) { .job-last .job-item .img-show { margin-bottom: 0; } }
+@media only screen and (min-width: 568px) { .job-last .job-item .right { order: 1; } }
+.job-last .job-item figure { align-items: center; display: flex; height: 100%; justify-content: center; margin-bottom: 0; text-align: center; }
 .job-last .job-item h5 { font-size: 12px; text-transform: uppercase; }
 .job-last .job-item h5 a { color: #d30630; }
 .job-last .job-item h5 .label { display: inline-block; vertical-align: top; padding: 0 3px; font-size: 12px; font-weight: 700; line-height: 14px; color: #fff; background-color: #c80f2d; text-transform: none; }
@@ -116,11 +119,11 @@ header#header:after { border-top: 90px solid #d30630; border-right: calc(100vw) 
 .container.no-padding { padding-left: 0; padding-right: 0; }
 
 .listing-offer .list-offres { border-bottom: 1px solid #cdcdcd; margin-bottom: 10px; padding-bottom: 15px; }
-@media only screen and (min-width: 480px) { .listing-offer .list-offres { margin-bottom: 20px; padding-bottom: 30px; } }
-.listing-offer .list-offres figure { margin: 0; text-align: center; }
-@media only screen and (min-width: 480px) { .listing-offer .list-offres figure { float: left; margin: 0 20px 0 0; max-width: 230px; } }
+@media only screen and (min-width: 568px) { .listing-offer .list-offres .testimonial { display: flex; margin-bottom: 0; } }
+.listing-offer .list-offres figure { text-align: center; }
+@media only screen and (min-width: 568px) { .listing-offer .list-offres figure { align-items: center; display: -webkit-flex; display: -moz-flex; display: -ms-flex; display: -o-flex; display: flex; justify-content: center; margin: 0 20px 0 0; max-width: 230px; flex: 0 0 230px; } }
 .listing-offer .list-offres figure img { height: auto; max-width: 100%; }
-.listing-offer .list-offres .desc-right { overflow: hidden; }
+.listing-offer .list-offres .desc-right { margin-bottom: 0; overflow: hidden; }
 .listing-offer .list-offres h2 { color: #c80f2d; font-size: 12px; margin-bottom: 0; text-transform: uppercase; }
 .listing-offer .list-offres h2 a { color: inherit; text-decoration: none; }
 .listing-offer .list-offres h2 a:hover { text-decoration: none; }
