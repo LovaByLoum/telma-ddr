@@ -259,7 +259,7 @@ class COffre
 				            </div>
 			        ';
 			        $html .='</div>';
-			        $html .='</article>';
+			    $html .='</article>';
 
         return $html;
 
