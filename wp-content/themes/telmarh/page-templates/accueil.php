@@ -123,7 +123,7 @@ get_header(); ?>
                     <div class="row">
                         <?php $urlImage = $offre->logo[0];?>
                         <?php if ( !empty( $urlImage ) && $i%2 == 1 ):?>
-                            <figure class="col-sm-3 <?php if ( $count % 2  != 0 ) {?> right <?php }?>"><img src="<?php echo $urlImage;?>"/></figure>
+                            <figure class="col-sm-3 img-show <?php if ( $count % 2  != 0 ) {?> right <?php }?>"><img src="<?php echo $urlImage;?>"/></figure>
                         <?php endif;?>
                         <div class="col-sm-9">
                             <h5><a href="<?php echo get_permalink( $offre->id );?>" title="<?php echo $offre->titre;?>"><?php echo $offre->titre;?></a> <span class="label">urgent</span></h5>
@@ -146,6 +146,7 @@ get_header(); ?>
                                 </a>
                             </p>
                         </div>
+
                     </div>
                 </div>
             <?php $count ++; }?>

@@ -95,20 +95,30 @@ header#header {
         border-bottom: 1px solid #cdcdcd;
         margin-bottom: 10px;
         padding-bottom: 15px;
-        @media #{$min480} {
-            margin-bottom: 20px;
-            padding-bottom: 30px;
+        @media #{$min568} {
+            // margin-bottom: 20px;
+            // padding-bottom: 30px;
         }
-        .entry-content {
-            
+
+        .testimonial {
+            @media #{$min568} {
+                display: flex;
+                margin-bottom: 0;
+            }
         }
         figure {
-            margin: 0;
             text-align: center;
-            @media #{$min480} {
-                float: left;
+            @media #{$min568} {
+                align-items: center;
+                display: -webkit-flex;
+                display: -moz-flex;
+                display: -ms-flex;
+                display: -o-flex;
+                display: flex;
+                justify-content: center;
                 margin: 0 20px 0 0;
                 max-width: 230px;
+                flex: 0 0 230px;
             }
             img {
                 height: auto;
@@ -116,6 +126,7 @@ header#header {
             }
         }
         .desc-right {
+            margin-bottom: 0;
             overflow: hidden;
         }
         header {}
