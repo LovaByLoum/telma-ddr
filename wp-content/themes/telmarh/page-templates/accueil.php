@@ -121,7 +121,9 @@ get_header(); ?>
             foreach( $offresUrgent as $offre ){ ?>
                 <div class="job-item">
                     <div class="row">
-                        <figure class="col-sm-3 <?php if ( $count % 2  != 0 ) {?> right <?php }?>">figure</figure>
+                        <div class="col-sm-3 img-show <?php if ( $count % 2  != 0 ) {?> right <?php }?>">
+                            <figure>figure</figure>
+                        </div>
                         <div class="col-sm-9">
                             <h5><a href="<?php echo get_permalink( $offre->id );?>" title="<?php echo $offre->titre;?>"><?php echo $offre->titre;?></a> <span class="label">urgent</span></h5>
                             <p class="summary">
@@ -143,6 +145,7 @@ get_header(); ?>
                                 </a>
                             </p>
                         </div>
+
                     </div>
                 </div>
             <?php $count ++; }?>
