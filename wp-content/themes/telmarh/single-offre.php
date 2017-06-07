@@ -104,7 +104,7 @@ get_header(); ?>
                                         </ul>
                                     </article>
                                     <article class="status-publish hentry">
-                                        <h3 class="widget-title">Description de l’entreprise :</h3>
+                                        <h3 class="widget-title">Description de l’offre :</h3>
                                         <div class="entry-content">
                                             <?php echo apply_filters("the_content", $offre->description );?>
                                         </div>
