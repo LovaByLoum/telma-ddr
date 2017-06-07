@@ -41,11 +41,13 @@ header#header .nav-right .login form .error { font-size: 13px; color: #f00; }
 header#header:after { border-top: 90px solid #d30630; border-right: calc(100vw) solid transparent; content: ""; display: block; height: 0; position: absolute; left: 0; top: 0; z-index: 1; }
 .home header#header:after { border-right: calc(40vw) solid transparent; }
 
-.site-footer:after { border-bottom: 90px solid #d30630; border-left: calc(40vw) solid transparent; width: 0; height: 0; content: ""; display: block; float: right; }
+.site-footer:after { border-bottom: 90px solid #d30630; border-left: calc(100vw) solid transparent; width: 0; height: 0; content: ""; display: block; float: right; }
+.home .site-footer:after { border-left: calc(40vw) solid transparent; }
 
-@media only screen and (min-width: 992px) { #page { min-height: 98vh; } }
+.site-content { min-height: calc(100vh - 90px); }
+.admin-bar .site-content { min-height: calc(100vh - 122px); }
 
-.site-footer { background: transparent; bottom: 0; left: 0; position: fixed; width: 100%; }
+.site-footer { background: transparent; width: 100%; }
 
 .error-404 h1 { color: #d30630; font-size: 80px; font-weight: 700; text-align: center; text-transform: uppercase; }
 .error-404 h1 span { color: #fff; }
