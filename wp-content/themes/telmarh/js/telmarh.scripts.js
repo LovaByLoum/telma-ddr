@@ -134,7 +134,7 @@ jQuery( function( $ ){
 
     jQuery(".menu-item #login_user, .postule-offre > span").on("click", function(){
         jQuery("#login-user").slideToggle();
-
+        return false;
     });
 
     addDatePickerInClass("datepicker");
