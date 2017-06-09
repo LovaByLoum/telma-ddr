@@ -177,7 +177,7 @@ header#header:after { border-top: 90px solid #d30630; border-right: calc(100vw) 
 .single-offer .candidature-spontanne-link a { color: #c80f2d; text-decoration: underline; }
 .single-offer h1 { color: #c80f2d; font-family: 'arial'; font-size: 30px; text-transform: uppercase; }
 .single-offer h2 { color: #646469; font-size: 18px; font-weight: 700; line-height: 125%; }
-.single-offer h3 { color: #646469; font-size: 14px; line-height: 125%; }
+.single-offer h3 { color: #646469; font-size: 14px; font-weight: 700; line-height: 125%; text-decoration: underline; }
 .single-offer ul, .single-offer li { list-style: none; }
 .single-offer ul { padding: 0; }
 .single-offer li { color: #646469; font-size: 14px; line-height: 125%; }
