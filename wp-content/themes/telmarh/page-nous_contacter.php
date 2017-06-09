@@ -17,7 +17,7 @@ $email      = ( is_user_logged_in() ) ? $user->email : ( ( isset( $_POST['email_
 $num_phone  = ( is_user_logged_in() ) ? $user->phone_number : ( ( isset( $_POST['num_phone'] ) && !empty( $_POST['num_phone'] ) ) ? $_POST['num_phone'] : "" );
 $response   = ( isset( $telmarh_options['option_reponse_form'] ) && !empty( $telmarh_options['option_reponse_form'] ) ) ? $telmarh_options['option_reponse_form'] : "Merci ! Vos informations ont bien été envoyées.";
 $idImage = get_post_thumbnail_id($post->ID);
-$image = wp_get_attachment_image_src( $idImage, "full" );
+list($image) = wp_get_attachment_image_src( $idImage, "full" );
 get_header(); ?>
 <section id="page-full-entry-content" class="contact-form form-page">
     <figure class="alauneImg">

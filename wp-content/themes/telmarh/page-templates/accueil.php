@@ -10,9 +10,8 @@
  */
 global $post;
 
-$description = ( isset( $post->texte_descriptif_hp ) && !empty( $post->texte_descriptif_hp ) ) ? $post->texte_descriptif_hp : "";
 $idImage = get_post_thumbnail_id($post->ID);
-$image = wp_get_attachment_image_src( $idImage, "full" );
+list($image) = wp_get_attachment_image_src( $idImage, "full" );
 $imageBackground = ( isset( $image ) && !empty( $image ) ) ? $image : get_template_directory_uri() . '/images/design/bldr.jpg';
 
 $offresUrgent = COffre::getOffreUrgent();

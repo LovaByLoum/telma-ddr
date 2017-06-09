@@ -22,7 +22,7 @@ if ( empty( $_POST ) ) {
 	}
 }
 $idImage = get_post_thumbnail_id($post->ID);
-$image = wp_get_attachment_image_src( $idImage, "full" );
+list($image) = wp_get_attachment_image_src( $idImage, "full" );
 get_header(); ?>
 <section id="page-full-entry-content" class="postuler-form form-page">
 	<figure class="alauneImg">

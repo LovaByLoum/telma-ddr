@@ -28,7 +28,7 @@ $permis                 = $enPoste;
 $catPermis1             = array( "a" => "Permis A", "ap" => "Permis A'", "b" => "Permis B", "c" => "Permis C" );
 $catPermis2             = array( "d" => "Permis D", "e" => "Permis E", "f" => "Permis F" );
 $idImage = get_post_thumbnail_id($post->ID);
-$image = wp_get_attachment_image_src( $idImage, "full" );
+list($image) = wp_get_attachment_image_src( $idImage, "full" );
 get_header(); ?>
 <section id="page-full-entry-content" class="registration-form form-page">
     <figure class="alauneImg">
