@@ -13,9 +13,11 @@ global $post;
 $idImage = get_post_thumbnail_id($post->ID);
 list($image) = wp_get_attachment_image_src( $idImage, "full" );
 $imageBackground = ( isset( $image ) && !empty( $image ) ) ? $image : get_template_directory_uri() . '/images/design/bldr.jpg';
-
+$blocService = CPage::getAllElementServiceHp( $post->ID );
+$blocPartenaires = CPage::getAllpartnerHp( $post->ID );
+$blocTestimonial = CPage::getAllElementTestimonialHp( $post->ID );
+$postOffes = ( is_object( wp_get_post_by_template( "offres.php" ) ) ) ?  wp_get_post_by_template( "offres.php" ) : $post;
 $offresUrgent = COffre::getOffreUrgent();
-//var_dump($offresUrgent);die;
 
 $blocConnecterPicto = get_field( "picto_connecter",$post->ID );
 $blocConnecterTitre = get_field( "titre_connecter",$post->ID );
@@ -156,6 +158,56 @@ get_header(); ?>
             <?php $count ++; }?>
         <?php }?>
     </section>
+    <?php if ( isset( $blocPartenaires ) && !empty( $blocPartenaires ) ):?>
+        <div class="panel-grid" id="pg-636-6">
+            <div  class="panel-row-style">
+                <div class="panel-grid-cell" id="pgc-636-6-0">
+                    <section id="home-clients" class="clients">
+                        <?php if ( isset( $blocPartenaires['titre'] ) && !empty( $blocPartenaires['titre'] ) ):?>
+                            <div class="grid grid-pad">
+                                <div class="col-1-1">
+                                    <h3 class="widget-title">
+                                        <?php echo $blocPartenaires['titre'];?>
+                                    </h3>
+                                </div>
+                            </div>
+                        <?php  endif;?>
+                        <?php if ( isset( $blocPartenaires['element'] ) && !empty( $blocPartenaires['element'] ) ):?>
+                            <div class="grid grid-pad">
+                                <div class="col-1-1">
+                                    <div class="client-carousel slick-initialized slick-slider">
+                                        <div tabindex="0" aria-live="polite"
+                                             class="slick-list draggable">
+                                            <div class="slick-track">
+                                                <?php foreach ( $blocPartenaires['element'] as $slider ):?>
+                                                    <div>
+                                                        <?php if ( isset( $slider->imageUrl ) && !empty( $slider->imageUrl ) ):?>
+                                                            <a href="<?php echo $slider->link;?>" title="<?php echo $slider->name;?>">
+                                                                <div class="client-container">
+                                                                    <img
+                                                                        src="<?php echo $slider->imageUrl;?>"
+                                                                        class="attachment-post-thumbnail size-post-thumbnail wp-post-image"
+                                                                        <?php if ( isset( $slider->imageTronque ) && !empty( $slider->imageTronque ) ):?>
+                                                                            width="<?php echo $slider->imageTronque[0];?>"
+                                                                            height="<?php echo $slider->imageTronque[1];?>"
+                                                                        <?php endif;?>
+                                                                    >
+                                                                </div>
+                                                            </a>
+                                                        <?php endif;?>
+                                                    </div>
+                                                <?php endforeach;?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div >
+                        <?php endif;?>
+                    </section>
+                </div>
+            </div>
+        </div>
+    <?php endif;?>
 </div>
 
 <?php get_footer(); ?>
