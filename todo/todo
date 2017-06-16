@@ -14,3 +14,9 @@
 -Choisir WordPress
 -Enfin importer le fichier
 
+@todo 4 : Restaurer le bloc "Bloc best Client"
+-Cliquer sur le menu ACF
+-Cliquer sur Corbeille
+-Selectionner le bloc "Bloc best Client" dans le selectbox
+-Choisir "rétablir" dans le selectbox
+-Cliquer sur le bouton "Appliquer"
