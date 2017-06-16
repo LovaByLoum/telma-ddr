@@ -27,6 +27,7 @@ get_header(); ?>
             <img src="<?php echo get_template_directory_uri(); ?>/images/batiment.jpg" alt="">
         <?php }?>
     </figure>
+    <div class="breadcrumb"><?php get_breadcrumb(); ?></div>
     <header class="entry-header">
         <div class="container">
             <?php if ( isset( $post->post_title ) && !empty( $post->post_title ) ):?>
@@ -37,7 +38,6 @@ get_header(); ?>
             </div>
         </div>
     </header>
-
     <article class="content-area main-content" id="primary">
         <div class="status-publish hentry container">
             <?php if ( isset( $_POST['error'] ) && isset( $_POST['error']['error'] ) && $_POST['error']['error'] == 0 && empty($_POST['error']['msg']) ):?>

@@ -113,51 +113,8 @@ get_header(); ?>
             <?php endif;?>
         </div>
     </section>
-    <section class="job-last">
-        <!-- offres urgents -->
-        <?php if ( !empty( $offresUrgent ) && count( $offresUrgent ) > 0 ){
-            $i = 1;?>
-            <h3 class="widget-title"><a href="<?php echo get_permalink($postOffes->ID);?>" title="Nos dernières offres" style="color:#c80f2d;text-decoration: none;text-transform: uppercase;"> Nos dernières offres </a><i class="fa fa-search"></i></h3>
-            <?php
-            $count = 0;
-            foreach( $offresUrgent as $offre ){ ?>
-                <div class="job-item">
-                    <div class="row">
-                        <?php $urlImage = $offre->logo[0];?>
-                        <?php if ( !empty( $urlImage ) && $i%2 == 1 ):?>
-                            <div class="col-sm-3 img-show <?php if ( $count % 2  != 0 ) {?> right <?php }?>">
-                                <figure>
-                                    <img src="<?php echo $urlImage;?>"/>
-                                </figure>
-                            </div>
-                        <?php endif;?>
-                        <div class="col-sm-9">
-                            <h5><a href="<?php echo get_permalink( $offre->id );?>" title="<?php echo $offre->titre;?>"><?php echo $offre->titre;?></a> <span class="label">urgent</span></h5>
-                            <p class="summary">
-                                <?php if ( isset( $offre->nameEntreprise ) && !empty( $offre->nameEntreprise ) ):?>
-                                    Entreprise : <?php echo $offre->nameEntreprise;?><br>
-                                <?php endif;?>
-                                <?php if ( isset( $offre->type_contrat ) && !empty( $offre->type_contrat ) ):?>
-                                    Type de contrat  : <?php echo $offre->type_contrat;?><br>
-                                <?php endif;?>
-                            </p>
+    <div class="breadcrumb"><?php get_breadcrumb(); ?></div>
 
-                            <p  class="desc">
-                                <?php echo wp_limite_text( $offre->desc, 200 );?>
-                            </p>
-
-                            <p  class="link">
-                                <a href="<?php echo get_permalink( $offre->id );?>" class="link-more" title="Voir les missions">
-                                    Voir les missions
-                                </a>
-                            </p>
-                        </div>
-
-                    </div>
-                </div>
-            <?php $count ++; }?>
-        <?php }?>
-    </section>
     <?php if ( isset( $blocPartenaires ) && !empty( $blocPartenaires ) ):?>
         <div class="panel-grid" id="pg-636-6">
             <div  class="panel-row-style">
@@ -208,6 +165,51 @@ get_header(); ?>
             </div>
         </div>
     <?php endif;?>
-</div>
 
+    <section class="job-last">
+        <!-- offres urgents -->
+        <?php if ( !empty( $offresUrgent ) && count( $offresUrgent ) > 0 ){
+            $i = 1;?>
+            <h3 class="widget-title"><a href="<?php echo get_permalink($postOffes->ID);?>" title="Nos dernières offres" style="color:#c80f2d;text-decoration: none;text-transform: uppercase;"> Nos dernières offres </a><i class="fa fa-search"></i></h3>
+            <?php
+            $count = 0;
+            foreach( $offresUrgent as $offre ){ ?>
+                <div class="job-item">
+                    <div class="row">
+                        <?php $urlImage = $offre->logo[0];?>
+                        <?php if ( !empty( $urlImage ) && $i%2 == 1 ):?>
+                            <div class="col-sm-3 img-show <?php if ( $count % 2  != 0 ) {?> right <?php }?>">
+                                <figure>
+                                    <img src="<?php echo $urlImage;?>"/>
+                                </figure>
+                            </div>
+                        <?php endif;?>
+                        <div class="col-sm-9">
+                            <h5><a href="<?php echo get_permalink( $offre->id );?>" title="<?php echo $offre->titre;?>"><?php echo $offre->titre;?></a> <span class="label">urgent</span></h5>
+                            <p class="summary">
+                                <?php if ( isset( $offre->nameEntreprise ) && !empty( $offre->nameEntreprise ) ):?>
+                                    Entreprise : <?php echo $offre->nameEntreprise;?><br>
+                                <?php endif;?>
+                                <?php if ( isset( $offre->type_contrat ) && !empty( $offre->type_contrat ) ):?>
+                                    Type de contrat  : <?php echo $offre->type_contrat;?><br>
+                                <?php endif;?>
+                            </p>
+
+                            <p  class="desc">
+                                <?php echo wp_limite_text( $offre->desc, 200 );?>
+                            </p>
+
+                            <p  class="link">
+                                <a href="<?php echo get_permalink( $offre->id );?>" class="link-more" title="Voir les missions">
+                                    Voir les missions
+                                </a>
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+            <?php $count ++; }?>
+        <?php }?>
+    </section>
+</div>
 <?php get_footer(); ?>
