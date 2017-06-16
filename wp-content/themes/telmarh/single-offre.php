@@ -21,7 +21,8 @@ get_header(); ?>
     <figure class="alauneImg">
         <img src="<?php echo get_template_directory_uri(); ?>/images/batiment.jpg" alt="">
     </figure>
-	<section id="page-entry-content" class="single-offer">
+    <div class="breadcrumb"><?php get_breadcrumb(); ?></div>
+    <section id="page-entry-content" class="single-offer">
         <header class="entry-header">
             <div class="container">
                 <p class="candidature-spontanne-link"><a href="<?php echo get_permalink($postIdCandidature->ID);?>">Envoyer une candidature spontannée</a></p>

@@ -14,7 +14,6 @@ global $post;
 $idImage = get_post_thumbnail_id($post->ID);
 $image = wp_get_attachment_image_src( $idImage, "full" );
 get_header(); ?>
-
 <section id="page-full-entry-content" class="page-standard">
     <figure class="alauneImg">
         <?php if ( isset( $image ) && !empty( $image ) ){?>
@@ -28,7 +27,7 @@ get_header(); ?>
             <?php the_title( '<h1 class="entry-title">', '</h1>' ); ?>
         </div>
     </header>
-
+    <div class="breadcrumb"><?php get_breadcrumb(); ?></div>
     <article id="post-<?php the_ID(); ?>">
         <div class="container">
             <div class="entry-content">

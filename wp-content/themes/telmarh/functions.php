@@ -1122,3 +1122,26 @@ function telmarh_update_check( $r, $url ) {
 	}
 	return $r;
 }
+
+/**
+ * get_breadcrumb
+ */
+function get_breadcrumb($niveau) {
+	echo '<a href="'.home_url().'" rel="nofollow">Accueil</a>';
+	if (is_category() || is_single()) {
+		echo "&nbsp;&nbsp;&#187;&nbsp;&nbsp;";
+		echo $niveau;
+		if (is_single()) {
+			echo " &nbsp;&nbsp;&#187;&nbsp;&nbsp;  ";
+			the_title();
+		}
+	} elseif (is_page()) {
+		echo "&nbsp;&nbsp;&#187;&nbsp;&nbsp;";
+		echo the_title();
+	} elseif (is_search()) {
+		echo "&nbsp;&nbsp;&#187;&nbsp;&nbsp;Recherche de Resultats... ";
+		echo '"<em>';
+		 echo the_search_query();
+		echo '</em>"';
+	}
+}
