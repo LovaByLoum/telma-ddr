@@ -21,7 +21,7 @@ get_header(); ?>
     <figure class="alauneImg">
         <img src="<?php echo get_template_directory_uri(); ?>/images/batiment.jpg" alt="">
     </figure>
-    <div class="breadcrumb"><?php get_breadcrumb(); ?></div>
+    <div class="breadcrumb"><?php get_breadcrumb("<a href=". get_permalink( $postOffes->ID )."> Offre </a>"); ?></div>
     <section id="page-entry-content" class="single-offer">
         <header class="entry-header">
             <div class="container">

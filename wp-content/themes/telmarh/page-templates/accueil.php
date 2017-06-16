@@ -113,8 +113,6 @@ get_header(); ?>
             <?php endif;?>
         </div>
     </section>
-    <div class="breadcrumb"><?php get_breadcrumb(); ?></div>
-
     <?php if ( isset( $blocPartenaires ) && !empty( $blocPartenaires ) ):?>
         <div class="panel-grid" id="pg-636-6">
             <div  class="panel-row-style">

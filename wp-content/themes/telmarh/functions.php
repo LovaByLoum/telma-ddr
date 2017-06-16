@@ -1126,22 +1126,33 @@ function telmarh_update_check( $r, $url ) {
 /**
  * get_breadcrumb
  */
-function get_breadcrumb() {
+function get_breadcrumb($niveau1 = '', $niveau2 = '') {
 	echo '<a href="'.home_url().'" rel="nofollow">Accueil</a>';
 	if (is_category() || is_single() || is_page()) {
 		echo "&nbsp;&nbsp;&#187;&nbsp;&nbsp;";
-		//echo $niveau;
+		if (isset( $niveau1 ) && !empty( $niveau1 )):
+		echo $niveau1;
+		endif;
 		if (is_single()) {
+			if (isset( $niveau1 ) && !empty( $niveau1 )):
 			echo " &nbsp;&nbsp;&#187;&nbsp;&nbsp;  ";
+			endif;
+			if (isset( $niveau2 ) && !empty( $niveau2 )):
+				echo $niveau2;
+				echo "&nbsp;&nbsp;&#187;&nbsp;&nbsp;";
+			endif;
 			the_title();
 		}
 		if (is_page()) {
+			if (isset( $niveau1 ) && !empty( $niveau1 )):
 			echo "&nbsp;&nbsp;&#187;&nbsp;&nbsp;";
+			endif;
+			if (isset( $niveau2 ) && !empty( $niveau2 )):
+				echo $niveau2;
+				echo "&nbsp;&nbsp;&#187;&nbsp;&nbsp;";
+			endif;
 			echo the_title();
 		}
-	} elseif (is_page()) {
-		echo "&nbsp;&nbsp;&#187;&nbsp;&nbsp;";
-		echo the_title();
 	} elseif (is_search()) {
 		echo "&nbsp;&nbsp;&#187;&nbsp;&nbsp;Recherche de Resultats... ";
 		echo '"<em>';
