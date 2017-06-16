@@ -1126,14 +1126,18 @@ function telmarh_update_check( $r, $url ) {
 /**
  * get_breadcrumb
  */
-function get_breadcrumb($niveau) {
+function get_breadcrumb() {
 	echo '<a href="'.home_url().'" rel="nofollow">Accueil</a>';
-	if (is_category() || is_single()) {
+	if (is_category() || is_single() || is_page()) {
 		echo "&nbsp;&nbsp;&#187;&nbsp;&nbsp;";
-		echo $niveau;
+		//echo $niveau;
 		if (is_single()) {
 			echo " &nbsp;&nbsp;&#187;&nbsp;&nbsp;  ";
 			the_title();
+		}
+		if (is_page()) {
+			echo "&nbsp;&nbsp;&#187;&nbsp;&nbsp;";
+			echo the_title();
 		}
 	} elseif (is_page()) {
 		echo "&nbsp;&nbsp;&#187;&nbsp;&nbsp;";
