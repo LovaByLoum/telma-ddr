@@ -12,7 +12,7 @@ $recherche = ( isset( $_GET['sof'] ) && !empty( $_GET['sof'] ) ) ? $_GET['sof'] 
     <figure class="alauneImg">
         <img src="<?php echo get_template_directory_uri(); ?>/images/batiment.jpg" alt="">
     </figure>
-    <div class="breadcrumb"><?php get_breadcrumb(''); ?></div>
+    <div class="breadcrumb"><div class="container"><?php get_breadcrumb(''); ?></div></div>
     <section class="top-listing-offer">
         <div class="container">
             <?php if ( isset( $postTitle ) && !empty( $postTitle ) ):?>

@@ -6,6 +6,21 @@
     background-position: center center;
     background-size: cover;
     margin-bottom: -210px;
+    position: relative;
+
+    &:after {
+        background-color: transparent;
+        border: 0 solid transparent;
+        border-left: calc(100vw) solid transparent;
+        border-bottom: 90px solid #fff;
+        bottom: 0;
+        content: '';
+        display: block;
+        height: 0;
+        left: 0;
+        position: absolute;
+        width: 100%;
+    }
 
     .logo-home {
         padding-top: 75px;
@@ -93,6 +108,40 @@
 
     .contacter {
         height: 240px;
+    }
+}
+
+.slick-prev, .slick-next {
+    width: 36px;
+    height: 36px;
+}
+
+.slick-prev::before, .slick-next::before {
+    color: #d30630;
+    font-size: 36px;
+}
+
+.slick-slide {
+    .client-container {
+        text-align: center;
+        line-height: 118px;
+    }
+
+    img {
+        display: inline-block;
+        max-width: 100%;
+    }
+}
+
+#home-clients {
+    h3 {
+        font-size: 36px;
+        color: #c80f2d;
+        line-height: 1;
+        padding: 30px 0;
+        @media #{$min568} {
+            font-size: 48px;
+        }
     }
 }
 

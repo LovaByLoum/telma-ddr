@@ -18,9 +18,8 @@
     &:after {
         background-color: transparent;
         border: 0 solid transparent;
-        border-right-width: 0px;
-        border-left-width: 100vw;
-        border-bottom: 45px solid #fff;
+        border-left: calc(100vw) solid transparent;
+        border-bottom: 90px solid #fff;
         bottom: 0;
         content: '';
         display: block;
