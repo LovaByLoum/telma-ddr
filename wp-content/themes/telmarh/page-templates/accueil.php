@@ -142,8 +142,8 @@ get_header(); ?>
                                                             <a href="<?php echo $slider->link;?>" title="<?php echo $slider->name;?>">
                                                                 <div class="client-container">
                                                                     <img
-                                                                        src="<?php echo $slider->imageUrl;?>"
-                                                                        class="attachment-post-thumbnail size-post-thumbnail wp-post-image"
+                                                                            src="<?php echo $slider->imageUrl;?>"
+                                                                            class="attachment-post-thumbnail size-post-thumbnail wp-post-image"
                                                                         <?php if ( isset( $slider->imageTronque ) && !empty( $slider->imageTronque ) ):?>
                                                                             width="<?php echo $slider->imageTronque[0];?>"
                                                                             height="<?php echo $slider->imageTronque[1];?>"
