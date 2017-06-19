@@ -59,6 +59,9 @@ header#header .nav-right .login form .error { font-size: 13px; color: #f00; }
 header#header:after { border-top: 90px solid #d30630; border-right: calc(100vw) solid transparent; content: ""; display: block; height: 0; position: absolute; left: 0; top: 0; z-index: 1; }
 .home header#header:after { border-right: calc(40vw) solid transparent; }
 
+.breadcrumb { background: none; }
+.breadcrumb a { color: #d30630; }
+
 .site-footer:after { border-bottom: 90px solid #d30630; border-left: calc(100vw) solid transparent; width: 0; height: 0; content: ""; display: block; float: right; }
 .home .site-footer:after { border-left: calc(40vw) solid transparent; }
 

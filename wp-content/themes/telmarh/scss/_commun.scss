@@ -359,6 +359,14 @@ header#header {
     }
 }
 
+.breadcrumb {
+    background: none;
+
+    a {
+        color: #d30630;
+    }
+}
+
 .site-footer {
     &:after {
         border-bottom: 90px solid #d30630;
