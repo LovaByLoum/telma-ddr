@@ -27,7 +27,7 @@ get_header(); ?>
             <?php the_title( '<h1 class="entry-title">', '</h1>' ); ?>
         </div>
     </header>
-    <div class="breadcrumb"><?php get_breadcrumb(); ?></div>
+ <div class="breadcrumb"><?php  get_breadcrumb(''); ?></div>
     <article id="post-<?php the_ID(); ?>">
         <div class="container">
             <div class="entry-content">
