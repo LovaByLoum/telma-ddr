@@ -11,6 +11,11 @@
 global $post;
 $idImage = get_post_thumbnail_id($post->ID);
 list($image) = wp_get_attachment_image_src( $idImage, "full" );
+$offre = JM_Offre::getById( $post->ID );
+$offreElment = COffre::getById( $post->ID );
+$idEntreprise = ( isset( $offre->societe_associe ) && !empty( $offre->societe_associe ) ) ? $offre->societe_associe : "";
+$society = ( intval( $idEntreprise ) > 0 ) ? JM_Societe::getById( $idEntreprise ) : "";
+$postOffes = ( is_object( wp_get_post_by_template( "offres.php" ) ) ) ?  wp_get_post_by_template( "offres.php" ) : $post;
 get_header(); ?>
 <section id="page-full-entry-content" class="spontaneous-form form-page">
     <figure class="alauneImg">
@@ -20,7 +25,7 @@ get_header(); ?>
             <img src="<?php echo get_template_directory_uri(); ?>/images/batiment.jpg" alt="">
         <?php }?>
     </figure>
-    <div class="breadcrumb"><div class="container"><?php get_breadcrumb("<a href=". get_permalink( $postOffes->ID )."> Les offres </a>"); ?></div></div>
+    <div class="breadcrumb"><div class="container"><?php get_breadcrumb("<a href=". get_permalink( $postOffes->ID )."> Nos offres </a>"); ?></div></div>
 	<header class="entry-header">
 		<div class="container">
 			<?php if ( isset( $post->post_title ) && !empty( $post->post_title ) ):?>

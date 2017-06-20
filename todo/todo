@@ -25,7 +25,7 @@
 - Accéder au menu "Tableau de bord" 
 -Cliquer sur le menu "Extensions"
 -Activer le module "Super cache" en cochant sur la case à cocher puis "activer"
--Cliquer sur reglage
+-Cliquer sur reglage en dessous du lien super Cache
 -Allez dans l’onglet "Avancé"
 -Cocher la case "Mise en cache Activée"
 -Cocher "Utiliser le mode PHP pour servir les fichiers de cache"

@@ -11,6 +11,10 @@
 global $post,$fmdb, $fm_globals;
 $offreId = ( isset( $_GET['po'] ) && !empty( $_GET['po'] ) ) ? $_GET['po'] : ( ( isset( $fm_globals['post_data'] ) && !empty( $fm_globals['post_data'] ) ) ? $fm_globals['post_data'][FORMULAIRE_POSTULER_OFFRE]['parent_post_id'] :  0 );
 $offre = JM_Offre::getById( $offreId );
+$offreElment = COffre::getById( $post->ID );
+$idEntreprise = ( isset( $offre->societe_associe ) && !empty( $offre->societe_associe ) ) ? $offre->societe_associe : "";
+$society = ( intval( $idEntreprise ) > 0 ) ? JM_Societe::getById( $idEntreprise ) : "";
+$postOffes = ( is_object( wp_get_post_by_template( "offres.php" ) ) ) ?  wp_get_post_by_template( "offres.php" ) : $post;
 $pageInscription = wp_get_post_by_template( "page-inscription.php", "" );
 if ( !is_user_logged_in()  ){
 	wp_redirect( get_permalink( $pageInscription->ID ) );
@@ -32,7 +36,7 @@ get_header(); ?>
 			<img src="<?php echo get_template_directory_uri(); ?>/images/batiment.jpg" alt="">
 		<?php }?>
 	</figure>
-	<div class="breadcrumb"><div class="container"><?php get_breadcrumb("<a href=". get_permalink( $postOffes->ID )."> Les offres </a>" , "<a href=".get_permalink( $offre->id ).">".$offre->titre."</a>" ); ?></div></div>
+	<div class="breadcrumb"><div class="container"><?php get_breadcrumb("<a href=". get_permalink( $postOffes->ID )."> Nos offres </a>" , "<a href=".get_permalink( $offre->id ).">".$offre->titre."</a>" ); ?></div></div>
 	<header class="entry-header">
 		<div class="container">
 			<?php if ( isset( $post->post_title ) && !empty( $post->post_title ) ):?>
