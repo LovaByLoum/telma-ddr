@@ -22,8 +22,9 @@
 -Cliquer sur le bouton "Appliquer"
 
 @todo 5 : Activer et configurer le module Super cache
+- Accéder au menu "Tableau de bord" 
 -Cliquer sur le menu "Extensions"
--Activer le module en cochant sur la case à cocher
+-Activer le module "Super cache" en cochant sur la case à cocher puis "activer"
 -Cliquer sur reglage
 -Allez dans l’onglet "Avancé"
 -Cocher la case "Mise en cache Activée"
@@ -33,5 +34,6 @@
 -Cliquer sur "mettre à jour les status"
 
 @todo 6 : Activer le module Lazy load
+- Accéder au menu "Tableau de bord" 
 -Cliquer sur le menu "Extensions"
 -Activer le module en cochant sur la case à cocher
