@@ -13,6 +13,7 @@
  *
  * @package WordPress
  */
+define('WP_CACHE', true); //Added by WP-Cache Manager
 define("WPLANG", "fr_FR");
 $host = $_SERVER['HTTP_HOST'];
 $appPath = dirname (__FILE__) . DIRECTORY_SEPARATOR;

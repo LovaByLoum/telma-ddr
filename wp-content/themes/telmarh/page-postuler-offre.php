@@ -32,7 +32,7 @@ get_header(); ?>
 			<img src="<?php echo get_template_directory_uri(); ?>/images/batiment.jpg" alt="">
 		<?php }?>
 	</figure>
-	<div class="breadcrumb"><?php get_breadcrumb("<a href=". get_permalink( $postOffes->ID )."> Les offres </a>" , "<a href=".get_permalink( $offre->id ).">".$offre->titre."</a>" ); ?></div>
+	<div class="breadcrumb"><div class="container"><?php get_breadcrumb("<a href=". get_permalink( $postOffes->ID )."> Les offres </a>" , "<a href=".get_permalink( $offre->id ).">".$offre->titre."</a>" ); ?></div></div>
 	<header class="entry-header">
 		<div class="container">
 			<?php if ( isset( $post->post_title ) && !empty( $post->post_title ) ):?>

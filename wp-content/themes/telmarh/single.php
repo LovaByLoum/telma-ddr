@@ -12,7 +12,7 @@ get_header(); ?>
         <div class="col-11-12">
             <div id="primary" class="content-area">
                 <main id="main" class="site-main" role="main">
-                    <div class="breadcrumb"><?php get_breadcrumb(); ?></div>
+                    <div class="breadcrumb"><div class="container"><?php get_breadcrumb(); ?></div></div>
                     <article id="post-<?php the_ID(); ?>">
                         <header class="entry-header">
                             <?php the_title( '<h1 class="entry-title">', '</h1>' ); ?>
