@@ -216,6 +216,16 @@ header#header {
                         > a {
                             background-color: #f8093a;
                         }
+
+                        .menu-item-has-children:hover {
+                            > a {
+                                background: none;
+
+                                &:hover {
+                                    background-color: #f8093a;
+                                }
+                            }
+                        }
                         .sub-menu {
                             display: block;
 
@@ -361,6 +371,7 @@ header#header {
 
 .breadcrumb {
     background: none;
+    color: #8d8d8d;
 
     a {
         color: #d30630;
