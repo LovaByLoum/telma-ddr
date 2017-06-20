@@ -13,7 +13,6 @@
  *
  * @package WordPress
  */
-define( 'WPCACHEHOME', 'E:\wampserver\www\projets\telmarh\wp-content\plugins\wp-super-cache/' ); //Added by WP-Cache Manager
 define('WP_CACHE', true); //Added by WP-Cache Manager
 define("WPLANG", "fr_FR");
 $host = $_SERVER['HTTP_HOST'];
