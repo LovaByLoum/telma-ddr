@@ -70,44 +70,52 @@ get_header(); ?>
             <!--block connecter-->
             <?php if (isset( $blocConnecterLien ) &&  !empty( $blocConnecterLien ) && isset( $blocConnecterTitre ) && !empty( $blocConnecterTitre ) && isset( $blocConnecterPicto ) && !empty( $blocConnecterPicto ) ):?>
             <div class="col-md-6 col-lg-4 card-item ">
-                <div class="connecter animate-plus animate-init" data-animations="bounceIn" data-animation-delay="0.5s" style="background-image: url(<?php print_r($imgBlocConnecter); ?>); background-color: <?php print_r($blocConnecterCouleur); ?>;">
-                    <a href="<?php print_r($blocConnecterLien); ?>">
-                        <p><i class="fa <?php echo $blocConnecterPicto; ?>"></i></p>
-                        <p> <?php print_r($blocConnecterTitre); ?> </p>
-                    </a>
+                <div class="animate-plus animate-init" data-animations="bounceIn" data-animation-delay="0.5s">
+                    <div class="connecter animate-tilt" style="background-image: url(<?php print_r($imgBlocConnecter); ?>); background-color: <?php print_r($blocConnecterCouleur); ?>;">
+                        <a href="<?php print_r($blocConnecterLien); ?>">
+                            <p><i class="fa <?php echo $blocConnecterPicto; ?>"></i></p>
+                            <p> <?php print_r($blocConnecterTitre); ?> </p>
+                        </a>
+                    </div>
                 </div>
             </div>
             <?php endif;?>
             <!--block Recheche-->
             <?php if ( isset( $blocRechercheLien ) && !empty( $blocRechercheLien ) && isset( $blocRechercheTitre ) && !empty( $blocRechercheTitre ) && isset( $blocRecherchePicto ) && !empty( $blocRecherchePicto ) ):?>
             <div class="col-md-6  col-lg-4 card-item">
-                <div class="rechercher  animate-plus"  data-animations="bounceIn" data-animation-delay="0.8s" style="background-color: <?php print_r($blocRechercheCouleur); ?>;">
-                    <a href="<?php print_r($blocRechercheLien); ?>">
-                        <p><i class="fa <?php echo $blocRecherchePicto; ?>"></i></p>
-                        <p><?php print_r($blocRechercheTitre); ?></p>
-                    </a>
+                <div class="animate-plus" data-animations="bounceIn" data-animation-delay="0.8s">
+                    <div class="rechercher animate-tilt" style="background-color: <?php print_r($blocRechercheCouleur); ?>;">
+                        <a href="<?php print_r($blocRechercheLien); ?>">
+                            <p><i class="fa <?php echo $blocRecherchePicto; ?>"></i></p>
+                            <p><?php print_r($blocRechercheTitre); ?></p>
+                        </a>
+                    </div>
                 </div>
             </div>
             <?php endif;?>
             <!--block Découvrir-->
             <?php if ( isset( $blocDecouvrirLien ) && !empty( $blocDecouvrirLien ) && isset( $blocDecouvrirTitre ) && !empty( $blocDecouvrirTitre ) && isset( $blocRechercheTitre ) && isset( $blocDecouvrirPicto ) && !empty( $blocDecouvrirPicto ) ):?>
             <div class="col-md-6 col-lg-4 card-item">
-                <div class="decouvrir  animate-plus"  data-animations="bounceIn" data-animation-delay="1s"  style="background-image: url(<?php print_r($imgBlocDecouvrir); ?>); background-color: <?php print_r($blocContacterCouleur); ?>;">
-                    <a href="<?php print_r($blocDecouvrirLien); ?>">
-                        <p><i class="fa <?php echo $blocDecouvrirPicto; ?>"></i></p>
-                        <p><?php print_r($blocDecouvrirTitre); ?></p>
-                    </a>
+                <div class="animate-plus" data-animations="bounceIn" data-animation-delay="1s">
+                    <div class="decouvrir animate-tilt" style="background-image: url(<?php print_r($imgBlocDecouvrir); ?>); background-color: <?php print_r($blocContacterCouleur); ?>;">
+                        <a href="<?php print_r($blocDecouvrirLien); ?>">
+                            <p><i class="fa <?php echo $blocDecouvrirPicto; ?>"></i></p>
+                            <p><?php print_r($blocDecouvrirTitre); ?></p>
+                        </a>
+                    </div>
                 </div>
             </div>
             <?php endif;?>
             <!--block contacter-->
             <?php if ( isset( $blocContacterLien ) && !empty( $blocContacterLien ) && isset( $blocContacterTitre ) && !empty( $blocContacterTitre ) && isset( $blocRechercheTitre ) && isset( $blocContacterPicto ) && !empty( $blocContacterPicto ) ):?>
             <div class="col-lg-8 card-item">
-                <div class="contacter  animate-plus"  data-animations="bounceIn" data-animation-delay="1.2s"  style="background-image: url(<?php print_r($imgBlocContacter); ?>); background-color: <?php print_r($blocDecouvrirCouleur); ?>;">
-                    <a href="<?php print_r($blocContacterLien); ?>">
-                    <p><i class="fa <?php echo $blocContacterPicto; ?>"></i></p>
-                        <p><?php print_r($blocContacterTitre); ?></p>
-                    </a>
+                <div class="animate-plus" data-animations="bounceIn" data-animation-delay="1.2s">
+                    <div class="contacter animate-tilt" style="background-image: url(<?php print_r($imgBlocContacter); ?>); background-color: <?php print_r($blocDecouvrirCouleur); ?>;">
+                        <a href="<?php print_r($blocContacterLien); ?>">
+                        <p><i class="fa <?php echo $blocContacterPicto; ?>"></i></p>
+                            <p><?php print_r($blocContacterTitre); ?></p>
+                        </a>
+                    </div>
                 </div>
             </div>
             <?php endif;?>
