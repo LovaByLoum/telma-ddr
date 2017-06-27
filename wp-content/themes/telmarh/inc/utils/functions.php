@@ -363,10 +363,12 @@ function telmarh_login_enqueue_script()
 	            padding-bottom: 10px;
 	        }
           .login-action-login {
-            background-color: #fff;
+            background: url(' . get_template_directory_uri() . '/images/plage-1.jpg) no-repeat center top;
+            background-size: cover;
           }
           body #login {
-            padding: 0;
+            background-color: #fff;
+            padding: 0 0 10px;
           }
           #login .message {
             border-left: none;
