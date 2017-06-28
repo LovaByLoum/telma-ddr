@@ -353,6 +353,8 @@ function telmarh_add_menu_items( $items, $args ){
 add_action("login_enqueue_scripts", "telmarh_login_enqueue_script");
 function telmarh_login_enqueue_script()
 {
+    global $telmarh_options;
+    $imageUrl = ( isset( $telmarh_options['image_bg_connect'] ) && !empty( $telmarh_options['image_bg_connect'] ) ) ? $telmarh_options['image_bg_connect'] : get_template_directory_uri() . '/images/plage-1.jpg';
 	$logo_image = get_theme_mod( 'telmarh_logo' );
 	$style = '<style type="text/css">
 	        #login h1{
@@ -363,7 +365,7 @@ function telmarh_login_enqueue_script()
 	            padding-bottom: 10px;
 	        }
           .login-action-login {
-            background: url(' . get_template_directory_uri() . '/images/plage-1.jpg) no-repeat center top;
+            background: url(' . $imageUrl . ') no-repeat center top;
             background-size: cover;
           }
           body #login {

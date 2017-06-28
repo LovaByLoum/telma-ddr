@@ -105,5 +105,11 @@ $telmarh_options_settings = array(
 			'type'              => 'text',
 			'description'       => 'Séparer les valeurs par un virgule (ex : Malgache,Français,Americain)'
 		)
-	)
+	),
+    'Image background connexion' => array(
+        'image_bg_connect'      => array(
+            'Label'                 => 'Image',
+            'type'                  => 'image',
+            'description'           => 'Image visible au page de connexion')
+    )
 );
