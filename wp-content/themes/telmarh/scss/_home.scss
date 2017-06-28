@@ -50,13 +50,14 @@
     .card-item {
         padding-top: 15px;
         padding-bottom: 15px;
-        > div {
-            background-color: #c80f2d;
-            background-size: cover;
-            background-position: center center;
-            padding: 15px;
+        .animate-plus {
             opacity: 0;
-
+            > div {
+                background-color: #c80f2d;
+                background-size: cover;
+                background-position: center center;
+                padding: 15px;
+            }
             a {
                 display: block;
                 padding: 15px;
@@ -65,10 +66,9 @@
 
                 &:hover {
                     text-decoration: none;
-                    background-color: rgba( 0,0,0,0.3 );
+                    //background-color: rgba( 0,0,0,0.3 );
                 }
             }
-
             p {
                 font-size: 18px;
                 color: #fff;
@@ -81,6 +81,12 @@
                 @media (min-width: 576px) {
                     font-size: 24px;
                 }
+            }
+        }
+        .animate-tilt {
+            transition: box-shadow .3s linear;
+            &:hover {
+                @include browserCss('box-shadow', 0 15px 30px rgba(0, 0, 0, 0.5));
             }
         }
     }

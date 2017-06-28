@@ -26,6 +26,10 @@ jQuery( function( $ ){
 				$(this).find('.caption').fadeOut(350);
 			}
 		);
+
+        $('.animate-tilt').tilt({
+            axis: "y"
+        });
 	});
 	
 });
