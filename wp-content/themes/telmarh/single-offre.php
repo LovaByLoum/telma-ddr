@@ -25,7 +25,7 @@ get_header(); ?>
     <section id="page-entry-content" class="single-offer">
         <header class="entry-header">
             <div class="container">
-                <p class="candidature-spontanne-link"><a href="<?php echo get_permalink($postIdCandidature->ID);?>">Envoyer une candidature spontannée</a></p>
+                <!--<p class="candidature-spontanne-link"><a href="<?php //echo get_permalink($postIdCandidature->ID);?>">Envoyer une candidature spontannée</a></p>-->
                 <?php if ( isset( $offre->titre ) && !empty( $offre->titre ) ):?>
                     <h1 class="entry-title"><?php echo $offre->titre;?></h1>
                 <?php endif;?>
