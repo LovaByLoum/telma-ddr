@@ -174,24 +174,22 @@ get_header(); ?>
 
     <section class="job-last">
         <!-- offres urgents -->
-        <?php if ( !empty( $offresUrgent ) && count( $offresUrgent ) > 0 ){
-            $i = 1;?>
+        <?php if ( !empty( $offresUrgent ) && count( $offresUrgent ) > 0 ){?>
             <h3 class="widget-title"><a href="<?php echo get_permalink($postOffes->ID);?>" title="Nos dernières offres" style="color:#c80f2d;text-decoration: none;text-transform: uppercase;"> Nos dernières offres </a><i class="fa fa-search"></i></h3>
             <?php
-            $count = 0;
             foreach( $offresUrgent as $offre ){ ?>
                 <div class="job-item">
                     <div class="row">
                         <?php $urlImage = $offre->logo[0];?>
-                        <?php if ( !empty( $urlImage ) && $i%2 == 1 ):?>
-                            <div class="col-sm-3 img-show <?php if ( $count % 2  != 0 ) {?> right <?php }?>">
+                        <?php if ( !empty( $urlImage ) ):?>
+                            <div class="col-sm-3 img-show">
                                 <figure>
                                     <img src="<?php echo $urlImage;?>"/>
                                 </figure>
                             </div>
                         <?php endif;?>
                         <div class="col-sm-9">
-                            <h5><a href="<?php echo get_permalink( $offre->id );?>" title="<?php echo $offre->titre;?>"><?php echo $offre->titre;?></a> <span class="label">urgent</span></h5>
+                            <h5><a href="<?php echo get_permalink( $offre->id );?>" title="<?php echo $offre->titre;?>"><?php echo $offre->titre;?></a> <span class="label">Urgent</span></h5>
                             <p class="summary">
                                 <?php if ( isset( $offre->nameEntreprise ) && !empty( $offre->nameEntreprise ) ):?>
                                     Entreprise : <?php echo $offre->nameEntreprise;?><br>
@@ -214,7 +212,6 @@ get_header(); ?>
 
                     </div>
                 </div>
-            <?php $count ++; }?>
         <?php }?>
     </section>
 </div>
