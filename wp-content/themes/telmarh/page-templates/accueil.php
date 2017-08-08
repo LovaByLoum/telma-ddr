@@ -212,6 +212,7 @@ get_header(); ?>
 
                     </div>
                 </div>
+            <?php }?>
         <?php }?>
     </section>
 </div>
