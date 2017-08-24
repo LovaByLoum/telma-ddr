@@ -904,7 +904,7 @@ if (!wp_next_scheduled('my_cinq_minute_action')) {
 if (!wp_next_scheduled('my_dix_minute_action')) {
   wp_schedule_event(time(), 'dix_minute', 'my_dix_minute_action');
 }
-if (!wp_next_scheduled('my_one_day_action')) {
+if (!wp_next_scheduled('my_trente_minute_action')) {
   wp_schedule_event(time(), 'one_day', 'my_trente_minute_action');
 }
 
