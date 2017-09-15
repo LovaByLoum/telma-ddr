@@ -18,7 +18,8 @@ header#header {
 // liste offres
 .top-listing-offer {
     margin-bottom: 20px;
-    text-align: center;
+    // padding: 0 0 90px;
+    //text-align: center;
     @media #{$min992} {
         margin-bottom: 40px;
     }
@@ -29,13 +30,20 @@ header#header {
         }
     }
     h1 {
+        border-bottom: 1px solid #cdcdcd;
+        padding-bottom: 10px;
         color: #c80f2d;
-        font-size: 38px;
+        font-size: 25px;
+        //  font-size: 38px;
+        // font-size:8.5714285714em;
+        font-weight: bold;
         line-height: 100%;
         margin-bottom: 10px;
         text-transform: uppercase;
         @media #{$min480} {
-            font-size: 48px;
+            font-size: 30px;
+            // font-size:48px;
+            // font-size:8.5714285714em;
         }
         @media #{$min992} {
             margin-bottom: 0;
@@ -396,10 +404,17 @@ header#header {
         }
     }
     h1 {
+        border-bottom: 1px solid #cdcdcd;
         color: #c80f2d;
         font-family: 'arial';
-        font-size: 30px;
+        font-size: 25px;
+        font-weight: bold;
+        margin-bottom: 10px;
+        padding-bottom: 10px;
         text-transform: uppercase;
+        @media #{$min640} {
+            font-size: 30px;
+        }
     }
     h2 {
         color: #646469;
