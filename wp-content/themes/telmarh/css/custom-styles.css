@@ -280,14 +280,20 @@ header#header {
   font-weight: 700;
   text-align: center;
   text-transform: uppercase; }
+  @media (max-width: 450px) {
+    .error-404 h1 {
+      font-size: 20px; } }
   .error-404 h1 span {
     color: #fff; }
 .error-404 .page-header {
   position: absolute;
-  top: 50%;
+  top: 14%;
   left: 0;
   width: 100%;
   z-index: 5; }
+  @media (max-width: 768px) {
+    .error-404 .page-header {
+      top: 7%; } }
 .error-404 p {
   text-align: center;
   color: #fff;
