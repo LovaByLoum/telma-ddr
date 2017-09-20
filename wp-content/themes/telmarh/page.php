@@ -22,12 +22,13 @@ get_header(); ?>
             <img src="<?php echo get_template_directory_uri(); ?>/images/batiment.jpg" alt="">
         <?php }?>
     </figure>
+    <div class="breadcrumb"><div class="container"><?php  get_breadcrumb(''); ?></div></div>
     <header class="entry-header">
         <div class="container">
             <?php the_title( '<h1 class="entry-title">', '</h1>' ); ?>
         </div>
     </header>
- <div class="breadcrumb"><div class="container"><?php  get_breadcrumb(''); ?></div></div>
+ 
     <article id="post-<?php the_ID(); ?>">
         <div class="container">
             <div class="entry-content">

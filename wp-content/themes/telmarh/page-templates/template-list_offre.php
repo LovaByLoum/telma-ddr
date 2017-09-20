@@ -74,7 +74,7 @@ $recherche = ( isset( $_GET['sof'] ) && !empty( $_GET['sof'] ) ) ? $_GET['sof'] 
                         </aside>
                         <aside class="widget">
                             <div class="control-group">
-                                <h5 class="head-accordion <?php if ( empty( $localisationDefault ) ):?>open<?php endif;?>">Région</h5>
+                                <h5 class="head-accordion <?php if ( empty( $localisationDefault ) ):?>open<?php endif;?>">Localisation</h5>
                                 <div class="content-accordion <?php if ( !empty( $localisationDefault ) ):?>open<?php endif;?>">
                                     <?php if ( !empty( $localisation ) && count( $localisation ) > 0 ):
                                             foreach ( $localisation as $term ):?>

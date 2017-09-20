@@ -1,13 +1,16 @@
 .page-standard {
     padding: 0 0 90px;
     h1 {
+        border-bottom: 1px solid #cdcdcd;
         color: #c80f2d;
         font-size: 25px;
+        font-weight: bold;
         margin-bottom: 10px;
         padding-bottom: 10px;
         text-transform: uppercase;
         @media #{$min640} {
             font-size: 30px;
+            // font-size:8.5714285714em;
         }
         a {
             color: inherit;

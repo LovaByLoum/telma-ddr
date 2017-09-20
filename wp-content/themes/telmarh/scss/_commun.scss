@@ -42,7 +42,7 @@ header#header {
 
 
             @media (min-width: 576px) {
-                width: 48px; height: 48px;
+                width: 40px; height: 40px;
             }
 
             &.opened {
@@ -65,7 +65,7 @@ header#header {
             }
 
             .home & {
-                display: none;
+                //display: none;
             }
         }
 
@@ -415,16 +415,22 @@ header#header {
         font-weight: 700;
         text-align: center;
         text-transform: uppercase;
+        @media ( max-width: 450px ) {
+            font-size: 20px;
+        }
         span {
             color: #fff;
         }
     }
     .page-header {
         position: absolute;
-        top: 50%;
+        top: 14%;
         left: 0;
         width: 100%;
         z-index: 5;
+        @media ( max-width: 768px ) {
+            top: 7%;
+        }
     }
     p {
         text-align: center;

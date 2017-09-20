@@ -109,7 +109,36 @@ get_header(); ?>
                                         <div class="entry-content">
                                             <?php echo apply_filters("the_content", $offre->description );?>
                                         </div>
-                                        <?php if ( !empty( $society ) ):?>
+                                        
+                                        <div id="comments">
+                                            <!--description des missions-->
+                                            <?php if ( isset( $offreElment->mission_principal ) ) :?>
+                                                <h3>Missions principales :</h3>
+                                                <div class="entry-content">
+                                                    <?php echo apply_filters("the_content", $offreElment->mission_principal );?>
+                                                </div>
+                                            <?php endif;?>
+                                            <!--description des missions-->
+                                            <!--description responsabilite-->
+                                            <?php if ( isset( $offreElment->responsabilite ) && !empty( $offreElment->responsabilite ) ):?>
+                                                <h3>Responsabilités :</h3>
+                                                <div class="entry-content">
+                                                    <?php echo apply_filters("the_content", $offreElment->responsabilite );?>
+                                                </div>
+                                            <?php endif;?>
+                                            <!--description responsabilite-->
+                                            <!--description qualité requise-->
+                                            <?php if ( isset( $offreElment->qualite_requise ) && !empty( $offreElment->qualite_requise ) ) :?>
+                                                <h3>Qualités requises :</h3>
+                                                <div class="entry-content">
+                                                    <?php echo apply_filters("the_content", $offreElment->qualite_requise );?>
+                                                </div>
+                                            <?php endif;?>
+                                            <!--description qualité requise-->
+
+
+                                            <!--societe footer-->
+                                            <?php if ( !empty( $society ) ):?>
                                         <div class="testimonial clearfix">
                                             <?php if ( isset( $society->titre ) ):?>
                                             <h2><i class="fa fa-industry"></i>&nbsp;<?php echo $society->titre; ?></h2>
@@ -144,31 +173,7 @@ get_header(); ?>
                                             </div>
                                         </div>
                                         <?php endif;?>
-                                        <div id="comments">
-                                            <!--description des missions-->
-                                            <?php if ( isset( $offreElment->mission_principal ) ) :?>
-                                                <h3>Missions principales :</h3>
-                                                <div class="entry-content">
-                                                    <?php echo apply_filters("the_content", $offreElment->mission_principal );?>
-                                                </div>
-                                            <?php endif;?>
-                                            <!--description des missions-->
-                                            <!--description responsabilite-->
-                                            <?php if ( isset( $offreElment->responsabilite ) && !empty( $offreElment->responsabilite ) ):?>
-                                                <h3>Responsabilités :</h3>
-                                                <div class="entry-content">
-                                                    <?php echo apply_filters("the_content", $offreElment->responsabilite );?>
-                                                </div>
-                                            <?php endif;?>
-                                            <!--description responsabilite-->
-                                            <!--description qualité requise-->
-                                            <?php if ( isset( $offreElment->qualite_requise ) && !empty( $offreElment->qualite_requise ) ) :?>
-                                                <h3>Qualités requises :</h3>
-                                                <div class="entry-content">
-                                                    <?php echo apply_filters("the_content", $offreElment->qualite_requise );?>
-                                                </div>
-                                            <?php endif;?>
-                                            <!--description qualité requise-->
+                                            <!--societe footer-->
                                             <p class="single-offre-left hidden-md-down">
                                                 <a href="<?php echo $linkPostule;?>" class="postule-link submit_link <?php if ( !is_user_logged_in() ):?>postule-offre<?php endif;?>" ><span>Intéressé(e) ? Postulez !</span></a>
                                             </p>
