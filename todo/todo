@@ -38,7 +38,8 @@
 -Cliquer sur le menu "Extensions"
 -Activer le module en cochant sur la case à cocher
 
-@todo 7: Activer le module "Advanced Custom Fields: Iconmoon"
+@todo 7: Module Font Icon
+- Aller dans le menu "Extensions" >> Activer le module "Advanced Custom Fields: Iconmoon"
 - Aller dans le menu "ACF" >> Modifier le Block homepage
 - Modifier les Picto en remplacant le type de champ par "Icon selector"
 - Mettre Requis "Oui"
@@ -47,3 +48,8 @@
 - Séléctionner les pictos correspondant à chaque blocs
 - Cliquer sur "Mettre à jour" 
 
+@todo 8: Ordonner les catégories des offres
+- Aller dans le menu "Extensions" >> Activer le module "Category Order and Taxonomy Terms Order"
+- Aller dans le Menu "Offres" >> "Taxonomy Order"
+- Choisir un Taxonomy et ordonner selon le choix
+- Enregister en cliquant sur le bouton "Update"
