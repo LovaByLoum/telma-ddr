@@ -37,3 +37,13 @@
 - Accéder au menu "Tableau de bord" 
 -Cliquer sur le menu "Extensions"
 -Activer le module en cochant sur la case à cocher
+
+@todo 7: Activer le module "Advanced Custom Fields: Iconmoon"
+- Aller dans le menu "ACF" >> Modifier le Block homepage
+- Modifier les Picto en remplacant le type de champ par "Icon selector"
+- Mettre Requis "Oui"
+- Cocher Display clear button
+- Aller dans le menu "Pages" >> Modifier "Le groupe AXIAN": Block homepage
+- Séléctionner les pictos correspondant à chaque blocs
+- Cliquer sur "Mettre à jour" 
+

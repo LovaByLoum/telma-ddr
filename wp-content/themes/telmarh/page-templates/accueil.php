@@ -43,6 +43,7 @@ $blocContacterImage = get_field( "image_contacter",$post->ID );
 $blocContacterLien = get_field( "lien_contacter",$post->ID );
 $blocContacterCouleur = get_field( "selection_couleur_contacter",$post->ID );
 
+
 // image pour block connecter
 list( $imageConnecter ) = ( isset( $blocConnecterImage ) && !empty( $blocConnecterImage ) ) ? wp_get_attachment_image_src( $blocConnecterImage, "full" ) : array();
 $imgBlocConnecter = $imageConnecter;
@@ -73,7 +74,7 @@ get_header(); ?>
                 <div class="animate-plus animate-init" data-animations="bounceIn" data-animation-delay="0.5s">
                     <div class="connecter animate-tilt" style="background-image: url(<?php print_r($imgBlocConnecter); ?>); background-color: <?php print_r($blocConnecterCouleur); ?>;">
                         <a href="<?php print_r($blocConnecterLien); ?>">
-                            <p><i class="fa <?php echo $blocConnecterPicto; ?>"></i></p>
+                            <p><i class="icon-<?php echo $blocConnecterPicto; ?>"></i></p>
                             <p> <?php print_r($blocConnecterTitre); ?> </p>
                         </a>
                     </div>
@@ -84,9 +85,9 @@ get_header(); ?>
             <?php if ( isset( $blocRechercheLien ) && !empty( $blocRechercheLien ) && isset( $blocRechercheTitre ) && !empty( $blocRechercheTitre ) && isset( $blocRecherchePicto ) && !empty( $blocRecherchePicto ) ):?>
             <div class="col-md-6  col-lg-4 card-item">
                 <div class="animate-plus" data-animations="bounceIn" data-animation-delay="0.8s">
-                    <div class="rechercher animate-tilt" style="background-color: <?php print_r($blocRechercheCouleur); ?>;">
+                    <div class="rechercher animate-tilt" style="background-image: url(<?php print_r($imgBlocRecherche); ?>); background-color: <?php print_r($blocRechercheCouleur); ?>;">
                         <a href="<?php print_r($blocRechercheLien); ?>">
-                            <p><i class="fa <?php echo $blocRecherchePicto; ?>"></i></p>
+                            <p><i class="icon-<?php echo $blocRecherchePicto; ?>"></i></p>
                             <p><?php print_r($blocRechercheTitre); ?></p>
                         </a>
                     </div>
@@ -99,7 +100,7 @@ get_header(); ?>
                 <div class="animate-plus" data-animations="bounceIn" data-animation-delay="1s">
                     <div class="decouvrir animate-tilt" style="background-image: url(<?php print_r($imgBlocDecouvrir); ?>); background-color: <?php print_r($blocContacterCouleur); ?>;">
                         <a href="<?php print_r($blocDecouvrirLien); ?>">
-                            <p><i class="fa <?php echo $blocDecouvrirPicto; ?>"></i></p>
+                            <p><i class="icon-<?php echo $blocDecouvrirPicto; ?>"></i></p>
                             <p><?php print_r($blocDecouvrirTitre); ?></p>
                         </a>
                     </div>
@@ -112,7 +113,7 @@ get_header(); ?>
                 <div class="animate-plus" data-animations="bounceIn" data-animation-delay="1.2s">
                     <div class="contacter animate-tilt" style="background-image: url(<?php print_r($imgBlocContacter); ?>); background-color: <?php print_r($blocDecouvrirCouleur); ?>;">
                         <a href="<?php print_r($blocContacterLien); ?>">
-                        <p><i class="fa <?php echo $blocContacterPicto; ?>"></i></p>
+                        <p><i class="icon-<?php echo $blocContacterPicto; ?>"></i></p>
                             <p><?php print_r($blocContacterTitre); ?></p>
                         </a>
                     </div>
