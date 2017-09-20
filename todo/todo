@@ -53,3 +53,9 @@
 - Aller dans le Menu "Offres" >> "Taxonomy Order"
 - Choisir un Taxonomy et ordonner selon le choix
 - Enregister en cliquant sur le bouton "Update"
+
+@todo 9: Dynamiser Menu "Se connecter/ Se déconnecter"
+- Aller dans le menu "Extensions" >> Activer le module "BAW Login/Logout menu"
+- Aller dans le menu "Apparence" >> Menus
+- Dans l'onglet "Login/Logout links V1.3.3"  : ajouter au menu "Se connecter | Se déconnecter"
+- "Enregister le menu"
