@@ -1,9 +1,9 @@
 <?php
-$anneeExperiences = get_terms( JM_TAXONOMIE_ANNEE_EXPERIENCE, array( 'hide_empty' => false ) );
-$typeContrat = get_terms( JM_TAXONOMIE_TYPE_CONTRAT, array( 'hide_empty' => false ) );
-$localisation = get_terms( JM_TAXONOMIE_LOCALISATION,array( 'hide_empty' => false ) );
-$criticites = get_terms( JM_TAXONOMIE_CRITICITE, array( 'hide_empty' => false ) );
-$domaineMetier = get_terms( JM_TAXONOMIE_DEPARTEMENT, array( 'hide_empty' => false ) );
+$anneeExperiences = get_terms( JM_TAXONOMIE_ANNEE_EXPERIENCE, array( 'hide_empty' => false, 'parent' => 0 ) );
+$typeContrat = get_terms( JM_TAXONOMIE_TYPE_CONTRAT, array( 'hide_empty' => false, 'parent' => 0 ) );
+$localisation = get_terms( JM_TAXONOMIE_LOCALISATION,array( 'hide_empty' => false, 'parent' => 0 ) );
+$criticites = get_terms( JM_TAXONOMIE_CRITICITE, array( 'hide_empty' => false, 'parent' => 0 ) );
+$domaineMetier = get_terms( JM_TAXONOMIE_DEPARTEMENT, array( 'hide_empty' => false, 'parent' => 0 ) );
 $entreprises  = JM_Societe::getBy();
 $nbrAffichage = ( isset( $telmarh_options['nombre_atus'] ) && !empty( $telmarh_options['nombre_atus'] ) ) ? $telmarh_options['nombre_atus'] : 4 ;
 $recherche = ( isset( $_GET['sof'] ) && !empty( $_GET['sof'] ) ) ? $_GET['sof'] : "";
