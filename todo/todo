@@ -37,3 +37,25 @@
 - Accéder au menu "Tableau de bord" 
 -Cliquer sur le menu "Extensions"
 -Activer le module en cochant sur la case à cocher
+
+@todo 7: Module Font Icon
+- Aller dans le menu "Extensions" >> Activer le module "Advanced Custom Fields: Iconmoon"
+- Aller dans le menu "ACF" >> Modifier le Block homepage
+- Modifier les Picto en remplacant le type de champ par "Icon selector"
+- Mettre Requis "Oui"
+- Cocher Display clear button
+- Aller dans le menu "Pages" >> Modifier "Le groupe AXIAN": Block homepage
+- Séléctionner les pictos correspondant à chaque blocs
+- Cliquer sur "Mettre à jour" 
+
+@todo 8: Ordonner les catégories des offres
+- Aller dans le menu "Extensions" >> Activer le module "Category Order and Taxonomy Terms Order"
+- Aller dans le Menu "Offres" >> "Taxonomy Order"
+- Choisir un Taxonomy et ordonner selon le choix
+- Enregister en cliquant sur le bouton "Update"
+
+@todo 9: Dynamiser Menu "Se connecter/ Se déconnecter"
+- Aller dans le menu "Extensions" >> Activer le module "BAW Login/Logout menu"
+- Aller dans le menu "Apparence" >> Menus
+- Dans l'onglet "Login/Logout links V1.3.3"  : ajouter au menu "Se connecter | Se déconnecter"
+- "Enregister le menu"

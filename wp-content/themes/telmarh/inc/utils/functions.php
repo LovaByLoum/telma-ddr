@@ -333,7 +333,7 @@ function telmarh_save_post( $post_id ){
 	}
 }
 
-add_filter( "wp_nav_menu_items", "telmarh_add_menu_items", 10, 2 );
+//add_filter( "wp_nav_menu_items", "telmarh_add_menu_items", 10, 2 );
 function telmarh_add_menu_items( $items, $args ){
 	global $post;
 	if ( isset( $args->theme_location ) && $args->theme_location == "primary" ){

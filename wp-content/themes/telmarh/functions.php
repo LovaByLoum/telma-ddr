@@ -181,7 +181,9 @@ function telmarh_scripts() {
 	wp_enqueue_style( 'telmarh-menu', get_template_directory_uri() . '/css/jPushMenu.css' ); 
 	
 	wp_enqueue_style( 'telmarh-font-awesome', get_template_directory_uri() . '/fonts/font-awesome.css' );
-	
+
+	wp_enqueue_style( 'telmarh-font-iconmoon', get_template_directory_uri() . '/fonts/iconmoon.css' );
+
 	$headings_font = esc_html(get_theme_mod('headings_fonts'));
 	$body_font = esc_html(get_theme_mod('body_fonts'));
 //	if( $headings_font ) {
@@ -1171,3 +1173,5 @@ function get_breadcrumb($niveau1 = '', $niveau2 = '') {
 		echo '</em>"';
 	}
 }
+
+
