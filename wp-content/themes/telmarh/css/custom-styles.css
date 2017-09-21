@@ -15,7 +15,7 @@ header#header {
   header#header .nav-right, header#header .nav-left {
     position: relative;
     z-index: 5;
-    padding: 15px; }
+    padding: .875rem 1.25rem; }
   header#header .nav-left {
     float: left; }
     header#header .nav-left .bt-toggle {
