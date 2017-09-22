@@ -701,7 +701,8 @@ class Better_Font_Awesome_Library {
 	 */
 	private function get_transient_css( $version ) {
 
-		$transient_css_array = get_transient( self::SLUG . '-css' );
+		//$transient_css_array = get_transient( self::SLUG . '-css' );
+        $transient_css_array = array($version =>"http://cdn.jsdelivr.net/fontawesome/4.7.0/css/font-awesome.min.css") ;
 		return isset( $transient_css_array[ $version ] ) ? $transient_css_array[ $version ] : '';
 
 	}
