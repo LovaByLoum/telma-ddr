@@ -43,7 +43,7 @@ $blocPartenaires = CPage::getAllpartnerHp( $frontpage_id );
             </div><!-- .entry-content -->
         </div>
     </article>
-
+    
     <!-- slider -->
     <?php if ( !empty($slider_partenaire[0]) ): ?>
         <?php if ( isset( $blocPartenaires ) && !empty( $blocPartenaires ) ):?>
@@ -98,6 +98,24 @@ $blocPartenaires = CPage::getAllpartnerHp( $frontpage_id );
         <?php endif;?>
     <?php endif;?>
     <!-- fin slider -->
+    <div class="container">
+        <div class="grid-container">
+
+            <div class="grid-content">
+                <?php for($i=0;$i<8;$i++){ ?>
+                
+                    <div class="item-grid">
+                        <img class="img-item" src="http://placehold.it/500x500" alt="">
+                    </div>
+                    
+                <?php } ?>
+            </div>
+
+
+        </div>
+    </div>
+
+
 
     <footer class="entry-footer">
         <?php edit_post_link( __( 'Edit', 'telmarh' ), '<span class="edit-link">', '</span>' ); ?>
