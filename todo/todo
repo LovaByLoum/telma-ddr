@@ -59,3 +59,16 @@
 - Aller dans le menu "Apparence" >> Menus
 - Dans l'onglet "Login/Logout links V1.3.3"  : ajouter au menu "Se connecter | Se déconnecter"
 - "Enregister le menu"
+
+>>>>>>>>>>>>>>> Début TODO lot 2 <<<<<<<<<<<<<<<<<<<
+
+@todo 10: Import Champ ACF "Slider partenaires"
+- Aller dans le menu Outils >> Importer 
+- Séléctionner "Wordpress"
+- Choisir le fichier "ACF-slider-partenaires.xml' qui se trouve dans le repertoire '\acf' du projet
+- Envoyer le fichier et l'importer
+- Aller dans menu "Pages" 
+- Choisissez une page de base (par exemple "Présentation de EDM") >> Modifier
+- En bas du wysiwyg se trouve le champ "Slider partenaires" >> Afficher (en cochant la case) 
+- Mettre à jour
+
