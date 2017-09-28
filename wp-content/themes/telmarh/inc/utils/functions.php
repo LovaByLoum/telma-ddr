@@ -333,23 +333,6 @@ function telmarh_save_post( $post_id ){
 	}
 }
 
-//add_filter( "wp_nav_menu_items", "telmarh_add_menu_items", 10, 2 );
-function telmarh_add_menu_items( $items, $args ){
-	global $post;
-	if ( isset( $args->theme_location ) && $args->theme_location == "primary" ){
-		$items .= '<li class="menu-item">';
-		if ( is_user_logged_in() ){
-			$items .='<a href="' . wp_logout_url( get_permalink( $post->ID ) ) .'" title="Se déconnecter" ><i class="fa fa-user-md"></i>&nbsp;Se déconnecter</a>';
-		} else {
-			$items .='<a href="javascript:;" title="Se Connecter" id="login_user"><i class="fa fa-user-secret"></i>&nbsp;Se Connecter</a>';
-		}
-
-		$items .='</li>';
-
-	}
-	return $items ;
-}
-
 add_action("login_enqueue_scripts", "telmarh_login_enqueue_script");
 function telmarh_login_enqueue_script()
 {
@@ -782,4 +765,5 @@ add_filter("new_user_approve_welcome_message", "telmarh_new_user_approve_welcome
 function telmarh_new_user_approve_welcome_message( $message ){
     return "Bienvenue chez Portail de recrutement du Groupe AXIAN. Ce site est accessible uniquement aux utilisateurs agréés. Pour être approuvé, vous devez d'abord vous enregistrer.";
 }
+
 
