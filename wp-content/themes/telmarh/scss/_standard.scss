@@ -26,7 +26,9 @@
         }
     }
 
-
+    .grid-container{
+        padding-top:75px;
+    }
     .grid-content{
         display:grid;
         grid-template-columns: repeat(4,calc(100%/4 - 10px));

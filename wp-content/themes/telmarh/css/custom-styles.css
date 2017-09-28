@@ -1239,6 +1239,8 @@ body.home .opened + .logo {
     margin-bottom: 10px; }
     .page-standard header p:last-child {
       margin-bottom: 0; }
+  .page-standard .grid-container {
+    padding-top: 75px; }
   .page-standard .grid-content {
     display: grid;
     grid-template-columns: repeat(4, calc(100%/4 - 10px));
