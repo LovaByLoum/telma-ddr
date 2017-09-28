@@ -924,6 +924,46 @@ function telmarh_connection(){
 	$secure_cookie = '';
 	$creds = array();
 	if ( !is_user_logged_in() ){
+    if (!isset($_POST['custom_connect_block_nonce']) || !wp_verify_nonce($_POST['custom_connect_block_nonce'], "telmarh_connection"))
+      return;
+		// If the user wants ssl but the session is not ssl, force a secure cookie.
+			if ( !empty($_POST['custom_log']) && !force_ssl_admin() ) {
+				$user_name = sanitize_user($_POST['custom_log']);
+				$user = get_user_by( 'login', $user_name );
+
+				if ( ! $user && strpos( $user_name, '@' ) ) {
+					$user = get_user_by( 'email', $user_name );
+				}
+
+				if ( isset( $user->ID ) && $user->ID > 0 ) {
+					$secure_cookie = true;
+				}
+			}
+		$creds['user_login'] = $_POST['custom_log'];
+		$creds['user_password'] = $_POST['custom_pwd'];
+		$creds['remember'] = $_POST['custom_rememberme'];
+		$user = wp_signon( $creds, $secure_cookie );
+		if ( isset( $user->errors ) ){
+			$_POST['errors'] = $user->errors;
+		} else {
+			wp_set_current_user( $user->ID );
+		}
+		$to_redirect = ( isset( $_POST['redirect_to'] ) && !empty( $_POST['redirect_to'] ) ) ? $_POST['redirect_to']  : home_url();
+		if ( !is_wp_error($user) ) {
+			wp_redirect( $to_redirect );
+			exit;
+		}
+
+	}
+
+}
+add_action("init", "telmarh_connection_page");
+function telmarh_connection_page(){
+	$secure_cookie = '';
+	$creds = array();
+	if ( !is_user_logged_in() ){
+    if (!isset($_POST['custom_connect_nonce']) || !wp_verify_nonce($_POST['custom_connect_nonce'], "telmarh_connection_page"))
+      return;
 		// If the user wants ssl but the session is not ssl, force a secure cookie.
 			if ( !empty($_POST['custom_log']) && !force_ssl_admin() ) {
 				$user_name = sanitize_user($_POST['custom_log']);
@@ -1173,5 +1213,17 @@ function get_breadcrumb($niveau1 = '', $niveau2 = '') {
 		echo '</em>"';
 	}
 }
+
+
+//add_filter( "login_url", "telmarh_wp_login_url" );
+function telmarh_wp_login_url(){
+  $page = get_bloginfo('url');
+  // Redirect to the home page
+  $page = wp_get_post_by_template("page-login.php", "");
+  $pageConnect = ( isset( $page->ID ) && !empty( $page->ID ) ) ? get_permalink( $page->ID ) : $page ;
+
+  return $pageConnect;
+}
+
 
 

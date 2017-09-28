@@ -72,3 +72,15 @@
 - En bas du wysiwyg se trouve le champ "Slider partenaires" >> Afficher (en cochant la case) 
 - Mettre à jour
 
+- "Enregister le menu"
+
+@todo 10 : Ajout page de connexion et mot de passe oublier
+ - Se connecter en tant qu'admin
+ - Aller dans le menu "Pages" >> ajouter une nouvelle page
+ - Ajouter le titre
+ - prendre le modèle de page "Page login"
+ - puis publié
+ - Aller de nouveau dans le menu "Pages" >> ajouter une nouvelle page
+ - Ajouter le titre
+ - prendre le modèle de page "Page lostpassword"
+ - puis publié

@@ -46,7 +46,7 @@ $linkRedirect = ( $is_offre ) ? get_permalink( $pagePostule->ID ) ."?po=" . $pos
 		<input type="hidden" name="redirect_to" value="<?php echo esc_attr($linkRedirect); ?>" />
 		<input type="submit" name="telmarh_connection" id="wp-submit" class="button-primary" value="Se connecter">
 	</p>
-
+    <?php wp_nonce_field("telmarh_connection", 'custom_connect_block_nonce');?>
 	<p class="login-links">
 
         <a href="<?php echo get_permalink( $pageInscription->ID );?>" class="signup" title="S'inscrire">

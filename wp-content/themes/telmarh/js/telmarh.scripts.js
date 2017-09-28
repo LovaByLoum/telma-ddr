@@ -711,6 +711,33 @@ jQuery( function( $ ){
         });
     }
 
+    if ( jQuery("#page-loginform").length > 0 ){
+        jQuery("#page-loginform").validate({
+            ignore : "",
+            errorElement : "p",
+            errorClass : "login-username error",
+            errorPlacement: function(error, element) {
+                error.insertBefore(".data-error");
+            },
+            rules :{
+                "custom_log" : {
+                   required : true
+                },
+                "custom_pwd" : {
+                    required : true
+                }
+            },
+            messages : {
+                "custom_log" : {
+                   required : "L'identifiant ou adresse de messagerie est requis."
+                },
+                "custom_pwd" : {
+                    required : "Le mot de passe est requis."
+                }
+            }
+        });
+    }
+
     if ( jQuery("#nous_contacter").length > 0 ){
         jQuery("#nous_contacter").validate({
             ignore : "",
