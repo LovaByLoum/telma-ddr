@@ -36,6 +36,9 @@ get_header();?>
     <article id="post-<?php the_ID(); ?>">
         <div class="container">
             <div class="entry-content">
+              <?php if ( isset( $post->post_content ) && !empty( $post->post_content ) ):?>
+                <?php echo $post->post_content;?>
+              <?php endif;?>
                 <form name="page-loginform" id="page-loginform" action="<?php echo get_permalink( $post->ID ); ?>" method="post">
                   <?php if (isset($_POST['errors']) && !empty($_POST['errors'])):
                     $errors = $_POST['errors']; ?>
