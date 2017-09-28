@@ -93,4 +93,9 @@ define( "USER_ROLE_ADMINISTRATOR", "administrator" );
 //status blacklist
 define( "CANDIDAT_BLACKLIST", "blacklist" );
 
+//field ACF Slider Partenaires Page standard
+define ( "SLIDER_PARTENAIRE", "slider_partenaire" );
+
+
+
 

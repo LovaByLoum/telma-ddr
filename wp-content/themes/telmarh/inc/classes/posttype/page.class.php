@@ -53,7 +53,7 @@ class CPage
 			$element = new stdClass();
 
 			//traitement des données
-
+			$element->slider_partenaire = get_field( SLIDER_PARTENAIRE, $p->ID );
 
 			//stocker dans le tableau statique
 			self::$_elements[$pid] = $element;
