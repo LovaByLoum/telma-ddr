@@ -39,6 +39,10 @@
             grid-template-columns: repeat(2,calc(100%/2 - 10px));
         }
     }
+    .item-grid{
+        align-self: center;
+        justify-self: center;
+    }
     
     .img-item{
         max-width:100%;

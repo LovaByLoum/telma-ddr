@@ -1250,6 +1250,9 @@ body.home .opened + .logo {
     @media (max-width: 768px) {
       .page-standard .grid-content {
         grid-template-columns: repeat(2, calc(100%/2 - 10px)); } }
+  .page-standard .item-grid {
+    align-self: center;
+    justify-self: center; }
   .page-standard .img-item {
     max-width: 100%;
     /* object-fit: cover; */
