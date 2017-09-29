@@ -1255,4 +1255,30 @@ body.home .opened + .logo {
     /* object-fit: cover; */
     /* height: inherit; */ }
 
+form[name~="page-loginform"] {
+  border: 1px solid #c1c1c1;
+  padding: 10% 20%;
+  margin-top: 125px; }
+  form[name~="page-loginform"] p {
+    display: grid;
+    grid-template-columns: 45% 45%;
+    margin-bottom: 2rem;
+    grid-gap: 30px; }
+    @media (max-width: 768px) {
+      form[name~="page-loginform"] p {
+        grid-template-columns: 100%;
+        grid-gap: 12px; } }
+  form[name~="page-loginform"] p.error {
+    grid-template-columns: 100%; }
+  form[name~="page-loginform"] input {
+    padding: 0.8em; }
+  form[name~="page-loginform"] input[type="submit"] {
+    background: #E57E75;
+    padding: 0.7em;
+    width: 13vw;
+    border: 0; }
+    @media (max-width: 768px) {
+      form[name~="page-loginform"] input[type="submit"] {
+        width: 27vw; } }
+
 /*# sourceMappingURL=custom-styles.css.map */
