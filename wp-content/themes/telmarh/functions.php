@@ -965,8 +965,8 @@ function telmarh_connection_page(){
     if (!isset($_POST['custom_connect_nonce']) || !wp_verify_nonce($_POST['custom_connect_nonce'], "telmarh_connection_page"))
       return;
 		// If the user wants ssl but the session is not ssl, force a secure cookie.
-			if ( !empty($_POST['custom_log']) && !force_ssl_admin() ) {
-				$user_name = sanitize_user($_POST['custom_log']);
+			if ( !empty($_POST['custom_log_page']) && !force_ssl_admin() ) {
+				$user_name = sanitize_user($_POST['custom_log_page']);
 				$user = get_user_by( 'login', $user_name );
 
 				if ( ! $user && strpos( $user_name, '@' ) ) {
@@ -977,8 +977,8 @@ function telmarh_connection_page(){
 					$secure_cookie = true;
 				}
 			}
-		$creds['user_login'] = $_POST['custom_log'];
-		$creds['user_password'] = $_POST['custom_pwd'];
+		$creds['user_login'] = $_POST['custom_log_page'];
+		$creds['user_password'] = $_POST['custom_pwd_page'];
 		$creds['remember'] = $_POST['custom_rememberme'];
 		$user = wp_signon( $creds, $secure_cookie );
 		if ( isset( $user->errors ) ){
@@ -1223,6 +1223,25 @@ function telmarh_wp_login_url(){
   $pageConnect = ( isset( $page->ID ) && !empty( $page->ID ) ) ? get_permalink( $page->ID ) : $page ;
 
   return $pageConnect;
+}
+
+add_action("init", "telmarh_lostpassword_page");
+function telmarh_lostpassword_page(){
+    if ( !is_user_logged_in() ){
+      if ( !isset($_POST['custom_lostpasword_nonce']) || !wp_verify_nonce($_POST['custom_lostpasword_nonce'], "telmarh_lostpassword_page") ){
+        $loginEmail = ( isset( $_POST['custom_email_name'] ) && !empty( $_POST['custom_email_name'] ) ) ? $_POST['custom_email_name'] : "";
+        if ( !empty( $loginEmail ) ){
+          if ( strpos( $loginEmail, "@" ) ){
+            $userData = get_user_by( 'email', trim( $loginEmail ) );
+          } else {
+            $login = trim($loginEmail);
+            $user_data = get_user_by('login', $login);
+          }
+          do_action('lostpassword_post');
+          
+        }
+      }
+    }
 }
 
 

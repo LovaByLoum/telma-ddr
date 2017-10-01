@@ -40,14 +40,14 @@ get_header();?>
                 <form name="page-lostpassword" id="page-lostpassword" action="<?php echo get_permalink( $post->ID ); ?>" method="post">
                   <?php if (isset($_POST['errors']) && !empty($_POST['errors'])):
                     $errors = $_POST['errors']; ?>
-                      <p class="login-username error">
+                      <p class="lostpassword-page error">
                         <?php if (isset($errors["incorrect_login"]) && !empty($errors["incorrect_login"])):
                           $message = (!empty($errors["incorrect_login"][0]) && $errors["incorrect_login"][0] == "<strong>ERREUR</strong>") ? " l’identifiant ou l’adresse de messagerie n’est pas valide." : $errors["incorrect_login"][0];
                           echo $message;
                         endif; ?>
                       </p>
                   <?php endif; ?>
-                    <p class="login-password">
+                    <p class="lostpassword-page data-error">
                         <label for="lostpassword">Identifiant ou adresse de messagerie</label>
                         <input type="text" name="custom_email_name" id="custom_email_name"
                                class="input_text <?php if (!empty($error) && isset($error['incorrect_login']) && !empty($error['incorrect_login'])): ?>error<?php endif; ?>"
@@ -58,6 +58,7 @@ get_header();?>
                     <p class="login-submit">
                         <input type="hidden" name="redirect_to"
                                value=""/>
+                      <?php wp_nonce_field("telmarh_lostpassword_page", 'custom_lostpasword_nonce');?>
                         <input type="submit" name="telmarh_lostpassword_page"
                                id="wp-submit" class="button-primary"
                                value="Générer un mot de passe">

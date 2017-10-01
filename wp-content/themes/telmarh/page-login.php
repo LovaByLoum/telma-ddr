@@ -42,7 +42,7 @@ get_header();?>
                 <form name="page-loginform" id="page-loginform" action="<?php echo get_permalink( $post->ID ); ?>" method="post">
                   <?php if (isset($_POST['errors']) && !empty($_POST['errors'])):
                     $errors = $_POST['errors']; ?>
-                      <p class="login-username error">
+                      <p class="login-username-page error">
                         <?php if (isset($errors["incorrect_password"]) && !empty($errors["incorrect_password"])):
                           $message = (!empty($errors["incorrect_password"][0]) && $errors["incorrect_password"][0] == "<strong>ERREUR</strong>") ? "Mot de passe incorrect." : $errors["incorrect_password"][0];
                           echo $message;
@@ -52,20 +52,20 @@ get_header();?>
                         endif; ?>
                       </p>
                   <?php endif; ?>
-                    <p class="login-username data-error">
+                    <p class="login-username-page data-error">
                         <label for="user_login">Identifiant ou adresse de
                             messagerie </label>
-                        <input type="text" name="custom_log" id="user_login"
+                        <input type="text" name="custom_log_page" id="user_login"
                                class="input_text <?php if (!empty($error) && isset($error['invalid_username']) && !empty($error['invalid_username'])): ?>error<?php endif; ?>"
-                               value="<?php echo $_POST['custom_log']; ?>"
+                               value="<?php echo $_POST['custom_log_page']; ?>"
                                size="20">
                     </p>
 
                     <p class="login-password">
                         <label for="user_pass">Mot de passe</label>
-                        <input type="password" name="custom_pwd" id="user_pass"
+                        <input type="password" name="custom_pwd_page" id="user_pass"
                                class="input_text <?php if (!empty($error) && isset($error['incorrect_password']) && !empty($error['incorrect_password'])): ?>error<?php endif; ?>"
-                               value="<?php echo $_POST['custom_pwd']; ?>"
+                               value="<?php echo $_POST['custom_pwd_page']; ?>"
                                size="20">
                     </p>
 

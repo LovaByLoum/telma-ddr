@@ -16,10 +16,13 @@ form[name~="page-loginform"]{
     }
     p.error{
         grid-template-columns: 100%;
+        color: #be3631;
     }
     input {
         padding: 0.8em;
-        
+        &.error{
+          border-color: #be3631;
+        }
       }
       input[type="submit"] {
         background: #E57E75;
