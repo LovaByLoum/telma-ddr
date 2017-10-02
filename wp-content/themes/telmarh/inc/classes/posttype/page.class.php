@@ -250,6 +250,31 @@ class CPage
 		global $wpdb;
 		return $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM  {$wpdb->prefix}fm_data_{$formId} WHERE parent_post_id = %d", $postId ) );
 	}
+
+
+	public static function getAllPavePage( $pid ){
+		$data = array();
+		if ( intval( $pid ) > 0 ){
+			$paves = get_field( PAVE_PERSONNALISABLE, $pid );
+			if ( !empty( $paves ) && count( $paves ) > 0 ){
+				foreach ( $paves as $pave ){
+					$elt                = new stdClass();
+					$imageUrl           = "";
+					$elt->name          = $pave[PAVE_PERS_TITRE];
+					$image              = wp_get_attachment_image_src( $pave[PAVE_PERS_IMAGE], "full" );
+					$elt->bordure       = $pave[PAVE_PERS_BORDURE_GRISE];
+					if ( !empty( $image ) ){
+						list( $url) = $image;
+						$imageUrl       =  $url;
+					}
+					$elt->imageUrl      = $imageUrl;
+					$data['element'][] = $elt;
+				}
+			}
+		}
+
+		return $data;
+	}
 }
 
 add_action( "init", "CPage::action" );

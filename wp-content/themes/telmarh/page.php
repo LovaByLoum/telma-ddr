@@ -18,6 +18,8 @@ $PageElement = CPage::getById($post->ID);
 $slider_partenaire = $PageElement->slider_partenaire;
 $frontpage_id = get_option( 'page_on_front' );
 $blocPartenaires = CPage::getAllpartnerHp( $frontpage_id );
+$blocPaves = CPage::getAllPavePage( $post->ID );
+//echo '<br><br><br><br><br><br><br><br>paves: '.count($blocPaves);
 ?>
 <section id="page-full-entry-content" class="page-standard">
     <figure class="alauneImg">
@@ -43,7 +45,7 @@ $blocPartenaires = CPage::getAllpartnerHp( $frontpage_id );
             </div><!-- .entry-content -->
         </div>
     </article>
-    
+
     <!-- slider -->
     <?php if ( !empty($slider_partenaire[0]) ): ?>
         <?php if ( isset( $blocPartenaires ) && !empty( $blocPartenaires ) ):?>
@@ -98,23 +100,32 @@ $blocPartenaires = CPage::getAllpartnerHp( $frontpage_id );
         <?php endif;?>
     <?php endif;?>
     <!-- fin slider -->
-    <div class="container">
-        <div class="grid-container">
 
-            <div class="grid-content">
-                <?php for($i=0;$i<8;$i++){ ?>
-                
-                    <div class="item-grid">
-                        <img class="img-item" src="http://placehold.it/500x500" alt="">
+    <!-- picto -->
+    <?php if ( !empty($blocPaves['element']) ): ?>
+        <?php if ( isset( $blocPaves['element'] ) && !empty( $blocPaves['element'] ) ):?>
+            <div class="container">
+                <div class="grid-container">
+
+                    <div class="grid-content">
+                        <?php foreach ( $blocPaves['element'] as $pave): ?>
+                            <?php if ( isset( $pave->bordure ) && !empty( $pave->bordure[0] ) ){?>
+                                <div class="item-grid-grise">
+                            <?php } else { ?>
+                                    <div class="item-grid">
+                            <?php } ?>
+                                <img class="img-item" src="<?php echo $pave->imageUrl;?>" alt="<?php echo $pave->name;?>">
+                            </div>
+
+                        <?php endforeach; ?>
                     </div>
-                    
-                <?php } ?>
+
+
+                </div>
             </div>
-
-
-        </div>
-    </div>
-
+        <?php endif;?>
+    <?php endif;?>
+    <!-- fin picto -->
 
 
     <footer class="entry-footer">

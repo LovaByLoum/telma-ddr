@@ -72,3 +72,13 @@
 - En bas du wysiwyg se trouve le champ "Slider partenaires" >> Afficher (en cochant la case) 
 - Mettre à jour
 
+@todo 11: "Pavé picto personnalisable"
+- Aller dans le menu Outils >> Importer
+- Séléctionner "Wordpress"
+- Choisir le fichier "ACF-pave-personnalisable.xml' qui se trouve dans le repertoire '\acf' du projet
+- Envoyer le fichier et l'importer
+- Aller dans menu "Pages"
+- Choisissez une page de base (par exemple "Présentation de EDM") >> Modifier
+- En bas du wysiwyg se trouve le metabox "Pavés personnalisables" >> Cliquer sur "Ajouter Bloc"
+- Insérer jusqu'à 8 images en choisissant pour chacun le titre du pavé ainsi que l'option "Bordure grise"
+- Mettre à jour
