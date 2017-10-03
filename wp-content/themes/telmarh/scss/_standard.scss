@@ -34,7 +34,7 @@
         grid-template-columns: repeat(4,calc(100%/4 - 10px));
         grid-gap: 10px;
         grid-auto-flow: dense;
-        grid-auto-rows: minmax(17vw, auto);;
+        grid-auto-rows: minmax(17vw, auto);
         @media (max-width: 768px) {
             grid-template-columns: repeat(2,calc(100%/2 - 10px));
         }
@@ -42,6 +42,18 @@
     .item-grid{
         align-self: center;
         justify-self: center;
+    }
+    .item-grid-grise{
+        // align-self: center;
+        // justify-self: center;
+        position:relative;
+        border: 1px solid #636466;
+        img{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
     }
     
     .img-item{

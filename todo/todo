@@ -60,7 +60,7 @@
 - Dans l'onglet "Login/Logout links V1.3.3"  : ajouter au menu "Se connecter | Se déconnecter"
 - "Enregister le menu"
 
->>>>>>>>>>>>>>> Début TODO lot 2 <<<<<<<<<<<<<<<<<<<
+
 
 @todo 10: Import Champ ACF "Slider partenaires"
 - Aller dans le menu Outils >> Importer 
@@ -71,17 +71,6 @@
 - Choisissez une page de base (par exemple "Présentation de EDM") >> Modifier
 - En bas du wysiwyg se trouve le champ "Slider partenaires" >> Afficher (en cochant la case) 
 - Mettre à jour
-
-
-
-
-
-
-
-
-
-
-
 
 - "Enregister le menu"
 
@@ -94,7 +83,9 @@
  - Aller de nouveau dans le menu "Pages" >> ajouter une nouvelle page
  - Ajouter le titre
  - prendre le modèle de page "Page lostpassword"
- - puis publié@todo 11: "Pavé picto personnalisable"
+ - puis publié
+ 
+ @todo 12: "Pavé picto personnalisable"
 - Aller dans le menu Outils >> Importer
 - Séléctionner "Wordpress"
 - Choisir le fichier "ACF-pave-personnalisable.xml' qui se trouve dans le repertoire '\acf' du projet

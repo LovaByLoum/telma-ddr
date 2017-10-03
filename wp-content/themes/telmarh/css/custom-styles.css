@@ -1253,6 +1253,14 @@ body.home .opened + .logo {
   .page-standard .item-grid {
     align-self: center;
     justify-self: center; }
+  .page-standard .item-grid-grise {
+    position: relative;
+    border: 1px solid #636466; }
+    .page-standard .item-grid-grise img {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%); }
   .page-standard .img-item {
     max-width: 100%;
     /* object-fit: cover; */

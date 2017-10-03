@@ -49,7 +49,7 @@ $blocPaves = CPage::getAllPavePage( $post->ID );
     <!-- slider -->
     <?php if ( !empty($slider_partenaire[0]) ): ?>
         <?php if ( isset( $blocPartenaires ) && !empty( $blocPartenaires ) ):?>
-            <div class="panel-grid" id="pg-636-6">
+            <div class="panel-grid container" id="pg-636-6">
                 <div  class="panel-row-style">
                     <div class="panel-grid-cell" id="pgc-636-6-0">
                         <section id="home-clients" class="clients">
