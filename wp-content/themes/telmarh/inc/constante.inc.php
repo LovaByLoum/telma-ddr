@@ -93,8 +93,14 @@ define( "USER_ROLE_ADMINISTRATOR", "administrator" );
 //status blacklist
 define( "CANDIDAT_BLACKLIST", "blacklist" );
 
-//field ACF Slider Partenaires Page standard
+//field ACF Slider Partenaires: Page standard
 define ( "SLIDER_PARTENAIRE", "slider_partenaire" );
+
+//field ACF Pavé Personnalisable: Page standard
+define ( "PAVE_PERSONNALISABLE", "paves_personnalisables" );
+define ( "PAVE_PERS_IMAGE", "image_pave_personnalisable" );
+define ( "PAVE_PERS_TITRE", "titre_pave_personnalisable" );
+define ( "PAVE_PERS_BORDURE_GRISE", "bordure_grise" );
 
 
 

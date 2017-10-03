@@ -18,6 +18,8 @@ $PageElement = CPage::getById($post->ID);
 $slider_partenaire = $PageElement->slider_partenaire;
 $frontpage_id = get_option( 'page_on_front' );
 $blocPartenaires = CPage::getAllpartnerHp( $frontpage_id );
+$blocPaves = CPage::getAllPavePage( $post->ID );
+//echo '<br><br><br><br><br><br><br><br>paves: '.count($blocPaves);
 ?>
 <section id="page-full-entry-content" class="page-standard">
     <figure class="alauneImg">
@@ -47,7 +49,7 @@ $blocPartenaires = CPage::getAllpartnerHp( $frontpage_id );
     <!-- slider -->
     <?php if ( !empty($slider_partenaire[0]) ): ?>
         <?php if ( isset( $blocPartenaires ) && !empty( $blocPartenaires ) ):?>
-            <div class="panel-grid container" id="pg-636-6">
+            <div class="panel-grid" id="pg-636-6">
                 <div  class="panel-row-style">
                     <div class="panel-grid-cell" id="pgc-636-6-0">
                         <section id="home-clients" class="clients">
@@ -99,24 +101,32 @@ $blocPartenaires = CPage::getAllpartnerHp( $frontpage_id );
     <?php endif;?>
     <!-- fin slider -->
 
-    <div class="container">
-        <div class="grid-container">
+    <!-- picto -->
+    <?php if ( !empty($blocPaves['element']) ): ?>
+        <?php if ( isset( $blocPaves['element'] ) && !empty( $blocPaves['element'] ) ):?>
+            <div class="container">
+                <div class="grid-container">
 
-            <div class="grid-content">
-                <?php for($i=0;$i<8;$i++){ ?>
-                
-                    <div class="item-grid">
-                        <img class="img-item" src="http://placehold.it/500x500" alt="">
+                    <div class="grid-content">
+                        <?php foreach ( $blocPaves['element'] as $pave): ?>
+                            <?php if ( isset( $pave->bordure ) && !empty( $pave->bordure[0] ) ){?>
+                                <div class="item-grid-grise">
+                            <?php } else { ?>
+                                    <div class="item-grid">
+                            <?php } ?>
+                                <img class="img-item" src="<?php echo $pave->imageUrl;?>" alt="<?php echo $pave->name;?>">
+                            </div>
+
+                        <?php endforeach; ?>
                     </div>
-                    
-                <?php } ?>
+
+
+                </div>
             </div>
+        <?php endif;?>
+    <?php endif;?>
+    <!-- fin picto -->
 
-
-        </div>
-    </div>
-
-    
 
     <footer class="entry-footer">
         <?php edit_post_link( __( 'Edit', 'telmarh' ), '<span class="edit-link">', '</span>' ); ?>
