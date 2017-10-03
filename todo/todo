@@ -83,13 +83,9 @@ Début TODO lot 2
 - Insérer jusqu'à 8 images en choisissant pour chacun le titre du pavé ainsi que l'option "Bordure grise"
 - Mettre à jour
 
-@todo 12 : Ajout page de connexion et mot de passe oublier
+@todo 12 : Ajout page de connexion
 - Se connecter en tant qu'admin
 - Aller dans le menu "Pages" >> ajouter une nouvelle page
 - Ajouter le titre
 - prendre le modèle de page "Page login"
-- puis publié
-- Aller de nouveau dans le menu "Pages" >> ajouter une nouvelle page
-- Ajouter le titre
-- prendre le modèle de page "Page lostpassword"
 - puis publié

@@ -261,13 +261,16 @@ class CPage
 					$elt                = new stdClass();
 					$imageUrl           = "";
 					$elt->name          = $pave[PAVE_PERS_TITRE];
+					$imageTronque       = "";
 					$image              = wp_get_attachment_image_src( $pave[PAVE_PERS_IMAGE], "full" );
 					$elt->bordure       = $pave[PAVE_PERS_BORDURE_GRISE];
 					if ( !empty( $image ) ){
-						list( $url) = $image;
+						list( $url, $w, $h ) = $image;
+						$imageTronque   =  self::getPropDim( $w, $h, 500, 500 );
 						$imageUrl       =  $url;
 					}
 					$elt->imageUrl      = $imageUrl;
+					$elt->imageTronque  = $imageTronque;
 					$data['element'][] = $elt;
 				}
 			}
