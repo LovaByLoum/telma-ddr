@@ -1215,30 +1215,72 @@ function get_breadcrumb($niveau1 = '', $niveau2 = '') {
 }
 
 
-//add_filter( "login_url", "telmarh_wp_login_url" );
+add_filter( "login_url", "telmarh_wp_login_url" );
 function telmarh_wp_login_url(){
-  $page = get_bloginfo('url');
+  $pageBlog = get_bloginfo('url');
   // Redirect to the home page
   $page = wp_get_post_by_template("page-login.php", "");
-  $pageConnect = ( isset( $page->ID ) && !empty( $page->ID ) ) ? get_permalink( $page->ID ) : $page ;
+  $pageConnect = ( isset( $page->ID ) && !empty( $page->ID ) ) ? get_permalink( $page->ID ) : $pageBlog ;
 
   return $pageConnect;
 }
 
-add_action("init", "telmarh_lostpassword_page");
+//add_filter( "lostpassword_url", "telmarh_lostpassword_url" );
+function telmarh_lostpassword_url(){
+  $pageBlog = get_bloginfo('url');
+  // Redirect to the home page
+  $page = wp_get_post_by_template("page-lostpassword.php", "");
+  $pageConnect = ( isset( $page->ID ) && !empty( $page->ID ) ) ? get_permalink( $page->ID ) : $pageBlog ;
+
+  return $pageConnect;
+}
+
+//add_action("init", "telmarh_lostpassword_page");
 function telmarh_lostpassword_page(){
+    global $wpdb, $current_site;
+    $message = array();
     if ( !is_user_logged_in() ){
-      if ( !isset($_POST['custom_lostpasword_nonce']) || !wp_verify_nonce($_POST['custom_lostpasword_nonce'], "telmarh_lostpassword_page") ){
+      if ( isset($_POST['custom_lostpasword_nonce']) || wp_verify_nonce($_POST['custom_lostpasword_nonce'], "telmarh_lostpassword_page") ){
         $loginEmail = ( isset( $_POST['custom_email_name'] ) && !empty( $_POST['custom_email_name'] ) ) ? $_POST['custom_email_name'] : "";
-        if ( !empty( $loginEmail ) ){
+		if ( !empty( $loginEmail ) ){
           if ( strpos( $loginEmail, "@" ) ){
-            $userData = get_user_by( 'email', trim( $loginEmail ) );
+			  $user_data = get_user_by( 'email', trim( $loginEmail ) );
           } else {
             $login = trim($loginEmail);
             $user_data = get_user_by('login', $login);
           }
+
           do_action('lostpassword_post');
-          
+          if ( !$user_data ){
+            $message["error"] = "Désolé, la valeur renseigner n'est reconnu ni comme un nom d'utilisateur ni comme une adresse e-mail.";
+          } else {
+            $user_login = $user_data->user_login;
+            $user_email = $user_data->user_email;
+			$key = $wpdb->get_var($wpdb->prepare("SELECT user_activation_key FROM $wpdb->users WHERE user_login = %s", $user_login));
+            if ( empty($key) ) {
+              // Generate something random for a key...
+              $key = wp_generate_password(20, false);
+              do_action('retrieve_password_key', $user_login, $key);
+              // Now insert the new md5 key into the db
+              $wpdb->update($wpdb->users, array('user_activation_key' => $key), array('user_login' => $user_login));
+            }
+            $message = __('Someone requested that the password be reset for the following account:') . "\r\n\r\n";
+            $message .= network_home_url( '/' ) . "\r\n\r\n";
+            $message .= sprintf(__('Username: %s'), $user_login) . "\r\n\r\n";
+            $message .= __('If this was a mistake, just ignore this email and nothing will happen.') . "\r\n\r\n";
+            $message .= __('To reset your password, visit the following address:') . "\r\n\r\n";
+            $message .= '<' . network_site_url("wp-login.php?action=rp&key=$key&login=" . rawurlencode($user_login), 'login') . ">\r\n";
+            $blogname = wp_specialchars_decode(get_option('blogname'), ENT_QUOTES);
+            $title = sprintf( __('[%s] Password Reset'), $blogname );
+            $title = apply_filters('retrieve_password_title', $title);
+
+            $message = apply_filters('retrieve_password_message', $message, $key);
+			 if ( $message && !wp_mail( $user_email, wp_specialchars_decode( $title ), $message ) )
+				wp_die( __('The email could not be sent.') . "<br />\n" . __('Possible reason: your host may have disabled the mail() function.') );
+
+			$_POST['errors']["incorrect_login"][0] = __('Link for password reset has been emailed to you. Please check your email.');
+          }
+
         }
       }
     }
