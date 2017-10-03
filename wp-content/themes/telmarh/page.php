@@ -99,11 +99,6 @@ $blocPaves = CPage::getAllPavePage( $post->ID );
         <?php endif;?>
     <?php endif;?>
     <!-- fin slider -->
-<<<<<<< HEAD
-=======
-
-
->>>>>>> features/lot2_dev
 
     <!-- picto -->
     <?php if ( !empty($blocPaves['element']) ): ?>
@@ -136,10 +131,6 @@ $blocPaves = CPage::getAllPavePage( $post->ID );
     <?php endif;?>
     <!-- fin picto -->
 
-<<<<<<< HEAD
-
-=======
->>>>>>> features/lot2_dev
     <footer class="entry-footer">
         <?php edit_post_link( __( 'Edit', 'telmarh' ), '<span class="edit-link">', '</span>' ); ?>
     </footer><!-- .entry-footer -->
