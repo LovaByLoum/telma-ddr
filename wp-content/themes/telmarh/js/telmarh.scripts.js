@@ -766,6 +766,8 @@ jQuery(function ($) {
     jQuery("#page-lostpassword").validate({
       ignore: "",
       errorElement: "p",
+      onkeyup: false,
+      onfocusout: false,
       errorClass: "lostpassword-page error",
       errorPlacement: function (error, element) {
         error.insertBefore(".data-error");
@@ -778,7 +780,7 @@ jQuery(function ($) {
       },
       messages:{
         "custom_email_name": {
-          required: "L'identifiant ou adresse de messagerie est requis.",
+          required: "Veuillez saisir une adresse de messagerie ou un identifiant.",
           loginNameEmailExist : "Désolé, la valeur renseigner n'est reconnu ni comme un nom d'utilisateur ni comme une adresse e-mail."
         }
       }

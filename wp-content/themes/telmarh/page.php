@@ -19,7 +19,6 @@ $slider_partenaire = $PageElement->slider_partenaire;
 $frontpage_id = get_option( 'page_on_front' );
 $blocPartenaires = CPage::getAllpartnerHp( $frontpage_id );
 $blocPaves = CPage::getAllPavePage( $post->ID );
-//echo '<br><br><br><br><br><br><br><br>paves: '.count($blocPaves);
 ?>
 <section id="page-full-entry-content" class="page-standard">
     <figure class="alauneImg">
@@ -100,6 +99,11 @@ $blocPaves = CPage::getAllPavePage( $post->ID );
         <?php endif;?>
     <?php endif;?>
     <!-- fin slider -->
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> features/lot2_dev
 
     <!-- picto -->
     <?php if ( !empty($blocPaves['element']) ): ?>
@@ -114,7 +118,12 @@ $blocPaves = CPage::getAllPavePage( $post->ID );
                             <?php } else { ?>
                                     <div class="item-grid">
                             <?php } ?>
-                                <img class="img-item" src="<?php echo $pave->imageUrl;?>" alt="<?php echo $pave->name;?>">
+                                <img class="img-item" src="<?php echo $pave->imageUrl;?>" alt="<?php echo $pave->name;?>"
+                                    <?php if ( isset( $pave->imageTronque ) && !empty( $pave->imageTronque ) ):?>
+                                        width="<?php echo $pave->imageTronque[0];?>"
+                                        height="<?php echo $pave->imageTronque[1];?>"
+                                    <?php endif;?>
+                                >
                             </div>
 
                         <?php endforeach; ?>
@@ -127,7 +136,10 @@ $blocPaves = CPage::getAllPavePage( $post->ID );
     <?php endif;?>
     <!-- fin picto -->
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> features/lot2_dev
     <footer class="entry-footer">
         <?php edit_post_link( __( 'Edit', 'telmarh' ), '<span class="edit-link">', '</span>' ); ?>
     </footer><!-- .entry-footer -->
