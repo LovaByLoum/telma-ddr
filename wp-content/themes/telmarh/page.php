@@ -100,8 +100,6 @@ $blocPaves = CPage::getAllPavePage( $post->ID );
     <?php endif;?>
     <!-- fin slider -->
 
-
-
     <!-- picto -->
     <?php if ( !empty($blocPaves['element']) ): ?>
         <?php if ( isset( $blocPaves['element'] ) && !empty( $blocPaves['element'] ) ):?>
@@ -136,7 +134,5 @@ $blocPaves = CPage::getAllPavePage( $post->ID );
     <footer class="entry-footer">
         <?php edit_post_link( __( 'Edit', 'telmarh' ), '<span class="edit-link">', '</span>' ); ?>
     </footer><!-- .entry-footer -->
-
-    
 
 <?php get_footer(); ?>
