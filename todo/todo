@@ -64,15 +64,15 @@
 Todo lot 2
 
 @todo 10: Import Champ ACF "Slider partenaires"
+- Avant tout il faut s'assurer que l'utilisateur SSH peut ecrire dans wp-content/uploads
 - Aller dans le menu Outils >> Importer 
 - Séléctionner "Wordpress"
 - Choisir le fichier "ACF-slider-partenaires.xml' qui se trouve dans le repertoire '\acf' du projet
-- Envoyer le fichier et l'importer
+- Envoyer le fichier et l'importer puis "submit" pour le valider
 - Aller dans menu "Pages" 
 - Choisissez une page de base (par exemple "Présentation de EDM") >> Modifier
 - En bas du wysiwyg se trouve le champ "Slider partenaires" >> Afficher (en cochant la case) 
 - Mettre à jour
-
 - "Enregister le menu"
 
 @todo 11 : Ajout page de connexion et mot de passe oublier
@@ -84,13 +84,13 @@ Todo lot 2
  - Aller de nouveau dans le menu "Pages" >> ajouter une nouvelle page
  - Ajouter le titre
  - prendre le modèle de page "Page lostpassword"
- - puis publié
+ - puis publier
  
  @todo 12: "Pavé picto personnalisable"
 - Aller dans le menu Outils >> Importer
 - Séléctionner "Wordpress"
 - Choisir le fichier "ACF-pave-personnalisable.xml' qui se trouve dans le repertoire '\acf' du projet
-- Envoyer le fichier et l'importer
+- Envoyer le fichier et l'importer puis "sumbit" pour le valider
 - Aller dans menu "Pages"
 - Choisissez une page de base (par exemple "Présentation de EDM") >> Modifier
 - En bas du wysiwyg se trouve le metabox "Pavés personnalisables" >> Cliquer sur "Ajouter Bloc"
