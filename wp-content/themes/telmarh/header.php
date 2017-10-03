@@ -33,7 +33,7 @@
             </nav>
         </div>
         <div class="nav-right">
-            <a href="#" title="Se connecter" class="btn-login"><i class="fa fa-sign-in"></i> Se connecter</a>
+            <a href="javascript:;" title="Se connecter" class="btn-login"><i class="fa fa-sign-in"></i> Se connecter</a>
             <div id="login-user" class="login  nav-close" <?php if ( !empty($error) ) :?>style="display: block;"<?php endif;?>>
                 <?php 	if ( !is_user_logged_in() ) :?>
                     <div class="inset">

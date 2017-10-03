@@ -1,0 +1,36 @@
+form[name~="page-loginform"], form[name~="page-lostpassword"]{
+    border: 1px solid #c1c1c1;
+    padding: 10% 20%;
+    margin-top:125px;
+    p{
+        display: grid;
+        grid-template-columns: 45% 45%;
+        margin-bottom: 2rem;
+        grid-gap: 30px;
+        @media (max-width: 768px) {
+            grid-template-columns: 100%;            
+            grid-gap: 12px;
+        }
+        
+        
+    }
+    p.error{
+        grid-template-columns: 100%;
+        color: #be3631;
+    }
+    input {
+        padding: 0.8em;
+        &.error{
+          border-color: #be3631;
+        }
+      }
+      input[type="submit"] {
+        background: #E57E75;
+        padding: 0.7em;
+        width: 13vw;
+        border: 0;
+        @media (max-width: 768px) {
+            width: 27vw;
+        }
+      }
+}

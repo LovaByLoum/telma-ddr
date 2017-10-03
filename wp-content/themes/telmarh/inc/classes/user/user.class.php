@@ -101,6 +101,21 @@ class CUser {
 		die();
 	}
 
+	public static function telmarh_check_login_email_exist(){
+		$data = 0;
+		if ( isset( $_POST['data_type'] ) && !empty( $_POST['data_type'] ) ){
+			$login = $_POST['data_type'];
+			if ( strpos( $login, '@' ) ){
+        $loginExist = email_exists( $login );
+      } else {
+        $loginExist = username_exists( $login );
+      }
+			$data = ( $loginExist ) ? false : true;
+		}
+		echo $data;
+		die();
+	}
+
 	public static function request_user_approval_email( $userId )
 	{
 		$user = self::getById( $userId );
@@ -282,4 +297,6 @@ add_filter('wp_ajax_telmarh_check_email_exist',array('CUser','telmarh_check_emai
 add_filter('wp_ajax_nopriv_telmarh_check_email_exist',array('CUser','telmarh_check_email_exist'));
 add_filter('wp_ajax_telmarh_check_login_exist',array('CUser','telmarh_check_login_exist'));
 add_filter('wp_ajax_nopriv_telmarh_check_login_exist',array('CUser','telmarh_check_login_exist'));
+add_filter('wp_ajax_telmarh_check_login_email_exist',array('CUser','telmarh_check_login_email_exist'));
+add_filter('wp_ajax_nopriv_telmarh_check_login_email_exist',array('CUser','telmarh_check_login_email_exist'));
 ?>

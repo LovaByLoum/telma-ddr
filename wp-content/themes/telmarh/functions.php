@@ -924,6 +924,8 @@ function telmarh_connection(){
 	$secure_cookie = '';
 	$creds = array();
 	if ( !is_user_logged_in() ){
+    if (!isset($_POST['custom_connect_block_nonce']) || !wp_verify_nonce($_POST['custom_connect_block_nonce'], "telmarh_connection"))
+      return;
 		// If the user wants ssl but the session is not ssl, force a secure cookie.
 			if ( !empty($_POST['custom_log']) && !force_ssl_admin() ) {
 				$user_name = sanitize_user($_POST['custom_log']);
@@ -939,6 +941,44 @@ function telmarh_connection(){
 			}
 		$creds['user_login'] = $_POST['custom_log'];
 		$creds['user_password'] = $_POST['custom_pwd'];
+		$creds['remember'] = $_POST['custom_rememberme'];
+		$user = wp_signon( $creds, $secure_cookie );
+		if ( isset( $user->errors ) ){
+			$_POST['errors'] = $user->errors;
+		} else {
+			wp_set_current_user( $user->ID );
+		}
+		$to_redirect = ( isset( $_POST['redirect_to'] ) && !empty( $_POST['redirect_to'] ) ) ? $_POST['redirect_to']  : home_url();
+		if ( !is_wp_error($user) ) {
+			wp_redirect( $to_redirect );
+			exit;
+		}
+
+	}
+
+}
+add_action("init", "telmarh_connection_page");
+function telmarh_connection_page(){
+	$secure_cookie = '';
+	$creds = array();
+	if ( !is_user_logged_in() ){
+    if (!isset($_POST['custom_connect_nonce']) || !wp_verify_nonce($_POST['custom_connect_nonce'], "telmarh_connection_page"))
+      return;
+		// If the user wants ssl but the session is not ssl, force a secure cookie.
+			if ( !empty($_POST['custom_log_page']) && !force_ssl_admin() ) {
+				$user_name = sanitize_user($_POST['custom_log_page']);
+				$user = get_user_by( 'login', $user_name );
+
+				if ( ! $user && strpos( $user_name, '@' ) ) {
+					$user = get_user_by( 'email', $user_name );
+				}
+
+				if ( isset( $user->ID ) && $user->ID > 0 ) {
+					$secure_cookie = true;
+				}
+			}
+		$creds['user_login'] = $_POST['custom_log_page'];
+		$creds['user_password'] = $_POST['custom_pwd_page'];
 		$creds['remember'] = $_POST['custom_rememberme'];
 		$user = wp_signon( $creds, $secure_cookie );
 		if ( isset( $user->errors ) ){
@@ -1173,5 +1213,64 @@ function get_breadcrumb($niveau1 = '', $niveau2 = '') {
 		echo '</em>"';
 	}
 }
+
+
+add_filter( "login_url", "telmarh_wp_login_url" );
+function telmarh_wp_login_url(){
+  $pageBlog = get_bloginfo('url');
+  // Redirect to the home page
+  $page = wp_get_post_by_template("page-login.php", "");
+  $pageConnect = ( isset( $page->ID ) && !empty( $page->ID ) ) ? get_permalink( $page->ID ) : $pageBlog ;
+
+  return $pageConnect;
+}
+
+add_action("init", "telmarh_lostpassword_page");
+function telmarh_lostpassword_page(){
+    global $wpdb, $current_site;
+    $message = array();
+    if ( !is_user_logged_in() ){
+      if ( !isset($_POST['custom_lostpasword_nonce']) || !wp_verify_nonce($_POST['custom_lostpasword_nonce'], "telmarh_lostpassword_page") ){
+        $loginEmail = ( isset( $_POST['custom_email_name'] ) && !empty( $_POST['custom_email_name'] ) ) ? $_POST['custom_email_name'] : "";
+        if ( !empty( $loginEmail ) ){
+          if ( strpos( $loginEmail, "@" ) ){
+            $userData = get_user_by( 'email', trim( $loginEmail ) );
+          } else {
+            $login = trim($loginEmail);
+            $user_data = get_user_by('login', $login);
+          }
+          do_action('lostpassword_post');
+          if ( !$user_data ){
+            $message["error"] = "Désolé, la valeur renseigner n'est reconnu ni comme un nom d'utilisateur ni comme une adresse e-mail.";
+          } else {
+            $user_login = $user_data->user_login;
+            $user_email = $user_data->user_email;
+            $key = $wpdb->get_var($wpdb->prepare("SELECT user_activation_key FROM $wpdb->users WHERE user_login = %s", $user_login));
+            if ( empty($key) ) {
+              // Generate something random for a key...
+              $key = wp_generate_password(20, false);
+              do_action('retrieve_password_key', $user_login, $key);
+              // Now insert the new md5 key into the db
+              $wpdb->update($wpdb->users, array('user_activation_key' => $key), array('user_login' => $user_login));
+            }
+            $message = __('Someone requested that the password be reset for the following account:') . "\r\n\r\n";
+            $message .= network_home_url( '/' ) . "\r\n\r\n";
+            $message .= sprintf(__('Username: %s'), $user_login) . "\r\n\r\n";
+            $message .= __('If this was a mistake, just ignore this email and nothing will happen.') . "\r\n\r\n";
+            $message .= __('To reset your password, visit the following address:') . "\r\n\r\n";
+            $message .= '<' . network_site_url("wp-login.php?action=rp&key=$key&login=" . rawurlencode($user_login), 'login') . ">\r\n";
+            $blogname = wp_specialchars_decode(get_option('blogname'), ENT_QUOTES);
+            $title = sprintf( __('[%s] Password Reset'), $blogname );
+            $title = apply_filters('retrieve_password_title', $title);
+            $message = apply_filters('retrieve_password_message', $message, $key);
+            $return = wp_mail($user_email, $title, $message);
+            if ( $return ) $message[''] = "Votre";
+          }
+
+        }
+      }
+    }
+}
+
 
 
