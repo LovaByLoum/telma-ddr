@@ -42,6 +42,8 @@
     .item-grid{
         align-self: center;
         justify-self: center;
+        position: relative;
+        // width: 50%;	
     }
     .item-grid-grise{
         align-self: center;
@@ -55,9 +57,22 @@
         //     transform: translate(-50%, -50%);
         // }
     }
+    .item-grid:before{
+        content: "";
+        display: block;
+        // padding-top: 100%; 	/* initial ratio of 1:1*/
+    }
+    .item-grid-grise:before{
+        content: "";
+        display: block;
+        // padding-top: 100%;
+    }
+    
     
     .img-item{
         max-width:100%;
+        min-width: 100%;
+        height: auto;
         /* object-fit: cover; */
         /* height: inherit; */
         // max-height: 100%;
