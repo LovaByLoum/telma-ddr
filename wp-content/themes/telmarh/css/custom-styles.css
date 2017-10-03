@@ -524,7 +524,6 @@ body.home .opened + .logo {
       display: inline-block;
       vertical-align: middle; } }
   .top-listing-offer h1 {
-    border-bottom: 1px solid #cdcdcd;
     padding-bottom: 10px;
     color: #c80f2d;
     font-size: 25px;
@@ -963,7 +962,6 @@ body.home .opened + .logo {
 .form-page {
   padding: 0 0 90px; }
   .form-page h1 {
-    border-bottom: 1px solid #cdcdcd;
     font-weight: bold;
     color: #c80f2d;
     font-size: 25px;
@@ -1222,7 +1220,6 @@ body.home .opened + .logo {
 .page-standard {
   padding: 0 0 90px; }
   .page-standard h1 {
-    border-bottom: 1px solid #cdcdcd;
     color: #c80f2d;
     font-size: 25px;
     font-weight: bold;
