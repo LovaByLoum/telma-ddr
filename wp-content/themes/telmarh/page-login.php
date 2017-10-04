@@ -74,6 +74,7 @@ get_header();?>
                             <input name="custom_rememberme" type="checkbox"
                                    id="rememberme" value="forever"
                                    <?php if (isset($_POST['custom_rememberme']) && $_POST['custom_rememberme'] == "forever"): ?>checked="checked"<?php endif; ?>>
+                                   <span class="uncheck-bg"><span class="check-bg"></span></span>
                             Se souvenir de moi
                         </label>
                     </p>

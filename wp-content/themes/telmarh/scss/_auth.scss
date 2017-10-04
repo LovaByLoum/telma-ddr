@@ -1,36 +1,96 @@
-form[name~="page-loginform"], form[name~="page-lostpassword"]{
+form[name~="page-loginform"],
+form[name~="page-lostpassword"] {
+  border: 1px solid #c1c1c1;
+  padding: 10% 20%;
+  margin-top: 62px;
+  font-family: sans-serif;
+  p {
+    display: grid;
+    grid-template-columns: 45% 45%;
+    margin-bottom: 2rem;
+    grid-gap: 30px;
+    @media (max-width: 768px) {
+      grid-template-columns: 100%;
+      grid-gap: 12px;
+    }
+    font-size: 14px;
+  }
+  p.error {
+    grid-template-columns: 100%;
+    color: #f00;
+  }
+  input {
+    padding: .5rem .75rem;
+    &.error {
+      border-color: #be3631;
+    }
+    border: 1px solid #d9d9d9;
+  }
+  input.error {
+    border-color: #f00;
+  }
+  input[type="submit"] {
+    background: #e57e75;
+    padding: 0.7em;
+    width: 100px;
+    border: 0;
+    cursor: pointer;
+    // @media (max-width: 768px) {
+    //     width: 27vw;
+    // }
+  }
+  input[type="submit"]:hover {
+    background-color: #c80f2d;
+  }
+  .signup,
+  .lostpassword {
+    color: #c80f2d;
+  }
+  .login-remember label{
+        cursor: pointer;
+        
+  }
+  .login-remember label:hover{
+    .uncheck-bg{
+        border-color:#c80f2d;
+        background-color: #fff;
+    }
+    
+}
+  input[type="checkbox"] {
+    display: none;
+  }
+  input[type="checkbox"] + span {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin: -2px 10px 0 0;
+    vertical-align: middle;
+    //background:url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/210284/check_radio_sheet.png) -38px top no-repeat;
+    cursor: pointer;
+  }
+
+  input[type="checkbox"]:checked + span {
+    .check-bg{
+        content: '';
+        display: block;
+        margin:auto;
+        width: 8px;
+        height: 11px;
+        border: solid #c80f2d;
+        border-width: 0 3px 3px 0; transform: rotate(45deg);
+    }
+  }
+  .uncheck-bg {
+    display: inline-block;
+    border: 1px solid;
+    // border-radius: 50%;
+    width: 16px;
+    height: 16px;
     border: 1px solid #c1c1c1;
-    padding: 10% 20%;
-    margin-top:125px;
-    p{
-        display: grid;
-        grid-template-columns: 45% 45%;
-        margin-bottom: 2rem;
-        grid-gap: 30px;
-        @media (max-width: 768px) {
-            grid-template-columns: 100%;            
-            grid-gap: 12px;
-        }
-        
-        
-    }
-    p.error{
-        grid-template-columns: 100%;
-        color: #be3631;
-    }
-    input {
-        padding: 0.8em;
-        &.error{
-          border-color: #be3631;
-        }
-      }
-      input[type="submit"] {
-        background: #E57E75;
-        padding: 0.7em;
-        width: 100px;
-        border: 0;
-        // @media (max-width: 768px) {
-        //     width: 27vw;
-        // }
-      }
+  }
+  .uncheck-bg:hover {
+    border-color:#c80f2d;
+    background-color: #fff;
+  }
 }
