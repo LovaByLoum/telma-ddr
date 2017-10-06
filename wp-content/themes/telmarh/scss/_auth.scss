@@ -14,17 +14,49 @@ form[name~="page-lostpassword"] {
       grid-gap: 12px;
     }
     font-size: 14px;
+    @supports (-webkit-appearance: none) {
+      // padding: 0.5vw;     
+      display: -ms-flexbox;
+      -ms-flex-wrap: wrap;
+      -ms-flex-direction: column;
+      -webkit-flex-flow: row wrap;
+      flex-flow: row wrap;
+      display: -webkit-box;
+      display: flex;
+      align-items: left;
+     
+    }
   }
   p.error {
     grid-template-columns: 100%;
     color: #f00;
   }
+  label,.lostpassword,.signup{
+    @supports (-webkit-appearance: none) {
+      -webkit-box-flex: auto;
+      -ms-flex: auto;
+      flex: 0 0 45%;
+      margin: .5vw; 
+      @media (max-width: 768px) {
+          flex: 0 0 100%;
+      }
+    }
+  }
   input {
-    padding: .5rem .75rem;
+    padding: 0.5rem 0.75rem;
     &.error {
       border-color: #be3631;
     }
     border: 1px solid #d9d9d9;
+    @supports (-webkit-appearance: none) {      
+      -webkit-box-flex: auto;
+      -ms-flex: auto;
+      flex: 0 0 45%;
+      margin: .5vw; 
+      @media (max-width: 768px) {
+          flex: 0 0 100%;
+      }
+    }
   }
   input.error {
     border-color: #f00;
@@ -35,9 +67,9 @@ form[name~="page-lostpassword"] {
     width: 100px;
     border: 0;
     cursor: pointer;
-    // @media (max-width: 768px) {
-    //     width: 27vw;
-    // }
+    @supports (-webkit-appearance: none) { 
+      flex: 0 0 100px;
+    }
   }
   input[type="submit"]:hover {
     background-color: #c80f2d;
@@ -46,17 +78,15 @@ form[name~="page-lostpassword"] {
   .lostpassword {
     color: #c80f2d;
   }
-  .login-remember label{
-        cursor: pointer;
-        
+  .login-remember label {
+    cursor: pointer;
   }
-  .login-remember label:hover{
-    .uncheck-bg{
-        border-color:#c80f2d;
-        background-color: #fff;
+  .login-remember label:hover {
+    .uncheck-bg {
+      border-color: #c80f2d;
+      background-color: #fff;
     }
-    
-}
+  }
   input[type="checkbox"] {
     display: none;
   }
@@ -71,14 +101,15 @@ form[name~="page-lostpassword"] {
   }
 
   input[type="checkbox"]:checked + span {
-    .check-bg{
-        content: '';
-        display: block;
-        margin:auto;
-        width: 8px;
-        height: 11px;
-        border: solid #c80f2d;
-        border-width: 0 3px 3px 0; transform: rotate(45deg);
+    .check-bg {
+      content: "";
+      display: block;
+      margin: auto;
+      width: 8px;
+      height: 11px;
+      border: solid #c80f2d;
+      border-width: 0 3px 3px 0;
+      transform: rotate(45deg);
     }
   }
   .uncheck-bg {
@@ -90,7 +121,7 @@ form[name~="page-lostpassword"] {
     border: 1px solid #c1c1c1;
   }
   .uncheck-bg:hover {
-    border-color:#c80f2d;
+    border-color: #c80f2d;
     background-color: #fff;
   }
 }
