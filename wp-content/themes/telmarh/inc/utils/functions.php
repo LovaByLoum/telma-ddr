@@ -169,6 +169,28 @@ if(!function_exists('wp_get_post_by_template')){
   }
 }
 
+if(!function_exists('wp_get_post_by_template_exist')){
+  /**
+   * fonction qui recherche les posts par son template
+   */
+  function wp_get_post_by_template_exist($meta_value, $dir_page_template = 'page-templates/'){
+    $args = array(
+      'post_type' => 'page',
+      'meta_key' => '_wp_page_template',
+      'meta_value' => $dir_page_template . $meta_value,
+      'suppress_filters' => FALSE,
+      'numberposts' => 1,
+      //'fields' => 'ids'
+    );
+    $posts = get_posts($args);
+    if(isset($posts) && !empty($posts)){
+      return $posts[0];
+    }else{
+      return false;
+    }
+  }
+}
+
 if (!function_exists('get_post_by_slug')) :
   //fonction recherchant les post par slug
   function get_post_by_slug($slug, $pt, $pages = false)

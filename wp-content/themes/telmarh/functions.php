@@ -1216,11 +1216,10 @@ function get_breadcrumb($niveau1 = '', $niveau2 = '') {
 
 
 add_filter( "login_url", "telmarh_wp_login_url" );
-function telmarh_wp_login_url(){
-  $pageBlog = get_bloginfo('url');
+function telmarh_wp_login_url($login_url){
   // Redirect to the home page
-  $page = wp_get_post_by_template("page-login.php", "");
-  $pageConnect = ( isset( $page->ID ) && !empty( $page->ID ) ) ? get_permalink( $page->ID ) : $pageBlog ;
+  $page = wp_get_post_by_template_exist("page-login.php", "");
+  $pageConnect = ( isset( $page->ID ) && !empty( $page->ID ) ) ? get_permalink( $page->ID ) : $login_url ;
 
   return $pageConnect;
 }
