@@ -7,7 +7,7 @@ sass_dir = "scss"
 images_dir = "images"
 javascripts_dir = "js"
 
-output_style = :compact
+output_style = :compressed
 environment = :production
 sass_options = { line_comments => true }
 
@@ -18,7 +18,7 @@ sass_options = { line_comments => true }
 # relative_assets = true
 
 # To disable debugging comments that display the original location of your selectors. Uncomment:
-# line_comments = false
+line_comments = false
 
 # If you prefer the indented syntax, you might want to regenerate this
 # project again passing --syntax sass, or you can uncomment this:
