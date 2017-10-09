@@ -89,3 +89,9 @@ Début TODO lot 2
 - Ajouter le titre
 - prendre le modèle de page "Page login"
 - puis publié
+
+@todo 13: Donner accès au taxonomy order pour les webmaster
+- Se connecter en tant qu'admin
+- Réglages >> Taxonomy Terms Order 
+- Changer le select "Minimum Level to use this plugin" en "Editor"
+- Save settings
