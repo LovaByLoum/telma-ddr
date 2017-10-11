@@ -1,3 +1,7 @@
+a{
+  color: #c80f2d;
+}
+
 form[name~="page-loginform"],
 form[name~="page-lostpassword"] {
   border: 1px solid #c1c1c1;
@@ -5,16 +9,16 @@ form[name~="page-lostpassword"] {
   margin-top: 62px;
   font-family: sans-serif;
   p {
-    display: grid;
-    grid-template-columns: 45% 45%;
-    margin-bottom: 2rem;
-    grid-gap: 30px;
-    @media (max-width: 768px) {
-      grid-template-columns: 100%;
-      grid-gap: 12px;
-    }
-    font-size: 14px;
-    @supports (-webkit-appearance: none) {
+    // display: grid;
+    // grid-template-columns: 45% 45%;
+    // margin-bottom: 2rem;
+    // grid-gap: 30px;
+    // @media (max-width: 768px) {
+    //   grid-template-columns: 100%;
+    //   grid-gap: 12px;
+    // }
+    // font-size: 14px;
+    // @supports (-webkit-appearance: none) {
       // padding: 0.5vw;     
       display: -ms-flexbox;
       -ms-flex-wrap: wrap;
@@ -25,14 +29,14 @@ form[name~="page-lostpassword"] {
       display: flex;
       align-items: left;
      
-    }
+    // }
   }
   p.error {
     grid-template-columns: 100%;
     color: #f00;
   }
   label,.lostpassword,.signup{
-    @supports (-webkit-appearance: none) {
+    // @supports (-webkit-appearance: none) {
       -webkit-box-flex: auto;
       -ms-flex: auto;
       flex: 0 0 45%;
@@ -40,15 +44,16 @@ form[name~="page-lostpassword"] {
       @media (max-width: 768px) {
           flex: 0 0 100%;
       }
-    }
+    // }
   }
   input {
     padding: 0.5rem 0.75rem;
     &.error {
       border-color: #be3631;
     }
+    outline:none;
     border: 1px solid #d9d9d9;
-    @supports (-webkit-appearance: none) {      
+    // @supports (-webkit-appearance: none) {      
       -webkit-box-flex: auto;
       -ms-flex: auto;
       flex: 0 0 45%;
@@ -56,8 +61,9 @@ form[name~="page-lostpassword"] {
       @media (max-width: 768px) {
           flex: 0 0 100%;
       }
-    }
+    // }
   }
+  
   input.error {
     border-color: #f00;
   }
@@ -67,9 +73,9 @@ form[name~="page-lostpassword"] {
     width: 100px;
     border: 0;
     cursor: pointer;
-    @supports (-webkit-appearance: none) { 
+    // @supports (-webkit-appearance: none) { 
       flex: 0 0 100px;
-    }
+    // }
   }
   input[type="submit"]:hover {
     background-color: #c80f2d;
