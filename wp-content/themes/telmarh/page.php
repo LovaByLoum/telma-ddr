@@ -135,6 +135,4 @@ $blocPaves = CPage::getAllPavePage( $post->ID );
         <?php edit_post_link( __( 'Edit', 'telmarh' ), '<span class="edit-link">', '</span>' ); ?>
     </footer><!-- .entry-footer -->
 
-    
-
 <?php get_footer(); ?>
