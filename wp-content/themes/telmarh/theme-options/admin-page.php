@@ -99,6 +99,20 @@ if ( ! isset( $_REQUEST['settings-updated'] ) )
                           <input size="36" id="<?php echo $name;?>-text" class="of-input" name="telmarh_theme_options[<?php echo $name;?>]" type="text" value="<?php if(!empty($telmarh_options[$name])) { echo esc_url($telmarh_options[$name]); } ?>" />
                           <?php
                           break;
+                          case 'choice':
+                              if(isset($field['options']['expanded']) && $field['options']['expanded'] === true &&
+                                  isset($field['options']['multiple']) && $field['options']['multiple'] === false &&
+                                  isset($field['options']['choices']) && is_array($field['options']['choices'])
+                              ):
+
+                              ?>
+                              <div class="explain"><?php echo $field['description']; ?></div>
+                                  <?php $i=0; foreach( $field['options']['choices'] as $value => $label): $i++;?>
+                                      <input id="<?php echo $name.$i;?>-radio" class="of-input" name="telmarh_theme_options[<?php echo $name;?>]" type="radio" value="<?php echo $value; ?>" <?php if ( $telmarh_options[$name] == $value ) echo 'checked=checked'?> />
+                                      <label for="<?php echo $name.$i;?>-radio"><?php echo $label;?></label>
+                                  <?php endforeach;?>
+                              <?php endif;
+                              break;
                         default:
                       }
                       ?>
