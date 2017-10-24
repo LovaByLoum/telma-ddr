@@ -61,7 +61,7 @@ get_header(); ?>
                                                 <li>Nom de l'entreprise :<?php echo $society->titre;?></li>
                                             <?php endif;?>
                                             <?php if ( isset( $offre->localisation ) && !empty( $offre->localisation ) ):?>
-                                                <li>Région :&nbsp;
+                                                <li>Localisation :&nbsp;
                                                     <?php   $i = 1;
                                                         $glue = ', ';
                                                         foreach ( $offre->localisation as $term ){
