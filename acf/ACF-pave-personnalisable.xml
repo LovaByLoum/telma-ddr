@@ -16,69 +16,71 @@
 <!-- 7. WordPress will then import each of the posts, pages, comments, categories, etc. -->
 <!--    contained in this file into your site. -->
 
-<!-- generator="WordPress/4.5.3" created="2017-10-02 15:20" -->
+<!-- generator="WordPress/4.5.3" created="2017-10-25 08:35" -->
 <rss version="2.0"
-	xmlns:excerpt="http://wordpress.org/export/1.1/excerpt/"
-	xmlns:content="http://purl.org/rss/1.0/modules/content/"
-	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
-	xmlns:dc="http://purl.org/dc/elements/1.1/"
-	xmlns:wp="http://wordpress.org/export/1.1/"
+	 xmlns:excerpt="http://wordpress.org/export/1.1/excerpt/"
+	 xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	 xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	 xmlns:dc="http://purl.org/dc/elements/1.1/"
+	 xmlns:wp="http://wordpress.org/export/1.1/"
 >
 
-<channel>
-	<title>Portail de recrutement du Groupe AXIAN</title>
-	<link>http://localhost/projets/telma/telma_rh/src</link>
-	<description>Bienvenue sur le site de recrutement du Groupe AXIAN</description>
-	<pubDate>Mon, 02 Oct 2017 15:20:40 +0000</pubDate>
-	<language></language>
-	<wp:wxr_version>1.1</wp:wxr_version>
-	<wp:base_site_url>http://localhost/projets/telma/telma_rh/src</wp:base_site_url>
-	<wp:base_blog_url>http://localhost/projets/telma/telma_rh/src</wp:base_blog_url>
-	<wp:author><wp:author_id>1</wp:author_id><wp:author_login>admin</wp:author_login><wp:author_email>rina.andriamampandry@telma.mg</wp:author_email><wp:author_display_name><![CDATA[admin]]></wp:author_display_name><wp:author_first_name><![CDATA[]]></wp:author_first_name><wp:author_last_name><![CDATA[]]></wp:author_last_name></wp:author>
-	<wp:author><wp:author_id>13</wp:author_id><wp:author_login>webmaster</wp:author_login><wp:author_email>rina.andria@outlook.com</wp:author_email><wp:author_display_name><![CDATA[webmaster telma]]></wp:author_display_name><wp:author_first_name><![CDATA[webmaster]]></wp:author_first_name><wp:author_last_name><![CDATA[telma]]></wp:author_last_name></wp:author>
-	<wp:author><wp:author_id>55</wp:author_id><wp:author_login>zanotiana</wp:author_login><wp:author_email>zanotiana.RAJAONISAONA@telma.mg</wp:author_email><wp:author_display_name><![CDATA[zanotiana RAJAONISAONA]]></wp:author_display_name><wp:author_first_name><![CDATA[zanotiana]]></wp:author_first_name><wp:author_last_name><![CDATA[RAJAONISAONA]]></wp:author_last_name></wp:author>
-	<wp:author><wp:author_id>58</wp:author_id><wp:author_login>tokiniainaf</wp:author_login><wp:author_email>tokiniaina.rakotondramaro@telma.mg</wp:author_email><wp:author_display_name><![CDATA[Tokiniaina RAKOTONDRAMARO]]></wp:author_display_name><wp:author_first_name><![CDATA[Tokiniaina]]></wp:author_first_name><wp:author_last_name><![CDATA[RAKOTONDRAMARO]]></wp:author_last_name></wp:author>
-	<item>
-		<title>Pavés personnalisables</title>
-		<link>http://localhost/projets/telma/telma_rh/src/?acf=acf_paves-personnalisables</link>
-		<pubDate>Thu, 28 Sep 2017 14:38:47 +0000</pubDate>
-		<dc:creator>admin</dc:creator>
-		<guid isPermaLink="false">http://localhost/projets/telma/telma_rh/src/?post_type=acf&#038;p=608</guid>
-		<wp:post_id>608</wp:post_id>
-		<wp:post_date>2017-09-28 15:38:47</wp:post_date>
-		<wp:post_date_gmt>2017-09-28 14:38:47</wp:post_date_gmt>
-		<wp:comment_status>closed</wp:comment_status>
-		<wp:ping_status>closed</wp:ping_status>
-		<wp:post_name>acf_paves-personnalisables</wp:post_name>
-		<wp:status>publish</wp:status>
-		<wp:post_parent>0</wp:post_parent>
-		<wp:menu_order>0</wp:menu_order>
-		<wp:post_type>acf</wp:post_type>
-		<wp:post_password></wp:post_password>
-		<wp:postmeta>
-			<wp:meta_key>_edit_last</wp:meta_key>
-			<wp:meta_value><![CDATA[1]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>field_59cd0663dca12</wp:meta_key>
-			<wp:meta_value><![CDATA[a:13:{s:3:"key";s:19:"field_59cd0663dca12";s:5:"label";s:23:"pavés personnalisables";s:4:"name";s:22:"paves_personnalisables";s:4:"type";s:8:"repeater";s:12:"instructions";s:0:"";s:8:"required";s:1:"0";s:10:"sub_fields";a:3:{i:0;a:12:{s:3:"key";s:19:"field_59cd0849686f4";s:5:"label";s:26:"Image pave personnalisable";s:4:"name";s:26:"image_pave_personnalisable";s:4:"type";s:5:"image";s:12:"instructions";s:32:"Taille de l'image 500x500 pixels";s:8:"required";s:1:"0";s:12:"column_width";s:0:"";s:11:"save_format";s:2:"id";s:12:"preview_size";s:9:"thumbnail";s:7:"library";s:3:"all";s:17:"conditional_logic";a:3:{s:6:"status";s:1:"0";s:5:"rules";a:1:{i:0;a:3:{s:5:"field";s:19:"field_59cd08c0686f5";s:8:"operator";s:2:"==";s:5:"value";s:1:"1";}}s:8:"allorany";s:3:"all";}s:8:"order_no";i:0;}i:1;a:15:{s:3:"key";s:19:"field_59cd0911686f6";s:5:"label";s:26:"Titre pave personnalisable";s:4:"name";s:26:"titre_pave_personnalisable";s:4:"type";s:4:"text";s:12:"instructions";s:0:"";s:8:"required";s:1:"0";s:12:"column_width";s:0:"";s:13:"default_value";s:0:"";s:11:"placeholder";s:0:"";s:7:"prepend";s:0:"";s:6:"append";s:0:"";s:10:"formatting";s:4:"html";s:9:"maxlength";s:0:"";s:17:"conditional_logic";a:3:{s:6:"status";s:1:"0";s:5:"rules";a:1:{i:0;a:3:{s:5:"field";s:19:"field_59cd08c0686f5";s:8:"operator";s:2:"==";s:5:"value";s:1:"1";}}s:8:"allorany";s:3:"all";}s:8:"order_no";i:1;}i:2;a:12:{s:3:"key";s:19:"field_59cd08c0686f5";s:5:"label";s:13:"Bordure grise";s:4:"name";s:13:"bordure_grise";s:4:"type";s:8:"checkbox";s:12:"instructions";s:0:"";s:8:"required";s:1:"0";s:12:"column_width";s:0:"";s:7:"choices";a:1:{i:1;s:8:"Afficher";}s:13:"default_value";s:0:"";s:6:"layout";s:8:"vertical";s:17:"conditional_logic";a:3:{s:6:"status";s:1:"0";s:5:"rules";a:1:{i:0;a:3:{s:5:"field";s:4:"null";s:8:"operator";s:2:"==";s:5:"value";s:0:"";}}s:8:"allorany";s:3:"all";}s:8:"order_no";i:2;}}s:7:"row_min";s:0:"";s:9:"row_limit";s:1:"8";s:6:"layout";s:3:"row";s:12:"button_label";s:12:"Ajouter Bloc";s:17:"conditional_logic";a:3:{s:6:"status";s:1:"0";s:5:"rules";a:1:{i:0;a:2:{s:5:"field";s:4:"null";s:8:"operator";s:2:"==";}}s:8:"allorany";s:3:"all";}s:8:"order_no";i:0;}]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>position</wp:meta_key>
-			<wp:meta_value><![CDATA[normal]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>layout</wp:meta_key>
-			<wp:meta_value><![CDATA[default]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>hide_on_screen</wp:meta_key>
-			<wp:meta_value><![CDATA[]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>rule</wp:meta_key>
-			<wp:meta_value><![CDATA[a:5:{s:5:"param";s:13:"page_template";s:8:"operator";s:2:"==";s:5:"value";s:7:"default";s:8:"order_no";i:0;s:8:"group_no";i:0;}]]></wp:meta_value>
-		</wp:postmeta>
-	</item>
-</channel>
+	<channel>
+		<title>Portail de recrutement du Groupe AXIAN</title>
+		<link>http://php-integ/recrutement.axian-group.com</link>
+		<description>Bienvenue sur le site de recrutement du Groupe AXIAN</description>
+		<pubDate>Wed, 25 Oct 2017 08:35:28 +0000</pubDate>
+		<language></language>
+		<wp:wxr_version>1.1</wp:wxr_version>
+		<wp:base_site_url>http://php-integ/recrutement.axian-group.com</wp:base_site_url>
+		<wp:base_blog_url>http://php-integ/recrutement.axian-group.com</wp:base_blog_url>
+		<wp:author><wp:author_id>1</wp:author_id><wp:author_login>admin</wp:author_login><wp:author_email>narisoa.andriambololona@netapsys.fr__tmp</wp:author_email><wp:author_display_name><![CDATA[admin]]></wp:author_display_name><wp:author_first_name><![CDATA[]]></wp:author_first_name><wp:author_last_name><![CDATA[]]></wp:author_last_name></wp:author>
+		<wp:author><wp:author_id>3</wp:author_id><wp:author_login>rina</wp:author_login><wp:author_email>rina.andriamampandry@telma.mg__tmp</wp:author_email><wp:author_display_name><![CDATA[Rina ANDRIAMAMPANDRY]]></wp:author_display_name><wp:author_first_name><![CDATA[Rina]]></wp:author_first_name><wp:author_last_name><![CDATA[ANDRIAMAMPANDRY]]></wp:author_last_name></wp:author>
+		<wp:author><wp:author_id>13</wp:author_id><wp:author_login>webmaster</wp:author_login><wp:author_email>rina.andria@yopmail.com</wp:author_email><wp:author_display_name><![CDATA[webmaster telma]]></wp:author_display_name><wp:author_first_name><![CDATA[webmaster]]></wp:author_first_name><wp:author_last_name><![CDATA[telma]]></wp:author_last_name></wp:author>
+		<wp:author><wp:author_id>25</wp:author_id><wp:author_login>axelle</wp:author_login><wp:author_email>axlandria@gmail.com__tmp</wp:author_email><wp:author_display_name><![CDATA[AXELLE ANDRIA]]></wp:author_display_name><wp:author_first_name><![CDATA[ANDRIA]]></wp:author_first_name><wp:author_last_name><![CDATA[AXELLE]]></wp:author_last_name></wp:author>
+		<wp:author><wp:author_id>36</wp:author_id><wp:author_login>Lalaina</wp:author_login><wp:author_email>Lalaina.RANDRIANOMENJANAHARY@telma.mg__tmp</wp:author_email><wp:author_display_name><![CDATA[Lalaina Milanto RANDRIANOMENJANAHARY]]></wp:author_display_name><wp:author_first_name><![CDATA[Lalaina Milanto]]></wp:author_first_name><wp:author_last_name><![CDATA[RANDRIANOMENJANAHARY]]></wp:author_last_name></wp:author>
+		<wp:author><wp:author_id>41</wp:author_id><wp:author_login>axellea</wp:author_login><wp:author_email>axlandria@live.fr__tmp</wp:author_email><wp:author_display_name><![CDATA[axelle a]]></wp:author_display_name><wp:author_first_name><![CDATA[axelle]]></wp:author_first_name><wp:author_last_name><![CDATA[a]]></wp:author_last_name></wp:author>
+		<item>
+			<title>Pavés personnalisables</title>
+			<link>http://php-integ/recrutement.axian-group.com/?acf=acf_paves-personnalisables</link>
+			<pubDate>Thu, 28 Sep 2017 14:38:47 +0000</pubDate>
+			<dc:creator>admin</dc:creator>
+			<guid isPermaLink="false">http://localhost/projets/telma/telma_rh/src/?post_type=acf&#038;p=608</guid>
+			<wp:post_id>608</wp:post_id>
+			<wp:post_date>2017-09-28 15:38:47</wp:post_date>
+			<wp:post_date_gmt>2017-09-28 14:38:47</wp:post_date_gmt>
+			<wp:comment_status>closed</wp:comment_status>
+			<wp:ping_status>closed</wp:ping_status>
+			<wp:post_name>acf_paves-personnalisables</wp:post_name>
+			<wp:status>publish</wp:status>
+			<wp:post_parent>0</wp:post_parent>
+			<wp:menu_order>0</wp:menu_order>
+			<wp:post_type>acf</wp:post_type>
+			<wp:post_password></wp:post_password>
+			<wp:postmeta>
+				<wp:meta_key>_edit_last</wp:meta_key>
+				<wp:meta_value><![CDATA[1]]></wp:meta_value>
+			</wp:postmeta>
+			<wp:postmeta>
+				<wp:meta_key>field_59cd0663dca12</wp:meta_key>
+				<wp:meta_value><![CDATA[a:13:{s:3:"key";s:19:"field_59cd0663dca12";s:5:"label";s:23:"pavés personnalisables";s:4:"name";s:22:"paves_personnalisables";s:4:"type";s:8:"repeater";s:12:"instructions";s:0:"";s:8:"required";s:1:"0";s:10:"sub_fields";a:5:{i:0;a:12:{s:3:"key";s:19:"field_59cd0849686f4";s:5:"label";s:26:"Image pave personnalisable";s:4:"name";s:26:"image_pave_personnalisable";s:4:"type";s:5:"image";s:12:"instructions";s:32:"Taille de l'image 500x500 pixels";s:8:"required";s:1:"0";s:12:"column_width";s:0:"";s:11:"save_format";s:2:"id";s:12:"preview_size";s:9:"thumbnail";s:7:"library";s:3:"all";s:17:"conditional_logic";a:3:{s:6:"status";s:1:"0";s:5:"rules";a:1:{i:0;a:3:{s:5:"field";s:19:"field_59cd08c0686f5";s:8:"operator";s:2:"==";s:5:"value";s:1:"1";}}s:8:"allorany";s:3:"all";}s:8:"order_no";i:0;}i:1;a:15:{s:3:"key";s:19:"field_59cd0911686f6";s:5:"label";s:26:"Titre pave personnalisable";s:4:"name";s:26:"titre_pave_personnalisable";s:4:"type";s:4:"text";s:12:"instructions";s:0:"";s:8:"required";s:1:"0";s:12:"column_width";s:0:"";s:13:"default_value";s:0:"";s:11:"placeholder";s:0:"";s:7:"prepend";s:0:"";s:6:"append";s:0:"";s:10:"formatting";s:4:"html";s:9:"maxlength";s:0:"";s:17:"conditional_logic";a:3:{s:6:"status";s:1:"0";s:5:"rules";a:1:{i:0;a:3:{s:5:"field";s:19:"field_59cd08c0686f5";s:8:"operator";s:2:"==";s:5:"value";s:1:"1";}}s:8:"allorany";s:3:"all";}s:8:"order_no";i:1;}i:2;a:15:{s:3:"key";s:19:"field_59f045ad98c5c";s:5:"label";s:10:"Lien pavé";s:4:"name";s:9:"pave_link";s:4:"type";s:4:"text";s:12:"instructions";s:0:"";s:8:"required";s:1:"0";s:12:"column_width";s:0:"";s:13:"default_value";s:0:"";s:11:"placeholder";s:0:"";s:7:"prepend";s:0:"";s:6:"append";s:0:"";s:10:"formatting";s:4:"html";s:9:"maxlength";s:0:"";s:17:"conditional_logic";a:3:{s:6:"status";s:1:"0";s:5:"rules";a:1:{i:0;a:3:{s:5:"field";s:19:"field_59cd08c0686f5";s:8:"operator";s:2:"==";s:5:"value";s:1:"1";}}s:8:"allorany";s:3:"all";}s:8:"order_no";i:2;}i:3;a:12:{s:3:"key";s:19:"field_59f04832e16ed";s:5:"label";s:17:"Ouverture du lien";s:4:"name";s:22:"pave_link_target_blank";s:4:"type";s:8:"checkbox";s:12:"instructions";s:0:"";s:8:"required";s:1:"0";s:12:"column_width";s:0:"";s:7:"choices";a:1:{i:1;s:36:"Ouvrir le lien vers un nouvel onglet";}s:13:"default_value";s:0:"";s:6:"layout";s:8:"vertical";s:17:"conditional_logic";a:3:{s:6:"status";s:1:"0";s:5:"rules";a:1:{i:0;a:3:{s:5:"field";s:19:"field_59cd08c0686f5";s:8:"operator";s:2:"==";s:5:"value";s:1:"1";}}s:8:"allorany";s:3:"all";}s:8:"order_no";i:3;}i:4;a:12:{s:3:"key";s:19:"field_59cd08c0686f5";s:5:"label";s:13:"Bordure grise";s:4:"name";s:13:"bordure_grise";s:4:"type";s:8:"checkbox";s:12:"instructions";s:0:"";s:8:"required";s:1:"0";s:12:"column_width";s:0:"";s:7:"choices";a:1:{i:1;s:8:"Afficher";}s:13:"default_value";s:0:"";s:6:"layout";s:8:"vertical";s:17:"conditional_logic";a:3:{s:6:"status";s:1:"0";s:5:"rules";a:1:{i:0;a:3:{s:5:"field";s:19:"field_59f04832e16ed";s:8:"operator";s:2:"==";s:5:"value";s:1:"1";}}s:8:"allorany";s:3:"all";}s:8:"order_no";i:4;}}s:7:"row_min";s:0:"";s:9:"row_limit";s:1:"8";s:6:"layout";s:3:"row";s:12:"button_label";s:12:"Ajouter Bloc";s:17:"conditional_logic";a:3:{s:6:"status";s:1:"0";s:5:"rules";a:1:{i:0;a:2:{s:5:"field";s:4:"null";s:8:"operator";s:2:"==";}}s:8:"allorany";s:3:"all";}s:8:"order_no";i:0;}]]></wp:meta_value>
+			</wp:postmeta>
+			<wp:postmeta>
+				<wp:meta_key>position</wp:meta_key>
+				<wp:meta_value><![CDATA[normal]]></wp:meta_value>
+			</wp:postmeta>
+			<wp:postmeta>
+				<wp:meta_key>layout</wp:meta_key>
+				<wp:meta_value><![CDATA[default]]></wp:meta_value>
+			</wp:postmeta>
+			<wp:postmeta>
+				<wp:meta_key>hide_on_screen</wp:meta_key>
+				<wp:meta_value><![CDATA[]]></wp:meta_value>
+			</wp:postmeta>
+			<wp:postmeta>
+				<wp:meta_key>rule</wp:meta_key>
+				<wp:meta_value><![CDATA[a:5:{s:5:"param";s:13:"page_template";s:8:"operator";s:2:"==";s:5:"value";s:7:"default";s:8:"order_no";i:0;s:8:"group_no";i:0;}]]></wp:meta_value>
+			</wp:postmeta>
+		</item>
+	</channel>
 </rss>
