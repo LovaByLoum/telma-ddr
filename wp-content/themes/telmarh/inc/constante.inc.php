@@ -100,6 +100,8 @@ define ( "SLIDER_PARTENAIRE", "slider_partenaire" );
 define ( "PAVE_PERSONNALISABLE", "paves_personnalisables" );
 define ( "PAVE_PERS_IMAGE", "image_pave_personnalisable" );
 define ( "PAVE_PERS_TITRE", "titre_pave_personnalisable" );
+define ( "PAVE_PERS_LIEN", "pave_link" );
+define ( "PAVE_PERS_IS_LIEN_TARGET_BLANK", "pave_link_target_blank" );
 define ( "PAVE_PERS_BORDURE_GRISE", "bordure_grise" );
 
 

@@ -261,6 +261,8 @@ class CPage
 					$elt                = new stdClass();
 					$imageUrl           = "";
 					$elt->name          = $pave[PAVE_PERS_TITRE];
+					$elt->link          = $pave[PAVE_PERS_LIEN];
+                    $elt->linkTarget = ((bool)$pave[PAVE_PERS_IS_LIEN_TARGET_BLANK] === true) ? '_blank': '_self';
 					$imageTronque       = "";
 					$image              = wp_get_attachment_image_src( $pave[PAVE_PERS_IMAGE], "full" );
 					$elt->bordure       = $pave[PAVE_PERS_BORDURE_GRISE];

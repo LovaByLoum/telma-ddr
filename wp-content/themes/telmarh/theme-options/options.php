@@ -111,5 +111,20 @@ $telmarh_options_settings = array(
             'Label'                 => 'Image',
             'type'                  => 'image',
             'description'           => 'Image visible au page de connexion')
-    )
+    ),
+    'Acceuil > Derniers offres' => array(
+        'last_offers_text' => array(
+            'label' => 'Libellé',
+            'type' => 'text',
+            'description' => 'Libellé pour "Nos dernières offres "'),
+        'last_offers_icon' => array(
+            'label' => 'Afficher l\'icône',
+            'type' => 'choice',
+            'options' => array(
+                'expanded' => true,
+                'multiple' => false,
+                'choices' => array('1' => 'Oui', '0' => 'Non')
+            ),
+            'description' => '')
+    ),
 );

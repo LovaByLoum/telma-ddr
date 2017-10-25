@@ -96,4 +96,8 @@ Début TODO lot 2
 - Insérer jusqu'à 8 images en choisissant pour chacun le titre du pavé ainsi que l'option "Bordure grise"
 - Mettre à jour
 
-
+@todo 13: Donner accès au taxonomy order pour les webmaster
+- Se connecter en tant qu'admin
+- Réglages >> Taxonomy Terms Order 
+- Changer le select "Minimum Level to use this plugin" en "Editor"
+- Save settings
