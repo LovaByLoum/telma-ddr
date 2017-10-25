@@ -8,8 +8,9 @@
  * @since telmarh 1.0
  * @author : Netapsys
  */
-global $post;
-
+global $post, $telmarh_options;
+$lastOffersIcon = (isset($telmarh_options['last_offers_icon']) && $telmarh_options['last_offers_icon'] == true) ? '<i class="fa fa-search"></i>' : '';
+$lastOffersText = isset($telmarh_options['last_offers_text']) ? $telmarh_options['last_offers_text'] : '';
 $idImage = get_post_thumbnail_id($post->ID);
 list($image) = wp_get_attachment_image_src( $idImage, "full" );
 $imageBackground = ( isset( $image ) && !empty( $image ) ) ? $image : get_template_directory_uri() . '/images/design/bldr.jpg';
@@ -176,7 +177,7 @@ get_header(); ?>
     <section class="job-last">
         <!-- offres urgents -->
         <?php if ( !empty( $offresUrgent ) && count( $offresUrgent ) > 0 ){?>
-            <h3 class="widget-title"><a href="<?php echo get_permalink($postOffes->ID);?>" title="Nos dernières offres" style="color:#c80f2d;text-decoration: none;text-transform: uppercase;"> Nos dernières offres </a><i class="fa fa-search"></i></h3>
+            <h3 class="widget-title" style="color:#c80f2d;text-decoration: none;text-transform: uppercase;"><?php echo $lastOffersText; ?><?php echo $lastOffersIcon; ?></h3>
             <?php
             foreach( $offresUrgent as $offre ){ ?>
                 <div class="job-item">
@@ -214,6 +215,7 @@ get_header(); ?>
                     </div>
                 </div>
             <?php }?>
+            <a href="<?php echo get_permalink($postOffes->ID);?>" title="Voir toutes les offres">Voir toutes les offres</a>
         <?php }?>
     </section>
 </div>
