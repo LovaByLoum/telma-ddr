@@ -21,7 +21,7 @@ get_header();?>
     <section id="page-full-entry-content" class="page-standard">
     <figure class="alauneImg">
       <?php if (isset($image) && !empty($image)) { ?>
-          <img src="<?php echo $image; ?>" alt="">
+          <img src="<?php echo $image[0]; ?>" alt="background">
       <?php } else { ?>
           <img src="<?php echo get_template_directory_uri(); ?>/images/batiment.jpg"
                alt="">
