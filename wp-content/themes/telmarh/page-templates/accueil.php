@@ -215,8 +215,13 @@ get_header(); ?>
                     </div>
                 </div>
             <?php }?>
-            <a href="<?php echo get_permalink($postOffes->ID);?>" title="Voir toutes les offres">Voir toutes les offres</a>
+            <div class="link-container">
+                <a href="<?php echo get_permalink($postOffes->ID);?>" class="link-underlined" title="Voir toutes les offres">Voir toutes les offres</a>
+            </div>
+            
         <?php }?>
+        
     </section>
+    
 </div>
 <?php get_footer(); ?>

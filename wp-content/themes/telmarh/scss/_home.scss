@@ -183,6 +183,7 @@
         figure {
             align-items: center;
             display: flex;
+            
             height: 100%;
             justify-content: flex-start;
             margin-bottom: 0;
@@ -197,6 +198,7 @@
 
             a {
                 color: #d30630;
+                
             }
 
             .label {
@@ -220,5 +222,13 @@
                 color: #646469;
             }
         }
+        
     }
+    .link-underlined{
+        text-decoration: underline;
+    }
+    .link-container{
+        padding:10px 0;
+    }
+
 }
