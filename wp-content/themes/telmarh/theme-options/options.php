@@ -116,7 +116,7 @@ $telmarh_options_settings = array(
         'last_offers_text' => array(
             'label' => 'Libellé',
             'type' => 'text',
-            'description' => 'Libellé pour "Nos dernières offres "'),
+            'description' => 'Libellé pour "Nos dernières offres"'),
         'last_offers_icon' => array(
             'label' => 'Afficher l\'icône',
             'type' => 'choice',
@@ -125,6 +125,10 @@ $telmarh_options_settings = array(
                 'multiple' => false,
                 'choices' => array('1' => 'Oui', '0' => 'Non')
             ),
-            'description' => '')
+            'description' => ''),
+        'last_offers_link_text' => array(
+            'label' => 'Texte du lien',
+            'type' => 'text',
+            'description' => 'Libellé pour le lien vers tous les offres'),
     ),
 );
