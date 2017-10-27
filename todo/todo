@@ -101,3 +101,15 @@ Début TODO lot 2
 - Réglages >> Taxonomy Terms Order 
 - Changer le select "Minimum Level to use this plugin" en "Editor"
 - Save settings
+
+ @todo 14: "Reimportation Pavé picto personnalisable"
+- Aller dans le menu ACF >> ACF
+- Parmis les groupes de champs, côcher "Pavés personnalisables"
+- En bas, choisir l'action "Déplacer dans la corbeille" puis cliquer sur "Appliquer"
+- Dans l'onglet "Corbeille", côcher "Pavés personnalisables"
+- En bas, choisir l'action "Supprimer définitivement" puis cliquer sur "Appliquer"
+- Aller dans le menu Outils >> Importer
+- Séléctionner "Wordpress"
+- Choisir le fichier "ACF-pave-personnalisable.xml' qui se trouve dans le repertoire '\acf' du projet
+- Envoyer le fichier et l'importer puis "sumbit" pour le valider
+
