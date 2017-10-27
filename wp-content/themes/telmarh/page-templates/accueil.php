@@ -178,7 +178,7 @@ get_header(); ?>
     <section class="job-last">
         <!-- offres urgents -->
         <?php if ( !empty( $offresUrgent ) && count( $offresUrgent ) > 0 ){?>
-            <h3 class="widget-title" style="color:#c80f2d;text-decoration: none;text-transform: uppercase;"><?php echo $lastOffersText; ?><?php echo $lastOffersIcon; ?></h3>
+            <h3 class="widget-title" style="color:#c80f2d;text-decoration: none;text-transform: none;"><?php echo $lastOffersText; ?><?php echo $lastOffersIcon; ?></h3>
             <?php
             foreach( $offresUrgent as $offre ){ ?>
                 <div class="job-item">
