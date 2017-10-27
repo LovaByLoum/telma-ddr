@@ -504,6 +504,13 @@ body.home .opened + .logo {
     margin-bottom: 10px; }
     .job-last .job-item p .link-more {
       color: #646469; }
+<<<<<<< HEAD
+=======
+.job-last .link-underlined {
+  text-decoration: underline; }
+.job-last .link-container {
+  padding: 10px 0; }
+>>>>>>> features/feat-inte-217
 
 .offer-page {
   padding: 0 0 90px; }
