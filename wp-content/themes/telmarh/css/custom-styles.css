@@ -459,10 +459,13 @@ body.home .opened + .logo {
   font-size: 36px;
   color: #c80f2d;
   line-height: 1;
-  padding: 30px 0; }
+  padding: 30px 0;
+  text-transform: none !important; }
   @media only screen and (min-width: 568px) {
     .job-last h3 {
       font-size: 48px; } }
+  .job-last h3 i {
+    padding: 0 15px; }
 .job-last .job-item {
   border-bottom: 1px solid #cdcdcd;
   padding-top: 15px; }
@@ -504,8 +507,9 @@ body.home .opened + .logo {
     margin-bottom: 10px; }
     .job-last .job-item p .link-more {
       color: #646469; }
-.job-last .link-underlined {
-  text-decoration: underline; }
+.job-last .link-underlined:hover {
+  text-decoration: underline;
+  color: #c80f2d; }
 .job-last .link-container {
   padding: 10px 0; }
 
