@@ -10,7 +10,7 @@
  */
 global $post, $telmarh_options;
 $lastOffersIcon = (isset($telmarh_options['last_offers_icon']) && $telmarh_options['last_offers_icon'] == true) ? '<i class="fa fa-search"></i>' : '';
-$lastOffersText = isset($telmarh_options['last_offers_text']) ? $telmarh_options['last_offers_text'] : '';
+$lastOffersText = isset($telmarh_options['last_offers_text']) ? $telmarh_options['last_offers_text'] : 'Nos dernières offres';
 $allOffersText = isset($telmarh_options['last_offers_link_text']) ? $telmarh_options['last_offers_link_text'] : 'Voir toutes les offres';
 $idImage = get_post_thumbnail_id($post->ID);
 list($image) = wp_get_attachment_image_src( $idImage, "full" );
