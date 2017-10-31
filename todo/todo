@@ -113,3 +113,11 @@ Début TODO lot 2
 - Choisir le fichier "ACF-pave-personnalisable.xml' qui se trouve dans le repertoire '\acf' du projet
 - Envoyer le fichier et l'importer puis "sumbit" pour le valider
 
+ @todo 15 : "Correction du acces webmaster sur la page d'option"
+- Se connecté en tant qu'administrateur
+- Parcourir le menu AAM
+- Sur l'onglet "User/Role Panel" selectionnez le webmaster en cliquant sur l'icone "settings" du colonne "Action"
+- Puis séléctionnez "capability" dans l'onglet "Access Control Panel"
+- Puis cocher sur la colonne "Action" de Category "Backend" et de Capability "manage_option"
+ 
+
