@@ -358,10 +358,11 @@ get_header(); ?>
                                 </div>
                                 <div class="row">
                                     <div class="form-group col-md-4">
-                                        <label for="organisme_exp_for">Ecole / Université / Organisme de formation<span class="required">*</span></label>
+                                        <label for="organisme_exp_for">Ecole / Université / Organisme de formation <span class="required">*</span></label>
                                         <input type="text" autocomplete="off" class="form-control" placeholder="Ecole / Université / Organisme de formation…" name="organisme_exp_for" id="organisme_exp_for" value="<?php echo $_POST['organisme_exp_for'];?>">
                                     </div>
                                     <div class="form-group col-md-4">
+                                        <label for="desc_exp_for">Description <span class="required">*</span></label>
                                         <textarea name="desc_exp_for" class="form-control" id="desc_exp_for" placeholder="Quelques mots"><?php echo $_POST['desc_exp_for'];?></textarea>
                                     </div>
                                     <div class="form-group col-md-4">
