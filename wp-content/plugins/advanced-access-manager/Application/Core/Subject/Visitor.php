@@ -21,25 +21,6 @@ class AAM_Core_Subject_Visitor extends AAM_Core_Subject {
     const UID = 'visitor';
 
     /**
-     * Retrieve Visitor Subject
-     *
-     * @return null|AAM_Core_Subject
-     *
-     * @access protected
-     */
-    protected function retrieveSubject() {
-        return null;
-    }
-
-    /**
-     *
-     * @return type
-     */
-    public function getCapabilities() {
-        return array();
-    }
-
-    /**
      *
      * @param type $value
      * @param type $object
@@ -81,12 +62,29 @@ class AAM_Core_Subject_Visitor extends AAM_Core_Subject {
     public function getUID() {
         return self::UID;
     }
-
+    
     /**
-     * @inheritdoc
+     * 
+     * @return type
      */
     public function getParent() {
-        return null;
+        return AAM_Core_Subject_Default::getInstance();
     }
 
+    /**
+     * 
+     * @return type
+     */
+    public function getName() {
+        return __('Anonymous', AAM_KEY);
+    }
+    
+    /**
+     * 
+     * @return boolean
+     */
+    public function isVisitor() {
+        return true;
+    }
+    
 }

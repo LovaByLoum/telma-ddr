@@ -10,13 +10,15 @@
 /**
  * AAM core API
  * 
+ * NOTE! THIS IS LEGACY CLASS THAT SLOWLY WILL DIE! DO NOT RELY ON ITS METHODS
+ * 
  * @package AAM
  * @author Vasyl Martyniuk <vasyl@vasyltech.com>
  */
 final class AAM_Core_API {
 
     /**
-     * Get current blog's option
+     * Get option
      *
      * @param string $option
      * @param mixed  $default
@@ -29,17 +31,61 @@ final class AAM_Core_API {
      */
     public static function getOption($option, $default = FALSE, $blog_id = null) {
         if (is_multisite()) {
-            $blog = (is_null($blog_id) ? get_current_blog_id() : $blog_id);
-            $response = get_blog_option($blog, $option, $default);
+            if (is_null($blog_id) || get_current_blog_id() === $blog_id) {
+                $response = self::getCachedOption($option, $default);
+            } else {
+                if ($blog_id === 'site') {
+                    $blog = (defined('SITE_ID_CURRENT_SITE') ? SITE_ID_CURRENT_SITE : 1);
+                } else {
+                    $blog = $blog_id;
+                }
+                $response = get_blog_option($blog, $option, $default);
+            }
         } else {
-            $response = get_option($option, $default);
+            $response = self::getCachedOption($option, $default);
         }
 
         return $response;
     }
+    
+    /**
+     * 
+     * @staticvar type $xmlrpc
+     * @return \classname
+     */
+    public static function getXMLRPCServer() {
+        static $xmlrpc = null;
+        
+        if (is_null($xmlrpc)) {
+            require_once(ABSPATH . WPINC . '/class-IXR.php');
+            require_once(ABSPATH . WPINC . '/class-wp-xmlrpc-server.php'); 
+            $classname = apply_filters('wp_xmlrpc_server_class', 'wp_xmlrpc_server');
+            $xmlrpc = new $classname;
+        }
+        
+        return $xmlrpc;
+    }
+    
+    /**
+     * 
+     * @param type $option
+     * @param type $default
+     * @return type
+     */
+    protected static function getCachedOption($option, $default) {
+        $cache = wp_cache_get('alloptions', 'options');
+        
+        if (empty($cache)) {
+            $response = get_option($option, $default);
+        } else {
+            $response = isset($cache[$option]) ? maybe_unserialize($cache[$option]) : $default;
+        }
+        
+        return $response;
+    }
 
     /**
-     * Update Blog Option
+     * Update option
      *
      * @param string $option
      * @param mixed  $data
@@ -52,7 +98,13 @@ final class AAM_Core_API {
      */
     public static function updateOption($option, $data, $blog_id = null) {
         if (is_multisite()) {
-            $blog = (is_null($blog_id) ? get_current_blog_id() : $blog_id);
+            if (is_null($blog_id)) {
+                $blog = get_current_blog_id();
+            } elseif ($blog_id === 'site') {
+                $blog = (defined('SITE_ID_CURRENT_SITE') ? SITE_ID_CURRENT_SITE : 1);
+            } else {
+                $blog = $blog_id;
+            }
             $response = update_blog_option($blog, $option, $data);
         } else {
             $response = update_option($option, $data);
@@ -62,7 +114,7 @@ final class AAM_Core_API {
     }
 
     /**
-     * Delete Blog Option
+     * Delete option
      *
      * @param string $option
      * @param int    $blog_id
@@ -74,7 +126,13 @@ final class AAM_Core_API {
      */
     public static function deleteOption($option, $blog_id = null) {
         if (is_multisite()) {
-            $blog = (is_null($blog_id) ? get_current_blog_id() : $blog_id);
+            if (is_null($blog_id)) {
+                $blog = get_current_blog_id();
+            } elseif ($blog_id == 'site') {
+                $blog = (defined('SITE_ID_CURRENT_SITE') ? SITE_ID_CURRENT_SITE : 1);
+            } else {
+                $blog = $blog_id;
+            }
             $response = delete_blog_option($blog, $option);
         } else {
             $response = delete_option($option);
@@ -87,32 +145,19 @@ final class AAM_Core_API {
      * Initiate HTTP request
      *
      * @param string $url Requested URL
-     * @param bool $send_cookies Wheather send cookies or not
      * 
      * @return WP_Error|array
      * 
      * @access public
      */
-    public static function cURL($url, $send_cookies = TRUE) {
+    public static function cURL($url, $params = array(), $timeout = 20) {
         $header = array('User-Agent' => AAM_Core_Request::server('HTTP_USER_AGENT'));
-
-        $cookies = AAM_Core_Request::cookie(null, array());
-        $requestCookies = array();
-        if (is_array($cookies) && $send_cookies) {
-            foreach ($cookies as $key => $value) {
-                //SKIP PHPSESSID - some servers don't like it for security reason
-                if ($key !== session_name()) {
-                    $requestCookies[] = new WP_Http_Cookie(array(
-                        'name' => $key, 'value' => $value
-                    ));
-                }
-            }
-        }
 
         return wp_remote_request($url, array(
             'headers' => $header,
-            'cookies' => $requestCookies,
-            'timeout' => 5
+            'method'  => 'POST',
+            'body'    => $params,
+            'timeout' => $timeout
         ));
     }
     
@@ -121,7 +166,7 @@ final class AAM_Core_API {
      * 
      * @global WP_Roles $wp_roles
      * 
-     * @return \WP_Roles
+     * @return WP_Roles
      */
     public static function getRoles() {
         global $wp_roles;
@@ -131,7 +176,7 @@ final class AAM_Core_API {
         } elseif(isset($wp_roles)) {
             $roles = $wp_roles;
         } else {
-            $roles = $wp_roles = new WP_Roles();
+            $roles = new WP_Roles();
         }
         
         return $roles;
@@ -148,17 +193,17 @@ final class AAM_Core_API {
      * @access public
      */
     public static function maxLevel($caps, $default = 0) {
-        $levels = array($default);
+        $max = $default;
         
         if (is_array($caps)) { //WP Error Fix bug report
             foreach($caps as $cap => $granted) {
-                if ($granted && preg_match('/^level_(10|[0-9])$/i', $cap, $match)) {
-                    $levels[] = intval($match[1]);
+                if ($granted && preg_match('/^level_([0-9]+)$/', $cap, $match)) {
+                    $max = ($max < $match[1] ? $match[1] : $max);
                 }
             }
         }
         
-        return max($levels);
+        return intval($max);
     }
     
     /**
@@ -171,17 +216,90 @@ final class AAM_Core_API {
      * @access public
      */
     public static function getAllCapabilities() {
-        $caps = array();
+        static $caps = array();
         
-        foreach (self::getRoles()->role_objects as $role) {
-            if (is_array($role->capabilities)) {
-                $caps = array_merge($caps, $role->capabilities);
+        if (empty($caps)) {
+            foreach (self::getRoles()->role_objects as $role) {
+                if (is_array($role->capabilities)) {
+                    $caps = array_merge($caps, $role->capabilities);
+                }
             }
         }
         
         return $caps;
     }
+    
+    /**
+     * Check if capability exists
+     * 
+     * @param string $cap
+     * 
+     * @return boolean
+     * 
+     * @access public
+     * @static
+     */
+    public static function capabilityExists($cap) {
+        $caps   = self::getAllCapabilities();
+        $exists = array_key_exists($cap, $caps) ? true : false;
+        
+        return (is_string($cap) && $exists);
+    }
+    
+    /**
+     * Clear all AAM settings
+     * 
+     * @global wpdb $wpdb
+     * 
+     * @access public
+     */
+    public static function clearSettings() {
+        global $wpdb;
 
+        //clear wp_options
+        $oquery = "DELETE FROM {$wpdb->options} WHERE (`option_name` LIKE %s) AND ";
+        $oquery .= "(`option_name` NOT IN ('aam-extensions', 'aam-uid'))";
+        $wpdb->query($wpdb->prepare($oquery, 'aam%'));
+
+        //clear wp_postmeta
+        $pquery = "DELETE FROM {$wpdb->postmeta} WHERE `meta_key` LIKE %s";
+        $wpdb->query($wpdb->prepare($pquery, 'aam-post-access-%'));
+
+        //clear wp_usermeta
+        $uquery = "DELETE FROM {$wpdb->usermeta} WHERE `meta_key` LIKE %s";
+        $wpdb->query($wpdb->prepare($uquery, 'aam%'));
+
+        $mquery = "DELETE FROM {$wpdb->usermeta} WHERE `meta_key` LIKE %s";
+        $wpdb->query($wpdb->prepare($mquery, $wpdb->prefix . 'aam%'));
+        
+        self::clearCache();
+    }
+    
+    /**
+     * 
+     * @param AAM_Core_Subject $subject
+     */
+    public static function clearCache($subject = null) {
+        global $wpdb;
+        
+        if (empty($subject)) { // clear all cache
+            // visitors, default and role cache
+            $query = "DELETE FROM {$wpdb->options} WHERE `option_name` LIKE %s";
+            $wpdb->query($wpdb->prepare($query, '%aam_cache%' ));
+            
+            // TODO: aam_visitor_cache does not follow the option naming pattern
+            $query = "DELETE FROM {$wpdb->options} WHERE `option_name` = %s";
+            $wpdb->query($wpdb->prepare($query, 'aam_visitor_cache' ));
+            
+            // user cache
+            $query = "DELETE FROM {$wpdb->usermeta} WHERE `meta_key` LIKE %s";
+            $wpdb->query($wpdb->prepare($query, '%aam_cache%' ));
+        } else {
+            //clear visitor cache
+            $subject->getObject('cache')->reset();
+        }
+    }
+    
     /**
      * Reject the request
      *
@@ -195,69 +313,66 @@ final class AAM_Core_API {
      * @access public
      */
     public static function reject($area = 'frontend', $args = array()) {
-        $type = apply_filters(
-                'aam-filter-redirect-option', 
-                AAM_Core_Config::get("{$area}.redirect.type"),
-                "{$area}.redirect.type",
-                AAM::getUser()
-        );
-        
-        if (!empty($type)) {
-            $redirect = apply_filters(
-                'aam-filter-redirect-option',
-                AAM_Core_Config::get("{$area}.redirect.{$type}"),
-                "{$area}.redirect.{$type}",
-                AAM::getUser()
-            );
+        if (AAM_Core_Request::server('REQUEST_METHOD') !== 'POST') {
+            $object = AAM::getUser()->getObject('redirect');
+            $type   = $object->get("{$area}.redirect.type");
+
+            if ($type === 'login') {
+                $redirect = add_query_arg(
+                        array('reason' => 'restricted'), 
+                        wp_login_url(AAM_Core_Request::server('REQUEST_URI'))
+                );
+            } elseif (!empty($type) && ($type !== 'default')) {
+                $redirect = $object->get("{$area}.redirect.{$type}");
+            } else { //ConfigPress setup
+                $redirect = AAM_Core_Config::get(
+                    "{$area}.access.deny.redirectRule", __('Access Denied', AAM_KEY)
+                );
+            }
+            
+            $doRedirect = true;
+            
+            if ($type === 'page') {
+                $page = self::getCurrentPost();
+                $doRedirect = (empty($page) || ($page->ID !== intval($redirect)));
+            } elseif ($type === 'url') {
+                $doRedirect = strpos($redirect, AAM_Core_Request::server('REQUEST_URI')) === false;
+            }
+            
+            if ($doRedirect) {
+                do_action('aam-access-rejected-action', $area, $args);
+                self::redirect($redirect, $args);
+            }
         } else {
-            $redirect = AAM_Core_Config::get("{$area}.access.deny.redirect");
+            wp_die(-1);
         }
-        
-        self::redirect($redirect, $area, $args);
     }
     
     /**
+     * Redirect request
      * 
-     * @param type $redirect
-     * @param type $area
-     * @param type $args
+     * Redirect user based on defined $rule
+     * 
+     * @param mixed $rule
+     * @param mixed $args
+     * 
+     * @access public
      */
-    protected static function redirect($redirect, $area , $args) {
-        if (filter_var($redirect, FILTER_VALIDATE_URL)) {
-            wp_redirect($redirect);
-        } elseif (preg_match('/^[\d]+$/', $redirect)) {
-            wp_redirect(get_post_permalink($redirect));
-        } elseif (is_callable($redirect)) {
-            call_user_func($redirect, $args);
+    public static function redirect($rule, $args = null) {
+        $path = wp_parse_url($rule);
+        
+        if ($path && !empty($path['host'])) {
+            wp_redirect($rule, 307); exit;
+        } elseif (preg_match('/^[\d]+$/', $rule)) {
+            wp_safe_redirect(get_page_link($rule), 307); exit;
+        } elseif (is_callable($rule)) {
+            call_user_func($rule, $args);
         } elseif (!empty($args['callback']) && is_callable($args['callback'])) {
-            $message = self::getDenyMessage($area);
-            call_user_func($args['callback'], $message, '', array());
-        } elseif (empty($args['skip-die'])) {
-            wp_die(self::getDenyMessage($area));
+            call_user_func($args['callback'], $rule, '', array());
+        } else {
+            wp_die($rule);
         }
         exit;
-    }
-    
-    /**
-     * 
-     * @param type $area
-     * @return type
-     */
-    protected static function getDenyMessage($area) {
-        $message = apply_filters(
-                'aam-filter-redirect-option', 
-                AAM_Core_Config::get("{$area}.redirect.message"),
-                "{$area}.redirect.message",
-                AAM::getUser()
-        );
-        
-        if (empty($message)) { //Support ConfigPress setup
-            $message = AAM_Core_Config::get(
-                    "{$area}.access.deny.message", __('Access Denied', AAM_KEY)
-            );
-        }
-        
-        return stripslashes($message);
     }
     
     /**
@@ -278,5 +393,68 @@ final class AAM_Core_API {
         
 	@rmdir($pathname);
     }
-
+    
+    /**
+     * Get plugin version
+     * 
+     * @return string
+     * 
+     * @access public
+     */
+    public static function version() {
+        if (file_exists(ABSPATH . 'wp-admin/includes/plugin.php')) {
+            require_once ABSPATH . 'wp-admin/includes/plugin.php';
+        }
+        
+        if (function_exists('get_plugin_data')) {
+            $data = get_plugin_data(
+                    realpath(dirname(__FILE__) . '/../../aam.php')
+            );
+            $version = (isset($data['Version']) ? $data['Version'] : null);
+        }
+        
+        return (!empty($version) ? $version : null);
+    }
+    
+    /**
+     * Get current post
+     * 
+     * @global type $wp_query
+     * 
+     * @return WP_Post|null
+     */
+    public static function getCurrentPost() {
+        global $wp_query, $post;
+        
+        $res = $post;
+        
+        if (!empty($wp_query->queried_object)) {
+            $res = $wp_query->queried_object;
+        } elseif (!empty($wp_query->post)) {
+            $res = $wp_query->post;
+        } elseif (!empty($wp_query->query_vars['p'])) {
+            $res = get_post($wp_query->query_vars['p']);
+        } elseif (!empty($wp_query->query_vars['page_id'])) {
+            $res = get_post($wp_query->query_vars['page_id']);
+        } elseif (!empty($wp_query->query['name'])) {
+            //Important! Cover the scenario of NOT LIST but ALLOW READ
+            if (!empty($wp_query->posts)) {
+                foreach($wp_query->posts as $p) {
+                    if ($p->post_name === $wp_query->query['name']) {
+                        $res = $p;
+                        break;
+                    }
+                }
+            } elseif (!empty($wp_query->query['post_type'])) {
+                $res = get_page_by_path(
+                    $wp_query->query['name'], OBJECT, $wp_query->query['post_type']
+                );
+            }
+        }
+        
+        $user = AAM::getUser();
+        
+        return (is_a($res, 'WP_Post') ? $user->getObject('post', $res->ID) : null);
+    }
+    
 }

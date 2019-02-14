@@ -12,31 +12,9 @@
  * 
  * @package AAM
  * @author Vasyl Martyniuk <vasyl@vasyltech.com>
+ * @todo - Remove May 2019
  */
 class AAM_Core_Cache {
-    
-    /**
-     * DB Cache option
-     */
-    const CACHE_OPTION = 'cache';
-    
-    /**
-     * Core config
-     * 
-     * @var array
-     * 
-     * @access protected 
-     */
-    protected static $cache = false;
-    
-    /**
-     * Update cache flag
-     * 
-     * @var boolean
-     * 
-     * @access protected 
-     */
-    protected static $updated = false;
     
     /**
      * Get cached option
@@ -47,8 +25,8 @@ class AAM_Core_Cache {
      * 
      * @access public
      */
-    public static function get($option) {
-        return (isset(self::$cache[$option]) ? self::$cache[$option] : null);
+    public static function get() {
+        return null;
     }
     
     /**
@@ -56,69 +34,32 @@ class AAM_Core_Cache {
      * 
      * @param string $option
      * @param mixed  $data
+     * @param mixed  $legacy Deprecated as the first arg was subject
      * 
      * @return void
      * 
      * @access public
      */
-    public static function set($option, $data) {
-        if (!isset(self::$cache[$option]) || self::$cache[$option] != $data) {
-            self::$cache[$option] = $data;
-            self::$updated = true;
-        }
+    public static function set() {
     }
     
     /**
-     * Clear cache
+     * Check if key exists
      * 
-     * @return void
+     * @param string $option
+     * 
+     * @return boolean
      * 
      * @access public
-     * @global WPDB $wpdb
+     */
+    public static function has() {
+        return null;
+    }
+    
+    /**
+     * 
      */
     public static function clear() {
-        global $wpdb;
-        
-        //clear visitor cache
-        $oquery = "DELETE FROM {$wpdb->options} WHERE `option_name` = %s";
-        $wpdb->query($wpdb->prepare($oquery, 'aam_visitor_cache' ));
-        
-        $mquery = "DELETE FROM {$wpdb->usermeta} WHERE `meta_key` = %s";
-        $wpdb->query($wpdb->prepare($mquery, $wpdb->prefix . 'aam_cache' ));
-        
-        //clear updated flag
-        self::$updated = false;
+        AAM_Core_API::clearCache();
     }
-    
-    /**
-     * Save cache
-     * 
-     * Save aam cache but only if changes deleted
-     * 
-     * @return void
-     * 
-     * @access public
-     */
-    public static function save() {
-        if (self::$updated) {
-            AAM::getUser()->updateOption(self::$cache, self::CACHE_OPTION);
-        }
-    }
-    
-    /**
-     * Bootstrap cache
-     * 
-     * Do not load cache if user is on AAM page
-     * 
-     * @return void
-     * 
-     * @access public
-     */
-    public static function bootstrap() {
-        if (!AAM::isAAM()) {
-            self::$cache = AAM::getUser()->readOption(self::CACHE_OPTION);
-            add_action('shutdown', 'AAM_Core_Cache::save');
-        }
-    }
-    
 }

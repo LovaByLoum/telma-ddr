@@ -27,8 +27,9 @@ class AAM_Backend_View_Helper {
      */
     public static function preparePhrase($phrase) {
         //prepare search patterns
-        $num = func_num_args();
-        $search = array_fill(0, ($num - 1) * 2, null);
+        $num    = func_num_args();
+        $search = ($num > 1 ? array_fill(0, ($num - 1) * 2, null) : array());
+        
         array_walk($search, 'AAM_Backend_View_Helper::prepareWalk');
 
         $replace = array();
@@ -50,16 +51,37 @@ class AAM_Backend_View_Helper {
     }
     
     /**
-     * Conver string to readable
+     * Get default Access Policy
      * 
-     * @param string $text
+     * @global string $wp_version
      * 
      * @return string
      * 
      * @access public
+     * @static
+     * @since  v5.7.3
      */
-    public static function getHumanText($text) {
-        return implode(' ', array_map('ucfirst', explode('_', $text)));
+    public static function getDefaultPolicy() {
+        global $wp_version;
+        
+        $aamVersion = AAM_Core_API::version();
+        
+        return <<<EOT
+{
+    "Version": "1.0.0",
+    "Dependency": {
+        "wordpress": ">=$wp_version",
+        "advanced-access-manager": ">=$aamVersion"
+    },
+    "Statement": [
+        {
+            "Effect": "deny",
+            "Resource": [],
+            "Action": []
+        }
+    ]
+}
+EOT;
     }
-
+    
 }

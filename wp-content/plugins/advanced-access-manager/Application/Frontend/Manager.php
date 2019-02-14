@@ -23,7 +23,7 @@ class AAM_Frontend_Manager {
      * @access private 
      */
     private static $_instance = null;
-
+    
     /**
      * Construct the manager
      * 
@@ -32,178 +32,45 @@ class AAM_Frontend_Manager {
      * @access public
      */
     public function __construct() {
-        if (AAM_Core_Config::get('frontend-access-control', true)) {
-            //control WordPress frontend
-            add_action('wp', array($this, 'wp'), 999);
-            add_action('404_template', array($this, 'themeRedirect'), 999);
-            //filter navigation pages & taxonomies
-            add_filter('get_pages', array($this, 'getPages'));
-            add_filter('wp_get_nav_menu_items', array($this, 'getNavigationMenu'));
-            //widget filters
-            add_filter('sidebars_widgets', array($this, 'widgetFilter'), 999);
-            //get control over commenting stuff
-            add_filter('comments_open', array($this, 'commentOpen'), 10, 2);
-            //user login control
-            add_filter('wp_authenticate_user', array($this, 'authenticate'), 1, 2);
-            //add post filter for LIST restriction
-            add_filter('the_posts', array($this, 'thePosts'), 999, 2);
-            //filter post content
-            add_filter('the_content', array($this, 'theContent'), 999);
-            //admin bar
-            $this->checkAdminBar();
+        if (AAM_Core_Config::get('core.settings.frontendAccessControl', true)) {
+            AAM_Frontend_Filter::register();
         }
-    }
-
-    /**
-     * Main Frontend access control hook
-     *
-     * @return void
-     *
-     * @access public
-     * @global WP_Post $post
-     */
-    public function wp() {
-        global $post;
-
-        if ((is_single() || is_page()) && is_object($post)) {
-            $this->checkPostReadAccess($post);
+        
+        //manage AAM shortcode
+        add_shortcode('aam', array($this, 'processShortcode'));
+        
+        //cache clearing hook
+        add_action('aam-clear-cache-action', 'AAM_Core_API::clearCache');
+        
+        //admin bar
+        $this->checkAdminBar();
+        
+        //register login widget
+        if (AAM_Core_Config::get('core.settings.secureLogin', true)) {
+            add_action('widgets_init', array($this, 'registerLoginWidget'));
+            add_action('wp_enqueue_scripts', array($this, 'printJavascript'));
         }
+        
+        //password protected filter
+        add_filter('post_password_required', array($this, 'isPassProtected'), 10, 2);
+        //manage password check expiration
+        add_filter('post_password_expires', array($this, 'checkPassExpiration'));
     }
     
     /**
-     * Theme redirect
+     * Process AAM short-codes
      * 
-     * Super important function that cover the 404 redirect that triggered by theme
-     * when page is not found. This covers the scenario when page is restricted from
-     * listing and read.
-     * 
-     * @global type $wp_query
-     * 
-     * @param type $template
+     * @param array  $args
+     * @param string $content
      * 
      * @return string
      * 
      * @access public
      */
-    public function themeRedirect($template) {
-        global $wp_query;
+    public function processShortcode($args, $content) {
+        $shortcode = new AAM_Shortcode_Factory($args, $content);
         
-        $object = (isset($wp_query->queried_object) ? $wp_query->queried_object : 0);
-        if ($object && is_a($object, 'WP_Post')) {
-            $this->checkPostReadAccess($object);
-        }
-        
-        return $template;
-    }
-    
-    /**
-     * Check post read access
-     * 
-     * @param WP_Post $post
-     * 
-     * @return void
-     * 
-     * @access protected
-     */
-    protected function checkPostReadAccess($post) {
-        $object = AAM::getUser()->getObject('post', $post->ID);
-        $read   = $object->has('frontend.read');
-        $others = $object->has('frontend.read_others');
-
-        if ($read || ($others && !$this->isAuthor($post))) {
-            AAM_Core_API::reject(
-                'frontend', 
-                array('object' => $object, 'action' => 'frontend.read')
-            );
-        }
-        //trigger any action that is listeting 
-        do_action('aam-wp-action', $object);
-    }
-    
-    /**
-     * Filter Pages that should be excluded in frontend
-     *
-     * @param array $pages
-     *
-     * @return array
-     *
-     * @access public
-     */
-    public function getPages($pages) {
-        if (is_array($pages)) {
-            foreach ($pages as $i => $page) {
-                $object = AAM::getUser()->getObject('post', $page->ID);
-                $list   = $object->has('frontend.list');
-                $others = $object->has('frontend.list_others');
-                
-                if ($list || ($others && !$this->isAuthor($page))) {
-                    unset($pages[$i]);
-                }
-            }
-        }
-
-        return $pages;
-    }
-
-    /**
-     * Filter Navigation menu
-     *
-     * @param array $pages
-     *
-     * @return array
-     *
-     * @access public
-     */
-    public function getNavigationMenu($pages) {
-        if (is_array($pages)) {
-            $user = AAM::getUser();
-            foreach ($pages as $i => $page) {
-                if ($page->type == 'post_type') {
-                    $object = $user->getObject('post', $page->object_id);
-                    $list   = $object->has('frontend.list');
-                    $others = $object->has('frontend.list_others');
-                    
-                    if ($list || ($others && !$this->isAuthor($page))) {
-                        unset($pages[$i]);
-                    }
-                }
-            }
-        }
-
-        return $pages;
-    }
-
-    /**
-     * Filter Frontend widgets
-     *
-     * @param array $widgets
-     *
-     * @return array
-     *
-     * @access public
-     */
-    public function widgetFilter($widgets) {
-        return AAM::getUser()->getObject('metabox')->filterFrontend($widgets);
-    }
-
-    /**
-     * Control Frontend commenting freature
-     *
-     * @param boolean $open
-     * @param int $post_id
-     *
-     * @return boolean
-     *
-     * @access public
-     */
-    public function commentOpen($open, $post_id) {
-        $object = AAM::getUser()->getObject('post', $post_id);
-        
-        if ($object->has('frontend.comment')) {
-            $open = false;
-        }
-
-        return $open;
+        return $shortcode->process();
     }
     
     /**
@@ -216,117 +83,97 @@ class AAM_Frontend_Manager {
      * @access public
      */
     public function checkAdminBar() {
-        $caps = AAM_Core_API::getAllCapabilities();
-        
-        if (isset($caps['show_admin_bar'])) {
+        if (AAM_Core_API::capabilityExists('show_admin_bar')) {
             if (!AAM::getUser()->hasCapability('show_admin_bar')) {
-                show_admin_bar(false);
+                add_filter('show_admin_bar', '__return_false', PHP_INT_MAX );
             }
         }
     }
-
-    /**
-     * Control User Block flag
-     *
-     * @param WP_Error $user
-     *
-     * @return WP_Error|WP_User
-     *
-     * @access public
-     */
-    public function authenticate($user) {
-        if ($user->user_status == 1) {
-            $user = new WP_Error();
-            
-            $message  = '[ERROR]: User is locked. Please contact your website ';
-            $message .= 'administrator.';
-            
-            $user->add(
-                'authentication_failed', 
-                AAM_Backend_View_Helper::preparePhrase($message, 'strong')
-            );
-        }
-
-        return $user;
-    }
     
     /**
-     * Filter posts from the list
-     *  
-     * @param array $posts
+     * Register login widget
      * 
-     * @return array
+     * @return void
      * 
      * @access public
      */
-    public function thePosts($posts) {
-        $filtered = array();
-
-        if (is_array($posts)) {
-            foreach ($posts as $post) {
-                $object = AAM::getUser()->getObject('post', $post->ID);
-                $list   = $object->has('frontend.list');
-                $others = $object->has('frontend.list_others');
-                
-                if (!$list && (!$others || $this->isAuthor($post))) {
-                    $filtered[] = $post;
-                }
-            }
-        } else {
-            $filtered = $posts;
-        }
-
-        return $filtered;
+    public function registerLoginWidget() {
+        register_widget('AAM_Backend_Widget_Login');
     }
     
     /**
-     * 
-     * @global WP_Post $post
-     * @param type $content
-     * 
-     * @return string
-     * 
+     * Print JS libraries
+     *
+     * @return void
+     *
      * @access public
      */
-    public function theContent($content) {
-        global $post;
-        
-        $object = AAM::getUser()->getObject('post', $post->ID);
-       
-        if ($object->has('frontend.limit')) {
-            $message = apply_filters(
-                'aam-filter-teaser-option', 
-                AAM_Core_Config::get("frontend.teaser.message"),
-                "frontend.teaser.message",
-                AAM::getUser()
+    public function printJavascript() {
+        if (AAM_Core_Config::get('core.settings.secureLogin', true)) {
+            wp_enqueue_script(
+                'aam-login', 
+                AAM_MEDIA . '/js/aam-login.js', 
+                array('jquery')
             );
-            $excerpt = apply_filters(
-                'aam-filter-teaser-option', 
-                AAM_Core_Config::get("frontend.teaser.excerpt"),
-                "frontend.teaser.excerpt",
-                AAM::getUser()
+
+            //add plugin localization
+            $locals = array(
+                'nonce'   => wp_create_nonce('aam_ajax'),
+                'ajaxurl' => admin_url('admin-ajax.php')
             );
-            
-            $content  = (intval($excerpt) ? $post->post_excerpt : '');
-            $content .= stripslashes($message);
+
+            wp_localize_script('aam-login', 'aamLocal', $locals);
         }
-        
-        return $content;
     }
     
     /**
-     * Check if user is post author
+     * Check if post is password protected
      * 
+     * @param boolean $res
      * @param WP_Post $post
      * 
      * @return boolean
      * 
-     * @access protected
+     * @access public
      */
-    protected function isAuthor($post) {
-        return ($post->post_author == get_current_user_id());
-    }
+    public function isPassProtected($res, $post) {
+        if (is_a($post, 'WP_Post')) {
+            $object = AAM::getUser()->getObject('post', $post->ID);
 
+            if ($object->has('frontend.protected')) {
+                require_once( ABSPATH . 'wp-includes/class-phpass.php' );
+                $hasher = new PasswordHash( 8, true );
+                $pass   = $object->get('frontend.password');
+                $hash   = wp_unslash(
+                        AAM_Core_Request::cookie('wp-postpass_' . COOKIEHASH)
+                );
+
+                $res = empty($hash) ? true : !$hasher->CheckPassword($pass, $hash);
+            }
+        }
+        
+        return $res;
+    }
+    
+    /**
+     * Get password expiration TTL
+     * 
+     * @param int $expire
+     * 
+     * @return int
+     * 
+     * @access public
+     */
+    public function checkPassExpiration($expire) {
+        $overwrite = AAM_Core_Config::get('feature.post.password.expires', null);
+        
+        if (!is_null($overwrite)) {
+            $expire = ($overwrite ? time() + strtotime($overwrite) : 0);
+        }
+        
+        return $expire;
+    }
+    
     /**
      * Bootstrap the manager
      * 

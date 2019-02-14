@@ -23,7 +23,7 @@ class AAM_Backend_Filter {
      * @access private 
      */
     private static $_instance = null;
-
+    
     /**
      * Initialize backend filters
      * 
@@ -33,73 +33,35 @@ class AAM_Backend_Filter {
      */
     protected function __construct() {
         //menu filter
-        add_filter('parent_file', array($this, 'filterMenu'), 999, 1);
+        if (!AAM::isAAM() || !current_user_can('aam_manage_admin_menu')) {
+            add_filter('parent_file', array($this, 'filterMenu'), 999, 1);
+        }
         
         //manager WordPress metaboxes
         add_action("in_admin_header", array($this, 'metaboxes'), 999);
+        add_action("widgets_admin_page", array($this, 'metaboxes'), 999);
         
         //control admin area
-        add_action('admin_init', array($this, 'adminInit'));
+        add_action('admin_notices', array($this, 'adminNotices'), -1);
+        add_action('network_admin_notices', array($this, 'adminNotices'), -1);
+        add_action('user_admin_notices', array($this, 'adminNotices'), -1);
         
         //post restrictions
         add_filter('page_row_actions', array($this, 'postRowActions'), 10, 2);
         add_filter('post_row_actions', array($this, 'postRowActions'), 10, 2);
-        add_action('admin_action_edit', array($this, 'adminActionEdit'));
+
+        add_action('pre_post_update', array($this, 'prePostUpdate'), 10, 2);
         
-        //control permalink editing
-        add_filter('get_sample_permalink_html', array($this, 'permalinkHTML'));
+        //user/role filters
+        if (!is_multisite() || !is_super_admin()) {
+            add_filter('editable_roles', array($this, 'filterRoles'));
+            add_action('pre_get_users', array($this, 'filterUserQuery'), 999);
+            add_filter('views_users', array($this, 'filterViews'));
+        }
         
-        //wp die hook
-        add_filter('wp_die_handler', array($this, 'backendDie'));
-        
-        //add post filter for LIST restriction
-        add_filter('the_posts', array($this, 'thePosts'), 999, 2);
-        
-        //some additional filter for user capabilities
-        add_filter('user_has_cap', array($this, 'checkUserCap'), 999, 4);
-        
-        //screen options & contextual help hooks
-        add_filter('screen_options_show_screen', array($this, 'screenOptions'));
-        add_filter('contextual_help', array($this, 'helpOptions'), 10, 3);
+        AAM_Backend_Authorization::bootstrap(); //bootstrap backend authorization
     }
     
-    /**
-     * Control Admin Area access
-     *
-     * @return void
-     *
-     * @access public
-     * @since  3.3
-     */
-    public function adminInit() {
-        global $plugin_page;
-
-        //compile menu
-        if (empty($plugin_page)){
-            $menu     = basename(AAM_Core_Request::server('SCRIPT_NAME'));
-            
-            $taxonomy = AAM_Core_Request::get('taxonomy');
-            $postType = AAM_Core_Request::get('post_type');
-            $page     = AAM_Core_Request::get('page');
-            
-            if (!empty($taxonomy)) {
-                $menu .= '?taxonomy=' . $taxonomy;
-            } elseif (!empty($postType)) {
-                $menu .= '?post_type=' . $postType;
-            } elseif (!empty($page)) {
-                $menu .= '?page=' . $page;
-            }
-        } else {
-            $menu = $plugin_page;
-        }
-        
-        $object = AAM::getUser()->getObject('menu');
-
-        if ($object->has($menu)) {
-            AAM_Core_API::reject('backend', array('object' => $object, 'id' => $menu));
-        }
-    }
-
     /**
      * Filter the Admin Menu
      *
@@ -115,9 +77,9 @@ class AAM_Backend_Filter {
 
         return $parent_file;
     }
-
+    
     /**
-     * Hanlde Metabox initialization process
+     * Handle metabox initialization process
      *
      * @return void
      *
@@ -127,23 +89,43 @@ class AAM_Backend_Filter {
         global $post;
 
         //make sure that nobody is playing with screen options
-        if ($post instanceof WP_Post) {
+        if (is_a($post, 'WP_Post')) {
             $screen = $post->post_type;
-        } elseif ($screen_object = get_current_screen()) {
-            $screen = $screen_object->id;
         } else {
-            $screen = '';
+            $screen_object = get_current_screen();
+            $screen        = ($screen_object ? $screen_object->id : '');
         }
-
-        if (AAM_Core_Request::get('init') != 'metabox') {
-            AAM::getUser()->getObject('metabox')->filterBackend($screen);
+        
+        if (AAM_Core_Request::get('init') !== 'metabox') {
+            if ($screen !== 'widgets') {
+                AAM::getUser()->getObject('metabox')->filterBackend($screen);
+            } else {
+                AAM::getUser()->getObject('metabox')->filterAppearanceWidgets();
+            }
         }
     }
-
+    
+    /**
+     * Manage notifications visibility
+     * 
+     * @return void
+     * 
+     * @access public
+     */
+    public function adminNotices() {
+        if (AAM_Core_API::capabilityExists('show_admin_notices')) {
+            if (!AAM::getUser()->hasCapability('show_admin_notices')) {
+                remove_all_actions('admin_notices');
+                remove_all_actions('network_admin_notices');
+                remove_all_actions('user_admin_notices');
+            }
+        }
+    }
+    
     /**
      * Post Quick Menu Actions Filtering
      *
-     * @param array $actions
+     * @param array   $actions
      * @param WP_Post $post
      *
      * @return array
@@ -151,10 +133,10 @@ class AAM_Backend_Filter {
      * @access public
      */
     public function postRowActions($actions, $post) {
-        $object = AAM::getUser()->getObject('post', $post->ID);
+        $object = AAM::getUser()->getObject('post', $post->ID, $post);
         
         //filter edit menu
-        if ($object->has('backend.edit')) {
+        if (!$object->allowed('backend.edit')) {
             if (isset($actions['edit'])) { 
                 unset($actions['edit']); 
             }
@@ -162,246 +144,142 @@ class AAM_Backend_Filter {
                 unset($actions['inline hide-if-no-js']);
             }
         }
-
+        
         //filter delete menu
-        if ($object->has('backend.delete')) {
-            if (isset($actions['trash'])) {
-                unset($actions['trash']);
-            }
-            if (isset($actions['delete'])) {
-                unset($actions['delete']);
+        if (!$object->allowed('backend.delete')) {
+            if (isset($actions['trash'])) { unset($actions['trash']); }
+            if (isset($actions['delete'])) { unset($actions['delete']); }
+        }
+        
+        //filter edit menu
+        if (!$object->allowed('backend.publish')) {
+            if (isset($actions['inline hide-if-no-js'])) {
+                unset($actions['inline hide-if-no-js']);
             }
         }
 
         return $actions;
     }
-
+    
     /**
-     * Control Edit Post
-     *
-     * Make sure that current user does not have access to edit Post
-     *
-     * @return void
-     *
-     * @access public
-     */
-    public function adminActionEdit() {
-        global $post;
-        
-        if (is_a($post, 'WP_Post')) {
-            $object = AAM::getUser()->getObject('post', $post->ID);
-            if ($object->has('backend.edit')) {
-                AAM_Core_API::reject(
-                        'backend', 
-                        array('object' => $object, 'action' => 'backend.edit')
-                );
-            }
-        }
-    }
-
-    /**
-     * Get Post ID
-     *
-     * Replication of the same mechanism that is in wp-admin/post.php
-     *
-     * @return WP_Post|null
-     *
-     * @access public
-     */
-    public function getPost() {
-        $post = null;
-        
-        if (get_post()) {
-            $post = get_post();
-        } elseif ($post_id = AAM_Core_Request::get('post')) {
-            $post = get_post($post_id);
-        } elseif ($post_id = AAM_Core_Request::get('post_ID')) {
-            $post = get_post($post_id);
-        }
-
-        return $post;
-    }
-
-    /**
-     * Take control over wp_die function
-     *
-     * @param callback $function
-     *
-     * @return void
-     *
-     * @access public
-     */
-    public function backendDie($function) {
-        if (AAM_Core_Config::get('access-denied-handler', true)) {
-            AAM_Core_API::reject(
-                'backend', array('callback' => $function, 'skip-die' => true)
-            );
-        }
-        
-        return $function;
-    }
-
-    /**
-     * Control edit permalink feature
+     * Post update hook
      * 
-     * @param string $html
+     * Clear cache if post owner changed
      * 
-     * @return string
+     * @param int   $id
+     * @param array $data
+     * 
+     * @return void
+     * 
+     * @access public
      */
-    public function permalinkHTML($html) {
-        if (AAM_Core_Config::get('control_permalink') === 'true') {
-            if (AAM::getUser()->hasCapability('manage_permalink') === false) {
-                $html = '';
-            }
+    public function prePostUpdate($id, $data) {
+        $post = get_post($id);
+        
+        if (intval($post->post_author) !== intval($data['post_author'])) {
+            AAM_Core_API::clearCache();
         }
-
-        return $html;
     }
     
     /**
-     * Filter posts from the list
-     *  
-     * @param array $posts
+     * Filter roles
+     * 
+     * @param array $roles
      * 
      * @return array
-     * 
-     * @access public
      */
-    public function thePosts($posts) {
-        $filtered = array();
+    public function filterRoles($roles) {
+        static $levels = array(); // to speed-up the execution
         
-        if (AAM::isAAM()) { //skip post filtering if this is AAM page
-            $filtered = $posts;
-        } else {
-            foreach ($posts as $post) {
-                $object = AAM::getUser()->getObject('post', $post->ID);
-                $list   = $object->has('backend.list');
-                $others = $object->has('backend.list_others');
-                
-                if (!$list && (!$others || $this->isAuthor($post))) {
-                    $filtered[] = $post;
+        $userLevel = AAM::getUser()->getMaxLevel();
+        
+        //filter roles
+        foreach($roles as $id => $role) {
+            if (!empty($role['capabilities']) && is_array($role['capabilities'])) {
+                if (!isset($levels[$id])) {
+                    $levels[$id] = AAM_Core_API::maxLevel($role['capabilities']);
+                }
+                if ($userLevel < $levels[$id]) {
+                    unset($roles[$id]);
+                } elseif ($userLevel === $levels[$id] && $this->filterSameLevel()) {
+                    unset($roles[$id]);
                 }
             }
         }
-
-        return $filtered;
+        
+        return $roles;
     }
     
     /**
-     * Check user capability
      * 
-     * This is a hack function that add additional layout on top of WordPress
-     * core functionality. Based on the capability passed in the $args array as
-     * "0" element, it performs additional check on user's capability to manage
-     * post.
+     * @return type
+     */
+    protected function filterSameLevel() {
+        $response = false;
+        
+        if (AAM_Core_API::capabilityExists('manage_same_user_level')) {
+            $response = !AAM::getUser()->hasCapability('manage_same_user_level');
+        }
+        
+        return $response;
+    }
+    
+    /**
+     * Filter user query
      * 
-     * @param array $allCaps
-     * @param array $metaCaps
-     * @param array $args
+     * Exclude all users that have higher user level
+     * 
+     * @param object $query
+     * 
+     * @access public
+     * 
+     * @return void
+     */
+    public function filterUserQuery($query) {
+        //current user max level
+        $max     = AAM::getUser()->getMaxLevel();
+        $exclude = array();
+        $roles   = AAM_Core_API::getRoles();
+        
+        foreach($roles->role_objects as $id => $role) {
+            $roleMax = AAM_Core_API::maxLevel($role->capabilities);
+            if ($roleMax > $max ) {
+                $exclude[] = $id;
+            } elseif ($roleMax === $max && $this->filterSameLevel()) {
+                $exclude[] = $id;
+            }
+        }
+        
+        $query->query_vars['role__not_in'] = $exclude;
+    }
+    
+    /**
+     * Filter user list view options
+     * 
+     * @param array $views
      * 
      * @return array
      * 
      * @access public
      */
-    public function checkUserCap($allCaps, $metaCaps, $args) {
-        //make sure that $args[2] is actually post ID
-        if (isset($args[2]) && is_scalar($args[2])) { 
-            switch($args[0]) {
-                case 'edit_post':
-                    $object = AAM::getUser()->getObject('post', $args[2]);
-                    if ($object->has('backend.edit')) {
-                        $allCaps = $this->restrictPostActions($allCaps, $metaCaps);
-                    }
-                    break;
-
-                case 'delete_post' :
-                    $object = AAM::getUser()->getObject('post', $args[2]);
-                    if ($object->has('backend.delete')) {
-                        $allCaps = $this->restrictPostActions($allCaps, $metaCaps);
-                    }
-                    break;
+    public function filterViews($views) {
+        $max   = AAM::getUser()->getMaxLevel();
+        $roles = AAM_Core_API::getRoles();
+        
+        foreach($roles->role_objects as $id => $role) {
+            $roleMax = AAM_Core_API::maxLevel($role->capabilities);
+            if (isset($views[$id])) {
+                if ($roleMax > $max) {
+                    unset($views[$id]);
+                } elseif ($roleMax === $max && $this->filterSameLevel()) {
+                    unset($views[$id]);
+                }
             }
         }
         
-        return $allCaps;
+        return $views;
     }
     
-    /**
-     * 
-     * @param type $flag
-     * @return type
-     */
-    public function screenOptions($flag) {
-        //IMPORTANT!! Do not use AAM::getUser()->hasCapability because 
-        //show_screen_options is custom capability and it may not be present for new
-        //website
-        $caps = AAM_Core_API::getAllCapabilities();
-        
-        if (isset($caps['show_screen_options'])) {
-            $flag = AAM::getUser()->hasCapability('show_screen_options');
-        }
-        
-        return $flag;
-    }
-    
-    /**
-     * 
-     * @param array $help
-     * @param type $id
-     * @param type $screen
-     * @return array
-     */
-    public function helpOptions($help, $id, $screen) {
-        //IMPORTANT!! Do not use AAM::getUser()->hasCapability because 
-        //show_screen_options is custom capability and it may not be present for new
-        //website
-        $caps = AAM_Core_API::getAllCapabilities();
-        
-        if (isset($caps['show_help_tabs'])) {
-            if (!AAM::getUser()->hasCapability('show_help_tabs')) {
-                $screen->remove_help_tabs();
-                $help = array();
-            }
-        }
-        
-        return $help;
-    }
-    
-    /**
-     * Restrict user capabilities
-     * 
-     * Iterate through the list of meta capabilities and disable them in the
-     * list of all user capabilities. Keep in mind that this disable caps only
-     * for one time call.
-     * 
-     * @param array $allCaps
-     * @param array $metaCaps
-     * 
-     * @return array
-     * 
-     * @access protected
-     */
-    protected function restrictPostActions($allCaps, $metaCaps) {
-        foreach($metaCaps as $cap) {
-            $allCaps[$cap] = false;
-        }
-        
-        return $allCaps;
-    }
-    
-    /**
-     * Check if user is post author
-     * 
-     * @param WP_Post $post
-     * 
-     * @return boolean
-     * 
-     * @access protected
-     */
-    protected function isAuthor($post) {
-        return ($post->post_author == get_current_user_id());
-    }
-
     /**
      * Register backend filters and actions
      * 

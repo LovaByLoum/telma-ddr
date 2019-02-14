@@ -39,7 +39,7 @@ class AAM_Core_Subject_Role extends AAM_Core_Subject {
 
         return $role;
     }
-
+    
     /**
      * Delete User Role 
      *
@@ -95,7 +95,7 @@ class AAM_Core_Subject_Role extends AAM_Core_Subject {
      * @access public
      */
     public function removeCapability($capability) {
-        $this->getSubject()->remove_cap($capability);
+        $this->getSubject()->add_cap($capability, false);
         
         return true;
     }
@@ -112,7 +112,7 @@ class AAM_Core_Subject_Role extends AAM_Core_Subject {
      * @access public
      */
     public function addCapability($capability) {
-        $this->getSubject()->add_cap($capability, 1);
+        $this->getSubject()->add_cap($capability, true);
         
         return true;
     }
@@ -126,6 +126,28 @@ class AAM_Core_Subject_Role extends AAM_Core_Subject {
      */
     public function getCapabilities() {
         return $this->getSubject()->capabilities;
+    }
+    
+    /**
+     * Check if subject has capability
+     * 
+     * @param string $cap
+     * 
+     * @return boolean
+     * 
+     * @access public
+     */
+    public function hasCapability($cap) {
+        $has = $this->getSubject()->has_cap($cap);
+        
+        // Override by policy if is set
+        $manager = AAM::api()->getPolicyManager($this);
+        
+        if ($manager->isAllowed("Capability:{$cap}") === false) {
+            $has = false;
+        }
+        
+        return $has;
     }
 
     /**
@@ -179,14 +201,27 @@ class AAM_Core_Subject_Role extends AAM_Core_Subject {
      * @inheritdoc
      */
     public function getParent() {
-        return apply_filters('aam-parent-role-filter', null, $this);
+        return apply_filters(
+                'aam-parent-role-filter', 
+                AAM_Core_Subject_Default::getInstance(), 
+                $this
+        );
     }
     
     /**
-     * @inheritdoc
+     * 
+     * @return type
      */
-    public function hasParent() {
-        return ($this->getParent() ? true : false);
+    public function getName() {
+        return $this->name;
     }
-
+    
+    /**
+     * 
+     * @return type
+     */
+    public function getMaxLevel() {
+        return AAM_Core_API::maxLevel($this->capabilities);
+    }
+    
 }

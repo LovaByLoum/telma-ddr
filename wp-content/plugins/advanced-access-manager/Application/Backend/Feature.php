@@ -7,6 +7,14 @@
  * ======================================================================
  */
 
+/**
+ * AAM Backend Feature
+ * 
+ * This class is used to hold the list of all registered UI features with few neat
+ * methods to manipulate it.
+ * 
+ * @author Vasyl Martyniuk <vasyl@vasyltech.com>
+ */
 class AAM_Backend_Feature {
 
     /**
@@ -33,17 +41,45 @@ class AAM_Backend_Feature {
         $response = false;
 
         if (empty($feature->capability)){
-            $cap = AAM_Core_Config::get('page.capability', 'administrator');
+            $cap = 'aam_manager';
         } else {
             $cap = $feature->capability;
         }
+        
+        if (isset($feature->option)) {
+            $show = self::isVisible($feature->option);
+        } else {
+            $show = true;
+        }
 
-        if (AAM::getUser()->hasCapability($cap)) {
+        if ($show && AAM::getUser()->hasCapability($cap)) {
             self::$_features[] = $feature;
             $response = true;
         }
 
         return $response;
+    }
+    
+    /**
+     * Check if feature is visible
+     * 
+     * There is a way to show/hide feature based on the option. For example some
+     * features should be visible only when Backend Access options is enabled.
+     * 
+     * @param string $options
+     * 
+     * @return boolean
+     * 
+     * @access protected
+     */
+    protected static function isVisible($options) {
+        $count = 0;
+        
+        foreach(explode(',', $options) as $option) {
+            $count += AAM_Core_Config::get($option, true);
+        }
+        
+        return ($count > 0);
     }
 
     /**
@@ -58,7 +94,7 @@ class AAM_Backend_Feature {
      */
     public static function initView(stdClass $feature){
         if (is_string($feature->view)){
-            $feature->view = new $feature->view;
+            $feature->view = new $feature->view(AAM_Backend_Subject::getInstance());
         }
 
         return $feature;
@@ -68,18 +104,22 @@ class AAM_Backend_Feature {
      * Retrieve list of features
      *
      * Retrieve sorted list of featured based on current subject
+     * 
+     * @param string $type
      *
      * @return array
      *
      * @access public
      * @static
      */
-    public static function retriveList() {
+    public static function retriveList($type) {
         $response = array();
-
-        $subject = AAM_Backend_View::getSubject();
+        
+        $subject = AAM_Backend_Subject::getInstance()->getUID();
         foreach (self::$_features as $feature) {
-            if (in_array(get_class($subject), $feature->subjects)) {
+            $ftype = (!empty($feature->type) ? $feature->type : 'main'); //TODO - legacy Nov 2018
+            if ($ftype === $type 
+                    && (empty($feature->subjects) || in_array($subject, $feature->subjects, true))) {
                 $response[] = self::initView($feature);
             }
         }
@@ -89,7 +129,7 @@ class AAM_Backend_Feature {
     }
 
     /**
-     * Order list of features or subjectes
+     * Order list of features
      *
      * Reorganize the list based on "position" attribute
      *
@@ -104,7 +144,7 @@ class AAM_Backend_Feature {
         $pos_a = (empty($feature_a->position) ? 9999 : $feature_a->position);
         $pos_b = (empty($feature_b->position) ? 9999 : $feature_b->position);
 
-        if ($pos_a == $pos_b){
+        if ($pos_a === $pos_b){
             $response = 0;
         } else {
             $response = ($pos_a < $pos_b ? -1 : 1);
