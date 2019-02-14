@@ -14,9 +14,11 @@
  * @package WordPress
  */
 define('WP_CACHE', true); //Added by WP-Cache Manager
+define( 'WPCACHEHOME', '/opt/axian/srcs/wp-content/plugins/wp-super-cache/' ); //Added by WP-Cache Manager
 define("WPLANG", "fr_FR");
 $host = $_SERVER['HTTP_HOST'];
 $appPath = dirname (__FILE__) . DIRECTORY_SEPARATOR;
 define("SERVERCONFIG", $host);
+define ("ABSPATH", dirname (__FILE__) . DIRECTORY_SEPARATOR );
 define ("BASEPATH", dirname (__FILE__));
 require_once( $appPath . 'wp-config' . DIRECTORY_SEPARATOR . SERVERCONFIG . DIRECTORY_SEPARATOR .  "wp-config.php" );

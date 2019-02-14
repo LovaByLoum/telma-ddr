@@ -51,10 +51,9 @@ function _get_cron_lock() {
 		if ( is_object( $row ) )
 			$value = $row->option_value;
 	}
-
 	return $value;
 }
-
+var_dump(_get_cron_array());
 if ( false === $crons = _get_cron_array() )
 	die();
 
@@ -67,7 +66,6 @@ if ( isset($keys[0]) && $keys[0] > $gmt_time )
 
 // The cron lock: a unix timestamp from when the cron was spawned.
 $doing_cron_transient = get_transient( 'doing_cron' );
-
 // Use global $doing_wp_cron lock otherwise use the GET lock. If no lock, trying grabbing a new lock.
 if ( empty( $doing_wp_cron ) ) {
 	if ( empty( $_GET[ 'doing_wp_cron' ] ) ) {
