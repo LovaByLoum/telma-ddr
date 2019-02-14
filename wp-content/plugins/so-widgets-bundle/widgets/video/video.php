@@ -5,6 +5,7 @@ Widget Name: Video Player
 Description: Play all your self or externally hosted videos in a customizable video player.
 Author: SiteOrigin
 Author URI: https://siteorigin.com
+Documentation: https://siteorigin.com/widgets-bundle/video-player-widget/
 */
 
 
@@ -25,7 +26,7 @@ class SiteOrigin_Widget_Video_Widget extends SiteOrigin_Widget {
 		);
 	}
 
-	function initialize_form() {
+	function get_widget_form() {
 		return array(
 			'title'     => array(
 				'type'  => 'text',
@@ -108,14 +109,24 @@ class SiteOrigin_Widget_Video_Widget extends SiteOrigin_Widget {
 							'video_type[external]' => array( 'show' ),
 							'video_type[self]'     => array( 'hide' ),
 						)
-					)
+					),
+					'related_videos' => array(
+						'type'          => 'checkbox',
+						'default'       => true,
+						'label'         => __( 'Show related videos.', 'so-widgets-bundle' ),
+						'description'   => __( 'If the external host supports it.', 'so-widgets-bundle' ),
+						'state_handler' => array(
+							'video_type[external]' => array( 'show' ),
+							'video_type[self]'     => array( 'hide' ),
+						)
+					),
 				),
 			),
 		);
 	}
 
 	function enqueue_frontend_scripts( $instance ) {
-		$video_host = $instance['host_type'];
+		$video_host = empty( $instance['host_type'] ) ? '' : $instance['host_type'];
 		if ( $video_host == 'external' ) {
 			$video_host = ! empty( $instance['video']['external_video'] ) ? $this->get_host_from_url( $instance['video']['external_video'] ) : '';
 		}
@@ -160,21 +171,23 @@ class SiteOrigin_Widget_Video_Widget extends SiteOrigin_Widget {
 		$video_host          = $instance['host_type'];
 		if ( $video_host == 'self' ) {
 
-			foreach ( $instance['video']['self_sources'] as $source ) {
-				$src        = '';
-				$video_type = '';
-				if ( ! empty( $source['self_video'] ) ) {
-					// Handle an attachment video
-					$src        = wp_get_attachment_url( $source['self_video'] );
-					$video_type = get_post_mime_type( $source['self_video'] );
-				} else if ( ! empty( $source['self_video_fallback'] ) ) {
-					// Handle an external URL video
-					$src        = $source['self_video_fallback'];
-					$vid_info   = wp_check_filetype( basename( $source['self_video_fallback'] ) );
-					$video_type = $vid_info['type'];
-				}
-				if ( ! empty( $src ) ) {
-					$self_sources[] = array( 'src' => $src, 'video_type' => $video_type );
+			if ( isset( $instance['video']['self_sources'] ) ) {
+				foreach ( $instance['video']['self_sources'] as $source ) {
+					$src        = '';
+					$video_type = '';
+					if ( ! empty( $source['self_video'] ) ) {
+						// Handle an attachment video
+						$src        = wp_get_attachment_url( $source['self_video'] );
+						$video_type = get_post_mime_type( $source['self_video'] );
+					} else if ( ! empty( $source['self_video_fallback'] ) ) {
+						// Handle an external URL video
+						$src        = $source['self_video_fallback'];
+						$vid_info   = wp_check_filetype( basename( $source['self_video_fallback'] ) );
+						$video_type = $vid_info['type'];
+					}
+					if ( ! empty( $src ) ) {
+						$self_sources[] = array( 'src' => $src, 'video_type' => $video_type );
+					}
 				}
 			}
 			$poster = ! empty( $instance['video']['self_poster'] ) ? wp_get_attachment_url( $instance['video']['self_poster'] ) : '';
@@ -193,6 +206,7 @@ class SiteOrigin_Widget_Video_Widget extends SiteOrigin_Widget {
 			'is_skinnable_video_host' => $this->is_skinnable_video_host( $video_host ),
 			'poster'                  => $poster,
 			'autoplay'                => ! empty( $instance['playback']['autoplay'] ),
+			'related_videos'          => ! empty( $instance['playback']['related_videos'] ),
 			'skin_class'              => 'default'
 		);
 
@@ -207,54 +221,6 @@ class SiteOrigin_Widget_Video_Widget extends SiteOrigin_Widget {
 	function get_style_name( $instance ) {
 		// For now, we'll only use the default style
 		return '';
-	}
-
-	/**
-	 * Gets a video source embed
-	 */
-	function get_video_oembed( $src, $autoplay = false ) {
-		if ( empty( $src ) ) {
-			return '';
-		}
-
-		global $content_width;
-
-		$video_width = ! empty( $content_width ) ? $content_width : 640;
-
-		$hash = md5( serialize( array(
-			'src'      => $src,
-			'width'    => $video_width,
-			'autoplay' => $autoplay,
-		) ) );
-
-		$html = get_transient( 'sow-vid-embed[' . $hash . ']' );
-		if ( empty( $html ) ) {
-			$html = wp_oembed_get( $src, array( 'width' => $video_width ) );
-
-			if ( $autoplay ) {
-				$html = preg_replace_callback( '/src=["\'](http[^"\']*)["\']/', array(
-					$this,
-					'autoplay_callback'
-				), $html );
-			}
-
-			if ( ! empty( $html ) ) {
-				set_transient( 'sow-vid-embed[' . $hash . ']', $html, 30 * 86400 );
-			}
-		}
-
-		return $html;
-	}
-
-	/**
-	 * The preg_replace callback that adds autoplay.
-	 *
-	 * @param $match
-	 *
-	 * @return mixed
-	 */
-	function autoplay_callback( $match ) {
-		return str_replace( $match[1], add_query_arg( 'autoplay', 1, $match[1] ), $match[0] );
 	}
 
 	/**

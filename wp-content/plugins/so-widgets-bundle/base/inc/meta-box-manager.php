@@ -35,7 +35,7 @@ class SiteOrigin_Widget_Meta_Box_Manager extends SiteOrigin_Widget {
 			__('SiteOrigin Meta Box Manager', 'so-widgets-bundle'),
 			array(
 				'has_preview' => false,
-				'help' => 'https://siteorigin.com/docs/widgets-bundle/advanced-concepts/widget-post-meta-box-forms/'
+				'help' => false
 			),
 			array(),
 			array()
@@ -71,7 +71,7 @@ class SiteOrigin_Widget_Meta_Box_Manager extends SiteOrigin_Widget {
 			}
 		}
 
-		if ( !empty( $this->form_options ) ) {
+		if ( ! empty( $this->form_options ) ) {
 			add_meta_box(
 				'siteorigin-widgets-meta-box',
 				__( 'Widgets Bundle Post Meta Data', 'so-widgets-bundle' ),
@@ -90,13 +90,16 @@ class SiteOrigin_Widget_Meta_Box_Manager extends SiteOrigin_Widget {
 	 */
 	public function render_widgets_meta_box( $post ) {
 		wp_enqueue_script(
-			'sow-meta-box-manager',
+			'sow-meta-box-manager-js',
 			plugin_dir_url(SOW_BUNDLE_BASE_FILE).'base/js/meta-box-manager' . SOW_BUNDLE_JS_SUFFIX . '.js',
 			array( 'jquery' ),
 			SOW_BUNDLE_VERSION,
 			true
 		);
 		$widget_post_meta = get_post_meta( $post->ID, self::POST_META_KEY, true );
+		if ( empty( $widget_post_meta ) ) {
+			$widget_post_meta = array();
+		}
 		$this->form( $widget_post_meta );
 		?><input type="hidden" id="widget_post_meta" name="widget_post_meta"> <?php
 		wp_nonce_field( 'widget_post_meta_save', '_widget_post_meta_nonce' );
@@ -140,14 +143,11 @@ class SiteOrigin_Widget_Meta_Box_Manager extends SiteOrigin_Widget {
 	 * @param $post_id
 	 */
 	public function save_widget_post_meta( $post_id ) {
-		$nonce = filter_input( INPUT_POST, '_widget_post_meta_nonce', FILTER_SANITIZE_STRING );
-		if ( !wp_verify_nonce( $nonce, 'widget_post_meta_save' ) ) return;
+		if ( empty( $_POST['_widget_post_meta_nonce'] ) || !wp_verify_nonce( $_POST['_widget_post_meta_nonce'], 'widget_post_meta_save' ) ) return;
 		if ( !current_user_can( 'edit_post', $post_id ) ) return;
 
-		$request = filter_input_array( INPUT_POST, array(
-			'widget_post_meta' => FILTER_DEFAULT
-		) );
-		$widget_post_meta = json_decode( $request['widget_post_meta'], true);
+		$widget_post_meta = isset( $_POST['widget_post_meta'] ) ? stripslashes_deep( $_POST['widget_post_meta'] ) : '';
+		$widget_post_meta = json_decode( $widget_post_meta, true);
 
 		update_post_meta( $post_id, self::POST_META_KEY, $widget_post_meta );
 
@@ -159,6 +159,7 @@ class SiteOrigin_Widget_Meta_Box_Manager extends SiteOrigin_Widget {
 	 * @param $post_id string The id of the post for which the meta data is stored.
 	 * @param $widget_id string The id of the widget for which the meta data is stored.
 	 * @param $meta_key string The key of the meta data value which is to be retrieved.
+	 *
 	 * @return mixed An empty string if the meta data is not found, else the meta data in whatever format it was stored.
 	 */
 	public function get_widget_post_meta( $post_id, $widget_id, $meta_key ) {
@@ -167,25 +168,5 @@ class SiteOrigin_Widget_Meta_Box_Manager extends SiteOrigin_Widget {
 		$widget_post_meta_field = $widget_id . '_' . $meta_key;
 		if( ! isset( $widget_post_meta[$widget_post_meta_field] ) ) return '';
 		return $widget_post_meta[$widget_post_meta_field];
-	}
-
-	/**
-	 * Unused override.
-	 *
-	 * @param $instance
-	 * @return string
-	 */
-	function get_style_name( $instance ) {
-		return '';
-	}
-
-	/**
-	 * Unused override.
-	 *
-	 * @param $instance
-	 * @return string
-	 */
-	function get_template_name( $instance ) {
-		return '';
 	}
 }

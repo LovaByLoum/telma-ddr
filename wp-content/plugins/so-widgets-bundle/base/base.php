@@ -7,16 +7,23 @@ include plugin_dir_path(__FILE__).'inc/widget-manager.class.php';
 include plugin_dir_path(__FILE__).'inc/meta-box-manager.php';
 include plugin_dir_path(__FILE__).'inc/post-selector.php';
 include plugin_dir_path(__FILE__).'inc/string-utils.php';
+include plugin_dir_path(__FILE__).'inc/array-utils.php';
 include plugin_dir_path(__FILE__).'inc/attachments.php';
+include plugin_dir_path(__FILE__).'inc/actions.php';
+include plugin_dir_path(__FILE__).'inc/shortcode.php';
+include plugin_dir_path(__FILE__).'inc/video.php';
+include plugin_dir_path(__FILE__).'inc/routes/sowb-rest-routes.php';
 
 /**
  * @param $css
  */
 function siteorigin_widget_add_inline_css($css){
 	global $siteorigin_widgets_inline_styles;
-	if(empty($siteorigin_widgets_inline_styles)) $siteorigin_widgets_inline_styles = '';
+	if ( empty( $siteorigin_widgets_inline_styles ) ) {
+	    $siteorigin_widgets_inline_styles = array();
+    }
 
-	$siteorigin_widgets_inline_styles .= $css;
+	$siteorigin_widgets_inline_styles[] = $css;
 }
 
 /**
@@ -24,11 +31,14 @@ function siteorigin_widget_add_inline_css($css){
  */
 function siteorigin_widget_print_styles(){
 	global $siteorigin_widgets_inline_styles;
-	if(!empty($siteorigin_widgets_inline_styles)) {
-		?><style type="text/css"><?php echo($siteorigin_widgets_inline_styles) ?></style><?php
-	}
+	if ( ! empty( $siteorigin_widgets_inline_styles ) ) {
+        foreach ($siteorigin_widgets_inline_styles as $widget_css) {
+            ?>
+            <style type="text/css"><?php echo($widget_css) ?></style><?php
+        }
+    }
 
-	$siteorigin_widgets_inline_styles = '';
+	$siteorigin_widgets_inline_styles = array();
 }
 add_action('wp_head', 'siteorigin_widget_print_styles');
 add_action('wp_footer', 'siteorigin_widget_print_styles');
@@ -37,14 +47,17 @@ add_action('wp_footer', 'siteorigin_widget_print_styles');
  * The ajax handler for getting a list of available icons.
  */
 function siteorigin_widget_get_icon_list(){
-	if(empty($_GET['family'])) exit();
-	if ( empty( $_REQUEST['_widgets_nonce'] ) || !wp_verify_nonce( $_REQUEST['_widgets_nonce'], 'widgets_action' ) ) return;
-
-	$widget_icon_families = apply_filters('siteorigin_widgets_icon_families', array() );
-
-	header('content-type: application/json');
-	echo json_encode( !empty($widget_icon_families[$_GET['family']]) ? $widget_icon_families[$_GET['family']] : array() );
-	exit();
+	if ( empty( $_REQUEST['_widgets_nonce'] ) || ! wp_verify_nonce( $_REQUEST['_widgets_nonce'], 'widgets_action' ) ) {
+		wp_die( __( 'Invalid request.', 'so-widgets-bundle' ), 403 );
+	}
+	
+	if ( empty( $_GET['family'] ) ) {
+		wp_die( __( 'Invalid request.', 'so-widgets-bundle' ), 400 );
+	}
+	
+	$widget_icon_families = apply_filters( 'siteorigin_widgets_icon_families', array() );
+	$icons = ! empty( $widget_icon_families[ $_GET['family'] ] ) ? $widget_icon_families[ $_GET['family'] ] : array();
+	wp_send_json( $icons );
 }
 add_action('wp_ajax_siteorigin_widgets_get_icons', 'siteorigin_widget_get_icon_list');
 
@@ -56,20 +69,37 @@ add_action('wp_ajax_siteorigin_widgets_get_icons', 'siteorigin_widget_get_icon_l
  */
 function siteorigin_widget_get_icon($icon_value, $icon_styles = false) {
 	if( empty( $icon_value ) ) return false;
-	list( $family, $icon ) = explode('-', $icon_value, 2);
+	$value_parts = SiteOrigin_Widget_Field_Icon::get_value_parts( $icon_value );
+	$family = $value_parts['family'];
+	$style = empty( $value_parts['style'] ) ? null : $value_parts['style'];
+	$icon = $value_parts['icon'];
 	if( empty( $family ) || empty( $icon ) ) return false;
 
 	static $widget_icon_families;
 	static $widget_icons_enqueued = array();
-
-	if( empty($widget_icon_families) ) $widget_icon_families = apply_filters('siteorigin_widgets_icon_families', array() );
-	if( empty($widget_icon_families[$family]) || empty($widget_icon_families[$family]['icons'][$icon]) ) return false;
-
-	if(empty($widget_icons_enqueued[$family]) && !empty($widget_icon_families[$family]['style_uri'])) {
-		if( !wp_style_is( 'siteorigin-widget-icon-font-'.$family ) ) {
-			wp_enqueue_style('siteorigin-widget-icon-font-'.$family, $widget_icon_families[$family]['style_uri'] );
+	
+	if ( empty( $widget_icon_families ) ) {
+		$widget_icon_families = apply_filters('siteorigin_widgets_icon_families', array() );
+	}
+	if ( empty( $widget_icon_families[ $family ] ) ||
+		 empty( $widget_icon_families[ $family ]['icons'][ $icon ] ) ) {
+		return false;
+	}
+	
+	if ( empty( $widget_icons_enqueued[ $family ] ) &&
+		 ! empty( $widget_icon_families[ $family ]['style_uri'] ) ) {
+		if( ! wp_style_is( 'siteorigin-widget-icon-font-'.$family ) ) {
+			wp_enqueue_style( 'siteorigin-widget-icon-font-' . $family, $widget_icon_families[ $family ]['style_uri'] );
 		}
-		return '<span class="sow-icon-' . esc_attr($family) . '" data-sow-icon="' . $widget_icon_families[$family]['icons'][$icon] . '" ' . ( !empty($icon_styles) ? 'style="'.implode('; ', $icon_styles).'"' : '' ) . '></span>';
+		$family_style = 'sow-icon-' . $family . ( empty( $style ) ? '' : ' ' . $style );
+		$icon_data = $widget_icon_families[ $family ]['icons'][ $icon ];
+		$unicode = '';
+		if ( ! empty( $icon_data['unicode'] ) ) {
+			$unicode = $icon_data['unicode'];
+		} else if ( is_string( $icon_data ) ) {
+			$unicode = $icon_data;
+		}
+		return '<span class="' . esc_attr( $family_style ) . '" data-sow-icon="' . $unicode . '" ' . ( ! empty( $icon_styles ) ? 'style="' . implode( '; ', $icon_styles ) . '"' : '' ) . '></span>';
 	}
 	else {
 		return false;
@@ -85,7 +115,8 @@ function siteorigin_widget_get_icon($icon_value, $icon_styles = false) {
 function siteorigin_widget_get_font($font_value) {
 
 	$web_safe = array(
-		'Helvetica Neue' => 'Arial, Helvetica, Geneva, sans-serif',
+		'Arial' => 'Arial, "Helvetica Neue", Helvetica, sans-serif',
+		'Helvetica Neue' => '"Helvetica Neue", Helvetica, Arial, sans-serif',
 		'Lucida Grande' => 'Lucida, Verdana, sans-serif',
 		'Georgia' => '"Times New Roman", Times, serif',
 		'Courier New' => 'Courier, mono',
@@ -104,7 +135,7 @@ function siteorigin_widget_get_font($font_value) {
 			$font['weight'] = $font_parts[1];
 			$font_url_param .= ':' . $font_parts[1];
 		}
-		$font['css_import'] = '@import url(http' . ( is_ssl() ? 's' : '' ) . '://fonts.googleapis.com/css?family=' . $font_url_param . ');';
+		$font['css_import'] = '@import url(https://fonts.googleapis.com/css?family=' . $font_url_param . ');';
 	}
 	else {
 		$font['family'] = $font_value;
@@ -115,97 +146,6 @@ function siteorigin_widget_get_font($font_value) {
 }
 
 /**
- * Action for displaying the widget preview.
- */
-function siteorigin_widget_preview_widget_action(){
-	if( !class_exists($_POST['class']) ) exit();
-	if ( empty( $_REQUEST['_widgets_nonce'] ) || !wp_verify_nonce( $_REQUEST['_widgets_nonce'], 'widgets_action' ) ) return;
-	$widget = new $_POST['class'];
-	if(!is_a($widget, 'SiteOrigin_Widget')) exit();
-
-	$instance = json_decode( stripslashes_deep($_POST['data']), true);
-	/* @var $widget SiteOrigin_Widget */
-	$instance = $widget->update( $instance, $instance );
-	$instance['is_preview'] = true;
-
-	// The theme stylesheet will change how the button looks
-	wp_enqueue_style( 'theme-css', get_stylesheet_uri(), array(), rand(0,65536) );
-	wp_enqueue_style( 'so-widget-preview', plugin_dir_url(__FILE__).'/css/preview.css', array(), rand(0,65536) );
-
-	ob_start();
-	$widget->widget(array(
-		'before_widget' => '',
-		'after_widget' => '',
-		'before_title' => '',
-		'after_title' => '',
-	), $instance);
-	$widget_html = ob_get_clean();
-
-	// Print all the scripts and styles
-	?>
-	<html>
-		<head>
-			<title><?php _e('Widget Preview', 'so-widgets-bundle') ?></title>
-			<?php
-			wp_print_scripts();
-			wp_print_styles();
-			siteorigin_widget_print_styles();
-			?>
-		</head>
-		<body>
-			<?php // A lot of themes use entry-content as their main content wrapper ?>
-			<div class="entry-content">
-				<?php echo $widget_html ?>
-			</div>
-		</body>
-	</html>
-
-	<?php
-	exit();
-}
-add_action('wp_ajax_so_widgets_preview', 'siteorigin_widget_preview_widget_action');
-
-/**
- * Action to handle searching
- */
-function siteorigin_widget_search_posts_action(){
-	if ( empty( $_REQUEST['_widgets_nonce'] ) || !wp_verify_nonce( $_REQUEST['_widgets_nonce'], 'widgets_action' ) ) return;
-
-	header('content-type: application/json');
-
-	// Get all public post types, besides attachments
-	$post_types = (array) get_post_types( array(
-		'public'   => true
-	) );
-	unset($post_types['attachment']);
-
-	$post_types = apply_filters( 'siteorigin_widgets_search_posts_post_types', $post_types );
-
-	global $wpdb;
-	if( !empty($_GET['query']) ) {
-		$query = "AND post_title LIKE '%" . esc_sql( $_GET['query'] ) . "%'";
-	}
-	else {
-		$query = '';
-	}
-
-	$post_types = "'" . implode("', '", array_map( 'esc_sql', $post_types ) ) . "'";
-
-	$results = $wpdb->get_results( "
-		SELECT ID, post_title, post_type
-		FROM {$wpdb->posts}
-		WHERE
-			post_type IN ( {$post_types} ) AND post_status = 'publish' {$query}
-		ORDER BY post_modified DESC
-		LIMIT 20
-	", ARRAY_A );
-
-	echo json_encode( apply_filters( 'siteorigin_widgets_search_posts_results', $results ) );
-	wp_die();
-}
-add_action('wp_ajax_so_widgets_search_posts', 'siteorigin_widget_search_posts_action');
-
-/**
  * Compatibility with Page Builder, add the groups and icons.
  *
  * @param $widgets
@@ -214,7 +154,7 @@ add_action('wp_ajax_so_widgets_search_posts', 'siteorigin_widget_search_posts_ac
  */
 function siteorigin_widget_add_bundle_groups($widgets){
 	foreach( $widgets as $class => &$widget ) {
-		if( preg_match('/SiteOrigin_Widget_(.*)_Widget/i', $class, $matches) ) {
+		if( preg_match('/SiteOrigin_Widgets?_(.*)_Widget/i', $class, $matches) ) {
 			$widget['icon'] = 'so-widget-icon so-widget-icon-'.strtolower($matches[1]);
 			$widget['groups'] = array('so-widgets-bundle');
 		}
@@ -262,6 +202,26 @@ function sow_esc_url_raw( $url ) {
 }
 
 /**
+ * Escape an HTML attribute
+ *
+ * This is a copy of the WP core `esc_attr` function, but modified to allow specifying arguments to the
+ * `_wp_specialchars` function for a bit more control. This was specifically necessary to allow double-encoding for
+ * the layout builder field.
+ *
+ * @param $text
+ * @param int $quote_style
+ * @param bool $charset
+ * @param bool $double_encode
+ *
+ * @return string
+ */
+function sow_esc_attr( $text, $quote_style = ENT_QUOTES, $charset = false, $double_encode = false ) {
+	$safe_text = wp_check_invalid_utf8( $text );
+	$safe_text = _wp_specialchars( $safe_text, $quote_style, $charset, $double_encode );
+	return apply_filters( 'attribute_escape', $safe_text, $text );
+}
+
+/**
  * Get all the Google Web Fonts.
  *
  * @return mixed|void
@@ -284,6 +244,7 @@ function siteorigin_widgets_is_google_webfont( $font_value ) {
 function siteorigin_widgets_font_families( ){
 	// Add the default fonts
 	$font_families = array(
+		'Arial' => 'Arial',
 		'Helvetica Neue' => 'Helvetica Neue',
 		'Lucida Grande' => 'Lucida Grande',
 		'Georgia' => 'Georgia',
@@ -305,11 +266,6 @@ function siteorigin_widgets_font_families( ){
 	return apply_filters('siteorigin_widgets_font_families', $font_families);
 }
 
-function siteorigin_widgets_tinymce_admin_print_styles() {
-	wp_enqueue_style( 'editor-buttons' );
-}
-add_action( 'admin_print_styles', 'siteorigin_widgets_tinymce_admin_print_styles' );
-
 /**
  * Get list of supported measurements
  *
@@ -317,23 +273,21 @@ add_action( 'admin_print_styles', 'siteorigin_widgets_tinymce_admin_print_styles
  */
 function siteorigin_widgets_get_measurements_list() {
 	$measurements = array(
-		'px',
-		'%',
-		'in',
-		'cm',
-		'mm',
-		'em',
-		'rem',
-		'pt',
-		'pc',
-		'ex',
-		'ch',
-		'vw',
-		'vh',
-		'vmin',
-		'vmax',
+		'px', '%', 'in', 'cm', 'mm', 'em', 'rem', 'pt', 'pc', 'ex', 'ch', 'vw', 'vh', 'vmin', 'vmax',
 	);
 
 	// Allow themes and plugins to trim or enhance the list.
 	return apply_filters('siteorigin_widgets_get_measurements_list', $measurements);
+}
+
+
+/**
+ * Returns the base URL of our widget with `$path` appended.
+ *
+ * @param string $path Extra path to append to the end of the URL.
+ *
+ * @return string Base URL of the widget, with $path appended.
+ */
+function siteorigin_widgets_url( $path = '' ) {
+	return plugins_url( 'so-widgets-bundle/' . $path );
 }

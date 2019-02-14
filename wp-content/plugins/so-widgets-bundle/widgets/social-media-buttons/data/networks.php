@@ -25,11 +25,23 @@ return array(
 		'icon_color' => '#FFFFFF',
 		'button_color' => '#FAA21B'
 	),
-	'envelope'   => array(
+	'email'   => array(
 		'label'    => __( 'Email', 'so-widgets-bundle' ),
 		'base_url' => 'mailto:',
 		'icon_color' => '#FFFFFF',
 		'button_color' => '#99C4E6'
+	),
+	'phone'   => array(
+		'label'    => __( 'Phone', 'so-widgets-bundle' ),
+		'base_url' => 'tel:',
+		'icon_color' => '#FFFFFF',
+		'button_color' => '#99E5AA'
+	),
+	'snapchat'    => array(
+		'label'    => __( 'Snapchat', 'so-widgets-bundle' ),
+		'base_url' => 'https://www.snapchat.com/',
+		'icon_color' => '#FFFFFF',
+		'button_color' => '#FFFC00'
 	),
 	'linkedin'    => array(
 		'label'    => __( 'LinkedIn', 'so-widgets-bundle' ),
@@ -81,6 +93,12 @@ return array(
 		'base_url' => 'https://500px.com/',
 		'icon_color' => '#FFFFFF',
 		'button_color' => '#292929'
+	),
+	'angellist'   => array(
+		'label'    => __( 'AngelList', 'so-widgets-bundle' ),
+		'base_url' => 'https://angel.co/',
+		'icon_color' => '#FFFFFF',
+		'button_color' => '#2A2929'
 	),
 	'behance'   => array(
 		'label'    => __( 'Behance', 'so-widgets-bundle' ),
@@ -238,8 +256,14 @@ return array(
 		'icon_color' => '#FFFFFF',
 		'button_color' => '#5BC8FF'
 	),
+	'whatsapp'   => array(
+		'label'    => __( 'WhatsApp', 'so-widgets-bundle' ),
+		'base_url' => 'https://www.whatsapp.com/',
+		'icon_color' => '#FFFFFF',
+		'button_color' => '#25D366'
+	),
 	'wordpress'   => array(
-		'label'    => __( 'Wordpress', 'so-widgets-bundle' ),
+		'label'    => __( 'WordPress', 'so-widgets-bundle' ),
 		'base_url' => 'https://wordpress.org/',
 		'icon_color' => '#797979',
 		'button_color' => '#222222'
