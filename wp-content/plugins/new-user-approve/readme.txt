@@ -1,10 +1,10 @@
-=== Plugin Name ===
+=== New User Approve ===
 Contributors: picklewagon
 Donate link: http://picklewagon.com/wordpress/new-user-approve/donate
 Tags: users, registration, sign up, user management, login
 Requires at least: 3.5.1
-Tested up to: 4.3.1
-Stable tag: 1.7.3
+Tested up to: 4.9.6
+Stable tag: 1.7.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,25 +13,15 @@ are able to login to the site.
 
 == Description ==
 
-On a normal WordPress site, once a new user registers, the user is created in
-the database. Then an email is sent to the new user with their login 
-credentials. Very simple. As it should be.
+On a normal WordPress site, once a new user registers, the user is created in the database. Then an email is sent to the new user with their login credentials. Very simple. As it should be.
 
-The New User Approve plugin modifies the registration process. When a user 
-registers for the site, the user gets created and then an email gets sent to
-the administrators of the site. An administrator then is expected to either 
-approve or deny the registration request. An email is then sent to the user 
-indicating whether they were approved or denied. If the user has been approved,
-the email will include the login credentials. Until a user is approved, the 
-user will not be able to login to the site.
+The New User Approve plugin modifies the registration process. When a user registers for the site, the user gets created and then an email gets sent to the administrators of the site. An administrator then is expected to either approve or deny the registration request. An email is then sent to the user indicating whether they were approved or denied. If the user has been approved, the email will include the login credentials. Until a user is approved, the user will not be able to login to the site.
 
-Only approved users will be allowed to login to site. Users waiting for approval
-as well as denied users will not be able to login to site.
+Only approved users will be allowed to login to site. Users waiting for approval as well as denied users will not be able to login to site.
 
 A user's status can be updated even after the initial approval/denial.
 
-Each user that exists before New User Approve has been activated will be treated as
-an approved user.
+Each user that exists before New User Approve has been activated will be treated as an approved user.
 
 Default WordPress registration process:
 
@@ -50,14 +40,19 @@ WordPress registration process with New User Approve plugin activated:
 5. Email is sent to user. If approved, email will include login credentials.
 6. User logs in to site using login credentials.
 
-[Fork New User Approve on Github](https://github.com/picklewagon/new-user-approve)
+**[Follow New User Approve on Github](https://github.com/picklewagon/new-user-approve)**
 
-[newuserapprove.com](http://newuserapprove.com/)
+Further support at [newuserapprove.com](http://newuserapprove.com/).
+
+**Customize**
+
+New User Approve allows for customizations by using custom actions and filters. You can find out more about these by browsing the source code.
+
+A commercial plugin that adds a config panel for customization is also available at [https://newuserapprove.com/products/options-addon/](https://newuserapprove.com/products/options-addon/).
 
 == Installation ==
 
-1. Upload new-user-approve to the wp-content/plugins directory or download from
-the WordPress backend (Plugins -> Add New -> search for 'new user approve')
+1. Upload new-user-approve to the wp-content/plugins directory or download from the WordPress backend (Plugins -> Add New -> search for 'new user approve')
 2. Activate the plugin through the Plugins menu in WordPress
 3. No configuration necessary.
 
@@ -65,35 +60,24 @@ the WordPress backend (Plugins -> Add New -> search for 'new user approve')
 
 = Why am I not getting the emails when a new user registers? =
 
-The New User Approve plugin uses the functions provided by WordPress to send
-email. Make sure your host is setup correctly to send email if this happens.
+The New User Approve plugin uses the functions provided by WordPress to send email. Make sure your host is setup correctly to send email if this happens.
 
 = How do I customize the email address and/or name when sending notifications to users? =
 
-This is not a function of the plugin but of WordPress. WordPress provides the
-*wp_mail_from* and *wp_mail_from_name* filters to allow you to customize this.
-There are also a number of plugins that provide a setting to change this to 
-your liking.
+This is not a function of the plugin but of WordPress. WordPress provides the *wp_mail_from* and *wp_mail_from_name* filters to allow you to customize this. There are also a number of plugins that provide a setting to change this to your liking.
 
 * [wp mail from](http://wordpress.org/extend/plugins/wp-mailfrom/)
 * [Mail From](http://wordpress.org/extend/plugins/mail-from/)
 
-= Why is the password reset when approving a user? =
-
-The password is generated again because, by default, the user will not be aware
-of their password. By generating a new password, the email that notifies the
-user can also give them the new password just like the email does when receiving
-your password on a regular WordPress install. At approval time, it is impossible
-to retrieve the user's password.
-
-There is a filter available (new_user_approve_bypass_password_reset) to turn off
-this feature.
-
 = What happens to the user's status after the plugin is deactivated? =
 
-If you deactivate the plugin, their status doesn't matter. The status that the
-plugin uses is only used by the plugin. All users will be allowed to login as long
-as they have their username and passwords.
+If you deactivate the plugin, their status doesn't matter. The status that the plugin uses is only used by the plugin. All users will be allowed to login as long as they have their username and passwords.
+
+= Are there any known issues with the New User Approve plugin? =
+
+We are aware of a few issues with multisite
+1. The status filters on users.php do not work correctly
+2. The bubble that shows next to the users link to show the number of pending users does not show
 
 == Screenshots ==
 
@@ -104,6 +88,43 @@ as they have their username and passwords.
 5. Custom messages on the login screen.
 
 == Changelog ==
+
+= 1.7.6 =
+* Fixed: Formatting of readme.txt had line breaks where they should have been
+* Fixed: Fix how deny_user() gets user_email
+  * Courtesy of [jrequiroso](https://github.com/jrequiroso)
+  * https://github.com/picklewagon/new-user-approve/pull/22
+* Fixed: Show unapproved user error message when the user attempts to reset password
+* Updated: Swedish translations
+  * Courtesy of [adevade](https://github.com/adevade)
+  * https://github.com/picklewagon/new-user-approve/pull/59
+* Updated: Updates to admin approval screen
+  * Courtesy of [adevade](https://github.com/adevade)
+  * https://github.com/picklewagon/new-user-approve/pull/60
+* Added: Don't allow a super admin to be denied or approved
+  * https://github.com/picklewagon/new-user-approve/pull/19
+* Added: readme.md to show content in github
+
+= 1.7.5 =
+* Fixed: User status filter in admin was not using database prefix
+  * Courtesy of [Oizopower](https://github.com/Oizopower)
+  * https://github.com/picklewagon/new-user-approve/pull/50
+* Fixed: Optimize user status list so it can be used with many users
+* Fixed: Updated transient to populate with user counts instead of user list
+* Updated: Modify output of user counts on dashboard
+* Updated: Polish translations
+  * Courtesy of [pik256](http://wordpress.org/support/profile/1271256)
+* Added: Missing string to translation file
+  * Courtesy of [spaszs](https://profiles.wordpress.org/spaszs/)
+* Added: Bulgarian translation
+  * Courtesy of [spaszs](https://profiles.wordpress.org/spaszs/)
+
+= 1.7.4 =
+* Fixed: Corrected erroneous SQL query when filtering users
+* Fixed: User filters
+  * Courtesy of [julmuell](https://github.com/julmuell)
+  * https://github.com/picklewagon/new-user-approve/pull/44
+* Fixed: Show a user status in the filters only if at least one user has that status
 
 = 1.7.3 =
 * place content in metaboxes in place of dynamically pulling from website
@@ -324,6 +345,7 @@ When sending me your translation files, please send me your wordpress.org userna
 
 * Belarussian translation by [Fat Cow](http://www.fatcow.com/)
 * Brazilian Portuguese translation by [leogermani](http://profiles.wordpress.org/leogermani/)
+* Bulgarian translation by [spaszs](https://profiles.wordpress.org/spaszs/)
 * Catalan translation by [xoanet](http://profiles.wordpress.org/xoanet/)
 * Croatian translation by Nik
 * Czech translation by [GazikT](http://profiles.wordpress.org/gazikt/)
