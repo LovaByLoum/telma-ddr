@@ -7,23 +7,23 @@ See wp-cache.php for author details.
 
 $wp_cache_refresh_single_only = '0'; //Added by WP-Cache Manager
 $wp_cache_make_known_anon = 0; //Added by WP-Cache Manager
+$wp_cache_mod_rewrite = 0; //Added by WP-Cache Manager
 $wp_cache_front_page_checks = 1; //Added by WP-Cache Manager
 $wp_cache_mfunc_enabled = 0; //Added by WP-Cache Manager
 $wp_supercache_304 = 0; //Added by WP-Cache Manager
 $wp_cache_no_cache_for_get = 1; //Added by WP-Cache Manager
 $wp_cache_disable_utf8 = 0; //Added by WP-Cache Manager
-$cache_page_secret = '03b6e3ab0ec7dd0f026f470d43bcc576'; //Added by WP-Cache Manager
-$wp_cache_home_path = ''; //Added by WP-Cache Manager
+$cache_page_secret = '5e9b5d01d0603763b069260504fa3f10'; //Added by WP-Cache Manager
 $wp_cache_slash_check = 1; //Added by WP-Cache Manager
 if ( ! defined('WPCACHEHOME') )
-    define( 'WPCACHEHOME', WP_CONTENT_DIR . "/plugins/wp-super-cache/" ); //Added by WP-Cache Manager
+	define( 'WPCACHEHOME', WP_CONTENT_DIR . "/plugins/wp-super-cache/" ); //Added by WP-Cache Manager
 
 $cache_compression = 0; // Super cache compression
 $cache_enabled = false; //Added by WP-Cache Manager
-$super_cache_enabled = false;
+$super_cache_enabled = true; //Added by WP-Cache Manager
 $cache_max_time = 3600; //in seconds
 //$use_flock = true; // Set it true or false if you know what to use
-$cache_path = '\opt\jobopportunity\srcs\wp-content/cache/'; //Added by WP-Cache Manager
+$cache_path = WP_CONTENT_DIR . '/cache/';
 $file_prefix = 'wp-cache-';
 $ossdlcdn = 0;
 
@@ -33,18 +33,18 @@ $cache_acceptable_files = array( 'wp-comments-popup.php', 'wp-links-opml.php', '
 $cache_rejected_uri = array('wp-.*\\.php', 'index\\.php');
 $cache_rejected_user_agent = array ( 0 => 'bot', 1 => 'ia_archive', 2 => 'slurp', 3 => 'crawl', 4 => 'spider', 5 => 'Yandex' );
 
-$cache_rebuild_files = 1; //Added by WP-Cache Manager
+$cache_rebuild_files = 0; //Added by WP-Cache Manager
 
 // Disable the file locking system.
 // If you are experiencing problems with clearing or creating cache files
 // uncommenting this may help.
-$wp_cache_mutex_disabled = 1; //Added by WP-Cache Manager
+$wp_cache_mutex_disabled = 0; //Added by WP-Cache Manager
 
 // Just modify it if you have conflicts with semaphores
-$sem_id = 1643836013; //Added by WP-Cache Manager
+$sem_id = 1417067371; //Added by WP-Cache Manager
 
 if ( '/' != substr($cache_path, -1)) {
-    $cache_path .= '/';
+	$cache_path .= '/';
 }
 
 $wp_cache_mobile = 0;
@@ -88,5 +88,5 @@ $wp_cache_not_logged_in = 1; //Added by WP-Cache Manager
 $wp_cache_clear_on_post_edit = 0; //Added by WP-Cache Manager
 $wp_cache_hello_world = 0; //Added by WP-Cache Manager
 $wp_cache_mobile_enabled = 0; //Added by WP-Cache Manager
-$wp_cache_cron_check = 1; //Added by WP-Cache Manager
+$wp_cache_cron_check = 0;
 ?>

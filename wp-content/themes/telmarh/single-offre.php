@@ -4,7 +4,7 @@
  *
  * @package telmarh
  */
-global $post;
+global $post,$current_user;
 $offre = JM_Offre::getById( $post->ID );
 $offreElment = COffre::getById( $post->ID );
 $idEntreprise = ( isset( $offre->societe_associe ) && !empty( $offre->societe_associe ) ) ? $offre->societe_associe : "";
@@ -44,7 +44,8 @@ get_header(); ?>
                                 <?php  if ( isset( $offre->criticite ) && !empty( $offre->criticite ) && $offre->criticite[0]->term_id == ID_TAXONOMIE_CRITICITE_URGENT ) :?>
                                     <p class="criticite-offre urgent"><?php echo $offre->criticite[0]->name;?></p>
                                 <?php else:?>
-                                    <p class="criticite-offre no-urgent"><?php echo __("Non urgent", "telmarh");?></p>
+<!--     ****************************************************     MODIFICATION NON-URGENT   ********************************                   -->
+                                    <p class="criticite-offre no-urgent" style="display: none;"><?php echo __("Non urgent", "telmarh");?></p>
                                 <?php  endif;?>
                             </div>
 
@@ -175,7 +176,7 @@ get_header(); ?>
                                         <?php endif;?>
                                             <!--societe footer-->
                                             <p class="single-offre-left hidden-md-down">
-                                                <a href="<?php echo $linkPostule;?>" class="postule-link submit_link <?php if ( !is_user_logged_in() ):?>postule-offre<?php endif;?>" ><span>Intéressé(e) ? Postulez !</span></a>
+                                                <a  href="<?php echo $linkPostule;?>" class="postule-link submit_link <?php if ( !is_user_logged_in() ):?>postule-offre<?php endif;?>" ><span id="postuler_offre_popup">Postuler</span></a>
                                             </p>
                                         </div>
                                     </article>
@@ -248,7 +249,7 @@ get_header(); ?>
                                 </div>
                             </div>
                             <p class="single-offre-left hidden-lg-up">
-                                <a href="<?php echo $linkPostule;?>" class="postule-link submit_link <?php if ( !is_user_logged_in() ):?>postule-offre<?php endif;?>" ><span>Intéressé(e) ? Postulez !</span></a>
+                                <a href="<?php echo $linkPostule;?>" class="postule-link submit_link <?php if ( !is_user_logged_in() ):?>postule-offre<?php endif;?>" ><span>Postuler</span></a>
                             </p>
                         </div>
                     </div>
@@ -258,3 +259,127 @@ get_header(); ?>
 	</section>
 </div>
 <?php get_footer(); ?>
+<style>
+    /* The Modal (background) */
+    .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        -webkit-animation-name: fadeIn; /* Fade in the background */
+        -webkit-animation-duration: 0.4s;
+        animation-name: fadeIn;
+        animation-duration: 0.4s
+    }
+
+    /* Modal Content */
+    .modal-content {
+        position: fixed;
+        padding: auto;
+        bottom: 0;
+        background-color: #c80f2d;
+        width: 100%;
+        -webkit-animation-name: slideIn;
+        -webkit-animation-duration: 0.4s;
+        animation-name: slideIn;
+        animation-duration: 0.4s;
+        text-align: center;
+        color:#fefefe ;
+        font-size: 25px;
+        font-weight: 400;
+        font-family: "Open Sans", Helvetica, Lucida, Arial, sans-serif;
+    }
+
+    /* The Close Button */
+    .close {
+        color: white;
+
+        font-size: 28px;
+        font-weight: bold;
+        text-align: right;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .modal-header {
+        /*padding: 2px 16px;*/
+        padding: 0px !important;
+        color: white;
+    }
+
+    .modal-body {padding: 2px 16px;}
+
+    /* Add Animation */
+    @-webkit-keyframes slideIn {
+        from {bottom: -300px; opacity: 0}
+        to {bottom: 0; opacity: 1}
+    }
+
+    @keyframes slideIn {
+        from {bottom: -300px; opacity: 0}
+        to {bottom: 0; opacity: 1}
+    }
+
+    @-webkit-keyframes fadeIn {
+        from {opacity: 0}
+        to {opacity: 1}
+    }
+
+    @keyframes fadeIn {
+        from {opacity: 0}
+        to {opacity: 1}
+    }
+</style>
+<div id="myModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <div class="modal-body">
+            <p>Pour pouvoir postuler à cette offre il faut d’abord s’inscrire et suivre les instructions.</p>
+        </div>
+    </div>
+
+</div>
+<script type="text/javascript">
+    var modal = document.getElementById('myModal');
+    // Get the button that opens the modal
+    var btn = document.getElementById("postuler_offre_popup");
+    var user = '<?php echo is_user_logged_in(); ?>';
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+    if ( !user) {
+        // When the user clicks the button, open the modal
+        btn.onclick = function () {
+            modal.style.display = "block";
+        };
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function () {
+            modal.style.display = "none";
+        };
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+    }}
+
+
+
+
+
+
+
+</script>

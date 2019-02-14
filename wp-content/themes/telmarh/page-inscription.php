@@ -19,8 +19,9 @@ $localisation           = get_terms( JM_TAXONOMIE_LOCALISATION,array( 'hide_empt
 $criticites             = get_terms( JM_TAXONOMIE_CRITICITE, array( 'hide_empty' => false ) );
 $niveauEtudes           = get_terms( JM_TAXONOMIE_NIVEAU_ETUDE, array( 'hide_empty' => false ) );
 $domainesMetier         = get_terms( JM_TAXONOMIE_DEPARTEMENT, array( 'hide_empty' => false ) );
-$referentielEtude       = get_terms( JM_TAXONOMIE_DEPARTEMENTMIE_DOMAINE_ETUDE, array( 'hide_empty' => false ) );
-$listPays               = ( isset( $telmarh_options['list_pays'] ) && !empty( $telmarh_options['list_pays'] ) ) ? explode( ",", $telmarh_options['list_pays'] ) : array();
+$referentielEtude       = get_terms( JM_TAXONOMIE_DEPARTEMENT, array( 'hide_empty' => false ) );
+//$listPays               = ( isset( $telmarh_options['list_pays'] ) && !empty( $telmarh_options['list_pays'] ) ) ? explode( ",", $telmarh_options['list_pays'] ) : array();
+$listPays               = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}liste_pays ORDER BY nom_fr_fr ASC");
 $entreprises            = JM_Societe::getBy();
 $nonce                  = wp_create_nonce( "inscription_user" );
 $enPoste                = array( 0 => "Non", 1 => "Oui" );
@@ -122,7 +123,7 @@ get_header(); ?>
                         <!-- Votre parcours -->
                         <div class="control-group open">
                             <h4 class="head-accordion">Votre parcours</h4>
-                            <div class="content-accordion">
+                            <div class="content-accordion" id="content-accordion">
                                 <div class="row">
                                     <div class="form-group col-md-4">
                                         <h5>Niveau d'études <span class="required">*</span></h5>
@@ -258,7 +259,7 @@ get_header(); ?>
                                         <input type="text" autocomplete="off" class="datepicker form-control" placeholder="jour/mois/année" readonly name="date_dispo" id="date_dispo" value="<?php echo $_POST['date_dispo'];?>">
                                     </div>
                                     <div class="form-group col-md-6 col-lg-4">
-                                        <h5>Nombre d’années d’expérience professionnelle <span class="required">*</span></h5>
+                                        <label>Nombre d’années d’expérience professionnelle <span class="required">*</span></label>
                                         <div class="select">
                                             <select name="annee_exp" class="form-control">
                                                 <option value="0">Sélectionnez</option>
@@ -310,13 +311,13 @@ get_header(); ?>
                                         <textarea name="desc_exp_prof" class="form-control" id="desc_exp_prof" placeholder="Quelques mots"><?php echo $_POST['desc_exp_prof'];?></textarea>
                                     </div>
                                     <div class="form-group col-md-4">
-                                        <h5>Localisation </h5>
+                                        <label>Localisation </label>
                                         <div class="select">
                                             <select name="localisation_prof" class="form-control">
                                                 <option value="0">Sélectionnez</option>
                                                 <?php if ( !empty( $listPays ) && count( $listPays ) > 0 ):?>
                                                     <?php foreach ( $listPays as $pays ):?>
-                                                        <option value="<?php echo $pays;?>" <?php if ( $_POST['localisation_prof'] == $pays ):?>selected="selected" <?php endif;?>><?php echo $pays;?></option>
+                                                        <option value="<?php echo $pays->nom_fr_fr;?>" <?php if ( $_POST['localisation_prof'] == $pays ):?>selected="selected" <?php endif;?>><?php echo $pays->nom_fr_fr;?></option>
                                                     <?php endforeach;?>
                                                 <?php endif;?>
                                             </select>
@@ -358,7 +359,7 @@ get_header(); ?>
                                 </div>
                                 <div class="row">
                                     <div class="form-group col-md-4">
-                                        <label for="organisme_exp_for">Ecole / Université / Organisme de formation <span class="required">*</span></label>
+                                        <label for="organisme_exp_for">Ecole / Université / Organisme de formation<span class="required">*</span></label>
                                         <input type="text" autocomplete="off" class="form-control" placeholder="Ecole / Université / Organisme de formation…" name="organisme_exp_for" id="organisme_exp_for" value="<?php echo $_POST['organisme_exp_for'];?>">
                                     </div>
                                     <div class="form-group col-md-4">
@@ -366,13 +367,13 @@ get_header(); ?>
                                         <textarea name="desc_exp_for" class="form-control" id="desc_exp_for" placeholder="Quelques mots"><?php echo $_POST['desc_exp_for'];?></textarea>
                                     </div>
                                     <div class="form-group col-md-4">
-                                        <h5>Localisation</h5>
+                                        <label>Localisation</label>
                                         <div class="select">
                                             <select name="localisation_for" class="form-control">
                                                 <option value="0">Sélectionnez</option>
                                                 <?php if ( !empty( $listPays ) && count( $listPays ) > 0 ):?>
                                                     <?php foreach ( $listPays as $pays ):?>
-                                                        <option value="<?php echo $pays;?>" <?php if ( $_POST['localisation_for'] == $pays ):?>selected="selected" <?php endif;?>><?php echo $pays;?></option>
+                                                        <option value="<?php echo $pays->nom_fr_fr;?>" <?php if ( $_POST['localisation_for'] == $pays ):?>selected="selected" <?php endif;?>><?php echo $pays->nom_fr_fr;?></option>
                                                     <?php endforeach;?>
                                                 <?php endif;?>
                                             </select>
@@ -436,13 +437,13 @@ get_header(); ?>
                                         <textarea name="desc_exp_pgt" class="form-control" id="desc_exp_pgt" placeholder="Quelques mots"><?php echo $_POST['desc_exp_pgt'];?></textarea>
                                     </div>
                                     <div class="form-group col-md-4">
-                                        <h5>Localisation</h5>
+                                        <label>Localisation</label>
                                         <div class="select">
                                             <select name="localisation_pgt" class="form-control">
                                                 <option value="0">Sélectionnez</option>
                                                 <?php if ( !empty( $listPays ) && count( $listPays ) > 0 ):?>
                                                     <?php foreach ( $listPays as $pays ):?>
-                                                        <option value="<?php echo $pays;?>" <?php if ( $_POST['localisation_pgt'] == $pays ):?>selected="selected" <?php endif;?>><?php echo $pays;?></option>
+                                                        <option value="<?php echo $pays->nom_fr_fr;?>" <?php if ( $_POST['localisation_pgt'] == $pays ):?>selected="selected" <?php endif;?>><?php echo $pays->nom_fr_fr;?></option>
                                                     <?php endforeach;?>
                                                 <?php endif;?>
                                             </select>
@@ -458,7 +459,27 @@ get_header(); ?>
                         </div>
                         <div class="submit-form">
                             <input type="hidden" name="nonce_inscription" value="<?php echo $nonce;?>">
-                            <input type="submit" class="submit_link submit-button" value="Envoyer">
+<!--                            <input type="submit" class="submit_link submit-button" value="Envoyer">-->
+                            <div class="bs-example">
+                                <!-- Button HTML (to Trigger Modal CONFIRMATION) -->
+                                <a href="#" class="btn btn-lg btn-primary">Envoyer</a>
+
+                                <!-- Modal HTML -->
+                                <div id="myModal" class="modal fade" data-toggle="modal">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content" style="top: 150px;">
+
+                                            <div class="modal-body">
+                                                <p>Confirmez-vous l’envoi de votre dossier d’inscription ?</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="non" data-dismiss="modal">Non</button>
+                                                <input type="submit" class="submit_link submit-button" onclick="dismiss()" value="Envoyer">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -471,3 +492,65 @@ get_header(); ?>
     </article>
 </section>
 <?php get_footer();?>
+
+
+<!--<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>-->
+<!-- BS JavaScript -->
+<!--        <script type="text/javascript" src="js/bootstrap.js"></script>-->
+<!-- Latest compiled and minified CSS -->
+<!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">-->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js" integrity="sha384-u/bQvRA/1bobcXlcEYpsEdFVK/vJs3+T+nXLsBYJthmdBuavHvAW6UsmqO2Gd/F9" crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+    function dismiss() {
+        jQuery("#myModal").modal('hide');
+    }
+    jQuery(document).ready(function(){
+        jQuery(".btn").click(function(){
+            jQuery("#myModal").modal('show');
+        });
+    });
+    // jQuery("#fm_form_submit").click(function(){
+    //     jQuery('.wonderplugin-box-top').hide(1000, function(){
+    //
+    //   script modal  });
+
+
+</script>
+<style type="text/css">
+    .bs-example{
+        margin: 20px;
+    }
+    .non{
+        border: none;
+        color: #fff;
+        cursor: pointer;
+        font-size: 18px;
+        height: 48px;
+        min-width: 138px;
+        padding: 10px 10px;
+        text-align: center;
+        text-transform: uppercase;
+        background: #eee;
+
+    }
+    .non:hover {
+        background:#f5f5f5;
+    }
+    .btn-primary{
+        border: none;
+        color: #fff;
+        cursor: pointer;
+        font-size: 18px;
+        height: 48px;
+        min-width: 138px;
+        padding: 10px 10px;
+        text-align: center;
+        text-transform: uppercase;
+        background: #c80f2d;
+    }
+    .btn-primary:hover{
+        background-color:#e57e75!important; ;
+    }
+</style>

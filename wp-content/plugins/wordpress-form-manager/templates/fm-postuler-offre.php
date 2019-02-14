@@ -57,7 +57,7 @@ fm_form_get_item_label($nickname) - get an item's label by nickname
 //////////////////////////////////////////////////////////////////////////////////////////
 
 */
-global $fm_display, $current_user;
+global $fm_display, $current_user, $wpdb;
 $form_items = array();
 $form_required = array();
 while(fm_form_have_items()): fm_form_the_item();
@@ -73,6 +73,18 @@ $termInformatiques = ( isset( $competencesRequired['infos'] ) && !empty( $compet
 $entrepriseId = get_post_meta( $postID, JM_META_SOCIETE_OFFRE_RELATION, true);
 $entreprise = JM_Societe::getById( $entrepriseId );
 $reference = get_post_meta( $postID, REFERENCE_OFFRE, true );
+//$poste_actuel_variable= 'entreprise_user';
+//$post_actuel = get_user_meta($user,ENTREPRISE_USER,true);
+$POST = $wpdb->get_row("SELECT meta_value FROM {$wpdb->prefix}usermeta WHERE user_id='$user->id' AND meta_key='fonction_user' ");
+$ENTREPRISE = $wpdb ->get_row("SELECT meta_value FROM {$wpdb->prefix}usermeta WHERE user_id='$user->id' AND meta_key='entreprise_user'");
+
+
+//$POST_update = $wpdb->update($wpdb->prefix.usermeta,array('meta_value'=>$_POST['poste_nouv']),array('user_id' =>'$user->id'));
+//$POST_update = $wpdb-> update();
+//var_dump($POST_update);
+
+                  //  var_dump($user->email);
+
 ?>
 <div class="form-layout">
     <form enctype="multipart/form-data" method="post" action="<?php echo $fm_display->currentFormOptions['action'];?>" name="fm-form-<?php echo $fm_display->currentFormInfo['ID'];?>" id="fm-form-<?php echo $fm_display->currentFormInfo['ID'];?>" autocomplete="on" novalidate="novalidate">
@@ -93,6 +105,7 @@ $reference = get_post_meta( $postID, REFERENCE_OFFRE, true );
                         <label for="email">Adresse email <span class="required">*</span></label>
                         <input type="text" class="form-control" placeholder="Email" name="<?php echo $form_items['email_postule'];?>" id="email" value="<?php echo $user->email;?>" readonly>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -180,7 +193,82 @@ $reference = get_post_meta( $postID, REFERENCE_OFFRE, true );
             </div>
     	</div>
         <!-- /Vos motivations -->
+        <!-- POSTE ACTUEL / ENTREPRISE ACTUELLE-->
 
+        <h4 class="head-accordion open">Confirmation poste/société actuelle</h4>
+        <div class="head-accordion">
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label for="nom">Société Actuelle<span class="required">*</span></label>
+
+                    <input type="text" class="form-control" placeholder="Poste actuel" name="poste_actu" id="poste_actuel" value="<?php echo $ENTREPRISE->meta_value ;?>" readonly>
+
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="prenom">Poste actuel<span class="required">*</span></label>
+                    <input type="text" class="form-control" placeholder="Entreprise actuelle" name="entreprise_actu" id="entreprise_actuelle" value="<?php echo $POST->meta_value;?>" readonly>
+                </div>
+
+            </div>
+        </div>
+        <!-- /POSTE ACTUEL / ENTREPRISE ACTUELLE-->
+        <!-- **************MISE A JOUR POSTE ACTUEL / ENTREPRISE ACTUELLE**********************-->
+
+        <h4 class="head-accordion open">Si il y a changement de poste/entreprise, veuillez inserer votre nouveau poste/entreprise </h4>
+        <div class="head-accordion">
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label for="nom">Nouveau poste</label>
+
+                    <input type="text" class="form-control" autocomplete="off" name="fonction_user" placeholder="Fonction" id="fonction" value="<?php echo $_POST['fonction_user'];?>"/>
+
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="prenom">Nouvelle entreprise</label>
+                    <input type="text" class="form-control" autocomplete="off" name="entreprise_user" placeholder="Nom de l'entreprise" id="entreprise" value="<?php echo $_POST['entreprise_user'];?>"/>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <h4 class="head-accordion open">Collaborateur du groupe Axian?:</h4>
+                    <div id="button_collab" style="display: block; float:left; width: 50px;">
+
+                        <input type="checkbox" id="chekbox_oui" value="Oui" onclick="functionClick(this.value)"> <label for="chekbox_oui" style="width: 30px;">Oui</label>
+
+
+                    </div>
+                    <input id="textcacher" type="hidden" value="" name="<?php echo $form_items['axian_collab']; ?>">
+                    <script type="text/javascript">
+                        // function functionClick(valeur) {
+                        //     jQuery("#textcacher").val(valeur);
+                        // }
+                        jQuery("#chekbox_oui").on("change",function () {
+                           if (jQuery(this).prop("checked")){
+                               jQuery("#textcacher").val('oui');
+                           }
+                           else {
+                               jQuery("#textcacher").val('non');
+                           }
+                        });
+
+
+
+
+                    </script>
+
+                </div>
+            </div>
+
+<!--        <div class="control-group">-->
+<!--            <div class="form-group">-->
+<!--<!--                <h4 class="head-accordion open">groupe axian?(OUI/NON) </h4>-->
+<!--<!--                <input type="text" name="--><?php ////echo $form_items['axian_collab'];?><!--<!--" class="textarea-field form-control" placeholder="axian groupe?"><input>-->
+<!--<!--                <label>Collaborateur du groupe Axian : </label>-->
+<!--<!--                <p>  <input type="checkbox" name="--><?php ////echo $form_items['collab']; ?><!--<!--" value="--><?php ////echo $form_items['collab']; ?><!--<!--" id="collab_1"><label for="collab_1">Oui</label></br>-->
+<!--<!--                    <input type="checkbox" name="--><?php ////echo $form_items['collab']; ?><!--<!--" value="--><?php ////echo $form_items['collab']; ?><!--<!--" id="collab_2"><label for="collab_2">Non</label></p>-->
+<!---->
+<!--            </div>-->
+<!--        </div>-->
+        <!-- *****************************/MISE A JOURPOSTE ACTUEL / ENTREPRISE ACTUELLE***********************-->
         <!-- Pièces jointes -->
     	<div class="control-group">
             <h4 class="head-accordion open">Pièces jointes</h4>
@@ -219,7 +307,28 @@ $reference = get_post_meta( $postID, REFERENCE_OFFRE, true );
         <!-- /Autres documents -->
 
         <div class="submit-form">
-            <input type="submit" name="fm_form_submit" id="fm_form_submit" class="button-postuler submit-button" value="Valider" >
+
+<!--            <input type="button" name="fm_form_submit1" id="fm_form_submit1" class="button-postuler submit-button" data-toggle="modal" data-target="#confirm-submit" value="Valider" >-->
+            <div class="bs-example">
+                <!-- Button HTML (to Trigger Modal oui/non) -->
+                <a href="#" class="btn btn-lg btn-primary">Valider</a>
+
+                <!-- Modal HTML -->
+                <div id="myModal" class="modal fade">
+                    <div class="modal-dialog">
+                        <div class="modal-content" style="top: 150px;">
+
+                            <div class="modal-body">
+                                <p>Confirmez-vous l’envoi de votre candidature ?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="non" data-dismiss="modal">Non</button>
+                                <input type="submit" name="fm_form_submit" id="fm_form_submit" class="button-postuler submit-button" value="Valider" >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
     	<input type="hidden" name="<?php echo $form_items['entreprise_postule']?>" value="<?php echo $entreprise->titre;?>">
@@ -231,3 +340,62 @@ $reference = get_post_meta( $postID, REFERENCE_OFFRE, true );
     	<input type="hidden" name="fm_parent_post_id" id="fm_parent_post_id" value="<?php echo $postID;?>" />
     <?php echo fm_form_end(); ?>
 </div>
+        <!-- jQuery -->
+<!--        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>-->
+        <!-- BS JavaScript -->
+<!--        <script type="text/javascript" src="js/bootstrap.js"></script>-->
+        <!-- Latest compiled and minified CSS -->
+<!--        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">-->
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js" integrity="sha384-u/bQvRA/1bobcXlcEYpsEdFVK/vJs3+T+nXLsBYJthmdBuavHvAW6UsmqO2Gd/F9" crossorigin="anonymous"></script>
+
+        <script type="text/javascript">
+               jQuery(document).ready(function(){
+                   jQuery(".btn").click(function(){
+                       jQuery("#myModal").modal('show');
+                   });
+               });
+
+               //  script modal   });
+                jQuery(document).load(function () {
+                    jQuery(".wonderplugin-box-container").hide();
+
+                })
+
+       </script>
+        <style type="text/css">
+            .bs-example{
+                margin: 20px;
+            }
+            .non{
+                border: none;
+                color: #fff;
+                cursor: pointer;
+                font-size: 18px;
+                height: 48px;
+                min-width: 138px;
+                padding: 10px 10px;
+                text-align: center;
+                text-transform: uppercase;
+                background: #eee;
+
+            }
+            .non:hover {
+                background:#f5f5f5;
+            }
+            .btn-primary{
+                border: none;
+                color: #fff;
+                cursor: pointer;
+                font-size: 18px;
+                height: 48px;
+                min-width: 138px;
+                padding: 10px 10px;
+                text-align: center;
+                text-transform: uppercase;
+                background: #c80f2d;
+                }
+            .btn-primary:hover{
+                background-color:#e57e75!important; ;
+            }
+        </style>

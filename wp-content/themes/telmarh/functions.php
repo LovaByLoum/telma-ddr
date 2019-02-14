@@ -4,6 +4,8 @@
  *
  * @package TELMARH
  */
+//$wpdb->update('wp_fm_data_1', array('custom_list-5b0d01a1a57a8' => $_POST['collab']), array('text-57864a781ce98' => $user->email));
+//$wpdb->query("UPDATE wp_fm_data_1 SET custom_list-5b0d01a1a57a8 =".$_POST['collab']."   WHERE text-57864a781ce98 = $current_user->email");
 
 require_once( get_template_directory() . '/inc/constante.inc.php' );
 require_once( get_template_directory() . '/inc/default.config.php' );
@@ -367,6 +369,7 @@ function telmarh_inscription_user(){
 		$mobilite           = ( isset( $_POST['region'] ) && !empty( $_POST['region'] ) ) ? strip_tags( $_POST['region'] ) : "";
 		$enPoste            = ( isset( $_POST['en_poste'] ) && !empty( $_POST['en_poste'] ) ) ? strip_tags( $_POST['en_poste'] ) : "";
 		$nomEntreprise      = ( isset( $_POST['entreprise_user'] ) && !empty( $_POST['entreprise_user'] ) ) ? strip_tags( $_POST['entreprise_user'] ) : "";
+//        $nomEntreprise_nouveau = (isset($_POST['fonction_user_nouv']) && !empty($_POST['fonction_user_nouv'])) ? strip_tags($_POST['fonction_user_nouv']) :"";
 		$fonction           = ( isset( $_POST['fonction_user'] ) && !empty( $_POST['fonction_user'] ) ) ? strip_tags( $_POST['fonction_user'] ) : "";
 		$domaineMetier      = ( isset( $_POST['dom_metier'] ) && !empty( $_POST['dom_metier'] ) ) ? strip_tags( $_POST['dom_metier'] ) : "";
 		$permis             = ( isset( $_POST['permis'] ) && !empty( $_POST['permis'] ) ) ? strip_tags( $_POST['permis'] ) : "";
@@ -514,6 +517,7 @@ function telmarh_inscription_user(){
 				add_user_meta( $userId, 'entreprise_user', $nomEntreprise );
 				add_user_meta( $userId, 'fonction_user', $fonction );
 			}
+//			update_user_meta($userId,'entreprise_user', $nomEntreprise_nouveau);
 			add_user_meta( $userId, 'domaine_metier_recherche_user', $domaineMetier );
 			add_user_meta( $userId, 'permis_de_conduire', $permis );
 			if ( $permis == 1 ){
@@ -615,6 +619,10 @@ function telmarh_inscription_user(){
 		$msg .= (isset(  $_POST['nonce-inscription']  ) ) ? "Ceci est un robot" : "";
 	}
 	return array( 'error' => $error, 'messages' => $msg );
+}
+function update_usermeta_value(){
+
+
 }
 
 /**
@@ -745,23 +753,45 @@ remove_action( 'fm_form_submission', 'fm_extraSubmissionActions' );
 add_action( 'fm_form_submission', 'telmarh_custom_mail_send' );
 function telmarh_custom_mail_send( $info ){
 	include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-    global $wpdb;
+    global $wpdb,$current_user;
     CUser::installTable();
 	$postData = $info['data'];
 	$uniqueId = $postData['unique_id'];
+
 	if ( $info['form']['ID'] == FORMULAIRE_POSTULER_OFFRE ){
+        if( isset($_POST['fonction_user']) && !empty($_POST['fonction_user']) && isset($_POST['entreprise_user']) && !empty($_POST['entreprise_user']) ) {
+            update_user_meta($current_user->ID, "fonction_user", $_POST['fonction_user']);
+            update_user_meta($current_user->ID, "entreprise_user", $_POST['entreprise_user']);
+        }
+
+
+//        $colab = $_POST['collab'];
+      //  if( isset($colab) && !empty($colab) ) {
+//                        $wpdb->query("UPDATE wp_fm_data_1 SET custom_list-5b0d01a1a57a8 =$colab WHERE text-57864a781ce98 = $user->email");
+
+           // $wpdb->update('wp_fm_data_1', array('custom_list-5b0d01a1a57a8' => $colab), array('text-57864a781ce98' => $current_user->email));
+    //    }
+
+        //$wpdb->insert('wp_collaborateur_axian_chekbox',array('id_secondaire'=>$current_user->ID,'valeur'=>$colab));
+
+        //$wpdb->insert('wp_fm_data_1',array('user'=>$current_user->ID,'checkbox-5b080d7281a18'=>$colab));
+//        $colab=$_POST['chekbox_collab'];
+//        $wpdb->query("UPDATE wp_fm_data_1 SET checkbox-5b080d7281a18 =$colab WHERE parent_post_id = '$current_user->ID'");
 		$offreId = $postData['parent_post_id'];
 		$element = get_post_meta( $offreId, JM_META_SOCIETE_OFFRE_RELATION, true );
 		$args = array(
 			"meta_value"    => $element,
 			"meta_key"      => JM_META_USER_SOCIETE_FILTER_ID,
 			"fields"        => "all"
+
 		);
 		$users = get_users( $args );
 		if ( !empty( $users ) && count( $users ) > 0 && is_plugin_active( "new-user-approve/new-user-approve.php" ) ){
 			foreach ( $users as $user ){
 	            $statusUser = get_user_meta( $user->ID,SLUG_META_APPROVED_USER , true);
 	            if ( !empty( $statusUser) && $statusUser == 'approved' ){
+
+                   // $wpdb->query("UPDATE {$wpdb->usermeta} SET meta_value = '".$_POST['fonction_user_nouv']."' WHERE user_id='$user->ID' AND meta_key='fonction_user' ");
 	                $wpdb->insert( CUser::$_tableNameEmail, array( 'id' => NULL, 'email' => $user->user_email, 'date_envoi' => NULL, 'envoyer' => 0, "element" => $uniqueId ));
 	            }
 	        }
@@ -924,6 +954,7 @@ function telmarh_connection(){
 	$secure_cookie = '';
 	$creds = array();
 	if ( !is_user_logged_in() ){
+
     if (!isset($_POST['custom_connect_block_nonce']) || !wp_verify_nonce($_POST['custom_connect_block_nonce'], "telmarh_connection"))
       return;
 		// If the user wants ssl but the session is not ssl, force a secure cookie.
@@ -962,6 +993,7 @@ function telmarh_connection_page(){
 	$secure_cookie = '';
 	$creds = array();
 	if ( !is_user_logged_in() ){
+
     if (!isset($_POST['custom_connect_nonce']) || !wp_verify_nonce($_POST['custom_connect_nonce'], "telmarh_connection_page"))
       return;
 		// If the user wants ssl but the session is not ssl, force a secure cookie.
@@ -1201,7 +1233,7 @@ function get_breadcrumb($niveau1 = '', $niveau2 = '') {
 				echo "&nbsp;&nbsp;&#47;&nbsp;&nbsp;";
 			endif;
 			if ( $post->ID == $iDPageOffre->ID ){
-				echo "Nos Offres";
+				echo "Nos offres";
 			} else{
 				the_title();
 			}
@@ -1285,5 +1317,34 @@ function telmarh_lostpassword_page(){
     }
 }
 
+add_action('admin_footer', 'custom_admin_js');
+function custom_admin_js() {
+    echo '<script type="text/javascript">
+                jQuery(document).ready(function() {
+                  jQuery("#competences-requisechecklist > li > label > input").on("change", function() {
+                    if(jQuery(this).prop("checked")){
+                        jQuery("#competences-requisechecklist li#"+ jQuery(this).parent().parent()[0].id +" "+ jQuery(this).parent().parent()[0].children[1].localName + ".children input").prop("checked", true);
+                    }
+                    else {
+                        jQuery("#competences-requisechecklist li#"+ jQuery(this).parent().parent()[0].id +" "+ jQuery(this).parent().parent()[0].children[1].localName + ".children input").prop("checked", false);
+                    }
+                  });
+                  jQuery("#competences-requisechecklist > li > ul > li label input").on("change", function() {
+                    if(jQuery(this).prop("checked")){
+                        jQuery("#"+ jQuery(this).parent().parent().parent().parent()[0].id +" > label > input").prop("checked", true);
+                    }
+                    else {
+                        var check = false;
+                        jQuery("#"+ jQuery(this).parent().parent().parent().parent()[0].id +" > ul > li label input").each(function() {
+                          if(jQuery(this).prop("checked"))
+                              check = true;
+                        });
+                        if(!check)
+                            jQuery("#"+ jQuery(this).parent().parent().parent().parent()[0].id +" > label > input").prop("checked", false);
+                    }
+                  });
+                });
+          </script>';
+}
 
 

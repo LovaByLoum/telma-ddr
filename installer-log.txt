@@ -1,0 +1,3 @@
+
+INSTALLER ERROR:
+A wp-config.php already exists in this location.  This error prevents users from accidentally overwriting the wrong directories contents.  You have three options: Empty this root directory except for the package and installer and try again.Delete just the wp-config.php file and try again.  This will over-write all other files in the directory.Check the "Manual package extraction" checkbox under advanced options to skip extraction

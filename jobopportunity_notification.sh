@@ -14,7 +14,7 @@ then
 elif ( echo $HOSTNAME | egrep -i '^tapq237lv$' > /dev/null )
 then
     wget https://$HOSTNAME/axianpreprod/wp-cron.php --no-check-certificate -O /dev/null
-elif ( echo $HOSTNAME | egrep -i '^TAPP242LV$' > /dev/null )
+elif ( echo $HOSTNAME | egrep -i '^tapp242lv$' > /dev/null )
 then
     wget https://$HOSTNAME/wp-cron.php --no-check-certificate -O /dev/null
 elif ( echo $HOSTNAME | egrep -i '^recrutement\.axian-group\.com$' > /dev/null )
