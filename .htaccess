@@ -44,7 +44,7 @@ Satisfy any
 
 # Repertoire virtuel de Base differente par environnement pour la reecriture d'URL
 
-SetEnvIf HOST "localhost" PROJECT_BASE_PATH=/projets/telmarh/srcs/
+SetEnvIf HOST "localhost" PROJECT_BASE_PATH=/projets/axian-recrutement/srcs/
 SetEnvIf HOST "telma-interface-recrutement-recette[.]mg[.]netapsys[.]fr" PROJECT_BASE_PATH=/
 SetEnvIf HOST "telma-interface-recrutement-recette[.]netapsys[.]fr" PROJECT_BASE_PATH=/
 SetEnvIf HOST "tsgt02lv" PROJECT_BASE_PATH=/jobopportunity/
@@ -57,19 +57,3 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule . %{ENV:PROJECT_BASE_PATH}index.php [L]
 </IfModule>
-
-
-# BEGIN WordPress
-<IfModule mod_rewrite.c>
-RewriteEngine On
-RewriteBase /
-RewriteRule ^index\.php$ - [L]
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule . /index.php [L]
-</IfModule>
-
-# END WordPress
-# BEGIN MainWP
-
-# END MainWP
