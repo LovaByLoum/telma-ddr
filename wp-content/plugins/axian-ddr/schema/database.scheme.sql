@@ -43,3 +43,20 @@ CREATE TABLE `wp_ddr_historique` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8
 
 
+CREATE TABLE `wp_ddr_interim` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `collaborator_id` bigint(20) NOT NULL,
+  `collaborator_interim_id` bigint(20) NOT NULL,
+  `date_debut` datetime DEFAULT NULL,
+  `date_fin` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`,`collaborator_id`,`collaborator_interim_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
+
+
+
+CREATE TABLE `wp_ddr_label` (
+`id` bigint(20) NOT NULL,
+`type` varchar(50) DEFAULT NULL,
+`label` varchar(50) DEFAULT NULL,
+PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8

@@ -9,7 +9,18 @@
  */
 
 
-define(STATUS_VALIDE,'valide');
-define(STATUS_EN_COUR,'en_cour');
-define(STATUS_REFUSE,'refuse');
-define(STATUS_CLOTURE,'cloture');
+define(STATUS_VALIDE,'valid');
+define(STATUS_EN_COURS,'in_progress');
+define(STATUS_REFUSE,'denied');
+define(STATUS_ANNULE,'canceled');
+define(STATUS_CLOTURE,'finished');
+
+define(CANDIDATURE_INTERNE,'internal');
+define(CANDIDATURE_EXTERNE,'external');
+
+define(TYPE_DEMANDE_PREVU,'planned');
+define(TYPE_DEMANDE_NON_PREVU,'not_planned');
+
+define(LABEL_TYPE_DIRECTION,'direction');
+define(LABEL_TYPE_DEPARTEMENT,'departement');
+
