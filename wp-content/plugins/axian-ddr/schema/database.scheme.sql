@@ -1,4 +1,4 @@
-CREATE TABLE `wp_ddr` (
+CREATE TABLE IF NOT EXISTS `wp_ddr` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `author_id` bigint(20) NOT NULL COMMENT 'Identifiant de l’utilisateur connecté ayant créé le ticket',
   `type` varchar(20) NOT NULL COMMENT 'Choix entre prevu et non-prevu',
@@ -28,7 +28,7 @@ CREATE TABLE `wp_ddr` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8
 
 
-CREATE TABLE `wp_ddr_historique` (
+CREATE TABLE IF NOT EXISTS `wp_ddr_historique` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `ddr_id` bigint(20) NOT NULL COMMENT 'id du ddr',
   `actor_id` bigint(20) NOT NULL COMMENT 'user id executant l''action',
@@ -43,7 +43,7 @@ CREATE TABLE `wp_ddr_historique` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8
 
 
-CREATE TABLE `wp_ddr_interim` (
+CREATE TABLE IF NOT EXISTS `wp_ddr_interim` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `collaborator_id` bigint(20) NOT NULL,
   `collaborator_interim_id` bigint(20) NOT NULL,
@@ -54,9 +54,10 @@ CREATE TABLE `wp_ddr_interim` (
 
 
 
-CREATE TABLE `wp_ddr_label` (
-`id` bigint(20) NOT NULL,
-`type` varchar(50) DEFAULT NULL,
-`label` varchar(50) DEFAULT NULL,
-PRIMARY KEY (`id`)
+CREATE TABLE IF NOT EXISTS `wp_ddr_label` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `type` varchar(50) NOT NULL,
+  `label` varchar(50) NOT NULL,
+  `description` text,
+  PRIMARY KEY (`id`,`type`,`label`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8

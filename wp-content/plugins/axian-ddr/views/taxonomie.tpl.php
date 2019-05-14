@@ -1,5 +1,10 @@
+<?php if(isset($error_label_msg) && !empty($error_label_msg)):?>
+<div class="error notice">
+    <p><?php echo $error_label_msg;?></p>
+</div>
+<?php endif;?>
 <div class="wrap nosubsub">
-<h1 class="wp-heading-inline">Catégories</h1>
+<h1 class="wp-heading-inline"><?php echo ucfirst($type);?> </h1>
 
 
 <hr class="wp-header-end">
@@ -11,9 +16,9 @@
 <input type="hidden" name="post_type" value="post">
 
 <p class="search-box">
-	<label class="screen-reader-text" for="tag-search-input">Rechercher dans les catégories:</label>
+	<label class="screen-reader-text" for="tag-search-input">Rechercher dans les <?php echo $type .'s';?>:</label>
 	<input type="search" id="tag-search-input" name="s" value="">
-	<input type="submit" id="search-submit" class="button" value="Rechercher dans les catégories"></p>
+	<input type="submit" id="search-submit" class="button" value="Rechercher dans les <?php echo $type .'s';?>"></p>
 
 </form>
 
@@ -24,38 +29,21 @@
 
 
 <div class="form-wrap">
-<h2>Ajouter une nouvelle catégorie</h2>
-<form id="addtag" method="post" action="edit-tags.php" class="validate">
-<input type="hidden" name="action" value="add-tag">
-<input type="hidden" name="screen" value="edit-category">
-<input type="hidden" name="taxonomy" value="category">
-<input type="hidden" name="post_type" value="post">
-<input type="hidden" id="_wpnonce_add-tag" name="_wpnonce_add-tag" value="7881a4fc5c"><input type="hidden" name="_wp_http_referer" value="/projets/axian-recrutement/srcs/wp-admin/edit-tags.php?taxonomy=category">
+<h2>Ajouter <?php echo $type;?></h2>
+<form id="add-label" method="post" action="" class="validate">
+    <input type="hidden" name="label-type" value="<?php echo $type;?>">
 <div class="form-field form-required term-name-wrap">
-	<label for="tag-name">Nom</label>
-	<input name="tag-name" id="tag-name" type="text" value="" size="40" aria-required="true">
+	<label for="label-name">Nom</label>
+	<input name="label-name" id="label-name" type="text" value="" size="40" aria-required="true">
 	<p>Ce nom est utilisé un peu partout sur votre site.</p>
 </div>
 <div class="form-field term-slug-wrap">
-	<label for="tag-slug">Identifiant</label>
-	<input name="slug" id="tag-slug" type="text" value="" size="40">
-	<p>L’identifiant est la version normalisée du nom. Il ne contient généralement que des lettres minuscules non accentuées, des chiffres et des traits d’union.</p>
-</div>
-<div class="form-field term-parent-wrap">
-	<label for="parent">Catégorie parente</label>
-	<select name="parent" id="parent" class="postform">
-	<option value="-1">Aucun</option>
-	<option class="level-0" value="1">Non classé</option>
-</select>
-			<p>Les catégories, contrairement aux étiquettes, peuvent avoir une hiérarchie. Vous pouvez avoir une catégorie nommée Jazz, et à l’intérieur, plusieurs catégories comme Bebop et Big Band. Ceci est totalement facultatif.</p>
-	</div>
-<div class="form-field term-description-wrap">
-	<label for="tag-description">Description</label>
-	<textarea name="description" id="tag-description" rows="5" cols="40"></textarea>
-	<p>La description n’est pas très utilisée par défaut, cependant de plus en plus de thèmes l’affichent.</p>
+	<label for="label-description">Description</label>
+    <textarea name="label-description" id="label-description" rows="5" cols="40"></textarea>
+	<p>Optionnel.</p>
 </div>
 
-<p class="submit"><input type="submit" name="submit" id="submit" class="button button-primary" value="Ajouter une nouvelle catégorie"></p></form></div>
+<p class="submit"><input type="submit" name="submit-label" id="submit" class="button button-primary" value="Ajouter <?php echo $type;?>"></p></form></div>
 
 </div>
 </div><!-- /col-left -->
@@ -85,7 +73,7 @@
 <span class="tablenav-pages-navspan" aria-hidden="true">»</span></span></div>
 		<br class="clear">
 	</div>
-<h2 class="screen-reader-text">Liste des catégories</h2><table class="wp-list-table widefat fixed striped tags">
+<h2 class="screen-reader-text">Liste des <?php echo $type;?></h2><table class="wp-list-table widefat fixed striped tags">
 	<thead>
 	<tr>
 		<td id="cb" class="manage-column column-cb check-column"><label class="screen-reader-text" for="cb-select-all-1">Tout sélectionner</label><input id="cb-select-all-1" type="checkbox"></td><th scope="col" id="name" class="manage-column column-name column-primary sortable desc"><a href="http://localhost/projets/axian-recrutement/srcs/wp-admin/edit-tags.php?taxonomy=category&amp;orderby=name&amp;order=asc"><span>Nom</span><span class="sorting-indicator"></span></a></th><th scope="col" id="description" class="manage-column column-description sortable desc"><a href="http://localhost/projets/axian-recrutement/srcs/wp-admin/edit-tags.php?taxonomy=category&amp;orderby=description&amp;order=asc"><span>Description</span><span class="sorting-indicator"></span></a></th><th scope="col" id="slug" class="manage-column column-slug sortable desc"><a href="http://localhost/projets/axian-recrutement/srcs/wp-admin/edit-tags.php?taxonomy=category&amp;orderby=slug&amp;order=asc"><span>Identifiant</span><span class="sorting-indicator"></span></a></th><th scope="col" id="posts" class="manage-column column-posts num sortable desc"><a href="http://localhost/projets/axian-recrutement/srcs/wp-admin/edit-tags.php?taxonomy=category&amp;orderby=count&amp;order=asc"><span>Compte</span><span class="sorting-indicator"></span></a></th>	</tr>
