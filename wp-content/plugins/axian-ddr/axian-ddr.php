@@ -6,17 +6,16 @@ Version: 1.0
 Author: Njaratiana
 */
 
-define ( 'ADDR_PATH', dirname(__FILE__) );
+define ( 'AXIAN_DDR_PATH', dirname(__FILE__) );
 require_once ('inc/constantes.inc.php');
 require_once('classes/main.class.php');
-require_once('classes/label.class.php');
+require_once('classes/administration.class.php');
+require_once('classes/ddr.class.php');
+require_once('classes/term.class.php');
+require_once('utils/functions.utils.php');
 
-register_activation_hook( __FILE__ , 'axian_ddr_active' );
+register_activation_hook( __FILE__ , 'AxianDDRMain::install' );
 
-
-function axian_ddr_active(){
-    //install base
-}
-
-new Main_DDR();
+global $axian_ddr_main;
+$axian_ddr_main = new AxianDDRMain();
 

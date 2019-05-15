@@ -7,7 +7,7 @@
  * To change this template use File | Settings | File Templates.
  */
 
-class Axian_Ddr{
+class AxianDDR{
 
     var $author_id;
     var $type;
@@ -31,6 +31,13 @@ class Axian_Ddr{
 
     }
 
+    public static function template_list(){
+
+    }
+
+    public static function template_edit(){
+
+    }
 
     public static function add(){
 
