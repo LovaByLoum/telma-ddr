@@ -6,6 +6,19 @@
  * Time: 09:20
  * To change this template use File | Settings | File Templates.
  */
+
+add_action( 'admin_enqueue_scripts', 'axian_ddr_admin_enqueue_scripts' );
+function axian_ddr_admin_enqueue_scripts(){
+    wp_enqueue_script('axian-ddr', AXIANDDR_PLUGIN_URL.'/js/axianddr.js');
+    wp_enqueue_script('axian-ddr-date', AXIANDDR_PLUGIN_URL.'/js/jquery.ui.datepicker.js');
+    wp_enqueue_script('axian-ddr-date-fr', AXIANDDR_PLUGIN_URL.'/js/jquery.ui.datepicker-fr.js');
+    wp_enqueue_script('axian-ddr', AXIANDDR_PLUGIN_URL.'/js/axianddr.js');
+    wp_enqueue_style('axian-ddr-bootstrap', AXIANDDR_PLUGIN_URL . '/css/bootstrap.min.css');
+    wp_enqueue_style('axian-ddr-css', AXIANDDR_PLUGIN_URL . '/css/general.css');
+    wp_enqueue_style('axian-ddr-date', AXIANDDR_PLUGIN_URL . '/css/jquery-ui-datepicker.css');
+}
+
+
 //render fields
 function axian_ddr_render_field( $field, $post_data = null ){
     if ( is_null($post_data) ) $post_data = $_POST;
@@ -15,7 +28,7 @@ function axian_ddr_render_field( $field, $post_data = null ){
         case 'text' :
             ?>
             <label for="<?php echo $field['name'];?>"><?php echo $field['label'];?><?php if (  $field['required'] ) : ?>&nbsp;<span style="color:red;">*</span><?php endif;?></label>
-            <input name="<?php echo $field['name'];?>" type="text" id="<?php echo $field['name'];?>" value="<?php echo $current_value;?>" class="regular-text <?php echo $field['class'];?>">
+            <input name="<?php echo $field['name'];?>" type="text" id="<?php echo $field['name'];?>" value="<?php echo $current_value;?>" class="regular-text form-control <?php echo $field['class'];?>">
             <?php if ( isset($field['description']) && !empty($field['description']) ) : ?><p><?php echo $field['description'];?></p><?php endif;?>
             <?php
             break;
@@ -33,7 +46,7 @@ function axian_ddr_render_field( $field, $post_data = null ){
         case 'select':
             ?>
             <label for="<?php echo $field['name'];?>"><?php echo $field['label'];?><?php if (  $field['required'] ) : ?>&nbsp;<span style="color:red;">*</span><?php endif;?></label>
-            <select name="<?php echo $field['name'];?>" class="<?php echo $field['class'];?>" tabindex="2">
+            <select name="<?php echo $field['name'];?>" class="form-control <?php echo $field['class'];?>" tabindex="2">
                 <?php foreach ( $field['options'] as  $val => $lib):?>
                     <option value="<?php echo $val;?>" <?php if ( $val ==  $current_value ): ?>selected<?php endif;?>><?php echo $lib;?></option>
                 <?php endforeach; ?>
@@ -44,7 +57,7 @@ function axian_ddr_render_field( $field, $post_data = null ){
         case 'date' :
             ?>
             <label for="<?php echo $field['name'];?>"><?php echo $field['label'];?><?php if (  $field['required'] ) : ?>&nbsp;<span style="color:red;">*</span><?php endif;?></label>
-            <input name="<?php echo $field['metakey'];?>" type="text" id="<?php echo $field['name'];?>" value="<?php echo $current_value;?>" class="regular-text addr-datepicker <?php echo $field['class'];?>" placeholder="DD/MM/YYYY" readonly>
+            <input name="<?php echo $field['name'];?>" type="text" id="<?php echo $field['name'];?>" value="<?php echo $current_value;?>" class="regular-text datepicker <?php echo $field['class'];?>" placeholder="DD/MM/YYYY" readonly>
             <?php if ( isset($field['description']) && !empty($field['description']) ) : ?><p><?php echo $field['description'];?></p><?php endif;?>
             <?php
             break;
@@ -63,8 +76,13 @@ function axian_ddr_render_field( $field, $post_data = null ){
         case 'textarea' :
             ?>
             <label for="<?php echo $field['name'];?>"><?php echo $field['label'];?><?php if (  $field['required'] ) : ?>&nbsp;<span style="color:red;">*</span><?php endif;?></label>
-            <textarea name="<?php echo $field['name'];?>" id="<?php echo $field['name'];?>"><?php echo $current_value;?></textarea>
+            <textarea name="<?php echo $field['name'];?>" id="<?php echo $field['name'];?>" rows="<?php echo $field['rows'];?>" cols="<?php echo $field['cols'];?>" class="form-control <?php echo $field['class'];?>"><?php echo $current_value;?></textarea>
             <?php if ( isset($field['description']) && !empty($field['description']) ) : ?><p><?php echo $field['description'];?></p><?php endif;?>
+            <?php
+            break;
+        case 'hidden' :
+            ?>
+            <input name="<?php echo $field['name'];?>" value="<?php echo $current_value;?>">
             <?php
             break;
     }

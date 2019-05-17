@@ -5,7 +5,7 @@
     ?>
     <h2 class="nav-tab-wrapper">
 
-        <a href="?page=axian-ddr-admin&amp;tab=general" class="nav-tab <?php echo $active_tab == 'general' ? 'nav-tab-active' : ''; ?>">Configuration générale</a>
+        <a href="?page=axian-ddr-admin&amp;tab=general" class="nav-tab ">Configuration générale</a>
         <a href="?page=axian-ddr-admin&amp;tab=term" class="nav-tab <?php echo $active_tab == 'term' ? 'nav-tab-active' : ''; ?>">Termes de taxonomie</a>
 
     </h2>
