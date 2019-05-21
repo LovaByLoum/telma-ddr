@@ -3,9 +3,9 @@
 class AxianDDRMain {
     public function __construct()
     {
-        add_action('admin_init', array($this,'install'));
-        add_action('admin_menu',array($this,'admin_menu'));
-
+        add_action( 'admin_init', array($this,'install') );
+        add_action( 'admin_menu',array($this,'admin_menu') );
+        add_action( 'admin_enqueue_scripts', array($this,'axian_ddr_admin_enqueue_scripts') );
 
     }
 
@@ -99,5 +99,17 @@ class AxianDDRMain {
 
         //
     }
+
+
+    public function axian_ddr_admin_enqueue_scripts(){
+        wp_enqueue_script('axian-ddr-chosen', AXIANDDR_PLUGIN_URL.'/js/chosen.jquery.js');
+        wp_enqueue_script('axian-ddr-date', AXIANDDR_PLUGIN_URL.'/js/jquery.ui.datepicker.js');
+        wp_enqueue_script('axian-ddr-date-fr', AXIANDDR_PLUGIN_URL.'/js/jquery.ui.datepicker-fr.js');
+        wp_enqueue_style('axian-ddr-bootstrap', AXIANDDR_PLUGIN_URL . '/css/bootstrap.min.css');
+        wp_enqueue_style('axian-ddr-css', AXIANDDR_PLUGIN_URL . '/css/general.css');
+        wp_enqueue_style('axian-ddr-date', AXIANDDR_PLUGIN_URL . '/css/jquery-ui-datepicker.css');
+    }
+
+
 
 }

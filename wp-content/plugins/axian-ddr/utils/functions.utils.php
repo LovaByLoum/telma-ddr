@@ -7,18 +7,6 @@
  * To change this template use File | Settings | File Templates.
  */
 
-add_action( 'admin_enqueue_scripts', 'axian_ddr_admin_enqueue_scripts' );
-function axian_ddr_admin_enqueue_scripts(){
-    wp_enqueue_script('axian-ddr', AXIANDDR_PLUGIN_URL.'/js/axianddr.js');
-    wp_enqueue_script('axian-ddr-date', AXIANDDR_PLUGIN_URL.'/js/jquery.ui.datepicker.js');
-    wp_enqueue_script('axian-ddr-date-fr', AXIANDDR_PLUGIN_URL.'/js/jquery.ui.datepicker-fr.js');
-    wp_enqueue_script('axian-ddr', AXIANDDR_PLUGIN_URL.'/js/axianddr.js');
-    wp_enqueue_style('axian-ddr-bootstrap', AXIANDDR_PLUGIN_URL . '/css/bootstrap.min.css');
-    wp_enqueue_style('axian-ddr-css', AXIANDDR_PLUGIN_URL . '/css/general.css');
-    wp_enqueue_style('axian-ddr-date', AXIANDDR_PLUGIN_URL . '/css/jquery-ui-datepicker.css');
-}
-
-
 //render fields
 function axian_ddr_render_field( $field, $post_data = null ){
     if ( is_null($post_data) ) $post_data = $_POST;
@@ -46,7 +34,7 @@ function axian_ddr_render_field( $field, $post_data = null ){
         case 'select':
             ?>
             <label for="<?php echo $field['name'];?>"><?php echo $field['label'];?><?php if (  $field['required'] ) : ?>&nbsp;<span style="color:red;">*</span><?php endif;?></label>
-            <select name="<?php echo $field['name'];?>" class="form-control <?php echo $field['class'];?>" tabindex="2">
+            <select name="<?php echo $field['name'];?>" id="<?php echo $field['id'];?>" class="form-control <?php echo $field['class'];?>" tabindex="2" data-placeholder=" <?php echo $field['placeholder'];?>">
                 <?php foreach ( $field['options'] as  $val => $lib):?>
                     <option value="<?php echo $val;?>" <?php if ( $val ==  $current_value ): ?>selected<?php endif;?>><?php echo $lib;?></option>
                 <?php endforeach; ?>
@@ -96,9 +84,7 @@ function axian_ddr_valiate_fields( $object, $post_data = null ){
     if ( isset($object->fields) ){
         foreach ( $object->fields as $id => $field ){
             //check required
-            if ( $field['required'] == true && isset($post_data[$field['name']]) && !empty($post_data[$field['name']]) ){
-                //do nothing
-            } else {
+            if ( $field['required'] == true && isset($post_data[$field['name']]) && empty($post_data[$field['name']]) ){
                 $msg .= 'Le champs ' . $field['label'] . ' est requis(e)<br>';
             }
 

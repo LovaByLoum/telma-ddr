@@ -10,6 +10,7 @@
 
 define ( 'AXIANDDR_PLUGIN_URL' , plugins_url(basename(dirname(dirname(__FILE__)))) );
 
+define('STATUS_DRAFT','draft');
 define('STATUS_VALIDE','valid');
 define('STATUS_EN_COURS','in_progress');
 define('STATUS_REFUSE','denied');

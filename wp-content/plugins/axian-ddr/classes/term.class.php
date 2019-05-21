@@ -58,18 +58,19 @@ class AxianDDRTerm{
                     $post_data['label']
                 );
 
-                if ( $return_add ){
+                //test si echec
+                if ( !$return_add ){
+                    return array(
+                        'code' => 'error',
+                        'msg' => 'Erreur inconnu',
+                    );
+                }  else {
                     //unset post
                     unset($_POST['type']);
                     unset($_POST['label']);
                     return array(
                         'code' => 'updated',
                         'msg' => 'Enregistrement effectué avec succés.',
-                    );
-                }  else {
-                    return array(
-                        'code' => 'error',
-                        'msg' => 'Erreur inconnu',
                     );
                 }
 
@@ -144,10 +145,14 @@ class AxianDDRTerm{
 
     public static function add( $type, $label ){
         global $wpdb;
-        return $wpdb->insert(TABLE_AXIAN_DDR_TERM, array(
+        $result = $wpdb->insert(TABLE_AXIAN_DDR_TERM, array(
             'type' => $type,
             'label' => $label
         ));
+        if ( $result ) {
+            $term_id = $wpdb->insert_id;
+            return $term_id;
+        }else return $result;
     }
 
     public static function update($id, $type, $label){

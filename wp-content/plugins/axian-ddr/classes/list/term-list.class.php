@@ -83,8 +83,9 @@ class AxianDDRTermList extends WP_List_Table{
         $current_page = ($current_page - 1) * $per_page;
 
         $resultats = AxianDDRTerm::getby($current_page,$per_page);
+        $total = AxianDDRTerm::count_result();
         $this->set_pagination_args( array(
-            'total_items' => $resultats['count'],
+            'total_items' => $total['tous'],
             'per_page'    => $per_page
         ));
 

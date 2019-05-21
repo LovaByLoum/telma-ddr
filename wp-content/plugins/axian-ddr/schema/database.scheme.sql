@@ -7,7 +7,6 @@ CREATE TABLE IF NOT EXISTS `wp_ddr` (
   `departement` text,
   `superieur_id` bigint(20) DEFAULT NULL COMMENT 'id de l''utilisateur superieur',
   `lieu_travail` text,
-  `batiment` text,
   `motif` longtext,
   `dernier_titulaire` text,
   `date_previsionnel` datetime DEFAULT NULL,
