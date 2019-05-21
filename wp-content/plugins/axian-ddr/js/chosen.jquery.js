@@ -1119,15 +1119,15 @@
         Chosen.prototype.no_results = function(terms) {
             var no_results_html;
             var search_class =  this.form_field.className;
+            var search_name = this.form_field.name;
             if(search_class.includes('chosen-select-add')){
                 no_results_html = $('<li class="no-results">' + this.results_none_found + '"<span></span>"' +
                     ' <button class="add"  class="submit"> Ajouter </button> ' +
                     '</li> ');
                 no_results_html.find("span").first().html(terms);
                 no_results_html.find(".add").click(function() {
-
-                    $('.chosen-select-add').chosen().append('<option valu="new|'+ terms +'" selected>' + terms + '</option>');
-                    $('.chosen-select-add').chosen().trigger('chosen:updated');
+                    $('.'+search_name).chosen().append('<option value="new|'+ terms +'" selected>' + terms + '</option>');
+                    $('.'+search_name).chosen().trigger('chosen:updated');
 
                 });
                 return this.search_results.html(no_results_html);
