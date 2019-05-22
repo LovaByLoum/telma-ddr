@@ -7,12 +7,7 @@
  * @author : Netapsys
  */
 
-add_action('admin_head','telmarh_custom_admin_head');
-function telmarh_custom_admin_head(){
-	?>
-	<style>
-
-	</style>
-	
-	<?php
+add_action( 'admin_enqueue_scripts', 'telmarh_admin_enqueue_scripts' );
+function telmarh_admin_enqueue_scripts(){
+    wp_enqueue_style( 'admin-style', get_template_directory_uri() . '/css/admin/styles.css' );
 }
