@@ -6,8 +6,22 @@ if( ! class_exists( 'WP_List_Table' ) ) {
 if( ! class_exists( 'AxianDDRTerm' ) ) {
     require_once( AXIAN_DDR_PATH . '/classes/term.class.php' );
 }
+if( ! class_exists( 'WP_Filter_List_Table' ) ) {
+    require_once( AXIAN_DDR_PATH . '/classes/list/class-wp-filter-list-table.php' );
+}
 
-class AxianDDRList extends WP_List_Table{
+class AxianDDRList extends WP_Filter_List_Table{
+
+    public $type = array(
+        TYPE_DEMANDE_PREVU => 'Prévu',
+        TYPE_DEMANDE_NON_PREVU => 'Non prévu',
+    );
+
+    public $candidature = array(
+        CANDIDATURE_INTERNE => 'Interne',
+        CANDIDATURE_EXTERNE => 'Externe',
+    );
+
     function __construct(){
         parent::__construct( array(
             'singular'  => 'Liste des demandes',
@@ -68,6 +82,16 @@ class AxianDDRList extends WP_List_Table{
         );
 
         return $sortable_columns;
+    }
+
+    function get_filterable_columns() {
+        $filterable_columns = array(
+            'title' => array('type' => 'text'),
+            'type' => array('type' => 'select', 'options' => $this->type),
+            'type_candidature' => array('type' => 'select', 'options' => $this->candidature),
+        );
+
+        return $filterable_columns;
     }
 
     function extra_tablenav( $which ) {

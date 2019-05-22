@@ -4,7 +4,7 @@ if( ! class_exists( 'WP_List_Table' ) ) {
     require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
 }
 
-class AxianDDRTermList extends WP_List_Table{
+class AxianDDRTermList extends WP_Filter_List_Table{
     function __construct(){
         parent::__construct( array(
             'singular'  => 'Liste des termes',
