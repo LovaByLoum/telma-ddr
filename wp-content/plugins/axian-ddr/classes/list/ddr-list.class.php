@@ -1,15 +1,4 @@
 <?php
-
-if( ! class_exists( 'WP_List_Table' ) ) {
-    require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
-}
-if( ! class_exists( 'AxianDDRTerm' ) ) {
-    require_once( AXIAN_DDR_PATH . '/classes/term.class.php' );
-}
-if( ! class_exists( 'WP_Filter_List_Table' ) ) {
-    require_once( AXIAN_DDR_PATH . '/classes/list/class-wp-filter-list-table.php' );
-}
-
 class AxianDDRList extends WP_Filter_List_Table{
 
     public $type = array(

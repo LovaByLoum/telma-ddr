@@ -1273,7 +1273,3 @@
 
 }).call(this);
 
-jQuery(function() {
-    jQuery('.chosen-select').chosen();
-    $( ".datepicker" ).datepicker();
-});

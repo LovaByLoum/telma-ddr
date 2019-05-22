@@ -6,18 +6,6 @@
  * Time: 15:40
  * To change this template use File | Settings | File Templates.
  */
-if( ! class_exists( 'AxianDDRTerm' ) ) {
-    require_once( AXIAN_DDR_PATH . '/classes/term.class.php' );
-}
-
-if( ! class_exists( 'AxianDDRList' ) ) {
-    require_once( AXIAN_DDR_PATH . '/classes/list/ddr-list.class.php' );
-}
-
-if( ! class_exists( 'AxianDDRHistorique' ) ) {
-    require_once( AXIAN_DDR_PATH . '/classes/historique.class.php' );
-}
-
 class AxianDDR{
 
     public static $types_demande = array(
@@ -85,7 +73,9 @@ class AxianDDR{
                 'name' => 'direction',
                 'size' => '50',
                 'required' => true,
-                'class' =>'chosen-select chosen-select-add direction',
+                'search' => true,
+                'add' => true,
+                'class' => 'direction',
                 'options' => self::$directions,
                 'placeholder' => ' '
             ),
@@ -104,7 +94,9 @@ class AxianDDR{
                 'name' => 'departement',
                 'size' => '50',
                 'required' => true,
-                'class' =>'chosen-select chosen-select-add departement',
+                'search' => true,
+                'add' => true,
+                'class' =>'departement',
                 'options' => self::$departements,
                 'placeholder' => ' '
             ),
@@ -123,7 +115,9 @@ class AxianDDR{
                 'name' => 'lieu_travail',
                 'size' => '50',
                 'required' => true,
-                'class' =>'chosen-select chosen-select-add lieu_travail',
+                'search' => true,
+                'add' => true,
+                'class' =>'lieu_travail',
                 'options' => self::$lieux,
                 'placeholder' => ' '
             ),
@@ -134,7 +128,9 @@ class AxianDDR{
                 'name' => 'batiment',
                 'size' => '50',
                 'required' => true,
-                'class' =>'chosen-select chosen-select-add',
+                'search' => true,
+                'add' => true,
+                'class' =>'',
                 'options' => self::$lieux,
                 'placeholder' => ' '
             ),
