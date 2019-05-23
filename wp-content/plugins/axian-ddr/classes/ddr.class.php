@@ -205,7 +205,9 @@ class AxianDDR{
     }
 
     public static function template_edit(){
-        include AXIAN_DDR_PATH . '/templates/ddr/ddr.tpl.php';
+        if ( 'view' == $_GET['action'] ){
+            include AXIAN_DDR_PATH . '/templates/ddr/ddr-view.tpl.php';
+        }else include AXIAN_DDR_PATH . '/templates/ddr/ddr-edit.tpl.php';
     }
 
     public static function add($args){

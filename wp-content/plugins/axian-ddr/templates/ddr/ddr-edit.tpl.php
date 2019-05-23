@@ -4,7 +4,6 @@ if ( (isset($_GET['id']) && !empty($_GET['id']) ) ){
     $post_data = $axian_ddr->getbyId(intval($_GET['id']));
 }else $post_data = null;
 $result = $axian_ddr->submit_ddr();
-var_dump($_GET['action']);
 ?>
 <?php if ( $result ) : ?>
     <div class="notice <?php echo $result['code'];?>">
@@ -17,7 +16,7 @@ var_dump($_GET['action']);
     <hr class="wp-header-end">
 
     <div id="col-container" class="wp-clearfix">
-    <?php if ( 'view' != $_GET['action'] ):?>
+
     <form action="<?php if (!is_null($post_data)) echo "?page=" . esc_attr( $_REQUEST['page'] )?>" id="" method="post" autocomplete="off">
 
         <!--demandeur & type-->
@@ -100,27 +99,13 @@ var_dump($_GET['action']);
             <input type="submit" name="update-ddr" id="submit" class="button button-primary" value="Enregistrer">
             <?php endif;?>
         <?php else : ?>
-            <input type="submit" name="submit-ddr" id="submit" class="button button-primary" value="Ajouter">
+            <input type="submit" name="submit-ddr" id="submit" class="button button-primary" value="Soumettre">
             <input type="submit" name="save-ddr" id="save" class="button" value="Enregistrer comme brouillon">
         <?php endif;?>
-            <a href="?page=new-axian-ddr" class="btn btn-sm btn-outline-danger">Annuler</a>
+            <a href="?page=axian-ddr" class="btn btn-sm btn-outline-danger">Annuler</a>
         </p>
 
 
     </form>
-    <?php else :?>
-
-
-        <div class="card">
-            <div class="card-header">
-                DDR - <?php echo $post_data['id'];?>
-            </div>
-            <div class="card-body">
-                <h5 class="card-title"><?php echo $post_data['title'];?></h5>
-                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
-            </div>
-        </div>
-    <?php endif?>
 </div>
     </div>

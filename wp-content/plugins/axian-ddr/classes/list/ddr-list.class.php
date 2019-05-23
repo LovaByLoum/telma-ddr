@@ -120,10 +120,10 @@ class AxianDDRList extends WP_Filter_List_Table{
 
         $columns = array(
             'id' => 'Numéro du ticket',
+            'title' => 'Titre de la demande',
             'type' => 'Type de la demande',
             'author_id' => 'Créateur',
             'assignee_id' => 'Attribution',
-            'title' => 'Titre de la demande',
             'etat' => 'Etat',
             'etape' => 'Etape',
             'direction' => 'Direction',
@@ -173,9 +173,9 @@ class AxianDDRList extends WP_Filter_List_Table{
         $title = '<strong>DDR-' . $item->id . '</strong>';
 
         $actions = [
-			'view' => sprintf( '<a href="?page=%s&action=%s&id=%s">Afficher</a>', 'new-axian-ddr','view', absint( $item->id ) ),
-            'edit' => sprintf( '<a href="?page=%s&action=%s&id=%s">Editer</a>', 'new-axian-ddr', 'edit', absint( $item->id ) ),
-            'delete' => sprintf( '<a href="?page=%s&action=%s&id=%s&_wpnonce=%s">Supprimer</a>', 'new-axian-ddr', 'delete', absint( $item->id ), $delete_nonce )
+			'view' => sprintf( '<a href="?page=%s&action=%s&id=%s">Afficher</a>', 'axian-ddr','view', absint( $item->id ) ),
+            'edit' => sprintf( '<a href="?page=%s&action=%s&id=%s">Editer</a>', 'axian-ddr', 'edit', absint( $item->id ) ),
+            'delete' => sprintf( '<a href="?page=%s&action=%s&id=%s&_wpnonce=%s">Supprimer</a>', 'axian-ddr', 'delete', absint( $item->id ), $delete_nonce )
         ];
 
         return $title . $this->row_actions( $actions );
