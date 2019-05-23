@@ -44,7 +44,7 @@ class WP_Filter_List_Table extends WP_List_Table{
 
         $this->display_styles();
         $this->display_scripts();
-        $this->display_tablenav( 'top' );
+        $this->display_tablenav('bottom');
 
         $this->screen->render_screen_reader_content( 'heading_list' );
         ?>
@@ -118,7 +118,7 @@ class WP_Filter_List_Table extends WP_List_Table{
 
                 switch( $filter_info['type'] ){
                     case 'text':
-                        $filter_input = "<input type='text' value='$current' class='filter-text' name='$column_key'>";
+                        $filter_input = "<input type='text' value='$current' class='filter-text' name='$column_key' size='16'>";
                         break;
                     case 'datepicker':
                         $filter_input = "<input type='text' value='$current' class='filter-text datepicker' name='$column_key' readonly>";

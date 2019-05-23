@@ -173,6 +173,7 @@ class AxianDDRList extends WP_Filter_List_Table{
         $title = '<strong>DDR-' . $item->id . '</strong>';
 
         $actions = [
+			'view' => sprintf( '<a href="?page=%s&action=%s&id=%s">Afficher</a>', 'new-axian-ddr','view', absint( $item->id ) ),
             'edit' => sprintf( '<a href="?page=%s&action=%s&id=%s">Editer</a>', esc_attr( $_REQUEST['page'] ), 'edit', absint( $item->id ) ),
             'delete' => sprintf( '<a href="?page=%s&action=%s&id=%s&_wpnonce=%s">Supprimer</a>', esc_attr( $_REQUEST['page'] ), 'delete', absint( $item->id ), $delete_nonce )
         ];
