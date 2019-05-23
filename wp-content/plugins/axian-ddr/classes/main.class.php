@@ -89,7 +89,7 @@ class AxianDDRMain {
     public function admin_menu(){
         //menu DDR
         add_menu_page('Demande de recrutement', 'Demande de recrutement', 'manage_options', 'axian-ddr','','dashicons-megaphone');
-        add_submenu_page( 'axian-ddr', 'Tous les DDR', 'Tous les DDR','manage_options', 'axian-ddr', 'AxianDDR::template_list');
+        $hook = add_submenu_page( 'axian-ddr', 'Tous les DDR', 'Tous les DDR','manage_options', 'axian-ddr', 'AxianDDR::template_list');
         add_submenu_page( 'axian-ddr', 'Nouvelle DDR', 'Nouvelle DDR','manage_options', 'new-axian-ddr','AxianDDR::template_edit');
 
         //menu admin
@@ -97,9 +97,49 @@ class AxianDDRMain {
         add_submenu_page( 'axian-ddr-admin', 'Réglage général', 'Réglage général','manage_options', 'axian-ddr-admin','AxianDDRAdministration::template');
         add_submenu_page( 'axian-ddr-admin', 'Termes de taxonomie', 'Termes de taxonomie','manage_options', 'axian-ddr-admin&tab=term', 'AxianDDRAdministration::template');
 
-        //
+        // creating options like per page data(pagination)
+        add_action( "load-".$hook, array($this,'add_options' ));
+
+
     }
 
+
+    function add_options() {
+
+        $option = 'per_page';
+
+        $args = array(
+
+            'label' => 'Nombres par pages',
+
+            'default' => 10,
+
+            'option' => 'results_per_page'
+
+        );
+
+        add_screen_option( $option, $args );
+
+        // Creating help tab
+        add_action( 'current_screen',array($this,'my_admin_add_help_tab'));
+
+    }
+
+    function my_admin_add_help_tab() {
+
+        $screen = get_current_screen();
+
+        // Add my_help_tab if current screen is My Admin Page
+
+        $screen->add_help_tab( array(
+
+            'id'    => 'ddr_help_tab',
+
+            'title' => 'Option',
+
+            'content'   => '<p>' . __( 'Options pour affichage list DDR.' ) . '</p>',
+        ) );
+    }
 
     public function axian_ddr_admin_enqueue_scripts(){
         wp_enqueue_script('axian-ddr-chosen', AXIANDDR_PLUGIN_URL.'/js/chosen.jquery.js');

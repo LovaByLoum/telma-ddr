@@ -64,7 +64,7 @@ class AxianDDRList extends WP_Filter_List_Table{
                 $lieu = AxianDDRTerm::getby_id($item->lieu_travail);
                 return $lieu['label'];
                 break;
-            case 'type_candidature':
+            case 'candidature':
                 return ($item->type_candidature == CANDIDATURE_INTERNE) ? 'Interne' : 'Externe';
                 break;
             default:
@@ -79,6 +79,7 @@ class AxianDDRList extends WP_Filter_List_Table{
         $sortable_columns = array(
             'id' => array('id',false),
             'title' => array('title',false),
+            'created' => array('created',false),
         );
 
         return $sortable_columns;
@@ -88,7 +89,7 @@ class AxianDDRList extends WP_Filter_List_Table{
         $filterable_columns = array(
             'title' => array('type' => 'text'),
             'type' => array('type' => 'select', 'options' => $this->type),
-            'type_candidature' => array('type' => 'select', 'options' => $this->candidature),
+            'candidature' => array('type' => 'select', 'options' => $this->candidature),
         );
 
         return $filterable_columns;
@@ -105,12 +106,12 @@ class AxianDDRList extends WP_Filter_List_Table{
 
         $columns = array(
             'id' => 'Numéro du ticket',
-            'type' => 'Type de la demande',
-            'title' => 'Titre de la demande',
+            'title' => 'Titre',
             'direction' => 'Direction',
+            'type' => 'Type de demande',
             'departement' => 'Département',
             'lieu' => 'Lieu',
-            'type_candidature' => 'Type de candidature',
+            'candidature' => 'Type de candidature',
             'created' => 'Date de création',
         );
 
@@ -125,19 +126,23 @@ class AxianDDRList extends WP_Filter_List_Table{
         $hidden   = array();
         $sortable = $this->get_sortable_columns();
         $this->_column_headers = array( $columns, $hidden, $sortable );
+        $user = get_current_user_id();
 
-        $per_page = 10;
+        $screen = get_current_screen();
 
+        $option = $screen->get_option('per_page', 'option');
+
+        $per_page = get_user_meta($user, $option, true);
+        var_dump($option);
         $current_page = $this->get_pagenum();
         $current_page = ($current_page -1 ) * $per_page;
 
-        $total = self::count_result();
         $resultats = AxianDDR::getby(array(
             'offset' => $current_page,
-            'limit' => $per_page)
-        );
+            'limit' => $per_page,
+        ));
         $this->set_pagination_args( array(
-            'total_items' => $total,
+            'total_items' => intval($resultats["count"]),
             'per_page'    => $per_page
         ));
 
@@ -146,21 +151,16 @@ class AxianDDRList extends WP_Filter_List_Table{
 
     function column_id( $item ) {
 
-        // create a nonce
-        $delete_nonce = wp_create_nonce( 'addr_delete_term' .absint( $item->id ) );
         $title = '<strong>DDR-' . $item->id . '</strong>';
 
         $actions = [
+            'view' => sprintf( '<a href="?page=%s&action=%s&id=%s">Afficher</a>', 'new-axian-ddr','view', absint( $item->id ) ),
             'edit' => sprintf( '<a href="?page=%s&action=%s&id=%s">Editer</a>', esc_attr( $_REQUEST['page'] ), 'edit', absint( $item->id ) ),
-            'delete' => sprintf( '<a href="?page=%s&action=%s&id=%s&_wpnonce=%s">Supprimer</a>', esc_attr( $_REQUEST['page'] ), 'delete', absint( $item->id ), $delete_nonce )
+            'delete' => sprintf( '<a href="?page=%s&action=%s&id=%s">Supprimer</a>', esc_attr( $_REQUEST['page'] ), 'delete', absint( $item->id ) )
         ];
 
         return $title . $this->row_actions( $actions );
     }
 
-    function count_result(){
-        global $wpdb;
-        return intval($wpdb->get_var("SELECT COUNT(*) FROM ".TABLE_AXIAN_DDR ));
-    }
 
 }

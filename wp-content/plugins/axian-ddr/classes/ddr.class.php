@@ -234,7 +234,34 @@ class AxianDDR{
     }
 
     public static function update($args){
+        global $wpdb;
+        $now = date("Y-m-d");
+        $args = array_merge(self::$default, $args);
+        $s =str_replace('/','-',$args['date_previsionnel']);
+        $date = date('Y/m/d',strtotime($s));
 
+        return $wpdb->update(
+            TABLE_AXIAN_DDR,
+            array(
+                'type' => $args['type'],
+                'direction' => $args['direction'],
+                'title' => $args['title'],
+                'departement' => $args['departement'],
+                'superieur_id' => intval($args['superieur_id']),
+                'lieu_travail' => $args['lieu_travail'],
+                'batiment' => $args['batiment'],
+                'motif' => $args['motif'],
+                'dernier_titulaire' => $args['dernier_titulaire'],
+                'date_previsionnel' => $date,
+                'comment' => $args['comment'],
+                'assignee_id' => intval($args['assignee_id']),
+                'type_candidature' => $args['type_candidature'],
+                'modified' => $now,
+                'etat' => $args['etat'],
+
+            ),
+            array( 'id' => $args['id'] )
+        );
     }
 
     public static function delete($id){
@@ -242,7 +269,10 @@ class AxianDDR{
     }
 
     public static function getbyId($id){
+        global $wpdb;
+        $result = $wpdb->get_row('SELECT * FROM '. TABLE_AXIAN_DDR . ' WHERE id = '.$id ,ARRAY_A);
 
+        return $result;
     }
 
     public function submit_ddr(){
@@ -257,7 +287,7 @@ class AxianDDR{
                     'msg' => $msg,
                 );
             } else {
-                //process ad term
+                //process add term
                 $post_data = $_POST;
                 if (strpos($post_data['direction'], 'new|') !== false) {
                     $label = str_replace( 'new|','',$post_data['direction']);
@@ -303,7 +333,7 @@ class AxianDDR{
                 }
 
             }
-        } elseif ( isset($_POST['update-term']) ){
+        } elseif ( isset($_POST['update-ddr']) || isset($_POST['publish-ddr']) ){
             $msg = axian_ddr_valiate_fields($this);
 
             if ( !empty($msg) ){
@@ -312,21 +342,44 @@ class AxianDDR{
                     'msg' => $msg,
                 );
             } else {
-                //process update term
+                //process add term
                 $post_data = $_POST;
-                $return_update = self::update(
-                    $post_data['id'],
-                    $post_data['type'],
-                    $post_data['label']
-                );
+                $post_data['etat'] = ( !empty($_POST['publish-ddr']) ) ? STATUS_EN_COURS : $post_data['etat'];
+                if (strpos($post_data['direction'], 'new|') !== false) {
+                    $label = str_replace( 'new|','',$post_data['direction']);
+                    $new = AxianDDRTerm::add('direction', $label);
+                    if ( $new != false ) $post_data['direction'] = $new;
+                }
 
-                if ( $return_update ){
+                if (strpos($post_data['departement'], 'new|') !== false) {
+                    $label = str_replace( 'new|','',$post_data['departement']);
+                    $new = AxianDDRTerm::add('departement', $label);
+                    if ( $new != false ) $post_data['departement'] = $new;
+                }
+
+                if (strpos($post_data['lieu_travail'], 'new|') !== false) {
+                    $label = str_replace( 'new|','',$post_data['lieu_travail']);
+                    $new = AxianDDRTerm::add('lieu', $label);
+                    if ( $new != false ) $post_data['lieu_travail'] = $new;
+                }
+
+                $return_add = self::update( $post_data );
+
+                if ( !empty($return_add) ){
                     //unset post
+                    unset($_POST['title']);
+                    unset($_POST['author_id']);
+                    unset($_POST['superieur_id']);
+                    unset($_POST['motif']);
+                    unset($_POST['departement']);
+                    unset($_POST['lieu_travail']);
+                    unset($_POST['dernier_titulaire']);
+                    unset($_POST['assignee_id']);
+                    unset($_POST['date_previsionnel']);
+                    unset($_POST['comment']);
                     unset($_POST['id']);
-                    unset($_POST['type']);
-                    unset($_POST['label']);
-                    unset($_GET['id']);
-
+                    unset($_POST['etat']);
+                    unset($_POST['direction']);
                     return array(
                         'code' => 'updated',
                         'msg' => 'Enregistrement effectué avec succés.',
@@ -394,22 +447,28 @@ class AxianDDR{
             $query_select .= " AND type='{$type}'";
         }
 
+        //type_candidature
+        $candidature = ( isset($_GET['candidature']) && !empty($_GET['candidature']) ) ? $_GET['candidature'] : $args['candidature'];
+        if ( !is_null($candidature) ){
+            $query_select .= " AND type_candidature='{$candidature}'";
+        }
+
+        //title
+        $title = ( isset($_GET['title']) && !empty($_GET['title']) ) ? $_GET['title'] : $args['title'];
+        if ( !is_null($title) ){
+            $query_select .= " AND title LIKE '%{$title}%'";
+        }
+
         //date_debut
         $debut = ( isset($_GET['debut']) && !empty($_GET['debut']) ) ? $_GET['debut'] : $args['debut'];
-        if ( !is_null($type) ){
-            $query_select .= " AND type='{$debut}'";
+        if ( !is_null($debut) ){
+            $query_select .= " AND debut='{$debut}'";
         }
 
         //date_fin
         $fin = ( isset($_GET['fin']) && !empty($_GET['fin']) ) ? $_GET['fin'] : $args['fin'];
-        if ( !is_null($type) ){
-            $query_select .= " AND type='{$fin}'";
-        }
-
-        //type_candidature
-        $candidature = ( isset($_GET['candidature']) && !empty($_GET['candidature']) ) ? $_GET['candidature'] : $args['candidature'];
-        if ( !is_null($type) ){
-            $query_select .= " AND type_candidature='{$candidature}'";
+        if ( !is_null($fin) ){
+            $query_select .= " AND fin='{$fin}'";
         }
 
         //ordre
@@ -423,9 +482,9 @@ class AxianDDR{
         }
 
         $result = $wpdb->get_results($query_select);
-
+        $count = $wpdb->get_var( "SELECT FOUND_ROWS()" );
         return array(
-            'count' => sizeof($result),
+            'count' => $count,
             'items' => $result
         );
 
