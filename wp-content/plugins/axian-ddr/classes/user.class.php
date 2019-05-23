@@ -35,7 +35,7 @@ class AxianDDRUser{
         $element->display_name      =   $user->data->display_name;
         $element->email             =   $user->data->user_email;
         $element->pseudo            =   $user->data->user_login;
-        $element->role              =   $user->roles[0];
+        $element->role              =   $user->roles;
         $element->register          =   mysql2date( get_option( 'date_format' ), $user->data->user_registered );
 
         //$element->phone_number      =   get_user_meta( $user->ID, "num_phone_user", true );

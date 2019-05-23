@@ -205,6 +205,7 @@ class AxianDDR{
     }
 
     public static function template_edit(){
+        setlocale (LC_TIME, 'fr_FR.utf8','fra');
         if ( 'view' == $_GET['action'] ){
             include AXIAN_DDR_PATH . '/templates/ddr/ddr-view.tpl.php';
         }else include AXIAN_DDR_PATH . '/templates/ddr/ddr-edit.tpl.php';
