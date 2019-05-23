@@ -1,16 +1,13 @@
-<?php
-?>
-<div class="col-wrap">
-	<form id="posts-filter" method="get" action="">
-		<h2>Liste des demandes</h2>
+<div class="wrap">
+    <h1 class="wp-heading-inline">Demandes de recrutement</h1><a href="admin.php?page=new-axian-ddr" class="page-title-action">Ajouter</a>
 
+	<form id="posts-filter" method="get" action="admin.php?page=axian-ddr">
+        <input type="hidden" name="page" value="axian-ddr"/>
 		<?php
-		$list_ddr = new AxianDDRList();
-		$list_ddr->prepare_items();
-		$list_ddr->display();
+        global $DDRListTable;
+        $DDRListTable->prepare_items();
+        $DDRListTable->display();
 		?>
-
 	</form>
-
 
 </div>

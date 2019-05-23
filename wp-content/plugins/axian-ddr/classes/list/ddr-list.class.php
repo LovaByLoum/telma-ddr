@@ -1,12 +1,12 @@
 <?php
 class AxianDDRList extends WP_Filter_List_Table{
 
-    public $type = array(
+    public static $type = array(
         TYPE_DEMANDE_PREVU => 'Prévu',
         TYPE_DEMANDE_NON_PREVU => 'Non prévu',
     );
 
-    public $candidature = array(
+    public static $candidature = array(
         CANDIDATURE_INTERNE => 'Interne',
         CANDIDATURE_EXTERNE => 'Externe',
     );
@@ -17,6 +17,21 @@ class AxianDDRList extends WP_Filter_List_Table{
             'plural'    => 'Liste des demandes',
             'ajax'      =>  false
         ) );
+    }
+
+
+    public static function load_hook(){
+        global $DDRListTable;
+
+        $option = 'per_page';
+        $args = array(
+            'label' => 'DDR',
+            'default' => 20,
+            'option' => 'ddr_per_page'
+        );
+        add_screen_option( $option, $args );
+
+        $DDRListTable = new AxianDDRList();
     }
 
     function no_items() {
@@ -33,7 +48,7 @@ class AxianDDRList extends WP_Filter_List_Table{
                 return $item->id;
                 break;
             case 'type':
-                return ($item->type == TYPE_DEMANDE_PREVU) ? 'Prévu' : 'Non prévu';
+                return self::$type[$item->$column_name];
                 break;
             case 'title':
                 return $item->title;
@@ -42,22 +57,16 @@ class AxianDDRList extends WP_Filter_List_Table{
                 return strftime("%d %b %Y", strtotime($item->created) );
                 break;
             case 'direction':
-                $direction = AxianDDRTerm::getby_id($item->direction);
-                return $direction['label'];
-                break;
             case 'departement':
-                $departement = AxianDDRTerm::getby_id($item->departement);
-                return $departement['label'];
-                break;
-            case 'lieu':
-                $lieu = AxianDDRTerm::getby_id($item->lieu_travail);
-                return $lieu['label'];
+            case 'lieu_travail':
+                $term = AxianDDRTerm::getby_id($item->$column_name);
+                return $term['label'];
                 break;
             case 'type_candidature':
-                return ($item->type_candidature == CANDIDATURE_INTERNE) ? 'Interne' : 'Externe';
+                return self::$candidature[$item->$column_name];
                 break;
             default:
-                return print_r( $item, true ) ;
+                return $item->$column_name ;
         }
     }
 
@@ -95,12 +104,19 @@ class AxianDDRList extends WP_Filter_List_Table{
         $columns = array(
             'id' => 'Numéro du ticket',
             'type' => 'Type de la demande',
+            'author_id' => 'Créateur',
+            'assignee_id' => 'Attribution',
             'title' => 'Titre de la demande',
+            'etat' => 'Etat',
+            'etape' => 'Etape',
             'direction' => 'Direction',
             'departement' => 'Département',
-            'lieu' => 'Lieu',
+            'lieu_travail' => 'Lieu',
             'type_candidature' => 'Type de candidature',
+            'motif' => 'Motif',
+            'date_previsionnel' => 'Date prévisionnelle',
             'created' => 'Date de création',
+            'modified' => 'Date de modification',
         );
 
         return $columns;
@@ -110,19 +126,19 @@ class AxianDDRList extends WP_Filter_List_Table{
      * Fonction qui gère les données à afficher
      */
     function prepare_items() {
-        $columns  = $this->get_columns();
+        /*$columns  = $this->get_columns();
         $hidden   = array();
         $sortable = $this->get_sortable_columns();
-        $this->_column_headers = array( $columns, $hidden, $sortable );
+        $this->_column_headers = array( $columns, $hidden, $sortable );*/
+        $this->_column_headers = $this->get_column_info();
 
-        $per_page = 10;
-
+        $per_page = $this->get_items_per_page('ddr_per_page', 20);
         $current_page = $this->get_pagenum();
-        $current_page = ($current_page -1 ) * $per_page;
+        $offset = ($current_page -1 ) * $per_page;
 
         $total = self::count_result();
         $resultats = AxianDDR::getby(array(
-            'offset' => $current_page,
+            'offset' => $offset,
             'limit' => $per_page)
         );
         $this->set_pagination_args( array(

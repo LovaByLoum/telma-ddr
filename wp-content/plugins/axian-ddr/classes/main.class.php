@@ -6,7 +6,7 @@ class AxianDDRMain {
         add_action( 'admin_init', array($this,'install') );
         add_action( 'admin_menu',array($this,'admin_menu') );
         add_action( 'admin_enqueue_scripts', array($this,'admin_enqueue_scripts') );
-
+        add_filter( 'set-screen-option', array( $this ,'set_screen_option'), 999, 3);
     }
 
     public static function install(){
@@ -88,8 +88,9 @@ class AxianDDRMain {
 
     public function admin_menu(){
         //menu DDR
-        add_menu_page('Demande de recrutement', 'Demande de recrutement', 'manage_options', 'axian-ddr','','dashicons-megaphone');
-        add_submenu_page( 'axian-ddr', 'Toutes les demandes', 'Toutes les demandes','manage_options', 'axian-ddr', 'AxianDDR::template_list');
+        add_menu_page('Demande de recrutement', 'Demande de recrutement', 'manage_options', 'axian-ddr','AxianDDR::template_list','dashicons-megaphone');
+        $hook = add_submenu_page( 'axian-ddr', 'Toutes les demandes', 'Toutes les demandes','manage_options', 'axian-ddr', 'AxianDDR::template_list');
+        add_action( "load-{$hook}", 'AxianDDRList::load_hook' );
         add_submenu_page( 'axian-ddr', 'Faire une demande', 'Faire une demande','manage_options', 'new-axian-ddr','AxianDDR::template_edit');
 
         //menu admin
@@ -115,5 +116,8 @@ class AxianDDRMain {
     }
 
 
+    public function set_screen_option($status, $option, $value) {
+         return $value;
+    }
 
 }

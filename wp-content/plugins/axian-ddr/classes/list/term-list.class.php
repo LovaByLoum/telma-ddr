@@ -94,8 +94,8 @@ class AxianDDRTermList extends WP_Filter_List_Table{
         $title = '<strong>' . $item->label . '</strong>';
 
         $actions = [
-            'edit' => sprintf( '<a href="?page=%s&tab=term&action=%s&id=%s">Edit</a>', esc_attr( $_REQUEST['page'] ), 'edit', absint( $item->id ) ),
-            'delete' => sprintf( '<a href="?page=%s&tab=term&action=%s&id=%s&_wpnonce=%s">Delete</a>', esc_attr( $_REQUEST['page'] ), 'delete', absint( $item->id ), $delete_nonce )
+            'edit' => sprintf( '<a href="?page=%s&tab=term&action=%s&id=%s">Modifier</a>', esc_attr( $_REQUEST['page'] ), 'edit', absint( $item->id ) ),
+            'delete' => sprintf( '<a href="?page=%s&tab=term&action=%s&id=%s&_wpnonce=%s">Supprimer</a>', esc_attr( $_REQUEST['page'] ), 'delete', absint( $item->id ), $delete_nonce )
         ];
 
         return $title . $this->row_actions( $actions );

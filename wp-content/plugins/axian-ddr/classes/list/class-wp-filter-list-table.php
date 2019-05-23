@@ -3,7 +3,6 @@ if( ! class_exists( 'WP_List_Table' ) ) {
     require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
 }
 class WP_Filter_List_Table extends WP_List_Table{
-
     function __construct( $args = array() ){
         parent::__construct($args);
     }
@@ -26,6 +25,7 @@ class WP_Filter_List_Table extends WP_List_Table{
             }
             input.filter-text{
                 padding: 5px!important;
+                width: 100%;
             }
             select.filter-select{
                 padding: 5px!important;
@@ -85,7 +85,12 @@ class WP_Filter_List_Table extends WP_List_Table{
         $count_col = 0;
         $button_search = "<button type='submit' class='filter-button button dashicons-before dashicons-search'></button>";
         foreach ( $columns as $column_key => $column_display_name ) {
-            $class = array( 'filter-column', "filter-column-$column_key" );
+            $class = array(
+                'manage-column',
+                "column-$column_key",
+                'filter-column',
+                "filter-column-$column_key"
+            );
 
             if ( in_array( $column_key, $hidden ) ) {
                 $class[] = 'hidden';
@@ -151,4 +156,5 @@ class WP_Filter_List_Table extends WP_List_Table{
             $count_col++;
         }
     }
+
 }
