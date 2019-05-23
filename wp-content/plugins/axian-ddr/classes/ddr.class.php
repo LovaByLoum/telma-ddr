@@ -358,7 +358,7 @@ class AxianDDR{
             } else {
                 //process add term
                 $post_data = $_POST;
-                $post_data['etat'] = ( !empty($_POST['publish-ddr']) ) ? STATUS_EN_COURS : $post_data['etat'];
+                $post_data['etat'] = ( !empty($_POST['publish-ddr']) ) ? DDR_STATUS_EN_COURS : $post_data['etat'];
                 if (strpos($post_data['direction'], 'new|') !== false) {
                     $label = str_replace( 'new|','',$post_data['direction']);
                     $new = AxianDDRTerm::add('direction', $label);

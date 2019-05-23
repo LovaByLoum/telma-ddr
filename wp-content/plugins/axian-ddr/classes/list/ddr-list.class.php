@@ -174,8 +174,8 @@ class AxianDDRList extends WP_Filter_List_Table{
 
         $actions = [
 			'view' => sprintf( '<a href="?page=%s&action=%s&id=%s">Afficher</a>', 'new-axian-ddr','view', absint( $item->id ) ),
-            'edit' => sprintf( '<a href="?page=%s&action=%s&id=%s">Editer</a>', esc_attr( $_REQUEST['page'] ), 'edit', absint( $item->id ) ),
-            'delete' => sprintf( '<a href="?page=%s&action=%s&id=%s&_wpnonce=%s">Supprimer</a>', esc_attr( $_REQUEST['page'] ), 'delete', absint( $item->id ), $delete_nonce )
+            'edit' => sprintf( '<a href="?page=%s&action=%s&id=%s">Editer</a>', 'new-axian-ddr', 'edit', absint( $item->id ) ),
+            'delete' => sprintf( '<a href="?page=%s&action=%s&id=%s&_wpnonce=%s">Supprimer</a>', 'new-axian-ddr', 'delete', absint( $item->id ), $delete_nonce )
         ];
 
         return $title . $this->row_actions( $actions );
