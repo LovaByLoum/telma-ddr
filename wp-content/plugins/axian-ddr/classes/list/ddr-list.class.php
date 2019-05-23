@@ -1,16 +1,6 @@
 <?php
 class AxianDDRList extends WP_Filter_List_Table{
 
-    public static $type = array(
-        TYPE_DEMANDE_PREVU => 'Prévu',
-        TYPE_DEMANDE_NON_PREVU => 'Non prévu',
-    );
-
-    public static $candidature = array(
-        CANDIDATURE_INTERNE => 'Interne',
-        CANDIDATURE_EXTERNE => 'Externe',
-    );
-
     function __construct(){
         parent::__construct( array(
             'singular'  => 'Liste des demandes',
@@ -48,13 +38,17 @@ class AxianDDRList extends WP_Filter_List_Table{
                 return $item->id;
                 break;
             case 'type':
-                return self::$type[$item->$column_name];
+                return AxianDDR::$types_demande[$item->$column_name];
                 break;
             case 'title':
                 return $item->title;
                 break;
+            case 'modified':
             case 'created':
-                return strftime("%d %b %Y", strtotime($item->created) );
+                return strftime("%d %b %Y %H:%M:%S", strtotime($item->$column_name) );
+                break;
+            case 'date_previsionnel':
+                return strftime("%d %b %Y", strtotime($item->$column_name) );
                 break;
             case 'direction':
             case 'departement':
@@ -62,8 +56,19 @@ class AxianDDRList extends WP_Filter_List_Table{
                 $term = AxianDDRTerm::getby_id($item->$column_name);
                 return $term['label'];
                 break;
+            case 'author_id':
+            case 'assignee_id':
+                $user = AxianDDRUser::getById($item->$column_name);
+                return $user->display_name;
+                break;
             case 'type_candidature':
-                return self::$candidature[$item->$column_name];
+                return AxianDDR::$types_candidature[$item->$column_name];
+                break;
+            case 'etat':
+                return AxianDDR::$etats[$item->$column_name];
+                break;
+            case 'etape':
+                return AxianDDR::$etapes[$item->$column_name];
                 break;
             default:
                 return $item->$column_name ;
@@ -77,6 +82,18 @@ class AxianDDRList extends WP_Filter_List_Table{
         $sortable_columns = array(
             'id' => array('id',false),
             'title' => array('title',false),
+            'type' => array('type',false),
+            'author_id' => array('author_id',false),
+            'assignee_id' => array('assignee_id',false),
+            'etat' => array('etat',false),
+            'etape' => array('etape',false),
+            'direction' => array('direction',false),
+            'departement' => array('departement',false),
+            'lieu_travail' => array('lieu_travail',false),
+            'type_candidature' => array('type_candidature',false),
+            'date_previsionnel' => array('date_previsionnel',false),
+            'created' => array('created',false),
+            'modified' => array('modified',false),
         );
 
         return $sortable_columns;
@@ -85,8 +102,8 @@ class AxianDDRList extends WP_Filter_List_Table{
     function get_filterable_columns() {
         $filterable_columns = array(
             'title' => array('type' => 'text'),
-            'type' => array('type' => 'select', 'options' => $this->type),
-            'type_candidature' => array('type' => 'select', 'options' => $this->candidature),
+            'type' => array('type' => 'select', 'options' => AxianDDR::$types_demande),
+            'type_candidature' => array('type' => 'select', 'options' => AxianDDR::$types_candidature),
         );
 
         return $filterable_columns;

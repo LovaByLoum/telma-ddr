@@ -8,6 +8,7 @@ Author: Njaratiana
 
 define ( 'AXIAN_DDR_PATH', dirname(__FILE__) );
 require_once ('inc/constantes.inc.php');
+require_once('classes/user.class.php');
 require_once('classes/main.class.php');
 require_once('classes/administration.class.php');
 require_once('classes/historique.class.php');

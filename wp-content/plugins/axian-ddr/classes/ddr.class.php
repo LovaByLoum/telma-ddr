@@ -18,9 +18,27 @@ class AxianDDR{
         CANDIDATURE_EXTERNE => 'Externe',
     );
 
+    public static $etats = array(
+        DDR_STATUS_DRAFT => 'Brouillon',
+        DDR_STATUS_VALIDE => 'Validé',
+        DDR_STATUS_EN_COURS => 'En cours',
+        DDR_STATUS_REFUSE => 'Refusé',
+        DDR_STATUS_ANNULE => 'Annulé',
+        DDR_STATUS_CLOTURE => 'Clôturé',
+    );
+
+    public static $etapes = array(
+        DDR_STEP_CREATE => 'Création',
+        DDR_STEP_VALIDATION_1 => 'Validation N1',
+        DDR_STEP_VALIDATION_2 => 'Validation N2',
+        DDR_STEP_VALIDATION_3 => 'Validation N3',
+        DDR_STEP_VALIDATION_4 => 'Validation N4',
+        DDR_STEP_PUBLISH => 'Publication',
+    );
+
     public static $default = array(
-        'etat' => STATUS_EN_COURS,
-        'etape' =>"validation"
+        'etat' => DDR_STATUS_EN_COURS,
+        'etape' => DDR_STEP_VALIDATION_1
 
     );
 
@@ -192,8 +210,8 @@ class AxianDDR{
 
     public static function add($args){
         global $wpdb;
-        $status = ( isset($args['submit-ddr']) && !empty($args['submit-ddr']) ) ? STATUS_EN_COURS : STATUS_DRAFT;
-        $now = date("Y-m-d");
+        $status = ( isset($args['submit-ddr']) && !empty($args['submit-ddr']) ) ? DDR_STATUS_EN_COURS : DDR_STATUS_DRAFT;
+        $now = date("Y-m-d H:i:s");
         $args = array_merge(self::$default, $args);
         $s =str_replace('/','-',$args['date_previsionnel']);
         $date = date('Y/m/d',strtotime($s));
@@ -245,7 +263,7 @@ class AxianDDR{
 
         setlocale (LC_TIME, 'fr_FR.utf8','fra');
         if ( isset($_POST['submit-ddr']) || isset($_POST['save-ddr']) ){
-            $msg = axian_ddr_valiate_fields($this);
+            $msg = axian_ddr_validate_fields($this);
 
             if ( !empty($msg) ){
                 return array(
@@ -300,7 +318,7 @@ class AxianDDR{
 
             }
         } elseif ( isset($_POST['update-term']) ){
-            $msg = axian_ddr_valiate_fields($this);
+            $msg = axian_ddr_validate_fields($this);
 
             if ( !empty($msg) ){
                 return array(
@@ -357,7 +375,7 @@ class AxianDDR{
 
                     return array(
                         'code' => 'updated',
-                        'msg' => 'Suppresion effectué avec succés.',
+                        'msg' => 'Suppresion effectuée avec succés.',
                     );
                 }
 

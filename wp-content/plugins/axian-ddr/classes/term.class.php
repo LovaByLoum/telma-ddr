@@ -43,7 +43,7 @@ class AxianDDRTerm{
 
     public function submit_term(){
         if ( isset($_POST['submit-term']) ){
-            $msg = axian_ddr_valiate_fields($this);
+            $msg = axian_ddr_validate_fields($this);
 
             if ( !empty($msg) ){
                 return array(
@@ -76,7 +76,7 @@ class AxianDDRTerm{
 
             }
         } elseif ( isset($_POST['update-term']) ){
-            $msg = axian_ddr_valiate_fields($this);
+            $msg = axian_ddr_validate_fields($this);
 
             if ( !empty($msg) ){
                 return array(

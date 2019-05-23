@@ -78,7 +78,7 @@ function axian_ddr_render_field( $field, $post_data = null ){
 }
 
 //validate fields
-function axian_ddr_valiate_fields( $object, $post_data = null ){
+function axian_ddr_validate_fields( $object, $post_data = null ){
     $msg = '';
     if ( is_null($post_data) ) $post_data = $_POST;
     if ( isset($object->fields) ){
