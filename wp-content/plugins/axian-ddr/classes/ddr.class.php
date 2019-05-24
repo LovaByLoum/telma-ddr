@@ -242,7 +242,7 @@ class AxianDDR{
         if ( $result ){
             $ddr_id =$wpdb->insert_id;
             $historique = new AxianDDRHistorique();
-            $historique_result = $historique->add($ddr_id,intval($args['author_id']),'creation','' ,$status, $args['etape']);
+            $historique_result = $historique->add($ddr_id,'creation','' ,$status, $args['etape']);
             if ( !$historique_result ) return $historique_result;
 
         }
@@ -251,13 +251,13 @@ class AxianDDR{
     }
 
     public static function update($args){
-        global $wpdb;
-        $now = date("Y-m-d");
+        global $wpdb, $current_user;
+        $now = date("Y-m-d H:i:s");
         $args = array_merge(self::$default, $args);
         $s =str_replace('/','-',$args['date_previsionnel']);
         $date = date('Y/m/d',strtotime($s));
 
-        return $wpdb->update(
+        $result = $wpdb->update(
             TABLE_AXIAN_DDR,
             array(
                 'type' => $args['type'],
@@ -279,6 +279,14 @@ class AxianDDR{
             ),
             array( 'id' => $args['id'] )
         );
+
+        if( $result && !empty($_POST['publish-ddr']) ){
+            $historique = new AxianDDRHistorique();
+            $historique_result = $historique->add($args['id'],'publier',DDR_STATUS_DRAFT ,$args['etat'], $args['etape']);
+            if ( !$historique_result ) return $historique_result;
+        }
+
+        return $result;
     }
 
     public static function delete($id){
