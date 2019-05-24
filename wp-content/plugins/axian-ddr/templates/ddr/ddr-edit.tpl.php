@@ -17,7 +17,7 @@ $result = $axian_ddr->submit_ddr();
 
     <div id="col-container" class="wp-clearfix">
 
-    <form action="<?php if (!is_null($post_data)) echo "?page=" . esc_attr( $_REQUEST['page'] )?>" id="" method="post" autocomplete="off">
+    <form action="<?php if (!is_null($post_data)) echo "?page=" . esc_attr( $_REQUEST['page'] )."&action=view&id=".$_GET['id']?>" id="" method="post" autocomplete="off">
 
         <!--demandeur & type-->
         <div class="form-row">
@@ -92,7 +92,7 @@ $result = $axian_ddr->submit_ddr();
         <?php if (!is_null($post_data)) :?>
             <input type="hidden" name="id" value="<?php echo intval($_GET['id']);?>" >
             <input type="hidden" name="etat" value="<?php echo $post_data['etat'];?>" >
-            <?php if ( STATUS_DRAFT == $post_data['etat'] ):?>
+            <?php if ( DDR_STATUS_DRAFT == $post_data['etat'] ):?>
             <input type="submit" name="publish-ddr" id="submit" class="button button-primary" value="Publier">
             <input type="submit" name="update-ddr" id="save" class="button" value="Enregistrer comme brouillon">
             <?php else : ?>

@@ -358,6 +358,7 @@
 
 .ddr-view .card .blockquote-footer{
     float: right;
+    font-size: 16px;
 }
 
 .ddr-view .card .card-header ul {
@@ -381,8 +382,26 @@
     color: antiquewhite;
 }
 
-.ddr-view .card span {
+.ddr-view .card .tab-content {
+    background: #f5f5f5;
+}
+
+.ddr-view .card .card-body.detail {
+    background: white;
+    padding-bottom: 2rem;
+}
+
+.ddr-view .card .card-body label {
    font-style: oblique;
    font-weight: bold;
-   text-decoration: underline;
+   font-size: 14px;
+   float: left;
+}
+
+.ddr-view .card .card-body p {
+   float: left;
+}
+
+.ddr-view .card .card-body h4 {
+    margin-bottom: 25px;
 }
