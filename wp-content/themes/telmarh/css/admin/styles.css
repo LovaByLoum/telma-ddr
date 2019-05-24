@@ -143,3 +143,13 @@ a:hover, .media-frame a:active, .media-frame a:hover {
 .tablenav-pages-navspan {
     height: 28px;
 }
+
+/*acf button*/
+.acf-button {
+    background: #d30630;
+    border: #8f0b28 solid 1px;
+}
+.acf-button:hover{
+    background: #f8093a;
+    border: #d30630 solid 1px;
+}
