@@ -3,10 +3,19 @@
 class AxianDDRMain {
     public function __construct()
     {
-        add_action( 'admin_init', array($this,'install') );
+        add_action( 'init', array($this,'init') );
         add_action( 'admin_menu',array($this,'admin_menu') );
         add_action( 'admin_enqueue_scripts', array($this,'admin_enqueue_scripts') );
         add_filter( 'set-screen-option', array( $this ,'set_screen_option'), 999, 3);
+    }
+
+    public function init(){
+        add_role( 'administrateur-ddr', 'Administrateurs DDR');
+        add_role( 'manager', 'Manager');
+        add_role( 'assistante-direction', 'Assistante de Direction');
+        add_role( 'assistante-rh', 'Assistante RH');
+        add_role( 'drh', 'DRH');
+        add_role( 'dg', 'DG');
     }
 
     public static function install(){
@@ -112,8 +121,13 @@ class AxianDDRMain {
         wp_enqueue_script('axian-ddr-chosen', AXIANDDR_PLUGIN_URL.'/assets/js/chosen.jquery.js');
         wp_enqueue_script('axian-ddr-date', AXIANDDR_PLUGIN_URL.'/assets/js/jquery.ui.datepicker.js');
         wp_enqueue_script('axian-ddr-date-fr', AXIANDDR_PLUGIN_URL.'/assets/js/jquery.ui.datepicker-fr.js');
-        wp_enqueue_script('axian-ddr-main', AXIANDDR_PLUGIN_URL.'/assets/js/main.js');
         wp_enqueue_script('axian-ddr-bootstrap-js', AXIANDDR_PLUGIN_URL.'/assets/js/bootstrap.min.js');
+        wp_enqueue_script( 'jquery-ui-autocomplete' );
+        wp_enqueue_script('axian-ddr-main', AXIANDDR_PLUGIN_URL.'/assets/js/main.js');
+        wp_localize_script('axian-ddr-main', 'ddr_settings', array(
+            'admin_url' => admin_url('/admin-ajax.php'),
+            'autocompletion_url' => AXIANDDR_PLUGIN_URL . '/entrypoint/autocompletion.php',
+        ));
     }
 
 

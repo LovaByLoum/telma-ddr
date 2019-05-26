@@ -104,6 +104,8 @@ class AxianDDRList extends WP_Filter_List_Table{
             'title' => array('type' => 'text'),
             'type' => array('type' => 'select', 'options' => AxianDDR::$types_demande),
             'type_candidature' => array('type' => 'select', 'options' => AxianDDR::$types_candidature),
+            'author_id' => array('type' => 'autocompletion', 'source' => 'user'),
+            'assignee_id' => array('type' => 'autocompletion', 'source' => 'user'),
         );
 
         return $filterable_columns;
@@ -139,27 +141,25 @@ class AxianDDRList extends WP_Filter_List_Table{
         return $columns;
     }
 
+
+
     /**
      * Fonction qui gère les données à afficher
      */
     function prepare_items() {
-        /*$columns  = $this->get_columns();
-        $hidden   = array();
-        $sortable = $this->get_sortable_columns();
-        $this->_column_headers = array( $columns, $hidden, $sortable );*/
+
         $this->_column_headers = $this->get_column_info();
 
         $per_page = $this->get_items_per_page('ddr_per_page', 20);
         $current_page = $this->get_pagenum();
         $offset = ($current_page -1 ) * $per_page;
 
-        $total = self::count_result();
         $resultats = AxianDDR::getby(array(
             'offset' => $offset,
             'limit' => $per_page)
         );
         $this->set_pagination_args( array(
-            'total_items' => $total,
+            'total_items' => $resultats['count'],
             'per_page'    => $per_page
         ));
 
@@ -179,11 +179,6 @@ class AxianDDRList extends WP_Filter_List_Table{
         ];
 
         return $title . $this->row_actions( $actions );
-    }
-
-    function count_result(){
-        global $wpdb;
-        return intval($wpdb->get_var("SELECT COUNT(*) FROM ".TABLE_AXIAN_DDR ));
     }
 
 }

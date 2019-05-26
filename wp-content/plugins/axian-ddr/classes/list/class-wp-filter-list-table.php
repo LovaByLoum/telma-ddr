@@ -118,7 +118,12 @@ class WP_Filter_List_Table extends WP_List_Table{
 
                 switch( $filter_info['type'] ){
                     case 'text':
-                        $filter_input = "<input type='text' value='$current' class='filter-text' name='$column_key' size='16'>";
+                        $filter_input = "<input type='text' value='$current' class='filter-text' name='$column_key'>";
+                        break;
+                    case 'autocompletion':
+                        $filter_input =
+                            "<input type='text' value='' class='filter-text ddr-autocompletion' data-source='" . $filter_info['source'] . "'>
+                            <input type='hidden' value='$current' class='ddr-autocompletion-hidden' name='$column_key'>";
                         break;
                     case 'datepicker':
                         $filter_input = "<input type='text' value='$current' class='filter-text datepicker' name='$column_key' readonly>";
