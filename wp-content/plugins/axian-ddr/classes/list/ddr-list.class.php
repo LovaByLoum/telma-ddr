@@ -113,9 +113,9 @@ class AxianDDRList extends WP_Filter_List_Table{
             'departement' => array('type' => 'select', 'options' => $axian_ddr::$departements),
             'lieu_travail' => array('type' => 'select', 'options' => $axian_ddr::$lieux),
             'motif' => array('type' => 'text'),
-            'date_previsionnel' => array('type' => 'datepicker'),
-            'created' => array('type' => 'datepicker'),
-            'modified' => array('type' => 'datepicker'),
+            'date_previsionnel' => array('type' => 'daterangepicker'),
+            'created' => array('type' => 'daterangepicker'),
+            'modified' => array('type' => 'daterangepicker'),
         );
 
         return $filterable_columns;

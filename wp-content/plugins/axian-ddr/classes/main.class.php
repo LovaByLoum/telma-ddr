@@ -115,6 +115,7 @@ class AxianDDRMain {
         //styles
         wp_enqueue_style('axian-ddr-bootstrap', AXIANDDR_PLUGIN_URL . '/assets/css/bootstrap.min.css');
         wp_enqueue_style('axian-ddr-date', AXIANDDR_PLUGIN_URL . '/assets/css/jquery-ui-datepicker.css');
+        wp_enqueue_style('axian-ddr-daterangepicker', AXIANDDR_PLUGIN_URL . '/assets/css/daterangepicker.css');
         wp_enqueue_style('axian-ddr-main', AXIANDDR_PLUGIN_URL . '/assets/css/main.css');
 
         //scripts
@@ -122,6 +123,8 @@ class AxianDDRMain {
         wp_enqueue_script('axian-ddr-date', AXIANDDR_PLUGIN_URL.'/assets/js/jquery.ui.datepicker.js');
         wp_enqueue_script('axian-ddr-date-fr', AXIANDDR_PLUGIN_URL.'/assets/js/jquery.ui.datepicker-fr.js');
         wp_enqueue_script('axian-ddr-bootstrap-js', AXIANDDR_PLUGIN_URL.'/assets/js/bootstrap.min.js');
+        wp_enqueue_script('axian-ddr-moment', AXIANDDR_PLUGIN_URL.'/assets/js/moment.min.js');
+        wp_enqueue_script('axian-ddr-daterangepicker', AXIANDDR_PLUGIN_URL.'/assets/js/daterangepicker.min.js');
         wp_enqueue_script( 'jquery-ui-autocomplete' );
         wp_enqueue_script('axian-ddr-main', AXIANDDR_PLUGIN_URL.'/assets/js/main.js');
         wp_localize_script('axian-ddr-main', 'ddr_settings', array(

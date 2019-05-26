@@ -128,6 +128,9 @@ class WP_Filter_List_Table extends WP_List_Table{
                     case 'datepicker':
                         $filter_input = "<input type='text' value='$current' class='filter-text datepicker' name='$column_key' readonly>";
                         break;
+                    case 'daterangepicker':
+                        $filter_input = "<input type='text' value='$current' class='filter-text daterangepicker-input' name='$column_key' readonly>";
+                        break;
                     case 'select':
                         $filter_input = "<select name='$column_key' class='filter-select'>";
                         $filter_input .= "<option value=''>Tous</option>";
