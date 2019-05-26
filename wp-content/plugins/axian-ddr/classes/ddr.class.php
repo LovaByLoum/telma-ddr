@@ -49,23 +49,9 @@ class AxianDDR{
     public static $lieux;
 
     public function __construct(){
-        self::$directions['']='';
-        self::$departements['']='';
-        self::$lieux['']='';
-        $obj_directions = AxianDDRTerm::getby(false, false, 'direction' )['items'];
-        $obj_departements = AxianDDRTerm::getby(false, false, 'departement' )['items'];
-        $obj_lieux = AxianDDRTerm::getby(false, false, 'lieu' )['items'];
-        foreach($obj_directions as $direction){
-            self::$directions[$direction->id] = $direction->label;
-        }
-
-        foreach($obj_departements as $departement){
-            self::$departements[$departement->id] = $departement->label;
-        }
-
-        foreach($obj_lieux as $lieu){
-            self::$lieux[$lieu->id] = $lieu->label;
-        }
+        self::$directions = AxianDDRTerm::getby(false, false, 'direction', 'options' );
+        self::$departements = AxianDDRTerm::getby(false, false, 'departement' , 'options' );
+        self::$lieux = AxianDDRTerm::getby(false, false, 'lieu' , 'options' );
 
         $this->fields = array(
             'demandeur' => array(

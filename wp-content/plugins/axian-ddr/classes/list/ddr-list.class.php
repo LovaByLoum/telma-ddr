@@ -100,12 +100,22 @@ class AxianDDRList extends WP_Filter_List_Table{
     }
 
     function get_filterable_columns() {
+        global $axian_ddr;
         $filterable_columns = array(
             'title' => array('type' => 'text'),
             'type' => array('type' => 'select', 'options' => AxianDDR::$types_demande),
             'type_candidature' => array('type' => 'select', 'options' => AxianDDR::$types_candidature),
             'author_id' => array('type' => 'autocompletion', 'source' => 'user'),
             'assignee_id' => array('type' => 'autocompletion', 'source' => 'user'),
+            'etat' => array('type' => 'select', 'options' => AxianDDR::$etats),
+            'etape' => array('type' => 'select', 'options' => AxianDDR::$etapes),
+            'direction' => array('type' => 'select', 'options' => $axian_ddr::$directions),
+            'departement' => array('type' => 'select', 'options' => $axian_ddr::$departements),
+            'lieu_travail' => array('type' => 'select', 'options' => $axian_ddr::$lieux),
+            'motif' => array('type' => 'text'),
+            'date_previsionnel' => array('type' => 'datepicker'),
+            'created' => array('type' => 'datepicker'),
+            'modified' => array('type' => 'datepicker'),
         );
 
         return $filterable_columns;

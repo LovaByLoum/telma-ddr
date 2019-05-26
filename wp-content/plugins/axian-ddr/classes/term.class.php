@@ -176,7 +176,7 @@ class AxianDDRTerm{
 
     }
 
-    public static function getby( $offset, $limit, $type = null ){
+    public static function getby( $offset=null, $limit=null, $type = null, $format = null ){
         global $wpdb;
         $query_select = "SELECT SQL_CALC_FOUND_ROWS * FROM  " . TABLE_AXIAN_DDR_TERM ;
 
@@ -187,9 +187,9 @@ class AxianDDRTerm{
         }
 
         //ordre
-        if(isset($_GET) && isset($_GET['orderby'])){
-            $query_select .= " ORDER BY {$_GET['orderby']} {$_GET['order']} ";
-        }
+        $orderby = isset($_GET['orderby']) ? $_GET['orderby'] : 'label';
+        $order = isset($_GET['order']) ? $_GET['order'] : 'ASC';
+        $query_select .= " ORDER BY {$orderby} {$order} ";
 
         //limit
         if( $offset && $limit ){
@@ -197,6 +197,14 @@ class AxianDDRTerm{
         }
 
         $result = $wpdb->get_results($query_select);
+
+        if ( $format == 'options' ){
+            $options = array();
+            foreach ( $result as $obj ){
+                $options[$obj->id] = $obj->label;
+            }
+            return $options;
+        }
 
         return array(
             'count' => sizeof($result),
