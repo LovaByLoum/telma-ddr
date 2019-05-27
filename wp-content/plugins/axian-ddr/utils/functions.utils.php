@@ -8,14 +8,14 @@
  */
 
 //render fields
-function axian_ddr_render_field( $field, $post_data = null ){
+function axian_ddr_render_field( $field, $post_data = null, $label = true ){
     if ( is_null($post_data) ) $post_data = $_POST;
 
     $current_value = (isset($post_data[$field['name']]) ? $post_data[$field['name']] : '' );
     switch ( $field['type'] ){
         case 'text' :
             ?>
-            <label for="<?php echo $field['name'];?>"><?php echo $field['label'];?><?php if (  $field['required'] ) : ?>&nbsp;<span style="color:red;">*</span><?php endif;?></label>
+            <?php if ( $label ): ?><label for="<?php echo $field['name'];?>"><?php echo $field['label'];?><?php if (  $field['required'] ) : ?>&nbsp;<span style="color:red;">*</span><?php endif;?></label><?php endif;?>
             <input name="<?php echo $field['name'];?>" type="text" id="<?php echo $field['name'];?>" value="<?php echo $current_value;?>" class="regular-text form-control <?php echo $field['class'];?>"/>
             <?php if ( isset($field['description']) && !empty($field['description']) ) : ?><p><?php echo $field['description'];?></p><?php endif;?>
             <?php
@@ -33,7 +33,7 @@ function axian_ddr_render_field( $field, $post_data = null ){
             break;
         case 'select':
             ?>
-            <label for="<?php echo $field['name'];?>"><?php echo $field['label'];?><?php if (  $field['required'] ) : ?>&nbsp;<span style="color:red;">*</span><?php endif;?></label>
+            <?php if ( $label ): ?><label for="<?php echo $field['name'];?>"><?php echo $field['label'];?><?php if (  $field['required'] ) : ?>&nbsp;<span style="color:red;">*</span><?php endif;?></label><?php endif;?>
             <select name="<?php echo $field['name'];?>" id="<?php echo $field['id'];?>" class="form-control <?php if ( $field['search'] == true ) : ?>chosen-select<?php endif;?> <?php if ( $field['add'] == true ) : ?>chosen-select-add<?php endif;?> <?php echo $field['class'];?>" tabindex="2" data-placeholder=" <?php echo $field['placeholder'];?>">
                 <?php foreach ( $field['options'] as  $val => $lib):?>
                     <option value="<?php echo $val;?>" <?php if ( $val ==  $current_value ): ?>selected<?php endif;?>><?php echo $lib;?></option>
@@ -44,14 +44,14 @@ function axian_ddr_render_field( $field, $post_data = null ){
             break;
         case 'date' :
             ?>
-            <label for="<?php echo $field['name'];?>"><?php echo $field['label'];?><?php if (  $field['required'] ) : ?>&nbsp;<span style="color:red;">*</span><?php endif;?></label>
+            <?php if ( $label ): ?><label for="<?php echo $field['name'];?>"><?php echo $field['label'];?><?php if (  $field['required'] ) : ?>&nbsp;<span style="color:red;">*</span><?php endif;?></label><?php endif;?>
             <input name="<?php echo $field['name'];?>" type="text" id="<?php echo $field['name'];?>" value="<?php echo $current_value;?>" class="regular-text datepicker <?php echo $field['class'];?>" placeholder="DD/MM/YYYY" readonly/>
             <?php if ( isset($field['description']) && !empty($field['description']) ) : ?><p><?php echo $field['description'];?></p><?php endif;?>
             <?php
             break;
         case 'wysiwyg' :
             ?>
-            <label for="<?php echo $field['name'];?>"><?php echo $field['label'];?><?php if (  $field['required'] ) : ?>&nbsp;<span style="color:red;">*</span><?php endif;?></label>
+            <?php if ( $label ): ?><label for="<?php echo $field['name'];?>"><?php echo $field['label'];?><?php if (  $field['required'] ) : ?>&nbsp;<span style="color:red;">*</span><?php endif;?></label><?php endif;?>
             <?php
             wp_editor(
                 $current_value,
@@ -63,7 +63,7 @@ function axian_ddr_render_field( $field, $post_data = null ){
             break;
         case 'textarea' :
             ?>
-            <label for="<?php echo $field['name'];?>"><?php echo $field['label'];?><?php if (  $field['required'] ) : ?>&nbsp;<span style="color:red;">*</span><?php endif;?></label>
+            <?php if ( $label ): ?><label for="<?php echo $field['name'];?>"><?php echo $field['label'];?><?php if (  $field['required'] ) : ?>&nbsp;<span style="color:red;">*</span><?php endif;?></label><?php endif;?>
             <textarea name="<?php echo $field['name'];?>" id="<?php echo $field['name'];?>" rows="<?php echo $field['rows'];?>" cols="<?php echo $field['cols'];?>" class="form-control <?php echo $field['class'];?>"><?php echo $current_value;?></textarea>
             <?php if ( isset($field['description']) && !empty($field['description']) ) : ?><p><?php echo $field['description'];?></p><?php endif;?>
             <?php
@@ -71,6 +71,14 @@ function axian_ddr_render_field( $field, $post_data = null ){
         case 'hidden' :
             ?>
             <input type="hidden" name="<?php echo $field['name'];?>" value="<?php echo $current_value;?>"/>
+            <?php
+            break;
+        case 'autocompletion' :
+            ?>
+            <?php if ( $label ): ?><label for="<?php echo $field['name'];?>"><?php echo $field['label'];?><?php if (  $field['required'] ) : ?>&nbsp;<span style="color:red;">*</span><?php endif;?></label><?php endif;?>
+            <input type="text" id="<?php echo $field['name'];?>" value="" data-source="<?php echo $field['source'];?>" class="ddr-autocompletion regular-text form-control <?php echo $field['class'];?>"/>
+            <input type="hidden" value="<?php echo $current_value;?>" class="ddr-autocompletion-hidden" name="<?php echo $field['name'];?>"/>
+            <?php if ( isset($field['description']) && !empty($field['description']) ) : ?><p><?php echo $field['description'];?></p><?php endif;?>
             <?php
             break;
     }

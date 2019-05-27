@@ -56,8 +56,7 @@ class AxianDDR{
         $this->fields = array(
             'demandeur' => array(
                 'label' => 'Demandeur',
-                'type' => 'text',
-                'size' => '50',
+                'type' => 'hidden',
                 'name' => 'author_id',
                 'required' => true,
             ),
@@ -141,8 +140,9 @@ class AxianDDR{
 
             'motif' => array(
                 'label' => 'Motif de la demande',
-                'type' => 'text',
-                'size' => '50',
+                'type' => 'textarea',
+                'cols' => '40',
+                'rows' => '4',
                 'name' => 'motif',
                 'required' => true,
             ),
@@ -165,13 +165,13 @@ class AxianDDR{
                 'type' => 'textarea',
                 'name' => 'comment',
                 'cols' => '40',
-                'rows' => '5'
+                'rows' => '4'
             ),
 
             'attribution' => array(
                 'label' => 'Attribution',
-                'type' => 'text',
-                'size' => '50',
+                'type' => 'autocompletion',
+                'source' => 'user',
                 'name' => 'assignee_id',
             ),
 

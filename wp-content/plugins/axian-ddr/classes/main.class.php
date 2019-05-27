@@ -116,6 +116,7 @@ class AxianDDRMain {
         wp_enqueue_style('axian-ddr-bootstrap', AXIANDDR_PLUGIN_URL . '/assets/css/bootstrap.min.css');
         wp_enqueue_style('axian-ddr-date', AXIANDDR_PLUGIN_URL . '/assets/css/jquery-ui-datepicker.css');
         wp_enqueue_style('axian-ddr-daterangepicker', AXIANDDR_PLUGIN_URL . '/assets/css/daterangepicker.css');
+        wp_enqueue_style('axian-ddr-chosen', AXIANDDR_PLUGIN_URL . '/assets/css/chosen.css');
         wp_enqueue_style('axian-ddr-main', AXIANDDR_PLUGIN_URL . '/assets/css/main.css');
 
         //scripts

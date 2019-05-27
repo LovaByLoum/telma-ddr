@@ -38,12 +38,28 @@ class AxianDDRUser{
         $element->role              =   $user->roles;
         $element->register          =   mysql2date( get_option( 'date_format' ), $user->data->user_registered );
 
-        //$element->phone_number      =   get_user_meta( $user->ID, "num_phone_user", true );
+        $element->company           =   get_user_meta( $user->ID, "company", true );
+        $element->manager           =   get_user_meta( $user->ID, "manager", true );
+        $element->_manager          =   get_user_meta( $user->ID, "_manager", true );
+        $element->departement       =   get_user_meta( $user->ID, "departement", true );
+        $element->description       =   get_user_meta( $user->ID, "next_ad_int_description", true );
+        $element->cn                =   get_user_meta( $user->ID, "next_ad_int_cn", true );
+        $element->classification    =   get_user_meta( $user->ID, "classification", true );
+        $element->mobile            =   get_user_meta( $user->ID, "mobile", true );
+        $element->titre             =   get_user_meta( $user->ID, "title", true );
 
 
         //...
 
         //stocker dans le tableau statique
         self::$_elements[$uid] = $element;
+    }
+
+    private static function isADUser($userId){
+        $samAccountName = get_user_meta($userId, NEXT_AD_INT_PREFIX . 'samaccountname', true);
+        if ($samAccountName) {
+            return true;
+        }
+        return false;
     }
 }
