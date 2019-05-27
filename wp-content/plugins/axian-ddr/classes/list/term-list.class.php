@@ -75,12 +75,19 @@ class AxianDDRTermList extends WP_Filter_List_Table{
         $per_page = 50;
 
         $current_page = $this->get_pagenum();
-        $current_page = ($current_page - 1) * $per_page;
+        $offset = ($current_page - 1) * $per_page;
 
-        $resultats = AxianDDRTerm::getby($current_page,$per_page);
-        $total = AxianDDRTerm::count_result();
+        $args = array(
+            'offset' => $offset,
+            'limit' => $per_page,
+            'type' => isset($_GET['type']) ? $_GET['type'] : 'tous',
+            'orderby' => isset($_GET['orderby']) ? $_GET['orderby'] : 'label',
+            'order' => isset($_GET['order']) ? $_GET['order'] : 'ASC',
+        );
+
+        $resultats = AxianDDRTerm::getby( $args );
         $this->set_pagination_args( array(
-            'total_items' => $total['tous'],
+            'total_items' => $resultats['count'],
             'per_page'    => $per_page
         ));
 

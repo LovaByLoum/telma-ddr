@@ -58,9 +58,12 @@ $count = $axian_ddr_term->count_result();
                 <form id="posts-filter" method="post" action="?page=<?php echo esc_attr( $_REQUEST['page'] );?>&tab=term">
                     <h2>Liste des termes</h2>
                     <ul class="subsubsub">
-                        <?php foreach( array_reverse($count) as $type=>$value) :?>
-                            <li><a href="admin.php?page=<?php echo esc_attr( $_REQUEST['page'] );?>&tab=term&type=<?php echo $type;?>" class="<?php if ($current_type == $type ) echo 'current';?>"><?php echo ucfirst($type);?> <span class="count">(<?php echo $value?>)</span></a> |</li>
-                        <?php endforeach;?>
+                        <?php
+                        $glue = '';
+                        foreach( array_reverse($count) as $type=>$value) :
+                            echo $glue;?>
+                            <li><a href="admin.php?page=<?php echo esc_attr( $_REQUEST['page'] );?>&tab=term&type=<?php echo $type;?>" class="<?php if ($current_type == $type ) echo 'current';?>"><?php echo ucfirst($type);?> <span class="count">(<?php echo $value?>)</span></a> </li>
+                        <?php $glue = '|'; endforeach;?>
                     </ul>
                     <?php
                     $list_term = new AxianDDRTermList();

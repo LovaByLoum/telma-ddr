@@ -7,7 +7,7 @@ jQuery(function() {
         "locale": {
             "format": "DD/MM/YYYY",
             "separator": ":",
-            "applyLabel": "Appliquer",
+            "applyLabel": "Séléctionner",
             "cancelLabel": "Réinitialiser",
             "fromLabel": "De",
             "toLabel": "A",
@@ -74,3 +74,9 @@ jQuery(function() {
 
 
 });
+
+function addParameterToURL(param){
+    _url = location.href;
+    _url += (_url.split('?')[1] ? '&':'?') + param;
+    location.href =  _url;
+}

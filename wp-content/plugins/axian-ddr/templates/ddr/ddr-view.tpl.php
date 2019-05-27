@@ -37,7 +37,7 @@ if ( null != $post_data ){
                             <div class="col-sm-6">
                                 <div class="form-group row">
                                     <label class="col-sm-5 control-label">Type de demande :</label>
-                                    <p class="col-sm-7 control-label"> <?php echo $axian_ddr::$types_demande[$post_data['type']];?> dans le budget</p>
+                                    <p class="col-sm-7 control-label"> <?php echo AxianDDR::$types_demande[$post_data['type']];?> dans le budget</p>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-sm-5 control-label">Attribution :</label>
@@ -48,19 +48,19 @@ if ( null != $post_data ){
                                 <div class="form-group row">
                                     <label class="col-sm-5 control-label">Direction :</label>
                                     <p class="col-sm-7 control-label">
-                                        <?php echo $axian_ddr::$directions[$post_data['direction']];?>
+                                        <?php echo $axian_ddr->directions[$post_data['direction']];?>
                                     </p>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-sm-5 control-label">Département :</label>
                                     <p class="col-sm-7 control-label">
-                                        <?php echo $axian_ddr::$departements[$post_data['departement']];?>
+                                        <?php echo $axian_ddr->departements[$post_data['departement']];?>
                                     </p>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-sm-5 control-label">Lieu de travail :</label>
                                     <p class="col-sm-7 control-label">
-                                        <?php echo $axian_ddr::$lieux[$post_data['lieu_travail']];?>
+                                        <?php echo $axian_ddr->lieux[$post_data['lieu_travail']];?>
                                     </p>
                                 </div>
                                 <div class="form-group row">
@@ -92,19 +92,19 @@ if ( null != $post_data ){
                                 <div class="form-group row">
                                     <label class="col-sm-5 control-label">Type de candidature :</label>
                                     <p class="col-sm-7 control-label">
-                                        <?php echo $axian_ddr::$types_candidature[$post_data['type_candidature']];?>
+                                        <?php echo AxianDDR::$types_candidature[$post_data['type_candidature']];?>
                                     </p>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-sm-5 control-label">Etat :</label>
                                     <p class="col-sm-7 control-label">
-                                        <?php echo $axian_ddr::$etats[$post_data['etat']];?>
+                                        <?php echo AxianDDR::$etats[$post_data['etat']];?>
                                     </p>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-sm-5 control-label">Etape :</label>
                                     <p class="col-sm-7 control-label">
-                                        <?php echo $axian_ddr::$etapes[$post_data['etape']];?>
+                                        <?php echo AxianDDR::$etapes[$post_data['etape']];?>
                                     </p>
                                 </div>
                                 <div class="form-group row">

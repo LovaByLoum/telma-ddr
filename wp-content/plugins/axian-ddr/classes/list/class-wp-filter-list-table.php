@@ -21,7 +21,7 @@ class WP_Filter_List_Table extends WP_List_Table{
         ?>
         <style>
             .filter-button.button{
-                padding-top: 5px!important;
+                padding: 2px!important;
             }
             input.filter-text{
                 padding: 5px!important;
@@ -31,6 +31,13 @@ class WP_Filter_List_Table extends WP_List_Table{
                 padding: 5px!important;
                 width: 100%;
             }
+            .oneline-filter{
+                display: flex!important;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+            }
+
         </style>
         <?php
     }
@@ -155,7 +162,7 @@ class WP_Filter_List_Table extends WP_List_Table{
                 }
             } else {
                 if ( $count_col == 0 ){
-                    echo "<$tag $scope $id $class>$button_search$filter_input</$tag>";
+                    echo "<$tag $scope $id $class><div class='oneline-filter'>$button_search$filter_input</div></$tag>";
                 } else {
                     echo "<$tag $scope $id $class>$filter_input</$tag>";
                 }

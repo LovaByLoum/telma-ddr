@@ -44,14 +44,14 @@ class AxianDDR{
 
     public $fields;
 
-    public static $directions;
-    public static $departements;
-    public static $lieux;
+    public $directions;
+    public $departements;
+    public $lieux;
 
     public function __construct(){
-        self::$directions = AxianDDRTerm::getby(false, false, 'direction', 'options' );
-        self::$departements = AxianDDRTerm::getby(false, false, 'departement' , 'options' );
-        self::$lieux = AxianDDRTerm::getby(false, false, 'lieu' , 'options' );
+        $this->directions = AxianDDRTerm::getby(array('type' => 'direction'), 'options' );
+        $this->departements = AxianDDRTerm::getby(array('type' => 'departement') , 'options' );
+        $this->lieux = AxianDDRTerm::getby(array('type' => 'lieu') , 'options' );
 
         $this->fields = array(
             'demandeur' => array(
@@ -80,7 +80,7 @@ class AxianDDR{
                 'search' => true,
                 'add' => true,
                 'class' => 'direction',
-                'options' => self::$directions,
+                'options' => $this->directions,
                 'placeholder' => ' '
             ),
 
@@ -101,7 +101,7 @@ class AxianDDR{
                 'search' => true,
                 'add' => true,
                 'class' =>'departement',
-                'options' => self::$departements,
+                'options' => $this->departements,
                 'placeholder' => ' '
             ),
 
@@ -122,7 +122,7 @@ class AxianDDR{
                 'search' => true,
                 'add' => true,
                 'class' =>'lieu_travail',
-                'options' => self::$lieux,
+                'options' => $this->lieux,
                 'placeholder' => ' '
             ),
 
@@ -135,7 +135,7 @@ class AxianDDR{
                 'search' => true,
                 'add' => true,
                 'class' =>'',
-                'options' => self::$lieux,
+                'options' => $this->lieux,
                 'placeholder' => ' '
             ),
 
@@ -435,61 +435,64 @@ class AxianDDR{
         }
     }
 
-    public static function getby( $args ){
-        global $wpdb;
-        $default = array(
-            'offset' => 0,
-            'limit' => null,
-            'type' => null,
-            'debut' => null,
-            'fin' => null,
-            'candidature' => null,
-            'etat' => null,
-            'etape' => null,
-        );
+    public static function getby( $field_args = array(), $supp_args = array(), $predifined_filters = '' ){
+        global $wpdb, $current_user;
 
-        $args = array_merge($default, $args);
+        $query_select = "SELECT SQL_CALC_FOUND_ROWS * FROM  " . TABLE_AXIAN_DDR . " WHERE 1=1 ";
 
-        $query_select = "SELECT SQL_CALC_FOUND_ROWS * FROM  " . TABLE_AXIAN_DDR . " WHERE id >" . 0;
+        //predefine filter
+        if ( !empty($predifined_filters) ){
+            if ( $predifined_filters == 'myvalidation' ){
+                $field_args['assignee_id'] = $current_user->ID;
+            }
 
-        //type
-        $type = ( isset($_GET['type']) && !empty($_GET['type']) ) ? $_GET['type'] : $args['type'];
-        if ( !is_null($type) ){
-            $query_select .= " AND type='{$type}'";
+            if ( $predifined_filters == 'mytickets' ){
+                $field_args['author_id'] = $current_user->ID;
+            }
+
+            if ( $predifined_filters == 'alltickets' ){
+                
+            }
         }
 
-        //type_candidature
-        $candidature = ( isset($_GET['candidature']) && !empty($_GET['candidature']) ) ? $_GET['candidature'] : $args['candidature'];
-        if ( !is_null($candidature) ){
-            $query_select .= " AND type_candidature='{$candidature}'";
+        foreach ( $field_args as $field => $value ){
+            if ( empty($value) ) continue;
+
+            switch( $field ){
+                case 'id':
+                    if ( preg_match('/DDR-([0-9]+)/', $value, $matches) ){
+                        $value = $matches[1];
+                    }
+                    $query_select .= " AND $field = '{$value}'";
+                    break;
+                case 'title':
+                case 'motif' :
+                    $query_select .= " AND $field LIKE '%{$value}%'";
+                    break;
+                case 'date_previsionnel' :
+                case 'created' :
+                case 'modified' :
+                    list($begin, $end) = explode(':', $value);
+                    list($bd, $bm, $by) = explode('/', $begin);
+                    list($ed, $em, $ey) = explode('/', $end);
+                    $mysql_begin = $by . '-' . $bm . '-' . $bd . ' 00:00:00';
+                    $mysql_end = $ey . '-' . $em . '-' . $ed . ' 23:59:59';
+                    $query_select .= " AND $field >= '{$mysql_begin}' AND $field < '{$mysql_end}' ";
+                    break;
+                default:
+                    $query_select .= " AND $field = '{$value}'";
+            }
         }
 
-        //title
-        $title = ( isset($_GET['title']) && !empty($_GET['title']) ) ? $_GET['title'] : $args['title'];
-        if ( !is_null($title) ){
-            $query_select .= " AND title LIKE '%{$title}%'";
-        }
-
-        //date_debut
-        $debut = ( isset($_GET['debut']) && !empty($_GET['debut']) ) ? $_GET['debut'] : $args['debut'];
-        if ( !is_null($debut) ){
-            $query_select .= " AND debut='{$debut}'";
-        }
-
-        //date_fin
-        $fin = ( isset($_GET['fin']) && !empty($_GET['fin']) ) ? $_GET['fin'] : $args['fin'];
-        if ( !is_null($fin) ){
-            $query_select .= " AND fin='{$fin}'";
-        }
 
         //ordre
-        if(isset($_GET) && isset($_GET['orderby'])){
-            $query_select .= " ORDER BY {$_GET['orderby']} {$_GET['order']} ";
+        if( isset($supp_args['orderby']) && isset($supp_args['order']) ){
+            $query_select .= " ORDER BY {$supp_args['orderby']} {$supp_args['order']} ";
         }
 
         //limit
-        if ( $args['limit'] != null ){
-            $query_select .= " LIMIT {$args['offset']},{$args['limit']} ";
+        if ( isset($supp_args['limit']) && isset($supp_args['offset']) ){
+            $query_select .= " LIMIT {$supp_args['offset']},{$supp_args['limit']} ";
         }
 
         $result = $wpdb->get_results($query_select);

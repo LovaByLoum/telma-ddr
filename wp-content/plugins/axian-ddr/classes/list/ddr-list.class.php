@@ -102,6 +102,7 @@ class AxianDDRList extends WP_Filter_List_Table{
     function get_filterable_columns() {
         global $axian_ddr;
         $filterable_columns = array(
+            'id' => array('type' => 'text'),
             'title' => array('type' => 'text'),
             'type' => array('type' => 'select', 'options' => AxianDDR::$types_demande),
             'type_candidature' => array('type' => 'select', 'options' => AxianDDR::$types_candidature),
@@ -109,9 +110,9 @@ class AxianDDRList extends WP_Filter_List_Table{
             'assignee_id' => array('type' => 'autocompletion', 'source' => 'user'),
             'etat' => array('type' => 'select', 'options' => AxianDDR::$etats),
             'etape' => array('type' => 'select', 'options' => AxianDDR::$etapes),
-            'direction' => array('type' => 'select', 'options' => $axian_ddr::$directions),
-            'departement' => array('type' => 'select', 'options' => $axian_ddr::$departements),
-            'lieu_travail' => array('type' => 'select', 'options' => $axian_ddr::$lieux),
+            'direction' => array('type' => 'select', 'options' => $axian_ddr->directions),
+            'departement' => array('type' => 'select', 'options' => $axian_ddr->departements),
+            'lieu_travail' => array('type' => 'select', 'options' => $axian_ddr->lieux),
             'motif' => array('type' => 'text'),
             'date_previsionnel' => array('type' => 'daterangepicker'),
             'created' => array('type' => 'daterangepicker'),
@@ -164,10 +165,23 @@ class AxianDDRList extends WP_Filter_List_Table{
         $current_page = $this->get_pagenum();
         $offset = ($current_page -1 ) * $per_page;
 
-        $resultats = AxianDDR::getby(array(
+        $get_data = $_GET;
+        unset($get_data['page']);
+        unset($get_data['orderby']);
+        unset($get_data['order']);
+        unset($get_data['prefilter']);
+
+        $args_supp = array(
             'offset' => $offset,
-            'limit' => $per_page)
+            'limit' => $per_page,
+            'orderby' => isset($_GET['orderby']) ? $_GET['orderby'] : 'id',
+            'order' => isset($_GET['order']) ? $_GET['order'] : 'ASC',
         );
+
+        $predifined_filters = isset($_GET['prefilter']) ? $_GET['prefilter'] : '';
+
+        $resultats = AxianDDR::getby($get_data, $args_supp, $predifined_filters);
+
         $this->set_pagination_args( array(
             'total_items' => $resultats['count'],
             'per_page'    => $per_page
