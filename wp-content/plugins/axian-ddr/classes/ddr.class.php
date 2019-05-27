@@ -451,7 +451,7 @@ class AxianDDR{
             }
 
             if ( $predifined_filters == 'alltickets' ){
-                
+
             }
         }
 

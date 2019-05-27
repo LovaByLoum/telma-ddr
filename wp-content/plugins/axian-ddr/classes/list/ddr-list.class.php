@@ -7,6 +7,9 @@ class AxianDDRList extends WP_Filter_List_Table{
             'plural'    => 'Liste des demandes',
             'ajax'      =>  false
         ) );
+
+        $this->filter_position = 'top';
+        //$this->filter_position = 'table';
     }
 
 
@@ -113,7 +116,7 @@ class AxianDDRList extends WP_Filter_List_Table{
             'direction' => array('type' => 'select', 'options' => $axian_ddr->directions),
             'departement' => array('type' => 'select', 'options' => $axian_ddr->departements),
             'lieu_travail' => array('type' => 'select', 'options' => $axian_ddr->lieux),
-            'motif' => array('type' => 'text'),
+            //'motif' => array('type' => 'text'),
             'date_previsionnel' => array('type' => 'daterangepicker'),
             'created' => array('type' => 'daterangepicker'),
             'modified' => array('type' => 'daterangepicker'),
@@ -143,7 +146,7 @@ class AxianDDRList extends WP_Filter_List_Table{
             'departement' => 'Département',
             'lieu_travail' => 'Lieu',
             'type_candidature' => 'Type de candidature',
-            'motif' => 'Motif',
+            //'motif' => 'Motif',
             'date_previsionnel' => 'Date prévisionnelle',
             'created' => 'Date de création',
             'modified' => 'Date de modification',

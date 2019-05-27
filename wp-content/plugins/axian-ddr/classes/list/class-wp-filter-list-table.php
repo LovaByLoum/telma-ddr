@@ -3,6 +3,7 @@ if( ! class_exists( 'WP_List_Table' ) ) {
     require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
 }
 class WP_Filter_List_Table extends WP_List_Table{
+    public $filter_position = 'top';
     function __construct( $args = array() ){
         parent::__construct($args);
     }
@@ -37,7 +38,26 @@ class WP_Filter_List_Table extends WP_List_Table{
                 justify-content: center;
                 align-items: center;
             }
-
+            #advanced-filter{
+                clear: both!important;
+                border-width: 1px;
+                border-style: solid;
+                border-color: #e5e5e5;
+                padding: 20px;
+                border-radius: 5px;
+            }
+            a[href='#advanced-filter']{
+                float: right!important;
+                font-size: 14px!important;
+            }
+            #advanced-filter .filter-button{
+                margin-top: 20px!important;
+            }
+            #advanced-filter label{
+                margin-top: 10px!important;
+                font-size: 13px!important;
+                margin-bottom: 5px!important;
+            }
         </style>
         <?php
     }
@@ -51,6 +71,10 @@ class WP_Filter_List_Table extends WP_List_Table{
 
         $this->display_styles();
         $this->display_scripts();
+        if ( $this->filter_position == 'top' ){
+            $this->print_filter_headers();
+        }
+
         $this->display_tablenav('bottom');
 
         $this->screen->render_screen_reader_content( 'heading_list' );
@@ -60,9 +84,13 @@ class WP_Filter_List_Table extends WP_List_Table{
             <tr>
                 <?php $this->print_column_headers(); ?>
             </tr>
+
+            <?php if ( $this->filter_position == 'table' ) : ?>
             <tr>
-                <?php $this->print_filter_headers(); ?>
+                <?php $this->print_filter_table(); ?>
             </tr>
+            <?php endif;?>
+
             </thead>
 
             <tbody id="the-list"<?php
@@ -83,7 +111,7 @@ class WP_Filter_List_Table extends WP_List_Table{
         $this->display_tablenav( 'bottom' );
     }
 
-    public function print_filter_headers() {
+    public function print_filter_table() {
         $filterable_columns = $this->get_filterable_columns();
         if ( empty($filterable_columns) ) return;
 
@@ -172,4 +200,59 @@ class WP_Filter_List_Table extends WP_List_Table{
         }
     }
 
+    public function print_filter_headers() {
+        $filterable_columns = $this->get_filterable_columns();
+        if ( empty($filterable_columns) ) return;
+
+        list( $columns, $hidden, $sortable, $primary ) = $this->get_column_info();
+
+        echo '<a class="btn" data-toggle="collapse" href="#advanced-filter" role="button" aria-expanded="false" aria-controls="advanced-filter">+ Filtres avancées</a>';
+        echo '<div id="advanced-filter" class="collapse clearfix">';
+        echo '<div  class="row">';
+        foreach ( $columns as $column_key => $column_display_name ) {
+
+            if ( array_key_exists($column_key, $filterable_columns) ){
+                $filter_info = $filterable_columns[$column_key];
+
+                $current = isset($_REQUEST[$column_key]) && !empty($_REQUEST[$column_key]) ? $_REQUEST[$column_key] : '';
+
+                switch( $filter_info['type'] ){
+                    case 'text':
+                        $filter_input = "<input type='text' value='$current' class='filter-text' name='$column_key'>";
+                        break;
+                    case 'autocompletion':
+                        $filter_input =
+                            "<input type='text' value='' class='filter-text ddr-autocompletion' data-source='" . $filter_info['source'] . "'>
+                            <input type='hidden' value='$current' class='ddr-autocompletion-hidden' name='$column_key'>";
+                        break;
+                    case 'datepicker':
+                        $filter_input = "<input type='text' value='$current' class='filter-text datepicker' name='$column_key' readonly>";
+                        break;
+                    case 'daterangepicker':
+                        $filter_input = "<input type='text' value='$current' class='filter-text daterangepicker-input' name='$column_key' readonly>";
+                        break;
+                    case 'select':
+                        $filter_input = "<select name='$column_key' class='filter-select'>";
+                        $filter_input .= "<option value=''>Tous</option>";
+                        if ( is_array($filter_info['options']) && !empty($filter_info['options']) ){
+                            foreach( $filter_info['options'] as $value => $label ){
+                                $selected = ($current==$value) ? 'selected' : '';
+                                $filter_input .= "<option value='$value' $selected>$label</option>";
+                            }
+                        }
+                        $filter_input .= "</select>";
+                        break;
+                }
+
+                echo "<div class='col col-md-3 col-sm-6 col-xs-12 col-12'>
+                        <label>" . $column_display_name . "</label>
+                        $filter_input
+                      </div>";
+            }
+
+        }
+        echo '</div>';
+        echo "<button type='submit' class='filter-button button dashicons-before dashicons-search'>Rechercher</button>";
+        echo '</div>';
+    }
 }
