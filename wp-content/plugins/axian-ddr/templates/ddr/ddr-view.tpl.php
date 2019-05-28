@@ -11,6 +11,7 @@ if ( null != $post_data ){
     $assignee = AxianDDRUser::getById(intval($post_data['assignee_id']));
     $author = AxianDDRUser::getById(intval($post_data['author_id']));
 }
+$historiques = AxianDDRHistorique::getByDdrId(intval($_GET['id']));
 ?>
 <div class="warp ddr-view">
 
@@ -30,7 +31,7 @@ if ( null != $post_data ){
         <!-- Tab panes -->
         <div class="tab-content">
             <div id="detail" class="container tab-pane active"><br>
-                        <h4 class="card-title text-center"><?php echo $post_data['title'];?></h4>
+                <h4 class="card-title text-center"><?php echo $post_data['title'];?></h4>
                 <div class="card-body detail">
                     <blockquote class="blockquote mb-0">
                         <div class="row">
@@ -125,9 +126,48 @@ if ( null != $post_data ){
             </div>
             <div id="historique" class="container tab-pane fade"><br>
                 <div class="card-body">
-                    <h4 class="text-center">Historique</h4>
-                </div>
+                    <fieldset class="ddr-box-bordered text-center">
+                        <legend><h4>Historiques</h4></legend>
 
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th class="libelle">Validateur</th>
+                                    <th class="libelle">Délégation</th>
+                                    <th class="libelle">Date</th>
+                                    <th class="libelle">Etat avant</th>
+                                    <th class="libelle">Etat après</th>
+                                    <th class="libelle">Etape</th>
+                                    <th class="libelle">Commentaire</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach($historiques as $key => $value):?>
+                                    <tr class=" <?php echo ($key % 2 == 0) ? 'odd' : 'even';?> ">
+                                        <td valign="top">
+                                            <?php echo $value['display_name'];?>
+                                        </td>
+                                        <td valign="top">
+                                        </td>
+                                        <td><?php echo strftime("%d %b %Y", strtotime($value['date']));?></td>
+                                        <td>
+                                            <?php echo AxianDDR::$etats[$value['etat_avant']];?>
+                                        </td>
+                                        <td>
+                                            <?php echo AxianDDR::$etats[$value['etat_apres']];?>
+                                        </td>
+                                        <td>
+                                            <?php echo AxianDDR::$etapes[$value['etape']];?>
+                                        </td>
+                                        <td>
+                                            Changement du programme
+                                        </td>
+                                    </tr>
+                                <?php endforeach;?>
+                            </tbody>
+                        </table>
+                    </fieldset>
+                </div>
             </div>
         </div>
     </div>
