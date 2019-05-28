@@ -477,7 +477,29 @@ class AxianDDR{
             }
         }
 
+        $data_authorized = array(
+            'id',
+            'author_id',
+            'type',
+            'direction',
+            'title',
+            'departement',
+            'superieur_id',
+            'lieu_travail',
+            'batiment',
+            'motif',
+            'dernier_titulaire',
+            'date_previsionnel',
+            'assignee_id',
+            'type_candidature',
+            'created',
+            'modified',
+            'etat',
+            'etape'
+        );
+
         foreach ( $field_args as $field => $value ){
+            if ( !in_array($field, $data_authorized) ) continue;
             if ( empty($value) ) continue;
 
             switch( $field ){
