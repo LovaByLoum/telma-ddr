@@ -36,7 +36,7 @@ class AxianDDRMain {
                 `batiment` text,
                 `motif` longtext,
                 `dernier_titulaire` text,
-                `date_previsionnel` datetime DEFAULT NULL,
+                `date_previsionnel` date DEFAULT NULL,
                 `comment` longtext,
                 `assignee_id` bigint(20) DEFAULT NULL COMMENT 'id de l''utilisateur assigné au ticket',
                 `type_candidature` varchar(20) DEFAULT NULL COMMENT 'Choix entre interne et externe',

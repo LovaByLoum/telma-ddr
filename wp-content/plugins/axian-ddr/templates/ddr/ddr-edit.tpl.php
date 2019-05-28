@@ -3,19 +3,23 @@ global $axian_ddr;
 global $current_user;
 $user_demandeur = AxianDDRUser::getById($current_user->ID);
 
-if ( (isset($_GET['id']) && !empty($_GET['id']) ) ){
-    $post_data = $axian_ddr->getbyId(intval($_GET['id']));
+$is_edit = isset($_GET['id']) && isset($_GET['action']) && 'edit' == $_GET['action'] && $_GET['id'] > 0;
+$the_ddr_id = null;
+
+if ( $is_edit ){
+    $the_ddr_id = intval($_GET['id']);
+    $post_data = $axian_ddr->getbyId($the_ddr_id);
 } else {
     $post_data = array(
        'author_id' => $current_user->ID
     );
 }
-$result = $axian_ddr->submit_ddr();
+$msg = $axian_ddr->submit_ddr();
 
 ?>
-<?php if ( $result ) : ?>
-    <div class="notice <?php echo $result['code'];?>">
-        <p><?php echo $result['msg'];?></p>
+<?php if ( $msg ) : ?>
+    <div class="notice <?php echo $msg['code'];?>">
+        <p><?php echo $msg['msg'];?></p>
     </div>
 <?php endif;?>
 
@@ -26,7 +30,11 @@ $result = $axian_ddr->submit_ddr();
 
     <div id="col-container" class="ddr-edit wp-clearfix">
 
-        <form action="<?php if (!is_null($post_data)) echo "?page=" . esc_attr( $_REQUEST['page'] )."&action=view&id=".$_GET['id']?>" id="" method="post" autocomplete="off">
+        <form action="<?php
+            if ( $is_edit ){
+                echo 'admin.php?page=axian-ddr&action=view&id=' . $the_ddr_id;
+            }
+        ?>" method="post" autocomplete="off">
 
 
             <fieldset class="ddr-box-bordered">
@@ -63,6 +71,11 @@ $result = $axian_ddr->submit_ddr();
                                     <?php
                                     if ( !empty($user_demandeur->manager) ){
                                         echo $user_demandeur->manager;
+                                        $post_data['superieur_id'] = $user_demandeur->manager;
+                                        axian_ddr_render_field(array(
+                                            'type' => 'hidden',
+                                            'name' => 'superieur_id'
+                                        ), $post_data, false);
                                     } else {
                                         axian_ddr_render_field(array(
                                             'type' => 'autocompletion',
@@ -96,10 +109,10 @@ $result = $axian_ddr->submit_ddr();
                             <?php axian_ddr_render_field($axian_ddr->fields['titre'],$post_data);?>
                         </div>
                         <div class="form-field">
-                            <?php axian_ddr_render_field($axian_ddr->fields['type'],$post_data);?>
+                            <?php axian_ddr_render_field($axian_ddr->fields['candidature'],$post_data);?>
                         </div>
                         <div class="form-field">
-                            <?php axian_ddr_render_field($axian_ddr->fields['candidature'],$post_data);?>
+                            <?php axian_ddr_render_field($axian_ddr->fields['dernier_titulaire'],$post_data);?>
                         </div>
                     </div>
                     <div class="form-group col-md-6">
@@ -117,6 +130,8 @@ $result = $axian_ddr->submit_ddr();
                         <div class="form-field">
                             <?php axian_ddr_render_field($axian_ddr->fields['direction'],$post_data);?>
                         </div>
+                    </div>
+                    <div class="form-group col-md-4">
                         <div class="form-field">
                             <?php axian_ddr_render_field($axian_ddr->fields['departement'],$post_data);?>
                         </div>
@@ -125,19 +140,17 @@ $result = $axian_ddr->submit_ddr();
                         <div class="form-field">
                             <?php axian_ddr_render_field($axian_ddr->fields['lieu'],$post_data);?>
                         </div>
-                        <div class="form-field">
-                            <?php axian_ddr_render_field($axian_ddr->fields['dernier_titulaire'],$post_data);?>
-                        </div>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <div class="form-field">
-                            <?php axian_ddr_render_field($axian_ddr->fields['comment'],$post_data);?>
-                        </div>
                     </div>
                 </div>
 
             </fieldset>
 
+            <fieldset class="ddr-box-bordered">
+                <legend>Annonce</legend>
+                <i class="info">Une offre sera crée avec ces informations lorsque votre demande a entièrement été validé.</i>
+
+
+            </fieldset>
 
             <fieldset class="validation-box ddr-box-bordered">
                 <legend>Validation</legend>
@@ -147,8 +160,20 @@ $result = $axian_ddr->submit_ddr();
                         <div class="form-field">
                             <?php axian_ddr_render_field($axian_ddr->fields['attribution'],$post_data);?>
                         </div>
+                        <div class="form-field">
+                            <?php axian_ddr_render_field($axian_ddr->fields['type'],$post_data);?>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <div class="form-field">
+                            <?php axian_ddr_render_field($axian_ddr->fields['comment'],$post_data);?>
+                        </div>
                     </div>
                 </div>
+            </fieldset>
+
+            <fieldset class="ddr-box-bordered">
+                <legend>Historique</legend>
 
                 <table class="table table-striped table-bordered">
                     <thead>
@@ -198,25 +223,22 @@ $result = $axian_ddr->submit_ddr();
                     </tr>
                     </tbody>
                 </table>
-
             </fieldset>
 
+            <p class="submit-part">
+                <?php if ( $is_edit ) :?>
+                    <input type="hidden" name="id" value="<?php echo $the_ddr_id;?>" />
+                    <input type="hidden" name="etat" value="<?php echo $post_data['etat'];?>" />
 
-            <p>
-            <?php if (!is_null($post_data)) :?>
-                <input type="hidden" name="id" value="<?php echo intval($_GET['id']);?>" >
-                <input type="hidden" name="etat" value="<?php echo $post_data['etat'];?>" >
-                <?php if ( DDR_STATUS_DRAFT == $post_data['etat'] ):?>
-                <input type="submit" name="publish-ddr" id="submit" class="button button-primary" value="Publier">
-                <input type="submit" name="update-ddr" id="save" class="button" value="Enregistrer comme brouillon">
+                    <input type="submit" name="submit-ddr" class="button button-primary" value="Soumettre"/>
+                    <?php if ( DDR_STATUS_DRAFT == $post_data['etat'] ):?>
+                        <input type="submit" name="save-draft" class="button" value="Enregistrer le brouillon"/>
+                    <?php endif; ?>
                 <?php else : ?>
-                <input type="submit" name="update-ddr" id="submit" class="button button-primary" value="Enregistrer">
+                    <input type="submit" name="submit-ddr" class="button button-primary" value="Soumettre"/>
+                    <input type="submit" name="save-draft" class="button" value="Enregistrer comme brouillon"/>
                 <?php endif;?>
-            <?php else : ?>
-                <input type="submit" name="submit-ddr" id="submit" class="button button-primary" value="Soumettre">
-                <input type="submit" name="save-ddr" id="save" class="button" value="Enregistrer comme brouillon">
-            <?php endif;?>
-                <a href="?page=axian-ddr" class="btn btn-sm btn-outline-danger">Annuler</a>
+                <a href="admin.php?page=axian-ddr-list" class="btn btn-sm btn-outline-danger">Annuler</a>
             </p>
 
 

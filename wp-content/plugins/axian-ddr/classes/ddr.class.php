@@ -199,13 +199,12 @@ class AxianDDR{
 
     public static function add($args){
         global $wpdb;
-        $status = ( isset($args['submit-ddr']) && !empty($args['submit-ddr']) ) ? DDR_STATUS_EN_COURS : DDR_STATUS_DRAFT;
         $now = date("Y-m-d H:i:s");
         $args = array_merge(self::$default, $args);
         $s =str_replace('/','-',$args['date_previsionnel']);
         $date = date('Y/m/d',strtotime($s));
 
-        $result = $wpdb->insert(TABLE_AXIAN_DDR,array(
+        $result = $wpdb->insert(TABLE_AXIAN_DDR, array(
             'author_id' => intval($args['author_id']),
             'type' => $args['type'],
             'direction' => $args['direction'],
@@ -221,7 +220,7 @@ class AxianDDR{
             'assignee_id' => intval($args['assignee_id']),
             'type_candidature' => $args['type_candidature'],
             'created' => $now,
-            'etat' => $status,
+            'etat' => $args['etat'],
             'etape' => $args['etape'],
 
         ));
@@ -289,7 +288,10 @@ class AxianDDR{
     public function submit_ddr(){
 
         setlocale (LC_TIME, 'fr_FR.utf8','fra');
-        if ( isset($_POST['submit-ddr']) || isset($_POST['save-ddr']) ){
+
+        $is_save_draft = isset($_POST['save-draft']);
+        $is_submit_ddr = isset($_POST['submit-ddr']);
+        if ( $is_save_draft || $is_submit_ddr ){
             $msg = axian_ddr_validate_fields($this);
 
             if ( !empty($msg) ){
@@ -316,6 +318,15 @@ class AxianDDR{
                     $label = str_replace( 'new|','',$post_data['lieu_travail']);
                     $new = AxianDDRTerm::add('lieu', $label);
                     if ( $new != false ) $post_data['lieu_travail'] = $new;
+                }
+
+                if ( $is_save_draft ){
+                    $post_data['etat'] = DDR_STATUS_DRAFT;
+                    $post_data['etape'] = DDR_STEP_CREATE;
+                }
+                if ( $is_submit_ddr ){
+                    $post_data['etat'] = DDR_STATUS_EN_COURS;
+                    $post_data['etape'] = DDR_STEP_VALIDATION_1;
                 }
 
                 $return_add = self::add( $post_data );
