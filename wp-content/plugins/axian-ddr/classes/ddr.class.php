@@ -195,7 +195,7 @@ class AxianDDR{
         global $wpdb;
         $now = date("Y-m-d H:i:s");
 
-        if ( preg_match('/([0-9]{4})\/([0-9]{2})/\([0-9]{2})/', $args['date_previsionnel'], $matches) ){
+        if ( preg_match('#([0-9]{4})/([0-9]{2})/([0-9]{2})#', $args['date_previsionnel'], $matches) ){
             $args['date_previsionnel'] = $matches[3] . '-' . $matches[2] . '' . $matches[1];
         }
 
@@ -338,16 +338,19 @@ class AxianDDR{
                         $redirect_to = 'admin.php?page=axian-ddr&action=view&id=' . $new_ddr_id . '&msg=' . DDR_MSG_SUBMITTED_SUCCESSFULLY;
                     }
 
+                    wp_safe_redirect($redirect_to);die;
                 //mise à jour
                 } else {
+
+                    $the_ddr = AxianDDR::getbyId($ddr_id);
 
                     //maj etat / etape
                     if ( $is_save_draft ){
                         $post_data['etat'] = DDR_STATUS_DRAFT;
                         $post_data['etape'] = DDR_STEP_CREATE;
-                    } elseif ( $is_submit_ddr ){
+                    } elseif ( $is_update_ddr ){
                         $post_data['etat'] = DDR_STATUS_EN_COURS;
-                        $post_data['etape'] = DDR_STEP_VALIDATION_1;
+                        $post_data['etape'] = DDR_STEP_CREATE;
                     }
 
                     self::update( $post_data );
@@ -355,17 +358,14 @@ class AxianDDR{
                     //historique
                     $story_id = AxianDDRHistorique::add($ddr_id, array(
                         'action' => DDR_ACTION_UPDATE,
-                        'etat_avant' => DDR_STATUS_DRAFT,
+                        'etat_avant' => $the_ddr->etat,
                         'etat_apres' => $post_data['etat'],
                         'etape' => $post_data['etape'],
                         'comment' => $post_data['comment'],
                     ));
 
-                    if ( $is_save_draft ){
-                        $redirect_to = 'admin.php?page=axian-ddr&action=edit&id=' . $new_ddr_id . '&msg=' . DDR_MSG_SAVED_SUCCESSFULLY;
-                    } elseif ( $is_submit_ddr ){
-                        $redirect_to = 'admin.php?page=axian-ddr&action=view&id=' . $new_ddr_id . '&msg=' . DDR_MSG_SUBMITTED_SUCCESSFULLY;
-                    }
+                    $redirect_to = 'admin.php?page=axian-ddr&action=edit&id=' . $new_ddr_id . '&msg=' . DDR_MSG_SAVED_SUCCESSFULLY;
+                    wp_safe_redirect($redirect_to);die;
                 }
 
             }

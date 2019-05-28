@@ -17,4 +17,13 @@ class AxianDDRHistorique{
             'date' => $date
         ));
     }
+
+    public function getByDdrId($id){
+        global $wpdb;
+        $historiques = $wpdb->get_results('SELECT h.*, u.display_name FROM '. TABLE_AXIAN_DDR_HISTORIQUE . ' AS h
+                                                        INNER JOIN '.$wpdb->prefix.'users  AS u ON actor_id = u.`ID`
+                                                WHERE ddr_id = '.$id ,ARRAY_A);
+
+        return $historiques;
+    }
 }

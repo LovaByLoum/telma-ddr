@@ -14,6 +14,7 @@ if ( $is_edit ){
        'author_id' => $current_user->ID
     );
 }
+$historiques = AxianDDRHistorique::getByDdrId(intval($_GET['id']));
 
 $msg = $axian_ddr->process_ddr($the_ddr_id);
 
@@ -191,46 +192,35 @@ if ( isset($_GET['msg']) ){
                         <th class="libelle">Validateur</th>
                         <th class="libelle">Délégation</th>
                         <th class="libelle">Date</th>
-                        <th class="libelle">Etat</th>
+                        <th class="libelle">Etat avant</th>
+                        <th class="libelle">Etat après</th>
                         <th class="libelle">Etape</th>
                         <th class="libelle">Commentaire</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr class="odd">
-                        <td valign="top">
-                            Johary RANARIMANANA
-                        </td>
-                        <td valign="top">
-                        </td>
-                        <td>24/05/2019 18:03:34</td>
-                        <td>
-                            Annulation en cours
-                        </td>
-                        <td>
-                            Validation SupÃ©rieur Hierarchique
-                        </td>
-                        <td>
-                            Changement du programme
-                        </td>
-                    </tr>
-                    <tr class="even">
-                        <td valign="top">
-                            Johary RANARIMANANA
-                        </td>
-                        <td valign="top">
-                        </td>
-                        <td>23/05/2019 13:17:12</td>
-                        <td>
-                            Validée
-                        </td>
-                        <td>
-                            Validation Supérieur Hierarchique
-                        </td>
-                        <td>
-
-                        </td>
-                    </tr>
+                    <?php foreach($historiques as $key => $value):?>
+                        <tr class=" <?php echo ($key % 2 == 0) ? 'odd' : 'even';?> ">
+                            <td valign="top">
+                                <?php echo $value['display_name'];?>
+                            </td>
+                            <td valign="top">
+                            </td>
+                            <td><?php echo strftime("%d %b %Y", strtotime($value['date']));?></td>
+                            <td>
+                                <?php echo AxianDDR::$etats[$value['etat_avant']];?>
+                            </td>
+                            <td>
+                                <?php echo AxianDDR::$etats[$value['etat_apres']];?>
+                            </td>
+                            <td>
+                                <?php echo AxianDDR::$etapes[$value['etape']];?>
+                            </td>
+                            <td>
+                                Changement du programme
+                            </td>
+                        </tr>
+                    <?php endforeach;?>
                     </tbody>
                 </table>
             </fieldset>

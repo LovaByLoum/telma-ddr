@@ -107,3 +107,12 @@ fieldset.ddr-box-bordered i.info{
 .ddr-view .card .card-body h4 {
     margin-bottom: 25px;
 }
+
+.ddr-view .card .card-body h4 {
+    margin-bottom: 0px;
+    color: black;
+}
+
+.ddr-view .card .card-body fieldset {
+    background: white;
+}
