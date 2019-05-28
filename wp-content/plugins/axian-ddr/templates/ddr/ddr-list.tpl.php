@@ -6,9 +6,9 @@
 
         <ul class="subsubsub">
             <?php $current_filter = isset($_GET['prefilter']) ? $_GET['prefilter'] : '';?>
-            <li><a href="javascript:addParameterToURL('prefilter=myvalidation');" class="<?php if ($current_filter == 'myvalidation' ) echo 'current';?>">Mes validations <span class="count">(<?php echo 1?>)</span></a> </li>|
-            <li><a href="javascript:addParameterToURL('prefilter=mytickets');" class="<?php if ($current_filter == 'mytickets' ) echo 'current';?>">Mes tickets <span class="count">(<?php echo 1?>)</span></a> </li>|
-            <li><a href="javascript:addParameterToURL('prefilter=alltickets');" class="<?php if ($current_filter == 'alltickets' ) echo 'current';?>">Tous <span class="count">(<?php echo 1?>)</span></a> </li>
+            <li><a href="javascript:addParameterToURL('prefilter=myvalidation');" class="<?php if ($current_filter == 'myvalidation' ) echo 'current';?>">Mes validations</a> </li>|
+            <li><a href="javascript:addParameterToURL('prefilter=mytickets');" class="<?php if ($current_filter == 'mytickets' ) echo 'current';?>">Mes tickets</a> </li>|
+            <li><a href="javascript:addParameterToURL('prefilter=alltickets');" class="<?php if ($current_filter == 'alltickets' ) echo 'current';?>">Tous</a> </li>
         </ul>
         <input type="hidden" name="prefilter" value="<?php echo $current_filter;?>"/>
 

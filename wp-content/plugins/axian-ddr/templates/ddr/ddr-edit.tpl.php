@@ -217,7 +217,7 @@ if ( isset($_GET['msg']) ){
                                 <?php echo AxianDDR::$etapes[$value['etape']];?>
                             </td>
                             <td>
-                                Changement du programme
+                                <?php echo AxianDDR::$etapes[$value['comment']];?>
                             </td>
                         </tr>
                     <?php endforeach;?>

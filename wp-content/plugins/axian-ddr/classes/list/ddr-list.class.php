@@ -170,6 +170,7 @@ class AxianDDRList extends WP_Filter_List_Table{
 
         $get_data = $_GET;
         unset($get_data['page']);
+        unset($get_data['paged']);
         unset($get_data['orderby']);
         unset($get_data['order']);
         unset($get_data['prefilter']);
