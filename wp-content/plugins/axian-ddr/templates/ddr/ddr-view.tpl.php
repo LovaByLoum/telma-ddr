@@ -4,14 +4,14 @@ if( !empty($_POST) ){
     $post_data = $_POST;
     $post_data['id'] = $_GET['id'];
 }elseif ( (isset($_GET['id']) && !empty($_GET['id']) ) ){
-    $post_data = $axian_ddr->getbyId(intval($_GET['id']));
+    $post_data = AxianDDR::getbyId(intval($_GET['id']));
 }else $post_data = null;
-$result = $axian_ddr->submit_ddr();
+
 if ( null != $post_data ){
     $assignee = AxianDDRUser::getById(intval($post_data['assignee_id']));
     $author = AxianDDRUser::getById(intval($post_data['author_id']));
 }
-$historiques = AxianDDRHistorique::getByDdrId(intval($_GET['id']));
+$historiques = AxianDDRHistorique::getByDDRId(intval($_GET['id']));
 ?>
 <div class="warp ddr-view">
 
@@ -132,8 +132,7 @@ $historiques = AxianDDRHistorique::getByDdrId(intval($_GET['id']));
                         <table class="table table-striped table-bordered">
                             <thead>
                                 <tr>
-                                    <th class="libelle">Validateur</th>
-                                    <th class="libelle">Délégation</th>
+                                    <th class="libelle">Utilisateur</th>
                                     <th class="libelle">Date</th>
                                     <th class="libelle">Etat avant</th>
                                     <th class="libelle">Etat après</th>
@@ -147,9 +146,7 @@ $historiques = AxianDDRHistorique::getByDdrId(intval($_GET['id']));
                                         <td valign="top">
                                             <?php echo $value['display_name'];?>
                                         </td>
-                                        <td valign="top">
-                                        </td>
-                                        <td><?php echo strftime("%d %b %Y", strtotime($value['date']));?></td>
+                                        <td><?php echo strftime("%d %b %Y %H:%M:%S", strtotime($value['date']));?></td>
                                         <td>
                                             <?php echo AxianDDR::$etats[$value['etat_avant']];?>
                                         </td>
@@ -160,7 +157,7 @@ $historiques = AxianDDRHistorique::getByDdrId(intval($_GET['id']));
                                             <?php echo AxianDDR::$etapes[$value['etape']];?>
                                         </td>
                                         <td>
-                                            Changement du programme
+                                            <?php echo $value['comment'];?>
                                         </td>
                                     </tr>
                                 <?php endforeach;?>

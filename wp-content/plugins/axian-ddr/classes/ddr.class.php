@@ -178,6 +178,8 @@ class AxianDDR{
                 'options' => self::$types_candidature,
             ),
         );
+
+        add_action('admin_init', array($this, 'process_ddr'));
     }
 
     public static function template_list(){
@@ -195,8 +197,8 @@ class AxianDDR{
         global $wpdb;
         $now = date("Y-m-d H:i:s");
 
-        if ( preg_match('#([0-9]{4})/([0-9]{2})/([0-9]{2})#', $args['date_previsionnel'], $matches) ){
-            $args['date_previsionnel'] = $matches[3] . '-' . $matches[2] . '' . $matches[1];
+        if ( preg_match('#([0-9]{2})/([0-9]{2})/([0-9]{4})#', $args['date_previsionnel'], $matches) ){
+            $args['date_previsionnel'] = $matches[3] . '-' . $matches[2] . '-' . $matches[1];
         }
 
         $result = $wpdb->insert(TABLE_AXIAN_DDR, array(
@@ -219,16 +221,20 @@ class AxianDDR{
 
         ));
 
-        return $result;
+        if ( $result ){
+            return $wpdb->insert_id;
+        }
+        return false;
 
     }
 
     public static function update($args){
-        global $wpdb, $current_user;
+        global $wpdb;
         $now = date("Y-m-d H:i:s");
-        $args = array_merge(self::$default, $args);
-        $s =str_replace('/','-',$args['date_previsionnel']);
-        $date = date('Y/m/d',strtotime($s));
+
+        if ( preg_match('#([0-9]{2})/([0-9]{2})/([0-9]{4})#', $args['date_previsionnel'], $matches) ){
+            $args['date_previsionnel'] = $matches[3] . '-' . $matches[2] . '-' . $matches[1];
+        }
 
         $result = $wpdb->update(
             TABLE_AXIAN_DDR,
@@ -242,8 +248,7 @@ class AxianDDR{
                 'batiment' => $args['batiment'],
                 'motif' => $args['motif'],
                 'dernier_titulaire' => $args['dernier_titulaire'],
-                'date_previsionnel' => $date,
-                'comment' => $args['comment'],
+                'date_previsionnel' => $args['date_previsionnel'],
                 'assignee_id' => intval($args['assignee_id']),
                 'type_candidature' => $args['type_candidature'],
                 'modified' => $now,
@@ -252,12 +257,6 @@ class AxianDDR{
             ),
             array( 'id' => $args['id'] )
         );
-
-        if( $result && !empty($_POST['publish-ddr']) ){
-            $historique = new AxianDDRHistorique();
-            $historique_result = $historique->add($args['id'],'publier',DDR_STATUS_DRAFT ,$args['etat'], $args['etape']);
-            if ( !$historique_result ) return $historique_result;
-        }
 
         return $result;
     }
@@ -268,12 +267,16 @@ class AxianDDR{
 
     public static function getbyId($id){
         global $wpdb;
-        $result = $wpdb->get_row('SELECT * FROM '. TABLE_AXIAN_DDR . ' WHERE id = '.$id ,ARRAY_A);
+        $result = $wpdb->get_row('SELECT * FROM '. TABLE_AXIAN_DDR . ' WHERE id = '.$id , ARRAY_A);
 
         return $result;
     }
 
-    public function process_ddr( $ddr_id = null ){
+    public function process_ddr(){
+        global $ddr_process_msg;
+        $is_edit = isset($_GET['id']) && isset($_GET['action']) && 'edit' == $_GET['action'] && $_GET['id'] > 0;
+        $the_ddr_id = null;
+        if ( $is_edit ) $the_ddr_id = intval($_GET['id']);
 
         setlocale (LC_TIME, 'fr_FR.utf8','fra');
 
@@ -286,7 +289,8 @@ class AxianDDR{
 
             //data not valid
             if ( !empty($msg) ){
-                return self::manage_message(DDR_MSG_VALIDATE_ERROR, $msg);
+                $ddr_process_msg = self::manage_message(DDR_MSG_VALIDATE_ERROR, $msg);
+                return false;
             //data valid
             } else {
                 //process add term
@@ -310,7 +314,7 @@ class AxianDDR{
                 }
 
                 //creation
-                if ( is_null($ddr_id) ){
+                if ( is_null($the_ddr_id) ){
                     //maj etat / etape
                     if ( $is_save_draft ){
                         $post_data['etat'] = DDR_STATUS_DRAFT;
@@ -324,7 +328,7 @@ class AxianDDR{
                     $new_ddr_id = self::insert( $post_data );
 
                     //historique
-                    $story_id = AxianDDRHistorique::add($new_ddr_id, array(
+                    AxianDDRHistorique::add($new_ddr_id, array(
                         'action' => DDR_ACTION_CREATE,
                         'etat_avant' => DDR_STATUS_DRAFT,
                         'etat_apres' => $post_data['etat'],
@@ -338,11 +342,14 @@ class AxianDDR{
                         $redirect_to = 'admin.php?page=axian-ddr&action=view&id=' . $new_ddr_id . '&msg=' . DDR_MSG_SUBMITTED_SUCCESSFULLY;
                     }
 
-                    wp_safe_redirect($redirect_to);die;
+                    if ( !empty($redirect_to) ){
+                        wp_safe_redirect($redirect_to);die;
+                    }
+
                 //mise à jour
                 } else {
 
-                    $the_ddr = AxianDDR::getbyId($ddr_id);
+                    $the_ddr = AxianDDR::getbyId($the_ddr_id);
 
                     //maj etat / etape
                     if ( $is_save_draft ){
@@ -356,15 +363,15 @@ class AxianDDR{
                     self::update( $post_data );
 
                     //historique
-                    $story_id = AxianDDRHistorique::add($ddr_id, array(
+                    AxianDDRHistorique::add($the_ddr_id, array(
                         'action' => DDR_ACTION_UPDATE,
-                        'etat_avant' => $the_ddr->etat,
+                        'etat_avant' => $the_ddr['etat'],
                         'etat_apres' => $post_data['etat'],
                         'etape' => $post_data['etape'],
                         'comment' => $post_data['comment'],
                     ));
 
-                    $redirect_to = 'admin.php?page=axian-ddr&action=edit&id=' . $new_ddr_id . '&msg=' . DDR_MSG_SAVED_SUCCESSFULLY;
+                    $redirect_to = 'admin.php?page=axian-ddr&action=edit&id=' . $the_ddr_id . '&msg=' . DDR_MSG_SAVED_SUCCESSFULLY;
                     wp_safe_redirect($redirect_to);die;
                 }
 
@@ -374,22 +381,18 @@ class AxianDDR{
 
 
             if ( $nonce != $_GET['_wpnonce'] ){
-                return array(
-                    'code' => 'error',
-                    'msg' => 'Action denied',
-                );
+                $ddr_process_msg = self::manage_message(DDR_MSG_ACTION_DENIED);
+                return false;
             } else {
                 //process delete term
-                $return_update = self::delete(absint( $_GET['id'] ));
+                $return_update = self::delete($the_ddr_id);
 
                 if ( $return_update ){
-                    //unset post
-                    unset($_POST['id']);
-                    unset($_POST['type']);
-                    unset($_POST['label']);
-                    unset($_GET['id']);
-
-                    return self::manage_message(DDR_MSG_DELETED_SUCCESSFULLY);
+                    $redirect_to = 'admin.php?page=axian-ddr-list&msg=' . DDR_MSG_DELETED_SUCCESSFULLY;
+                    wp_safe_redirect($redirect_to);die;
+                } else {
+                    $ddr_process_msg = self::manage_message(DDR_MSG_UNKNOWN_ERROR);
+                    return false;
                 }
 
             }

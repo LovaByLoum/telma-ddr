@@ -11,7 +11,6 @@ CREATE TABLE `wp_ddr` (
   `motif` longtext,
   `dernier_titulaire` text,
   `date_previsionnel` date DEFAULT NULL,
-  `comment` longtext,
   `assignee_id` bigint(20) DEFAULT NULL COMMENT 'id de l''utilisateur assigné au ticket',
   `type_candidature` varchar(20) DEFAULT NULL COMMENT 'Choix entre interne et externe',
   `created` datetime NOT NULL,

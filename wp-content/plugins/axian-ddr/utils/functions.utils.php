@@ -43,6 +43,10 @@ function axian_ddr_render_field( $field, $post_data = null, $label = true ){
             <?php
             break;
         case 'date' :
+            if ( preg_match('#([0-9]{4})-([0-9]{2})-([0-9]{2})#', $current_value, $matches) ){
+                $current_value = $matches[3] . '/' . $matches[2] . '/' . $matches[1];
+            }
+
             ?>
             <?php if ( $label ): ?><label for="<?php echo $field['name'];?>"><?php echo $field['label'];?><?php if (  $field['required'] ) : ?>&nbsp;<span style="color:red;">*</span><?php endif;?></label><?php endif;?>
             <input name="<?php echo $field['name'];?>" type="text" id="<?php echo $field['name'];?>" value="<?php echo $current_value;?>" class="regular-text datepicker <?php echo $field['class'];?>" placeholder="DD/MM/YYYY" readonly/>

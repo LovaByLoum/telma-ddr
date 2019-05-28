@@ -1,6 +1,8 @@
 <?php
 global $axian_ddr;
 global $current_user;
+global $ddr_process_msg;
+
 $user_demandeur = AxianDDRUser::getById($current_user->ID);
 
 $is_edit = isset($_GET['id']) && isset($_GET['action']) && 'edit' == $_GET['action'] && $_GET['id'] > 0;
@@ -8,16 +10,17 @@ $the_ddr_id = null;
 
 if ( $is_edit ){
     $the_ddr_id = intval($_GET['id']);
-    $post_data = $axian_ddr->getbyId($the_ddr_id);
+    $post_data = AxianDDR::getbyId($the_ddr_id);
 } else {
     $post_data = array(
        'author_id' => $current_user->ID
     );
 }
-$historiques = AxianDDRHistorique::getByDdrId(intval($_GET['id']));
+$historiques = AxianDDRHistorique::getByDDRId(intval($_GET['id']));
 
-$msg = $axian_ddr->process_ddr($the_ddr_id);
-
+if ( !is_null($ddr_process_msg) ){
+    $msg = $ddr_process_msg;
+}
 if ( isset($_GET['msg']) ){
     $msg = AxianDDR::manage_message($_GET['msg']);
 }
@@ -35,11 +38,7 @@ if ( isset($_GET['msg']) ){
 
     <div id="col-container" class="ddr-edit wp-clearfix">
 
-        <form action="<?php
-            if ( $is_edit ){
-                echo 'admin.php?page=axian-ddr&action=view&id=' . $the_ddr_id;
-            }
-        ?>" method="post" autocomplete="off">
+        <form action="" method="post" autocomplete="off">
 
 
             <fieldset class="ddr-box-bordered">
@@ -189,8 +188,7 @@ if ( isset($_GET['msg']) ){
                 <table class="table table-striped table-bordered">
                     <thead>
                     <tr>
-                        <th class="libelle">Validateur</th>
-                        <th class="libelle">Délégation</th>
+                        <th class="libelle">Utilisateur</th>
                         <th class="libelle">Date</th>
                         <th class="libelle">Etat avant</th>
                         <th class="libelle">Etat après</th>
@@ -204,9 +202,7 @@ if ( isset($_GET['msg']) ){
                             <td valign="top">
                                 <?php echo $value['display_name'];?>
                             </td>
-                            <td valign="top">
-                            </td>
-                            <td><?php echo strftime("%d %b %Y", strtotime($value['date']));?></td>
+                            <td><?php echo strftime("%d %b %Y %H:%M:%S", strtotime($value['date']));?></td>
                             <td>
                                 <?php echo AxianDDR::$etats[$value['etat_avant']];?>
                             </td>
@@ -217,7 +213,7 @@ if ( isset($_GET['msg']) ){
                                 <?php echo AxianDDR::$etapes[$value['etape']];?>
                             </td>
                             <td>
-                                <?php echo AxianDDR::$etapes[$value['comment']];?>
+                                <?php echo $value['comment'];?>
                             </td>
                         </tr>
                     <?php endforeach;?>

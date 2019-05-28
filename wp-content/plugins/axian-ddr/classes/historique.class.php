@@ -6,7 +6,7 @@ class AxianDDRHistorique{
         global $wpdb, $current_user;
         $date = date("Y-m-d H:i:s");
 
-        return $wpdb->insert(TABLE_AXIAN_DDR_HISTORIQUE, array(
+        $wpdb->insert(TABLE_AXIAN_DDR_HISTORIQUE, array(
             'ddr_id' => $ddr_id,
             'actor_id' => intval($current_user->data->ID),
             'action' => $args['action'],
@@ -18,7 +18,7 @@ class AxianDDRHistorique{
         ));
     }
 
-    public function getByDdrId($id){
+    public static function getByDDRId($id){
         global $wpdb;
         $historiques = $wpdb->get_results('SELECT h.*, u.display_name FROM '. TABLE_AXIAN_DDR_HISTORIQUE . ' AS h
                                                         INNER JOIN '.$wpdb->prefix.'users  AS u ON actor_id = u.`ID`
