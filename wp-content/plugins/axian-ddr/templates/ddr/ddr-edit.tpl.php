@@ -17,24 +17,44 @@ if ( $is_edit ){
     );
 }
 $historiques = AxianDDRHistorique::getByDDRId(intval($_GET['id']));
-
-if ( !is_null($ddr_process_msg) ){
-    $msg = $ddr_process_msg;
-}
-if ( isset($_GET['msg']) ){
-    $msg = AxianDDR::manage_message($_GET['msg']);
-}
 ?>
-<?php if ( $msg ) : ?>
-    <div class="notice <?php echo $msg['code'];?>">
-        <p><?php echo $msg['msg'];?></p>
-    </div>
-<?php endif;?>
 
 <div class="wrap nosubsub">
-    <h1 class="wp-heading-inline">Demande de recrutement</h1>
+    <h1 class="wp-heading-inline">Demande de recrutement <?php if ($is_edit){ echo ' / DDR-' . $the_ddr_id; } ?></h1>
 
+    <?php
+    if ( !is_null($ddr_process_msg) ){
+        $msg = $ddr_process_msg;
+    }
+    if ( isset($_GET['msg']) ){
+        $msg = AxianDDR::manage_message($_GET['msg']);
+    }
+    ?>
+    <?php if ( isset($msg) ) : ?>
+        <div class="notice <?php echo $msg['code'];?>">
+            <p><?php echo $msg['msg'];?></p>
+        </div>
+    <?php endif;?>
     <hr class="wp-header-end">
+
+    <?php if ( $is_edit ): ?>
+        <br>
+        <div class="ddr-summary res row">
+            <div class="col-md-6">
+                <p><label class="col-sm-3">N° Demande :</label><strong><?php echo 'DDR-' . $the_ddr_id;;?></strong></p>
+                <p><label class="col-sm-3">Etat :</label><strong><?php echo AxianDDR::$etats[$post_data['etat']];?></strong></p>
+                <p><label class="col-sm-3">Etape :</label><strong><?php echo AxianDDR::$etapes[$post_data['etape']];?></strong></p>
+            </div>
+            <div class="col-md-6">
+                <p><label class="col-sm-3">Créé le :</label><strong><?php echo axian_ddr_convert_to_human_datetime($post_data['created']);?></strong></p>
+                <?php if ( !empty($post_data['modified']) ) : ?>
+                    <p><label class="col-sm-3">Modifié le :</label><strong><?php echo axian_ddr_convert_to_human_datetime($post_data['modified']);?></strong></p>
+                <?php endif;?>
+                <p><label class="col-sm-3">Type :</label><strong><?php echo AxianDDR::$types_demande[$post_data['type']];?></strong></p>
+            </div>
+        </div>
+    <?php endif;?>
+
 
     <div id="col-container" class="ddr-edit wp-clearfix">
 
@@ -42,7 +62,7 @@ if ( isset($_GET['msg']) ){
 
 
             <fieldset class="ddr-box-bordered">
-                <legend>Demandeur</legend>
+                <legend>Initiateur</legend>
 
                 <div class="res row">
                     <div class="col-md-4 col-sm-6 col-xs-6">
@@ -182,6 +202,7 @@ if ( isset($_GET['msg']) ){
                 </div>
             </fieldset>
 
+            <?php if ( ! empty($historiques) ) : ?>
             <fieldset class="ddr-box-bordered">
                 <legend>Historique</legend>
 
@@ -202,7 +223,7 @@ if ( isset($_GET['msg']) ){
                             <td valign="top">
                                 <?php echo $value['display_name'];?>
                             </td>
-                            <td><?php echo strftime("%d %b %Y %H:%M:%S", strtotime($value['date']));?></td>
+                            <td><?php echo axian_ddr_convert_to_human_datetime($value['date']);?></td>
                             <td>
                                 <?php echo AxianDDR::$etats[$value['etat_avant']];?>
                             </td>
@@ -220,6 +241,7 @@ if ( isset($_GET['msg']) ){
                     </tbody>
                 </table>
             </fieldset>
+            <?php endif;?>
 
             <p class="submit-part">
                 <?php if ( $is_edit ) :?>

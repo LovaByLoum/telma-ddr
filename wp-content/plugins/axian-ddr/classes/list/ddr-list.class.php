@@ -48,10 +48,10 @@ class AxianDDRList extends WP_Filter_List_Table{
                 break;
             case 'modified':
             case 'created':
-                return strftime("%d %b %Y %H:%M:%S", strtotime($item->$column_name) );
+                return axian_ddr_convert_to_human_datetime($item->$column_name);
                 break;
             case 'date_previsionnel':
-                return strftime("%d %b %Y", strtotime($item->$column_name) );
+                return axian_ddr_convert_to_human_date($item->$column_name);
                 break;
             case 'direction':
             case 'departement':

@@ -43,10 +43,7 @@ function axian_ddr_render_field( $field, $post_data = null, $label = true ){
             <?php
             break;
         case 'date' :
-            if ( preg_match('#([0-9]{4})-([0-9]{2})-([0-9]{2})#', $current_value, $matches) ){
-                $current_value = $matches[3] . '/' . $matches[2] . '/' . $matches[1];
-            }
-
+            $current_value = axian_ddr_convert_to_dateformat($current_value);
             ?>
             <?php if ( $label ): ?><label for="<?php echo $field['name'];?>"><?php echo $field['label'];?><?php if (  $field['required'] ) : ?>&nbsp;<span style="color:red;">*</span><?php endif;?></label><?php endif;?>
             <input name="<?php echo $field['name'];?>" type="text" id="<?php echo $field['name'];?>" value="<?php echo $current_value;?>" class="regular-text datepicker <?php echo $field['class'];?>" placeholder="DD/MM/YYYY" readonly/>
@@ -105,4 +102,26 @@ function axian_ddr_validate_fields( $object, $post_data = null ){
     }
 
     return $msg;
+}
+
+function axian_ddr_convert_to_dateformat($date){
+    if ( preg_match('#([0-9]{4})-([0-9]{2})-([0-9]{2})#', $date, $matches) ){
+        $date = $matches[3] . '/' . $matches[2] . '/' . $matches[1];
+    }
+    return $date;
+}
+
+function axian_ddr_convert_to_mysql_date($date){
+    if ( preg_match('#([0-9]{2})/([0-9]{2})/([0-9]{4})#', $date, $matches) ){
+        $date = $matches[3] . '-' . $matches[2] . '-' . $matches[1];
+    }
+    return $date;
+}
+
+function axian_ddr_convert_to_human_datetime($datetime){
+    return strftime("%d %b %Y %H:%M:%S", strtotime($datetime) );
+}
+
+function axian_ddr_convert_to_human_date($date){
+    return strftime("%d %b %Y", strtotime($date) );
 }

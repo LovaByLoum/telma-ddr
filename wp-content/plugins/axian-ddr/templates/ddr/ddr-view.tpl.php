@@ -1,5 +1,7 @@
 <?php
 global $axian_ddr;
+global $ddr_process_msg;
+
 if( !empty($_POST) ){
     $post_data = $_POST;
     $post_data['id'] = $_GET['id'];
@@ -18,6 +20,22 @@ $historiques = AxianDDRHistorique::getByDDRId(intval($_GET['id']));
     <div class="card w-100">
         <div class="card-header bg-danger">
             <h3>DDR - <?php echo $post_data['id'];?></h3>
+
+            <?php
+            if ( !is_null($ddr_process_msg) ){
+                $msg = $ddr_process_msg;
+            }
+            if ( isset($_GET['msg']) ){
+                $msg = AxianDDR::manage_message($_GET['msg']);
+            }
+            ?>
+            <?php if ( isset($msg) ) : ?>
+                <div class="notice <?php echo $msg['code'];?>">
+                    <p><?php echo $msg['msg'];?></p>
+                </div>
+            <?php endif;?>
+            <hr class="wp-header-end">
+
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
                 <li class="nav-item">
@@ -81,13 +99,13 @@ $historiques = AxianDDRHistorique::getByDDRId(intval($_GET['id']));
                                 <div class="form-group row">
                                     <label class="col-sm-5 control-label">Date création :</label>
                                     <p class="col-sm-7 control-label">
-                                        <?php echo strftime("%d %b %Y %H:%M:%S", strtotime($post_data['created']));?>
+                                        <?php echo axian_ddr_convert_to_human_datetime($post_data['created']);?>
                                     </p>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-sm-5 control-label">Date dernier modification :</label>
                                     <p class="col-sm-7 control-label">
-                                        <?php echo  strftime("%d %b %Y %H:%M:%S", strtotime($post_data['modified']));?>
+                                        <?php echo  axian_ddr_convert_to_human_datetime($post_data['modified']);?>
                                     </p>
                                 </div>
                                 <div class="form-group row">
@@ -111,7 +129,7 @@ $historiques = AxianDDRHistorique::getByDDRId(intval($_GET['id']));
                                 <div class="form-group row">
                                     <label class="col-sm-5 control-label">Date previsionnel d'embauche :</label>
                                     <p class="col-sm-7 control-label">
-                                        <?php echo strftime("%d %b %Y", strtotime($post_data['date_previsionnel']));?>
+                                        <?php echo axian_ddr_convert_to_human_date($post_data['date_previsionnel']);?>
                                     </p>
                                 </div>
                             </div>
@@ -146,7 +164,7 @@ $historiques = AxianDDRHistorique::getByDDRId(intval($_GET['id']));
                                         <td valign="top">
                                             <?php echo $value['display_name'];?>
                                         </td>
-                                        <td><?php echo strftime("%d %b %Y %H:%M:%S", strtotime($value['date']));?></td>
+                                        <td><?php echo axian_ddr_convert_to_human_datetime($value['date']);?></td>
                                         <td>
                                             <?php echo AxianDDR::$etats[$value['etat_avant']];?>
                                         </td>

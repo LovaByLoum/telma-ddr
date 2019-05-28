@@ -197,9 +197,7 @@ class AxianDDR{
         global $wpdb;
         $now = date("Y-m-d H:i:s");
 
-        if ( preg_match('#([0-9]{2})/([0-9]{2})/([0-9]{4})#', $args['date_previsionnel'], $matches) ){
-            $args['date_previsionnel'] = $matches[3] . '-' . $matches[2] . '-' . $matches[1];
-        }
+        $args['date_previsionnel'] = axian_ddr_convert_to_mysql_date($args['date_previsionnel']);
 
         $result = $wpdb->insert(TABLE_AXIAN_DDR, array(
             'author_id' => intval($args['author_id']),
@@ -232,29 +230,36 @@ class AxianDDR{
         global $wpdb;
         $now = date("Y-m-d H:i:s");
 
-        if ( preg_match('#([0-9]{2})/([0-9]{2})/([0-9]{4})#', $args['date_previsionnel'], $matches) ){
-            $args['date_previsionnel'] = $matches[3] . '-' . $matches[2] . '-' . $matches[1];
+        $data_authorized = array(
+            'type',
+            'direction',
+            'title',
+            'departement',
+            'superieur_id',
+            'lieu_travail',
+            'batiment',
+            'motif',
+            'dernier_titulaire',
+            'date_previsionnel',
+            'assignee_id',
+            'type_candidature',
+            'etat',
+            'etape',
+
+        );
+        $data = array();
+        foreach ( $args as $key => $value ){
+            if ( in_array($key, $data_authorized) ){
+                $data[$key] = $value;
+            }
         }
+
+        $data['date_previsionnel'] = axian_ddr_convert_to_mysql_date($data['date_previsionnel']);
+        $data['modified'] = $now;
 
         $result = $wpdb->update(
             TABLE_AXIAN_DDR,
-            array(
-                'type' => $args['type'],
-                'direction' => $args['direction'],
-                'title' => $args['title'],
-                'departement' => $args['departement'],
-                'superieur_id' => intval($args['superieur_id']),
-                'lieu_travail' => $args['lieu_travail'],
-                'batiment' => $args['batiment'],
-                'motif' => $args['motif'],
-                'dernier_titulaire' => $args['dernier_titulaire'],
-                'date_previsionnel' => $args['date_previsionnel'],
-                'assignee_id' => intval($args['assignee_id']),
-                'type_candidature' => $args['type_candidature'],
-                'modified' => $now,
-                'etat' => $args['etat'],
-
-            ),
+            $data,
             array( 'id' => $args['id'] )
         );
 
@@ -284,6 +289,7 @@ class AxianDDR{
         $is_submit_ddr = isset($_POST['submit-ddr']);
         $is_update_ddr = isset($_POST['update-ddr']);
         $is_delete_ddr = isset($_POST['delete-ddr']);
+
         if ( $is_save_draft || $is_submit_ddr || $is_update_ddr ){
             $msg = axian_ddr_validate_fields($this);
 
@@ -358,6 +364,9 @@ class AxianDDR{
                     } elseif ( $is_update_ddr ){
                         $post_data['etat'] = DDR_STATUS_EN_COURS;
                         $post_data['etape'] = DDR_STEP_CREATE;
+                    } elseif ( $is_submit_ddr ){
+                        $post_data['etat'] = DDR_STATUS_EN_COURS;
+                        $post_data['etape'] = DDR_STEP_VALIDATION_1;
                     }
 
                     self::update( $post_data );
