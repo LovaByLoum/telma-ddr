@@ -14,8 +14,12 @@ if ( $is_edit ){
        'author_id' => $current_user->ID
     );
 }
-$msg = $axian_ddr->submit_ddr();
 
+$msg = $axian_ddr->process_ddr($the_ddr_id);
+
+if ( isset($_GET['msg']) ){
+    $msg = AxianDDR::manage_message($_GET['msg']);
+}
 ?>
 <?php if ( $msg ) : ?>
     <div class="notice <?php echo $msg['code'];?>">
@@ -166,7 +170,13 @@ $msg = $axian_ddr->submit_ddr();
                     </div>
                     <div class="form-group col-md-6">
                         <div class="form-field">
-                            <?php axian_ddr_render_field($axian_ddr->fields['comment'],$post_data);?>
+                            <?php axian_ddr_render_field(array(
+                                'label' => 'Commentaire',
+                                'type' => 'textarea',
+                                'name' => 'comment',
+                                'cols' => '40',
+                                'rows' => '4'
+                            ), $post_data);?>
                         </div>
                     </div>
                 </div>
@@ -233,7 +243,11 @@ $msg = $axian_ddr->submit_ddr();
                     <input type="submit" name="submit-ddr" class="button button-primary" value="Soumettre"/>
                     <?php if ( DDR_STATUS_DRAFT == $post_data['etat'] ):?>
                         <input type="submit" name="save-draft" class="button" value="Enregistrer le brouillon"/>
+                    <?php else : ?>
+                        <input type="submit" name="update-ddr" class="button" value="Enregistrer"/>
                     <?php endif; ?>
+
+                    <input type="submit" name="delete-ddr" class="button" value="Supprimer"/>
                 <?php else : ?>
                     <input type="submit" name="submit-ddr" class="button button-primary" value="Soumettre"/>
                     <input type="submit" name="save-draft" class="button" value="Enregistrer comme brouillon"/>

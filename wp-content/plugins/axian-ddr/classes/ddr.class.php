@@ -18,6 +18,14 @@ class AxianDDR{
         CANDIDATURE_EXTERNE => 'Externe',
     );
 
+    public static $actions = array(
+        DDR_ACTION_CREATE => 'Créer',
+        DDR_ACTION_SUBMIT => 'Soumettre',
+        DDR_ACTION_VALIDATE => 'Valider',
+        DDR_ACTION_REFUSE => 'Refuser',
+        DDR_ACTION_CLOSE => 'Clôturer',
+    );
+
     public static $etats = array(
         DDR_STATUS_DRAFT => 'Brouillon',
         DDR_STATUS_VALIDE => 'Validé',
@@ -34,12 +42,6 @@ class AxianDDR{
         DDR_STEP_VALIDATION_3 => 'Validation N3',
         DDR_STEP_VALIDATION_4 => 'Validation N4',
         DDR_STEP_PUBLISH => 'Publication',
-    );
-
-    public static $default = array(
-        'etat' => DDR_STATUS_EN_COURS,
-        'etape' => DDR_STEP_VALIDATION_1
-
     );
 
     public $fields;
@@ -160,14 +162,6 @@ class AxianDDR{
                 'name' => 'date_previsionnel',
             ),
 
-            'comment' => array(
-                'label' => 'Commentaire',
-                'type' => 'textarea',
-                'name' => 'comment',
-                'cols' => '40',
-                'rows' => '4'
-            ),
-
             'attribution' => array(
                 'label' => 'Attribution',
                 'type' => 'autocompletion',
@@ -197,12 +191,13 @@ class AxianDDR{
         }else include AXIAN_DDR_PATH . '/templates/ddr/ddr-edit.tpl.php';
     }
 
-    public static function add($args){
+    public static function insert($args){
         global $wpdb;
         $now = date("Y-m-d H:i:s");
-        $args = array_merge(self::$default, $args);
-        $s =str_replace('/','-',$args['date_previsionnel']);
-        $date = date('Y/m/d',strtotime($s));
+
+        if ( preg_match('/([0-9]{4})\/([0-9]{2})/\([0-9]{2})/', $args['date_previsionnel'], $matches) ){
+            $args['date_previsionnel'] = $matches[3] . '-' . $matches[2] . '' . $matches[1];
+        }
 
         $result = $wpdb->insert(TABLE_AXIAN_DDR, array(
             'author_id' => intval($args['author_id']),
@@ -215,8 +210,7 @@ class AxianDDR{
             'batiment' => $args['batiment'],
             'motif' => $args['motif'],
             'dernier_titulaire' => $args['dernier_titulaire'],
-            'date_previsionnel' => $date,
-            'comment' => $args['comment'],
+            'date_previsionnel' => $args['date_previsionnel'],
             'assignee_id' => intval($args['assignee_id']),
             'type_candidature' => $args['type_candidature'],
             'created' => $now,
@@ -224,13 +218,7 @@ class AxianDDR{
             'etape' => $args['etape'],
 
         ));
-        if ( $result ){
-            $ddr_id =$wpdb->insert_id;
-            $historique = new AxianDDRHistorique();
-            $historique_result = $historique->add($ddr_id,'creation','' ,$status, $args['etape']);
-            if ( !$historique_result ) return $historique_result;
 
-        }
         return $result;
 
     }
@@ -285,136 +273,103 @@ class AxianDDR{
         return $result;
     }
 
-    public function submit_ddr(){
+    public function process_ddr( $ddr_id = null ){
 
         setlocale (LC_TIME, 'fr_FR.utf8','fra');
 
         $is_save_draft = isset($_POST['save-draft']);
         $is_submit_ddr = isset($_POST['submit-ddr']);
-        if ( $is_save_draft || $is_submit_ddr ){
+        $is_update_ddr = isset($_POST['update-ddr']);
+        $is_delete_ddr = isset($_POST['delete-ddr']);
+        if ( $is_save_draft || $is_submit_ddr || $is_update_ddr ){
             $msg = axian_ddr_validate_fields($this);
 
+            //data not valid
             if ( !empty($msg) ){
-                return array(
-                    'code' => 'error',
-                    'msg' => $msg,
-                );
+                return self::manage_message(DDR_MSG_VALIDATE_ERROR, $msg);
+            //data valid
             } else {
                 //process add term
                 $post_data = $_POST;
-                if (strpos($post_data['direction'], 'new|') !== false) {
+                if ( strpos($post_data['direction'], 'new|') !== false ) {
                     $label = str_replace( 'new|','',$post_data['direction']);
                     $new = AxianDDRTerm::add('direction', $label);
                     if ( $new != false ) $post_data['direction'] = $new;
                 }
 
-                if (strpos($post_data['departement'], 'new|') !== false) {
+                if ( strpos($post_data['departement'], 'new|') !== false ) {
                     $label = str_replace( 'new|','',$post_data['departement']);
                     $new = AxianDDRTerm::add('departement', $label);
                     if ( $new != false ) $post_data['departement'] = $new;
                 }
 
-                if (strpos($post_data['lieu_travail'], 'new|') !== false) {
+                if ( strpos($post_data['lieu_travail'], 'new|') !== false ) {
                     $label = str_replace( 'new|','',$post_data['lieu_travail']);
                     $new = AxianDDRTerm::add('lieu', $label);
                     if ( $new != false ) $post_data['lieu_travail'] = $new;
                 }
 
-                if ( $is_save_draft ){
-                    $post_data['etat'] = DDR_STATUS_DRAFT;
-                    $post_data['etape'] = DDR_STEP_CREATE;
-                }
-                if ( $is_submit_ddr ){
-                    $post_data['etat'] = DDR_STATUS_EN_COURS;
-                    $post_data['etape'] = DDR_STEP_VALIDATION_1;
-                }
+                //creation
+                if ( is_null($ddr_id) ){
+                    //maj etat / etape
+                    if ( $is_save_draft ){
+                        $post_data['etat'] = DDR_STATUS_DRAFT;
+                        $post_data['etape'] = DDR_STEP_CREATE;
+                    } elseif ( $is_submit_ddr ){
+                        $post_data['etat'] = DDR_STATUS_EN_COURS;
+                        $post_data['etape'] = DDR_STEP_VALIDATION_1;
+                    }
 
-                $return_add = self::add( $post_data );
+                    //insert
+                    $new_ddr_id = self::insert( $post_data );
 
-                if ( !empty($return_add) ){
-                    //unset post
-                    unset($_POST['title']);
-                    unset($_POST['author_id']);
-                    unset($_POST['superieur_id']);
-                    unset($_POST['motif']);
-                    unset($_POST['departement']);
-                    unset($_POST['lieu_travail']);
-                    unset($_POST['dernier_titulaire']);
-                    unset($_POST['assignee_id']);
-                    unset($_POST['date_previsionnel']);
-                    unset($_POST['comment']);
-                    return array(
-                        'code' => 'updated',
-                        'msg' => 'Enregistrement effectué avec succés.',
-                    );
-                }  else {
-                    return array(
-                        'code' => 'error',
-                        'msg' => 'Erreur inconnu',
-                    );
-                }
+                    //historique
+                    $story_id = AxianDDRHistorique::add($new_ddr_id, array(
+                        'action' => DDR_ACTION_CREATE,
+                        'etat_avant' => DDR_STATUS_DRAFT,
+                        'etat_apres' => $post_data['etat'],
+                        'etape' => $post_data['etape'],
+                        'comment' => $post_data['comment'],
+                    ));
 
-            }
-        } elseif ( isset($_POST['update-ddr']) || isset($_POST['publish-ddr']) ){
-            $msg = axian_ddr_validate_fields($this);
+                    if ( $is_save_draft ){
+                        $redirect_to = 'admin.php?page=axian-ddr&action=edit&id=' . $new_ddr_id . '&msg=' . DDR_MSG_SAVED_SUCCESSFULLY;
+                    } elseif ( $is_submit_ddr ){
+                        $redirect_to = 'admin.php?page=axian-ddr&action=view&id=' . $new_ddr_id . '&msg=' . DDR_MSG_SUBMITTED_SUCCESSFULLY;
+                    }
 
-            if ( !empty($msg) ){
-                return array(
-                    'code' => 'error',
-                    'msg' => $msg,
-                );
-            } else {
-                //process add term
-                $post_data = $_POST;
-                $post_data['etat'] = ( !empty($_POST['publish-ddr']) ) ? DDR_STATUS_EN_COURS : $post_data['etat'];
-                if (strpos($post_data['direction'], 'new|') !== false) {
-                    $label = str_replace( 'new|','',$post_data['direction']);
-                    $new = AxianDDRTerm::add('direction', $label);
-                    if ( $new != false ) $post_data['direction'] = $new;
-                }
+                //mise à jour
+                } else {
 
-                if (strpos($post_data['departement'], 'new|') !== false) {
-                    $label = str_replace( 'new|','',$post_data['departement']);
-                    $new = AxianDDRTerm::add('departement', $label);
-                    if ( $new != false ) $post_data['departement'] = $new;
-                }
+                    //maj etat / etape
+                    if ( $is_save_draft ){
+                        $post_data['etat'] = DDR_STATUS_DRAFT;
+                        $post_data['etape'] = DDR_STEP_CREATE;
+                    } elseif ( $is_submit_ddr ){
+                        $post_data['etat'] = DDR_STATUS_EN_COURS;
+                        $post_data['etape'] = DDR_STEP_VALIDATION_1;
+                    }
 
-                if (strpos($post_data['lieu_travail'], 'new|') !== false) {
-                    $label = str_replace( 'new|','',$post_data['lieu_travail']);
-                    $new = AxianDDRTerm::add('lieu', $label);
-                    if ( $new != false ) $post_data['lieu_travail'] = $new;
-                }
+                    self::update( $post_data );
 
-                $return_add = self::update( $post_data );
+                    //historique
+                    $story_id = AxianDDRHistorique::add($ddr_id, array(
+                        'action' => DDR_ACTION_UPDATE,
+                        'etat_avant' => DDR_STATUS_DRAFT,
+                        'etat_apres' => $post_data['etat'],
+                        'etape' => $post_data['etape'],
+                        'comment' => $post_data['comment'],
+                    ));
 
-                if ( !empty($return_add) ){
-                    //unset post
-                    unset($_POST['title']);
-                    unset($_POST['author_id']);
-                    unset($_POST['superieur_id']);
-                    unset($_POST['motif']);
-                    unset($_POST['departement']);
-                    unset($_POST['lieu_travail']);
-                    unset($_POST['dernier_titulaire']);
-                    unset($_POST['assignee_id']);
-                    unset($_POST['date_previsionnel']);
-                    unset($_POST['comment']);
-                    unset($_POST['id']);
-                    unset($_POST['etat']);
-                    unset($_POST['direction']);
-                    return array(
-                        'code' => 'updated',
-                        'msg' => 'Enregistrement effectué avec succés.',
-                    );
-                }  else {
-                    return array(
-                        'code' => 'error',
-                        'msg' => 'Erreur inconnu',
-                    );
+                    if ( $is_save_draft ){
+                        $redirect_to = 'admin.php?page=axian-ddr&action=edit&id=' . $new_ddr_id . '&msg=' . DDR_MSG_SAVED_SUCCESSFULLY;
+                    } elseif ( $is_submit_ddr ){
+                        $redirect_to = 'admin.php?page=axian-ddr&action=view&id=' . $new_ddr_id . '&msg=' . DDR_MSG_SUBMITTED_SUCCESSFULLY;
+                    }
                 }
 
             }
-        }elseif ( ( $_GET['action'] == "delete" ) && !empty( $_GET['_wpnonce'] ) && !empty( $_GET['id'] )){
+        } elseif ( $is_delete_ddr ){
             $nonce = wp_create_nonce( 'addr_delete_term'.absint( $_GET['id'] ) );
 
 
@@ -434,16 +389,60 @@ class AxianDDR{
                     unset($_POST['label']);
                     unset($_GET['id']);
 
-                    return array(
-                        'code' => 'updated',
-                        'msg' => 'Suppresion effectuée avec succés.',
-                    );
+                    return self::manage_message(DDR_MSG_DELETED_SUCCESSFULLY);
                 }
 
             }
         }else {
             return false;
         }
+    }
+
+    public static function manage_message( $slug = null, $msg = '' ){
+        if ( is_null($slug) ){
+            $slug = isset($_GET['msg']) ? $_GET['msg'] : '';
+        }
+        $return = null;
+        switch( $slug ){
+            case DDR_MSG_SAVED_SUCCESSFULLY:
+                $return = array(
+                    'code' => 'updated',
+                    'msg' => 'Enregistrement effectué avec succés.'
+                );
+                break;
+            case DDR_MSG_SUBMITTED_SUCCESSFULLY:
+                $return = array(
+                    'code' => 'updated',
+                    'msg' => 'Soumission effectuée avec succés. Votre ticket est en phase de validation.'
+                );
+                break;
+            case DDR_MSG_DELETED_SUCCESSFULLY:
+                $return = array(
+                    'code' => 'updated',
+                    'msg' => 'Suppresion effectuée avec succés.',
+                );
+                break;
+            case DDR_MSG_ACTION_DENIED:
+                $return = array(
+                    'code' => 'error',
+                    'msg' => 'Action non autorisée',
+                );
+                break;
+            case DDR_MSG_VALIDATE_ERROR:
+                $return = array(
+                    'code' => 'error',
+                    'msg' => $msg,
+                );
+                break;
+            case DDR_MSG_UNKNOWN_ERROR:
+                $return = array(
+                    'code' => 'error',
+                    'msg' => 'Action denied',
+                );
+                break;
+        }
+
+        return $return;
     }
 
     public static function getby( $field_args = array(), $supp_args = array(), $predifined_filters = '' ){

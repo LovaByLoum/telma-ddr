@@ -37,7 +37,6 @@ class AxianDDRMain {
                 `motif` longtext,
                 `dernier_titulaire` text,
                 `date_previsionnel` date DEFAULT NULL,
-                `comment` longtext,
                 `assignee_id` bigint(20) DEFAULT NULL COMMENT 'id de l''utilisateur assigné au ticket',
                 `type_candidature` varchar(20) DEFAULT NULL COMMENT 'Choix entre interne et externe',
                 `created` datetime NOT NULL,
@@ -65,6 +64,7 @@ class AxianDDRMain {
                 `etat_apres` varchar(50) NOT NULL COMMENT 'etat du ticket apres',
                 `etape` varchar(50) NOT NULL COMMENT 'etape actuelle du ticket',
                 `date` datetime NOT NULL COMMENT 'date de l''action',
+                `comment` longtext,
                 PRIMARY KEY (`id`),
                 KEY `ddr_id` (`ddr_id`),
                 KEY `actor_id` (`actor_id`)

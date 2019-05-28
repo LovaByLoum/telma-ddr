@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS `wp_ddr` (
+CREATE TABLE `wp_ddr` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `author_id` bigint(20) NOT NULL COMMENT 'Identifiant de l’utilisateur connecté ayant créé le ticket',
   `type` varchar(20) NOT NULL COMMENT 'Choix entre prevu et non-prevu',
@@ -7,9 +7,10 @@ CREATE TABLE IF NOT EXISTS `wp_ddr` (
   `departement` text,
   `superieur_id` bigint(20) DEFAULT NULL COMMENT 'id de l''utilisateur superieur',
   `lieu_travail` text,
+  `batiment` text,
   `motif` longtext,
   `dernier_titulaire` text,
-  `date_previsionnel` datetime DEFAULT NULL,
+  `date_previsionnel` date DEFAULT NULL,
   `comment` longtext,
   `assignee_id` bigint(20) DEFAULT NULL COMMENT 'id de l''utilisateur assigné au ticket',
   `type_candidature` varchar(20) DEFAULT NULL COMMENT 'Choix entre interne et externe',
@@ -24,10 +25,10 @@ CREATE TABLE IF NOT EXISTS `wp_ddr` (
   KEY `type_candidature` (`type_candidature`),
   KEY `etat` (`etat`),
   KEY `etape` (`etape`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8
 
 
-CREATE TABLE IF NOT EXISTS `wp_ddr_historique` (
+CREATE TABLE `wp_ddr_historique` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `ddr_id` bigint(20) NOT NULL COMMENT 'id du ddr',
   `actor_id` bigint(20) NOT NULL COMMENT 'user id executant l''action',
@@ -36,10 +37,11 @@ CREATE TABLE IF NOT EXISTS `wp_ddr_historique` (
   `etat_apres` varchar(50) NOT NULL COMMENT 'etat du ticket apres',
   `etape` varchar(50) NOT NULL COMMENT 'etape actuelle du ticket',
   `date` datetime NOT NULL COMMENT 'date de l''action',
+  `comment` longtext,
   PRIMARY KEY (`id`),
   KEY `ddr_id` (`ddr_id`),
   KEY `actor_id` (`actor_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8
 
 
 CREATE TABLE IF NOT EXISTS `wp_ddr_interim` (

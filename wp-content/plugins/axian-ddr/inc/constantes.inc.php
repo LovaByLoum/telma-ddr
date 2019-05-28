@@ -24,11 +24,26 @@ define('DDR_STEP_VALIDATION_3','validation3');
 define('DDR_STEP_VALIDATION_4','validation4');
 define('DDR_STEP_PUBLISH','publish');
 
+define('DDR_ACTION_CREATE','create');
+define('DDR_ACTION_UPDATE','update');
+define('DDR_ACTION_SUBMIT','submit');
+define('DDR_ACTION_VALIDATE','validate');
+define('DDR_ACTION_REFUSE','refuse');
+define('DDR_ACTION_CLOSE','close');
+
 define('CANDIDATURE_INTERNE','internal');
 define('CANDIDATURE_EXTERNE','external');
 
 define('TYPE_DEMANDE_PREVU','planned');
 define('TYPE_DEMANDE_NON_PREVU','not_planned');
+
+
+define('DDR_MSG_SAVED_SUCCESSFULLY', 'saved-successfully');
+define('DDR_MSG_SUBMITTED_SUCCESSFULLY', 'submitted-successfully');
+define('DDR_MSG_DELETED_SUCCESSFULLY', 'deleted-successfully');
+define('DDR_MSG_ACTION_DENIED', 'action-denied');
+define('DDR_MSG_VALIDATE_ERROR', 'validate-error');
+define('DDR_MSG_UNKNOWN_ERROR', 'unknown-error');
 
 //Table name
 global $wpdb;
