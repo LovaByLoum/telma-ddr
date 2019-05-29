@@ -2,7 +2,99 @@
 class AxianDDRWorkflow{
 
     public static $etapes;
+    public static $capabilities;
     public function __construct(){
+        //capabilities statiques
+        self::$capabilities = array(
+
+            DDR_ROLE_ADMINISTRATEUR_DDR => array(
+                DDR_CAP_CAN_CREATE_DDR,
+                DDR_CAP_CAN_SUBMIT_DDR,
+                DDR_CAP_CAN_LIST_DDR,
+                DDR_CAP_CAN_LIST_OTHERS_DDR,
+                DDR_CAP_CAN_DELETE_DDR,
+                DDR_CAP_CAN_DELETE_OTHERS_DDR,
+                DDR_CAP_CAN_EDIT_DDR,
+                DDR_CAP_CAN_EDIT_OTHERS_DDR,
+                DDR_CAP_CAN_VIEW_DDR,
+                DDR_CAP_CAN_VIEW_OTHERS_DDR,
+                DDR_CAP_CAN_VALIDATE_DDR,
+                DDR_CAP_CAN_REFUSE_DDR,
+                DDR_CAP_CAN_CLOSE_DDR,
+                DDR_CAP_CAN_ADMIN_DDR,
+                DDR_CAP_CAN_EXPORT_DDR,
+                DDR_CAP_CAN_EXPORT_OTHERS_DDR,
+            ),
+
+            DDR_ROLE_MANAGER => array(
+                DDR_CAP_CAN_CREATE_DDR,
+                DDR_CAP_CAN_SUBMIT_DDR,
+                DDR_CAP_CAN_LIST_DDR,
+                DDR_CAP_CAN_DELETE_DDR,
+                DDR_CAP_CAN_EDIT_DDR,
+                DDR_CAP_CAN_VIEW_DDR,
+                DDR_CAP_CAN_EXPORT_DDR
+            ),
+
+            DDR_ROLE_ASSISTANTE_DIRECTION => array(
+                DDR_CAP_CAN_CREATE_DDR,
+                DDR_CAP_CAN_SUBMIT_DDR,
+                DDR_CAP_CAN_LIST_DDR,
+                DDR_CAP_CAN_DELETE_DDR,
+                DDR_CAP_CAN_EDIT_DDR,
+                DDR_CAP_CAN_VIEW_DDR,
+                DDR_CAP_CAN_EXPORT_DDR,
+            ),
+
+            DDR_ROLE_ASSISTANTE_RH => array(
+                DDR_CAP_CAN_LIST_DDR,
+                DDR_CAP_CAN_LIST_OTHERS_DDR,
+                DDR_CAP_CAN_DELETE_DDR,
+                DDR_CAP_CAN_DELETE_OTHERS_DDR,
+                DDR_CAP_CAN_EDIT_DDR,
+                DDR_CAP_CAN_EDIT_OTHERS_DDR,
+                DDR_CAP_CAN_VIEW_DDR,
+                DDR_CAP_CAN_VIEW_OTHERS_DDR,
+                DDR_CAP_CAN_EXPORT_DDR,
+                DDR_CAP_CAN_EXPORT_OTHERS_DDR,
+                DDR_CAP_CAN_VALIDATE_DDR,
+                DDR_CAP_CAN_REFUSE_DDR,
+            ),
+
+            DDR_ROLE_DRH => array(
+                DDR_CAP_CAN_LIST_DDR,
+                DDR_CAP_CAN_LIST_OTHERS_DDR,
+                DDR_CAP_CAN_VIEW_DDR,
+                DDR_CAP_CAN_VIEW_OTHERS_DDR,
+                DDR_CAP_CAN_VALIDATE_DDR,
+                DDR_CAP_CAN_REFUSE_DDR,
+                DDR_CAP_CAN_EXPORT_DDR,
+                DDR_CAP_CAN_EXPORT_OTHERS_DDR,
+            ),
+
+            DDR_ROLE_DG => array(
+                DDR_CAP_CAN_LIST_DDR,
+                DDR_CAP_CAN_LIST_OTHERS_DDR,
+                DDR_CAP_CAN_VIEW_DDR,
+                DDR_CAP_CAN_VIEW_OTHERS_DDR,
+                DDR_CAP_CAN_VALIDATE_DDR,
+                DDR_CAP_CAN_REFUSE_DDR,
+                DDR_CAP_CAN_EXPORT_DDR,
+                DDR_CAP_CAN_EXPORT_OTHERS_DDR,
+            ),
+
+            DDR_ROLE_GESTIONNAIRE_TALENT => array(
+                DDR_CAP_CAN_LIST_DDR,
+                DDR_CAP_CAN_LIST_OTHERS_DDR,
+                DDR_CAP_CAN_VIEW_DDR,
+                DDR_CAP_CAN_VIEW_OTHERS_DDR,
+                DDR_CAP_CAN_CLOSE_DDR,
+                DDR_CAP_CAN_EXPORT_DDR,
+                DDR_CAP_CAN_EXPORT_OTHERS_DDR,
+            )
+
+        );
+
         //workflow statique
         self::$etapes = array(
             //etape 1
@@ -10,34 +102,17 @@ class AxianDDRWorkflow{
                 'etat' => DDR_STATUS_DRAFT,
                 'etape' => DDR_STEP_CREATE,
                 'acteur' => array(
-                    array(
-                        'role' => DDR_ROLE_MANAGER,
-                        'capabilities' => array(
-                            DDR_CAP_CAN_CREATE_DDR,
-                            DDR_CAP_CAN_SUBMIT_DDR,
-                            DDR_CAP_CAN_LIST_DDR,
-                            DDR_CAP_CAN_DELETE_DDR,
-                            DDR_CAP_CAN_EDIT_DDR,
-                            DDR_CAP_CAN_VIEW_DDR,
-                            DDR_CAP_CAN_EXPORT_DDR
-                        ),
-                        'type' => TYPE_DEMANDE_NON_PREVU
+                    DDR_ROLE_MANAGER => array(
+                        'type' => TYPE_DEMANDE_NON_PREVU,
+                        'action' => array(DDR_ACTION_CREATE, DDR_ACTION_UPDATE, DDR_ACTION_SUBMIT, DDR_ACTION_DELETE),
                     ),
-                    array(
-                        'role' => DDR_ROLE_ASSISTANTE_DIRECTION,
-                        'capabilities' => array(
-                            DDR_CAP_CAN_CREATE_DDR,
-                            DDR_CAP_CAN_SUBMIT_DDR,
-                            DDR_CAP_CAN_LIST_DDR,
-                            DDR_CAP_CAN_DELETE_DDR,
-                            DDR_CAP_CAN_EDIT_DDR,
-                            DDR_CAP_CAN_VIEW_DDR,
-                            DDR_CAP_CAN_EXPORT_DDR,
-                        ),
-                        'type' => TYPE_DEMANDE_PREVU
+
+                    DDR_ROLE_ASSISTANTE_DIRECTION => array(
+                        'type' => TYPE_DEMANDE_PREVU,
+                        'action' => array(DDR_ACTION_CREATE, DDR_ACTION_UPDATE, DDR_ACTION_SUBMIT, DDR_ACTION_DELETE),
                     ),
                 ),
-                'action' => array(DDR_ACTION_CREATE, DDR_ACTION_UPDATE, DDR_ACTION_SUBMIT, DDR_ACTION_DELETE),
+
             ),
 
             //etape 2
@@ -45,25 +120,17 @@ class AxianDDRWorkflow{
                 'etat' => DDR_STATUS_EN_COURS,
                 'etape' => DDR_STEP_VALIDATION_1,
                 'acteur' => array(
-                    array(
-                        'role' => DDR_ROLE_ASSISTANTE_RH,
-                        'capabilities' => array(
-                            DDR_CAP_CAN_LIST_DDR,
-                            DDR_CAP_CAN_LIST_OTHERS_DDR,
-                            DDR_CAP_CAN_DELETE_DDR,
-                            DDR_CAP_CAN_DELETE_OTHERS_DDR,
-                            DDR_CAP_CAN_EDIT_DDR,
-                            DDR_CAP_CAN_EDIT_OTHERS_DDR,
-                            DDR_CAP_CAN_VIEW_DDR,
-                            DDR_CAP_CAN_VIEW_OTHERS_DDR,
-                            DDR_CAP_CAN_EXPORT_DDR,
-                            DDR_CAP_CAN_EXPORT_OTHERS_DDR,
-                            DDR_CAP_CAN_VALIDATE_DDR,
-                            DDR_CAP_CAN_REFUSE_DDR,
-                        )
+                    DDR_ROLE_ASSISTANTE_RH => array(
+                        'action' => array(DDR_ACTION_VALIDATE, DDR_ACTION_REFUSE, DDR_ACTION_UPDATE),
+                    ),
+                    DDR_ROLE_MANAGER => array(
+                        'action' => array(DDR_ACTION_CANCEL)
+                    ),
+
+                    DDR_ROLE_ASSISTANTE_DIRECTION => array(
+                        'action' => array(DDR_ACTION_CANCEL)
                     ),
                 ),
-                'action' => array(DDR_ACTION_VALIDATE, DDR_ACTION_REFUSE, DDR_ACTION_UPDATE),
             ),
 
             //etape 3
@@ -71,21 +138,10 @@ class AxianDDRWorkflow{
                 'etat' => DDR_STATUS_EN_COURS,
                 'etape' => DDR_STEP_VALIDATION_2,
                 'acteur' => array(
-                    array(
-                        'role' => DDR_ROLE_DRH,
-                        'capabilities' => array(
-                            DDR_CAP_CAN_LIST_DDR,
-                            DDR_CAP_CAN_LIST_OTHERS_DDR,
-                            DDR_CAP_CAN_VIEW_DDR,
-                            DDR_CAP_CAN_VIEW_OTHERS_DDR,
-                            DDR_CAP_CAN_VALIDATE_DDR,
-                            DDR_CAP_CAN_REFUSE_DDR,
-                            DDR_CAP_CAN_EXPORT_DDR,
-                            DDR_CAP_CAN_EXPORT_OTHERS_DDR,
-                        )
+                    DDR_ROLE_DRH => array(
+                        'action' => array(DDR_ACTION_VALIDATE, DDR_ACTION_REFUSE)
                     ),
                 ),
-                'action' => array(DDR_ACTION_VALIDATE, DDR_ACTION_REFUSE),
             ),
 
             //etape 4
@@ -93,21 +149,10 @@ class AxianDDRWorkflow{
                 'etat' => DDR_STATUS_EN_COURS,
                 'etape' => DDR_STEP_VALIDATION_3,
                 'acteur' => array(
-                    array(
-                        'role' => DDR_ROLE_DG,
-                        'capabilities' => array(
-                            DDR_CAP_CAN_LIST_DDR,
-                            DDR_CAP_CAN_LIST_OTHERS_DDR,
-                            DDR_CAP_CAN_VIEW_DDR,
-                            DDR_CAP_CAN_VIEW_OTHERS_DDR,
-                            DDR_CAP_CAN_VALIDATE_DDR,
-                            DDR_CAP_CAN_REFUSE_DDR,
-                            DDR_CAP_CAN_EXPORT_DDR,
-                            DDR_CAP_CAN_EXPORT_OTHERS_DDR,
-                        )
-                    ),
+                    DDR_ROLE_DG => array(
+                        'action' => array(DDR_ACTION_VALIDATE, DDR_ACTION_REFUSE),
+                    )
                 ),
-                'action' => array(DDR_ACTION_VALIDATE, DDR_ACTION_REFUSE),
             ),
 
             //etape 5
@@ -115,20 +160,10 @@ class AxianDDRWorkflow{
                 'etat' => DDR_STATUS_VALIDE,
                 'etape' => DDR_STEP_PUBLISH,
                 'acteur' => array(
-                    array(
-                        'role' => DDR_ROLE_GESTIONNAIRE_TALENT,
-                        'capabilities' => array(
-                            DDR_CAP_CAN_LIST_DDR,
-                            DDR_CAP_CAN_LIST_OTHERS_DDR,
-                            DDR_CAP_CAN_VIEW_DDR,
-                            DDR_CAP_CAN_VIEW_OTHERS_DDR,
-                            DDR_CAP_CAN_CLOSE_DDR,
-                            DDR_CAP_CAN_EXPORT_DDR,
-                            DDR_CAP_CAN_EXPORT_OTHERS_DDR,
-                        )
+                    DDR_ROLE_GESTIONNAIRE_TALENT => array(
+                        'action' => array(DDR_ACTION_CLOSE),
                     ),
                 ),
-                'action' => array(DDR_ACTION_CLOSE),
             ),
 
             //etape 6
@@ -136,20 +171,10 @@ class AxianDDRWorkflow{
                 'etat' => DDR_STATUS_REFUSE,
                 'etape' => DDR_STEP_REFUSE,
                 'acteur' => array(
-                    array(
-                        'role' => DDR_ROLE_GESTIONNAIRE_TALENT,
-                        'capabilities' => array(
-                            DDR_CAP_CAN_LIST_DDR,
-                            DDR_CAP_CAN_LIST_OTHERS_DDR,
-                            DDR_CAP_CAN_VIEW_DDR,
-                            DDR_CAP_CAN_VIEW_OTHERS_DDR,
-                            DDR_CAP_CAN_CLOSE_DDR,
-                            DDR_CAP_CAN_EXPORT_DDR,
-                            DDR_CAP_CAN_EXPORT_OTHERS_DDR,
-                        )
+                    DDR_ROLE_GESTIONNAIRE_TALENT => array(
+                        'action' => array(DDR_ACTION_DELETE),
                     ),
                 ),
-                'action' => array(DDR_ACTION_DELETE),
             ),
 
             //etape 7 finish
@@ -157,20 +182,10 @@ class AxianDDRWorkflow{
                 'etat' => DDR_STATUS_CLOTURE,
                 'etape' => DDR_STEP_FINISH,
                 'acteur' => array(
-                    array(
-                        'role' => DDR_ROLE_GESTIONNAIRE_TALENT,
-                        'capabilities' => array(
-                            DDR_CAP_CAN_LIST_DDR,
-                            DDR_CAP_CAN_LIST_OTHERS_DDR,
-                            DDR_CAP_CAN_VIEW_DDR,
-                            DDR_CAP_CAN_VIEW_OTHERS_DDR,
-                            DDR_CAP_CAN_CLOSE_DDR,
-                            DDR_CAP_CAN_EXPORT_DDR,
-                            DDR_CAP_CAN_EXPORT_OTHERS_DDR,
-                        )
-                    ),
+                    DDR_ROLE_GESTIONNAIRE_TALENT => array(
+                        'action' => array(DDR_ACTION_DELETE),
+                    )
                 ),
-                'action' => array(DDR_ACTION_DELETE),
             ),
         );
 
@@ -197,13 +212,42 @@ class AxianDDRWorkflow{
     public static function isUserInCurrentEtape( $current_etape ){
         global $current_user;
         $workflow_etape_info = self::getWorkflowInfoBy($current_etape);
-        foreach ( $workflow_etape_info['workflow_info']['acteur'] as $acteur ){
-            if ( in_array($acteur['role'], $current_user->roles) ){
+
+        foreach ( $workflow_etape_info['workflow_info']['acteur'] as $role => $data_acteur ){
+            if ( in_array($role, $current_user->roles) ){
                 return true;
             }
         }
         return false;
     }
+
+    public static function getTypeDemandeByRole($current_etape){
+        global $current_user;
+        $workflow_etape_info = self::getWorkflowInfoBy($current_etape);
+        foreach ( $workflow_etape_info['workflow_info']['acteur'] as $role => $data_acteur ){
+            if ( in_array($role, $current_user->roles) ){
+                return $data_acteur['type'];
+            }
+        }
+        return false;
+    }
+
+    public static function isActionInCurrentActeurActions($current_etape, $current_action){
+        global $current_user;
+        $workflow_etape_info = self::getWorkflowInfoBy($current_etape);
+        foreach ( $workflow_etape_info['workflow_info']['acteur'] as $role => $data_acteur ){
+            if ( in_array($role, $current_user->roles) ){
+                return in_array($current_action, $data_acteur['action']);
+            }
+        }
+    }
+
+    public static function checkActionActeurInEtape( $current_etape, $current_action ){
+        //verifier que l'acteur est present dans l'étape
+        //verifier que l'action est présent dans les actions de l'acteur dans l'étape en cours
+        return self::isUserInCurrentEtape($current_etape) && self::isActionInCurrentActeurActions($current_etape, $current_action);
+    }
+
 }
 global $axian_ddr_workflow;
 $axian_ddr_workflow = new AxianDDRWorkflow();

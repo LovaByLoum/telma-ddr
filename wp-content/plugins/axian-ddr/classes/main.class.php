@@ -4,6 +4,7 @@ class AxianDDRMain {
     public function __construct()
     {
         add_action( 'init', array($this,'init_permission') );
+        add_action( 'admin_head',array($this,'admin_head') );
         add_action( 'admin_menu',array($this,'admin_menu') );
         add_action( 'admin_enqueue_scripts', array($this,'admin_enqueue_scripts') );
         add_filter( 'set-screen-option', array( $this ,'set_screen_option'), 999, 3);
@@ -19,32 +20,14 @@ class AxianDDRMain {
         add_role( DDR_ROLE_DG, 'DG');
 
         //add capabilities
-        foreach ( AxianDDRWorkflow::$etapes as $numero_etape => $data_etape ){
-            foreach ( $data_etape['acteur'] as $acteur ){
-                $role = get_role( $acteur['role'] );
-                $caps = isset($acteur['capabilities']) ? $acteur['capabilities'] : array();
-                if ( !empty($caps) ){
-                    foreach ( $caps as $cap ){
-                        $role->add_cap( $cap );
-                    }
-                }
-
-                //additional caps
-                $role->add_cap('read');
+        foreach ( AxianDDRWorkflow::$capabilities as $role_slug => $caps ){
+            $role = get_role( $role_slug );
+            foreach ( $caps as $cap ){
+                $role->add_cap( $cap );
             }
-        }
-
-        //admin
-        foreach ( array(DDR_ROLE_ADMINISTRATEUR_DDR, 'administrator') as $admin_role ){
-            $role = get_role( $admin_role );
-            $all_const = get_defined_constants();
-            $all_caps = preg_grep('#DDR_CAP_(.*?)#', array_keys($all_const));
-            foreach ( $all_caps as $cap ){
-                $role->add_cap( $all_const[$cap] );
-            }
+            //additional caps
             $role->add_cap('read');
         }
-
 
     }
 
@@ -74,6 +57,7 @@ class AxianDDRMain {
                 `etat` varchar(50) DEFAULT NULL COMMENT 'Etat actuel du ticket',
                 `etape` varchar(50) DEFAULT NULL COMMENT 'Etape actuelle du ticket',
                 `offre_data` longtext,
+                `societe` varchar(50) DEFAULT NULL,
                 PRIMARY KEY (`id`),
                 KEY `author_id` (`author_id`),
                 KEY `type` (`type`),
@@ -139,6 +123,18 @@ class AxianDDRMain {
         add_submenu_page( 'axian-ddr-admin', 'Termes de taxonomie', 'Termes de taxonomie', DDR_CAP_CAN_ADMIN_DDR, 'axian-ddr-admin&tab=term', 'AxianDDRAdministration::template');
 
         //
+    }
+
+    public function admin_head(){
+        if ( !current_user_can(DDR_CAP_CAN_CREATE_DDR) ) :
+        ?>
+        <style>
+            #adminmenu li a[href="admin.php?page=axian-ddr"]{
+                display: none!important;
+            }
+        </style>
+        <?php
+        endif;
     }
 
 

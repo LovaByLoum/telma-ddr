@@ -47,6 +47,7 @@ class AxianDDRUser{
         $element->classification    =   get_user_meta( $user->ID, "classification", true );
         $element->mobile            =   get_user_meta( $user->ID, "mobile", true );
         $element->titre             =   get_user_meta( $user->ID, "title", true );
+        $element->matricule         =   get_user_meta( $user->ID, "matricule", true );
 
 
         //...

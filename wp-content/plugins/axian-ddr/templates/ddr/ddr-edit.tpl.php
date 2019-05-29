@@ -106,6 +106,10 @@ $offres = new AxianDDROffre();
                             <p class="col-sm-9"><strong><?php echo $user_demandeur->email;?></strong></p>
                         </div>
                         <div class="form-group row">
+                            <label class="col-sm-3">N°Matricule&nbsp;:</label>
+                            <p class="col-sm-9"><strong><?php echo $user_demandeur->matricule;?></strong></p>
+                        </div>
+                        <div class="form-group row">
                             <label class="col-sm-3">Tél.&nbsp;:</label>
                             <p class="col-sm-9"><strong><?php echo $user_demandeur->mobile;?></strong></p>
                         </div>
@@ -266,8 +270,21 @@ $offres = new AxianDDROffre();
                         <div class="form-field">
                             <?php axian_ddr_render_field($axian_ddr->fields['attribution'],$post_data, true);?>
                         </div>
-                        <div class="form-field">
-                            <?php axian_ddr_render_field($axian_ddr->fields['type'],$post_data, true, $is_view);?>
+                        <div class="form-field label-left row">
+                            <?php
+                            if ( $is_create ){
+                                $type_predefini = AxianDDRWorkflow::getTypeDemandeByRole($post_data['etape']);
+                                if ( false !== $type_predefini ){
+                                    $post_data['type'] = $type_predefini;
+                                } else {
+                                    $post_data['type'] = TYPE_DEMANDE_NON_PREVU;
+                                }
+                                axian_ddr_render_field($axian_ddr->fields['type'], $post_data);
+                            }
+                            ?>
+                            <label class="col-sm-3">Type de demande:</label>
+                            <span class="col-sm-8"><?php echo AxianDDR::$types_demande[$post_data['type']] ;?></span>
+
                         </div>
                     </div>
                     <div class="form-group col-md-6">
@@ -336,33 +353,33 @@ $offres = new AxianDDROffre();
                     <input type="hidden" name="id" value="<?php echo $the_ddr_id;?>" />
                     <input type="hidden" name="etat" value="<?php echo $post_data['etat'];?>" />
 
-                    <?php if ( in_array(DDR_ACTION_SUBMIT, $current_workflow_etape['workflow_info']['action']) && AxianDDRWorkflow::isUserInCurrentEtape($post_data['etape']) ) :?>
+                    <?php if ( AxianDDRWorkflow::checkActionActeurInEtape($post_data['etape'], DDR_ACTION_SUBMIT ) ) :?>
                         <?php if ( current_user_can(DDR_CAP_CAN_SUBMIT_DDR) ) : ?>
-                        <input type="submit" name="submit-ddr" class="button button-primary" value="Soumettre"/>
+                        <input type="submit" name="submit-ddr" class="button button-primary confirm-before" value="Soumettre"/>
                         <?php endif;?>
                     <?php endif;?>
 
-                    <?php if ( in_array(DDR_ACTION_VALIDATE, $current_workflow_etape['workflow_info']['action']) && AxianDDRWorkflow::isUserInCurrentEtape($post_data['etape']) ) :?>
+                    <?php if ( AxianDDRWorkflow::checkActionActeurInEtape($post_data['etape'], DDR_ACTION_VALIDATE ) ) :?>
                         <?php if ( current_user_can(DDR_CAP_CAN_VALIDATE_DDR) ) : ?>
-                            <input type="submit" name="validate-ddr" class="button button-primary" value="Valider"/>
+                            <input type="submit" name="validate-ddr" class="button button-primary confirm-before" value="Valider"/>
                         <?php endif;?>
                     <?php endif;?>
 
-                    <?php if ( in_array(DDR_ACTION_REFUSE, $current_workflow_etape['workflow_info']['action']) && AxianDDRWorkflow::isUserInCurrentEtape($post_data['etape']) ) :?>
+                    <?php if ( AxianDDRWorkflow::checkActionActeurInEtape($post_data['etape'], DDR_ACTION_REFUSE ) ) :?>
                         <?php if ( current_user_can(DDR_CAP_CAN_REFUSE_DDR) ) : ?>
-                            <input type="submit" name="refuse-ddr" class="button button-primary" value="Refuser"/>
+                            <input type="submit" name="refuse-ddr" class="button button-primary confirm-before" value="Refuser"/>
                         <?php endif;?>
                     <?php endif;?>
 
-                    <?php if ( in_array(DDR_ACTION_CLOSE, $current_workflow_etape['workflow_info']['action']) && AxianDDRWorkflow::isUserInCurrentEtape($post_data['etape']) ) :?>
+                    <?php if ( AxianDDRWorkflow::checkActionActeurInEtape($post_data['etape'], DDR_ACTION_CLOSE ) ) :?>
                         <?php if ( current_user_can(DDR_CAP_CAN_CLOSE_DDR) ) : ?>
-                            <input type="submit" name="cloture-ddr" class="button button-primary" value="Clôturer"/>
+                            <input type="submit" name="cloture-ddr" class="button button-primary confirm-before" value="Clôturer"/>
                         <?php endif;?>
                     <?php endif;?>
 
                     <?php if ( DDR_STATUS_DRAFT == $post_data['etat'] ):?>
 
-                        <?php if ( in_array(DDR_ACTION_CREATE, $current_workflow_etape['workflow_info']['action']) && AxianDDRWorkflow::isUserInCurrentEtape($post_data['etape']) ) :?>
+                        <?php if ( AxianDDRWorkflow::checkActionActeurInEtape($post_data['etape'], DDR_ACTION_CREATE ) ) :?>
                             <?php if ( current_user_can(DDR_CAP_CAN_CREATE_DDR) ) : ?>
                                 <input type="submit" name="save-draft" class="button" value="Enregistrer le brouillon"/>
                             <?php endif;?>
@@ -370,7 +387,7 @@ $offres = new AxianDDROffre();
 
                     <?php else : ?>
 
-                        <?php if ( in_array(DDR_ACTION_UPDATE, $current_workflow_etape['workflow_info']['action']) && AxianDDRWorkflow::isUserInCurrentEtape($post_data['etape']) ) :?>
+                        <?php if ( AxianDDRWorkflow::checkActionActeurInEtape($post_data['etape'], DDR_ACTION_UPDATE ) ) :?>
                             <?php if ( current_user_can(DDR_CAP_CAN_EDIT_OTHERS_DDR) || ( current_user_can(DDR_CAP_CAN_EDIT_DDR) && $current_user->ID == $post_data['author_id'] ) ) : ?>
                                 <input type="submit" name="update-ddr" class="button" value="Enregistrer"/>
                             <?php endif;?>
@@ -378,28 +395,35 @@ $offres = new AxianDDROffre();
 
                     <?php endif; ?>
 
-                    <?php if ( in_array(DDR_ACTION_DELETE, $current_workflow_etape['workflow_info']['action']) && AxianDDRWorkflow::isUserInCurrentEtape($post_data['etape']) ) :?>
+                    <?php if ( AxianDDRWorkflow::checkActionActeurInEtape($post_data['etape'], DDR_ACTION_CANCEL ) ) :?>
+                        <?php if ( current_user_can(DDR_CAP_CAN_DELETE_DDR) ) : ?>
+                            <input type="submit" name="cancel-ddr" class="button" value="Annuler la demande"/>
+                        <?php endif;?>
+                    <?php endif;?>
+
+
+                    <?php if ( AxianDDRWorkflow::checkActionActeurInEtape($post_data['etape'], DDR_ACTION_DELETE ) ) :?>
                         <?php if ( current_user_can(DDR_CAP_CAN_DELETE_OTHERS_DDR) || ( current_user_can(DDR_CAP_CAN_DELETE_DDR) && $current_user->ID == $post_data['author_id'] ) ) : ?>
-                        <input type="submit" name="delete-ddr" class="button" value="Supprimer"/>
+                        <input type="submit" name="delete-ddr" class="button confirm-before" value="Supprimer"/>
                         <?php endif;?>
                     <?php endif;?>
 
                 <?php elseif ( $is_create ) : ?>
 
-                    <?php if ( in_array(DDR_ACTION_SUBMIT, $current_workflow_etape['workflow_info']['action']) && AxianDDRWorkflow::isUserInCurrentEtape($post_data['etape']) ) :?>
+                    <?php if ( AxianDDRWorkflow::checkActionActeurInEtape($post_data['etape'], DDR_ACTION_SUBMIT ) ) :?>
                         <?php if ( current_user_can(DDR_CAP_CAN_SUBMIT_DDR) ) : ?>
-                        <input type="submit" name="submit-ddr" class="button button-primary" value="Soumettre"/>
+                        <input type="submit" name="submit-ddr" class="button button-primary confirm-before" value="Soumettre"/>
                         <?php endif;?>
                     <?php endif;?>
 
-                    <?php if ( in_array(DDR_ACTION_CREATE, $current_workflow_etape['workflow_info']['action']) && AxianDDRWorkflow::isUserInCurrentEtape($post_data['etape']) ) :?>
+                    <?php if ( AxianDDRWorkflow::checkActionActeurInEtape($post_data['etape'], DDR_ACTION_CREATE ) ) :?>
                         <?php if ( current_user_can(DDR_CAP_CAN_CREATE_DDR) ) : ?>
                         <input type="submit" name="save-draft" class="button" value="Enregistrer comme brouillon"/>
                         <?php endif;?>
                     <?php endif;?>
 
                 <?php endif;?>
-                <a href="admin.php?page=axian-ddr-list" class="btn btn-sm btn-outline-danger">Annuler</a>
+                <a href="admin.php?page=axian-ddr-list" class="btn btn-sm btn-outline-danger confirm-before">Retour</a>
             </p>
 
 

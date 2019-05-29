@@ -66,11 +66,9 @@ class AxianDDR{
 
             'type' => array(
                 'label' => 'Type de demande',
-                'type' => 'select',
+                'type' => 'hidden',
                 'name' => 'type',
-                'size' => '50',
-                'required' => true,
-                'options' => self::$types_demande,
+                'required' => true
             ),
 
             'direction' => array(
@@ -193,14 +191,20 @@ class AxianDDR{
     }
 
     public static function insert($args){
-        global $wpdb;
+        global $wpdb, $current_user;
         $now = date("Y-m-d H:i:s");
 
+        $the_user= AxianDDRUser::getById($current_user->ID);
         $args['date_previsionnel'] = axian_ddr_convert_to_mysql_date($args['date_previsionnel']);
         $args['offre_data'] = serialize($args['offre_data']);
 
+        $company = $the_user->company;
+        if ( empty($company) ){
+            //get by resaeu ldap ...
+        }
+
         $result = $wpdb->insert(TABLE_AXIAN_DDR, array(
-            'author_id' => intval($args['author_id']),
+            'author_id' => $current_user->ID,
             'type' => $args['type'],
             'direction' => $args['direction'],
             'title' => $args['title'],
@@ -217,6 +221,7 @@ class AxianDDR{
             'etat' => $args['etat'],
             'etape' => $args['etape'],
             'offre_data' => $args['offre_data'],
+            'societe' => $company,
 
         ));
 
@@ -232,7 +237,6 @@ class AxianDDR{
         $now = date("Y-m-d H:i:s");
 
         $data_authorized = array(
-            'type',
             'direction',
             'title',
             'departement',
@@ -247,7 +251,6 @@ class AxianDDR{
             'etat',
             'etape',
             'offre_data',
-
         );
         $data = array();
         foreach ( $args as $key => $value ){
@@ -299,6 +302,7 @@ class AxianDDR{
         $is_validate_ddr = isset($_POST['validate-ddr']);
         $is_refuse_ddr = isset($_POST['refuse-ddr']);
         $is_cloture_ddr = isset($_POST['cloture-ddr']);
+        $is_cancel_ddr = isset($_POST['cancel-ddr']);
 
         //permission
         if ( $is_save_draft && !current_user_can(DDR_CAP_CAN_CREATE_DDR) ){
@@ -310,7 +314,7 @@ class AxianDDR{
         if ( $is_update_ddr && !current_user_can(DDR_CAP_CAN_EDIT_DDR) ){
             wp_die('Action non autorisée');
         }
-        if ( $is_delete_ddr && !current_user_can(DDR_CAP_CAN_DELETE_DDR) ){
+        if ( ( $is_delete_ddr || $is_cancel_ddr ) && !current_user_can(DDR_CAP_CAN_DELETE_DDR) ){
             wp_die('Action non autorisée');
         }
         if ( $is_validate_ddr && !current_user_can(DDR_CAP_CAN_VALIDATE_DDR) ){
@@ -503,6 +507,29 @@ class AxianDDR{
                 $redirect_to = 'admin.php?page=axian-ddr&action=view&id=' . $the_ddr_id . '&msg=' . DDR_MSG_CLOSED_SUCCESSFULLY;
                 wp_safe_redirect($redirect_to);die;
             }
+        } elseif ( $is_cancel_ddr ){
+            if ( !is_null($the_ddr_id) ){
+                $post_data = $_POST;
+                $the_ddr = AxianDDR::getbyId($the_ddr_id);
+
+                //maj etat / etape
+                $post_data['etat'] = DDR_STATUS_ANNULE;
+                $post_data['etape'] = DDR_STEP_CANCEL;
+
+                self::update( $post_data );
+
+                //historique
+                AxianDDRHistorique::add($the_ddr_id, array(
+                    'action' => DDR_ACTION_CANCEL,
+                    'etat_avant' => $the_ddr['etat'],
+                    'etat_apres' => $post_data['etat'],
+                    'etape' => $post_data['etape'],
+                    'comment' => $post_data['comment'],
+                ));
+
+                $redirect_to = 'admin.php?page=axian-ddr&action=view&id=' . $the_ddr_id . '&msg=' . DDR_MSG_CANCELED_SUCCESSFULLY;
+                wp_safe_redirect($redirect_to);die;
+            }
         } else {
             return false;
         }
@@ -551,6 +578,12 @@ class AxianDDR{
                     'msg' => 'Clôture du ticket effectuée avec succés.',
                 );
                 break;
+            case DDR_MSG_CANCELED_SUCCESSFULLY:
+                $return = array(
+                    'code' => 'updated',
+                    'msg' => 'Annulation du ticket effectuée avec succés.',
+                );
+                break;
             case DDR_MSG_ACTION_DENIED:
                 $return = array(
                     'code' => 'error',
@@ -576,6 +609,7 @@ class AxianDDR{
 
     public static function getby( $field_args = array(), $supp_args = array(), $predifined_filters = '' ){
         global $wpdb, $current_user;
+        $the_user = AxianDDRUser::getById($current_user->ID);
 
         $query_select = "SELECT SQL_CALC_FOUND_ROWS * FROM  " . TABLE_AXIAN_DDR . " WHERE 1=1 ";
 
@@ -599,6 +633,9 @@ class AxianDDR{
             $field_args['author_id'] = $current_user->ID;
         }
 
+        //restriction by societe
+        //$field_args['societe'] = $the_user->company;
+
         $data_authorized = array(
             'id',
             'author_id',
@@ -617,7 +654,8 @@ class AxianDDR{
             'created',
             'modified',
             'etat',
-            'etape'
+            'etape',
+            'societe',
         );
 
         foreach ( $field_args as $field => $value ){

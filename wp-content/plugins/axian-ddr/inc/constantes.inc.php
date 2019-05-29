@@ -28,6 +28,7 @@ define('DDR_STEP_VALIDATION_4','validation4');
 define('DDR_STEP_PUBLISH','publish');
 define('DDR_STEP_FINISH','finish');
 define('DDR_STEP_REFUSE','refuse');
+define('DDR_STEP_CANCEL','annulation');
 
 //action
 define('DDR_ACTION_CREATE','create');
@@ -36,6 +37,7 @@ define('DDR_ACTION_DELETE','delete');
 define('DDR_ACTION_SUBMIT','submit');
 define('DDR_ACTION_VALIDATE','validate');
 define('DDR_ACTION_REFUSE','refuse');
+define('DDR_ACTION_CANCEL','cancel');
 define('DDR_ACTION_CLOSE','close');
 
 //type candidat
@@ -53,6 +55,7 @@ define('DDR_MSG_DELETED_SUCCESSFULLY', 'deleted-successfully');
 define('DDR_MSG_VALIDATED_SUCCESSFULLY', 'validated-successfully');
 define('DDR_MSG_INVALIDATED_SUCCESSFULLY', 'invalidated-successfully');
 define('DDR_MSG_CLOSED_SUCCESSFULLY', 'closed-successfully');
+define('DDR_MSG_CANCELED_SUCCESSFULLY', 'canceled-successfully');
 define('DDR_MSG_ACTION_DENIED', 'action-denied');
 define('DDR_MSG_VALIDATE_ERROR', 'validate-error');
 define('DDR_MSG_UNKNOWN_ERROR', 'unknown-error');

@@ -78,6 +78,10 @@ jQuery(function() {
         }
     })
 
+    //confirmation
+    $('input[type=submit].confirm-before, a.confirm-before').click(function(){
+        return confirm("Êtes-vous sûr de vouloir continuer ?");
+    })
 
 });
 

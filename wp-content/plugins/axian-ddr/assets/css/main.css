@@ -37,6 +37,11 @@ fieldset.ddr-box-bordered .form-group input[type=text]{
     padding: 5px 10px;
     width: 100%;
 }
+fieldset.ddr-box-bordered .form-group .form-field.label-left label{
+    text-align: left!important;
+    padding-left: 0!important;
+    max-width: 25%;
+}
 fieldset.ddr-box-bordered .form-group .form-field{
     margin-bottom: 20px;
 }

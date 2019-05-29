@@ -29,7 +29,6 @@ function axian_ddr_render_field( $field, $post_data = null, $label = true, $disp
             case 'radio' :
             case 'wysiwyg' :
             case 'textarea' :
-            case 'hidden' :
                 echo $current_value;
                 break;
             case 'date' :
@@ -40,7 +39,7 @@ function axian_ddr_render_field( $field, $post_data = null, $label = true, $disp
             case 'taxonomy_select':
             case 'select':
                 if ( $field['type'] == 'post_select' ){
-                    $posts = get_posts(array('post_type' => $field['post_type']));
+                    $posts = get_posts(array('post_type' => $field['post_type'], 'numberposts' => -1));
                     foreach ( $posts as $p ){
                         $field['options'][$p->ID] = $p->post_title;
                     }
@@ -100,7 +99,7 @@ function axian_ddr_render_field( $field, $post_data = null, $label = true, $disp
             case 'select':
 
                 if ( $field['type'] == 'post_select' ){
-                    $posts = get_posts(array('post_type' => $field['post_type']));
+                    $posts = get_posts(array('post_type' => $field['post_type'], 'numberposts' => -1));
                     foreach ( $posts as $p ){
                         $field['options'][$p->ID] = $p->post_title;
                     }

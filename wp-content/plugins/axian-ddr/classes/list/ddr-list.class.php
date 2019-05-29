@@ -97,6 +97,7 @@ class AxianDDRList extends WP_Filter_List_Table{
             'date_previsionnel' => array('date_previsionnel',false),
             'created' => array('created',false),
             'modified' => array('modified',false),
+            'societe' => array('societe',false),
         );
 
         return $sortable_columns;
@@ -120,6 +121,7 @@ class AxianDDRList extends WP_Filter_List_Table{
             'date_previsionnel' => array('type' => 'daterangepicker'),
             'created' => array('type' => 'daterangepicker'),
             'modified' => array('type' => 'daterangepicker'),
+            'societe' => array('type' => 'autocompletion', 'source' => 'entreprise'),
         );
 
         return $filterable_columns;
@@ -150,6 +152,7 @@ class AxianDDRList extends WP_Filter_List_Table{
             'date_previsionnel' => 'Date prévisionnelle',
             'created' => 'Date de création',
             'modified' => 'Date de modification',
+            'societe' => 'Société',
         );
 
         return $columns;
