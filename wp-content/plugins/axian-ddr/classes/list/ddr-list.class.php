@@ -205,7 +205,7 @@ class AxianDDRList extends WP_Filter_List_Table{
         }
 
         if ( current_user_can(DDR_CAP_CAN_EDIT_OTHERS_DDR) || ( current_user_can(DDR_CAP_CAN_EDIT_DDR) && $item->author_id == $current_user->ID ) ){
-            $actions['edit'] = sprintf( '<a href="?page=%s&action=%s&id=%s">Editer</a>', 'axian-ddr', 'edit', absint( $item->id ) );
+            $actions['edit'] = sprintf( '<a href="?page=%s&action=%s&id=%s">Modifier</a>', 'axian-ddr', 'edit', absint( $item->id ) );
         }
 
         /*if ( current_user_can(DDR_CAP_CAN_DELETE_OTHERS_DDR) || ( current_user_can(DDR_CAP_CAN_DELETE_DDR) && $item->author_id == $current_user->ID ) ){

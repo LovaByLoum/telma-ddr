@@ -6,12 +6,15 @@ global $ddr_process_msg;
 $user_demandeur = AxianDDRUser::getById($current_user->ID);
 
 $is_edit = isset($_GET['id']) && isset($_GET['action']) && 'edit' == $_GET['action'] && $_GET['id'] > 0;
+$is_create = !isset($_GET['id']) && !isset($_GET['action']);
+$is_view = isset($_GET['id']) && isset($_GET['action']) && 'view' == $_GET['action'] && $_GET['id'] > 0;
+
 $the_ddr_id = null;
 
-if ( $is_edit ){
+if ( $is_edit || $is_view ){
     $the_ddr_id = intval($_GET['id']);
     $post_data = AxianDDR::getbyId($the_ddr_id);
-} else {
+} elseif ( $is_create ) {
     $post_data = array(
         'author_id' => $current_user->ID,
         'etape' => DDR_STEP_CREATE
@@ -23,7 +26,11 @@ if ( $is_edit ){
     if ( !current_user_can(DDR_CAP_CAN_EDIT_OTHERS_DDR) && current_user_can(DDR_CAP_CAN_EDIT_DDR) && $current_user->ID != $post_data['author_id'] ){
         wp_die('Action non autorisée');
     }
-} else {
+} elseif ( $is_view ){
+    if ( !current_user_can(DDR_CAP_CAN_VIEW_OTHERS_DDR) && current_user_can(DDR_CAP_CAN_VIEW_DDR) && $current_user->ID != $post_data['author_id'] ){
+        wp_die('Action non autorisée');
+    }
+} elseif ( $is_create ) {
     if ( !current_user_can(DDR_CAP_CAN_CREATE_DDR) ){
         wp_die('Action non autorisée');
     }
@@ -33,7 +40,7 @@ $historiques = AxianDDRHistorique::getByDDRId(intval($_GET['id']));
 ?>
 
 <div class="wrap nosubsub">
-    <h1 class="wp-heading-inline">Demande de recrutement <?php if ($is_edit){ echo ' / DDR-' . $the_ddr_id; } ?></h1>
+    <h1 class="wp-heading-inline">Demande de recrutement <?php if ($is_edit || $is_view){ echo ' / DDR-' . $the_ddr_id; } ?></h1>
 
     <?php
     if ( !is_null($ddr_process_msg) ){
@@ -50,7 +57,7 @@ $historiques = AxianDDRHistorique::getByDDRId(intval($_GET['id']));
     <?php endif;?>
     <hr class="wp-header-end">
 
-    <?php if ( $is_edit ): ?>
+    <?php if ( $is_edit || $is_view ): ?>
         <br>
         <div class="ddr-summary res row">
             <div class="col-md-6">
@@ -112,13 +119,13 @@ $historiques = AxianDDRHistorique::getByDDRId(intval($_GET['id']));
                                         axian_ddr_render_field(array(
                                             'type' => 'hidden',
                                             'name' => 'superieur_id'
-                                        ), $post_data, false);
+                                        ), $post_data, false, $is_view);
                                     } else {
                                         axian_ddr_render_field(array(
                                             'type' => 'autocompletion',
                                             'name' => 'superieur_id',
                                             'source' => 'user'
-                                        ), $post_data, false);
+                                        ), $post_data, false, $is_view);
                                     }
                                     ?>
                                 </strong>
@@ -134,7 +141,11 @@ $historiques = AxianDDRHistorique::getByDDRId(intval($_GET['id']));
                         </div>
                     </div>
                 </div>
-                <?php axian_ddr_render_field($axian_ddr->fields['demandeur'],$post_data);?>
+
+                <?php if ( $is_edit ) : ?>
+                <?php axian_ddr_render_field($axian_ddr->fields['demandeur'],$post_data, true);?>
+                <?php endif;?>
+
             </fieldset>
 
             <fieldset class="ddr-box-bordered">
@@ -143,21 +154,21 @@ $historiques = AxianDDRHistorique::getByDDRId(intval($_GET['id']));
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <div class="form-field">
-                            <?php axian_ddr_render_field($axian_ddr->fields['titre'],$post_data);?>
+                            <?php axian_ddr_render_field($axian_ddr->fields['titre'],$post_data, true, $is_view);?>
                         </div>
                         <div class="form-field">
-                            <?php axian_ddr_render_field($axian_ddr->fields['candidature'],$post_data);?>
+                            <?php axian_ddr_render_field($axian_ddr->fields['candidature'],$post_data, true, $is_view);?>
                         </div>
                         <div class="form-field">
-                            <?php axian_ddr_render_field($axian_ddr->fields['dernier_titulaire'],$post_data);?>
+                            <?php axian_ddr_render_field($axian_ddr->fields['dernier_titulaire'],$post_data, true, $is_view);?>
                         </div>
                     </div>
                     <div class="form-group col-md-6">
                         <div class="form-field">
-                            <?php axian_ddr_render_field($axian_ddr->fields['motif'],$post_data);?>
+                            <?php axian_ddr_render_field($axian_ddr->fields['motif'],$post_data, true, $is_view);?>
                         </div>
                         <div class="form-field">
-                            <?php axian_ddr_render_field($axian_ddr->fields['date'],$post_data);?>
+                            <?php axian_ddr_render_field($axian_ddr->fields['date'],$post_data, true, $is_view);?>
                         </div>
                     </div>
                 </div>
@@ -165,17 +176,17 @@ $historiques = AxianDDRHistorique::getByDDRId(intval($_GET['id']));
                 <div class="form-row">
                     <div class="form-group col-md-4">
                         <div class="form-field">
-                            <?php axian_ddr_render_field($axian_ddr->fields['direction'],$post_data);?>
+                            <?php axian_ddr_render_field($axian_ddr->fields['direction'],$post_data, true, $is_view);?>
                         </div>
                     </div>
                     <div class="form-group col-md-4">
                         <div class="form-field">
-                            <?php axian_ddr_render_field($axian_ddr->fields['departement'],$post_data);?>
+                            <?php axian_ddr_render_field($axian_ddr->fields['departement'],$post_data, true, $is_view);?>
                         </div>
                     </div>
                     <div class="form-group col-md-4">
                         <div class="form-field">
-                            <?php axian_ddr_render_field($axian_ddr->fields['lieu'],$post_data);?>
+                            <?php axian_ddr_render_field($axian_ddr->fields['lieu'],$post_data, true, $is_view);?>
                         </div>
                     </div>
                 </div>
@@ -195,10 +206,10 @@ $historiques = AxianDDRHistorique::getByDDRId(intval($_GET['id']));
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <div class="form-field">
-                            <?php axian_ddr_render_field($axian_ddr->fields['attribution'],$post_data);?>
+                            <?php axian_ddr_render_field($axian_ddr->fields['attribution'],$post_data, true);?>
                         </div>
                         <div class="form-field">
-                            <?php axian_ddr_render_field($axian_ddr->fields['type'],$post_data);?>
+                            <?php axian_ddr_render_field($axian_ddr->fields['type'],$post_data, true, $is_view);?>
                         </div>
                     </div>
                     <div class="form-group col-md-6">
@@ -209,7 +220,7 @@ $historiques = AxianDDRHistorique::getByDDRId(intval($_GET['id']));
                                 'name' => 'comment',
                                 'cols' => '40',
                                 'rows' => '4'
-                            ), $post_data);?>
+                            ), $post_data, true);?>
                         </div>
                     </div>
                 </div>
@@ -315,7 +326,7 @@ $historiques = AxianDDRHistorique::getByDDRId(intval($_GET['id']));
                         <?php endif;?>
                     <?php endif;?>
 
-                <?php else : ?>
+                <?php elseif ( $is_create ) : ?>
 
                     <?php if ( in_array(DDR_ACTION_SUBMIT, $current_workflow_etape['workflow_info']['action']) && AxianDDRWorkflow::isUserInCurrentEtape($post_data['etape']) ) :?>
                         <?php if ( current_user_can(DDR_CAP_CAN_SUBMIT_DDR) ) : ?>
