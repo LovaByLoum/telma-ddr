@@ -255,13 +255,19 @@ class AxianDDR{
         );
         $data = array();
         foreach ( $args as $key => $value ){
-            if ( in_array($key, $data_authorized) ){
+            if ( in_array($key, $data_authorized) && !empty($value) ){
                 $data[$key] = $value;
             }
         }
 
-        $data['offre_data'] = serialize($data['offre_data']);
-        $data['date_previsionnel'] = axian_ddr_convert_to_mysql_date($data['date_previsionnel']);
+        if ( isset($data['offre_data']) && !empty($data['offre_data']) ){
+            $data['offre_data'] = serialize($data['offre_data']);
+        }
+
+        if ( isset($data['date_previsionnel']) && !empty($data['date_previsionnel']) ){
+            $data['date_previsionnel'] = axian_ddr_convert_to_mysql_date($data['date_previsionnel']);
+        }
+
         $data['modified'] = $now;
 
         $result = $wpdb->update(
@@ -291,8 +297,9 @@ class AxianDDR{
     public function process_ddr(){
         global $ddr_process_msg;
         $is_edit = isset($_GET['id']) && isset($_GET['action']) && 'edit' == $_GET['action'] && $_GET['id'] > 0;
+        $is_view = isset($_GET['id']) && isset($_GET['action']) && 'view' == $_GET['action'] && $_GET['id'] > 0;
         $the_ddr_id = null;
-        if ( $is_edit ) $the_ddr_id = intval($_GET['id']);
+        if ( $is_edit || $is_view ) $the_ddr_id = intval($_GET['id']);
 
         setlocale (LC_TIME, 'fr_FR.utf8','fra');
 
@@ -495,6 +502,8 @@ class AxianDDR{
                 $post_data['etape'] = DDR_STEP_FINISH;
 
                 self::update( $post_data );
+
+                //create draft offre with offre_data prefill
 
                 //historique
                 AxianDDRHistorique::add($the_ddr_id, array(
