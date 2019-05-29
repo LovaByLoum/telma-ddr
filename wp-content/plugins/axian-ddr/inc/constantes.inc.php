@@ -26,10 +26,13 @@ define('DDR_STEP_VALIDATION_2','validation2');
 define('DDR_STEP_VALIDATION_3','validation3');
 define('DDR_STEP_VALIDATION_4','validation4');
 define('DDR_STEP_PUBLISH','publish');
+define('DDR_STEP_FINISH','finish');
+define('DDR_STEP_REFUSE','refuse');
 
 //action
 define('DDR_ACTION_CREATE','create');
 define('DDR_ACTION_UPDATE','update');
+define('DDR_ACTION_DELETE','delete');
 define('DDR_ACTION_SUBMIT','submit');
 define('DDR_ACTION_VALIDATE','validate');
 define('DDR_ACTION_REFUSE','refuse');
@@ -47,6 +50,9 @@ define('TYPE_DEMANDE_NON_PREVU','not_planned');
 define('DDR_MSG_SAVED_SUCCESSFULLY', 'saved-successfully');
 define('DDR_MSG_SUBMITTED_SUCCESSFULLY', 'submitted-successfully');
 define('DDR_MSG_DELETED_SUCCESSFULLY', 'deleted-successfully');
+define('DDR_MSG_VALIDATED_SUCCESSFULLY', 'validated-successfully');
+define('DDR_MSG_INVALIDATED_SUCCESSFULLY', 'invalidated-successfully');
+define('DDR_MSG_CLOSED_SUCCESSFULLY', 'closed-successfully');
 define('DDR_MSG_ACTION_DENIED', 'action-denied');
 define('DDR_MSG_VALIDATE_ERROR', 'validate-error');
 define('DDR_MSG_UNKNOWN_ERROR', 'unknown-error');
@@ -75,6 +81,8 @@ define('DDR_CAP_CAN_VALIDATE_DDR', 'can-validate-ddr');
 define('DDR_CAP_CAN_REFUSE_DDR', 'can-refuse-ddr');
 define('DDR_CAP_CAN_CLOSE_DDR', 'can-close-ddr');
 define('DDR_CAP_CAN_ADMIN_DDR', 'can-admin-ddr');
+define('DDR_CAP_CAN_EXPORT_DDR', 'can-export-ddr');
+define('DDR_CAP_CAN_EXPORT_OTHERS_DDR', 'can-export-others-ddr');
 
 //Table name
 global $wpdb;

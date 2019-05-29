@@ -1,5 +1,9 @@
 <div class="wrap">
-    <h1 class="wp-heading-inline">Demandes de recrutement</h1><a href="admin.php?page=axian-ddr" class="page-title-action">Ajouter</a>
+    <h1 class="wp-heading-inline">Demandes de recrutement</h1>
+
+    <?php if ( current_user_can(DDR_CAP_CAN_CREATE_DDR) ) :?>
+    <a href="admin.php?page=axian-ddr" class="page-title-action">Ajouter</a>
+    <?php endif;?>
 
     <?php if (  isset($_GET['msg']) ) :
         $msg = AxianDDR::manage_message($_GET['msg'])?>

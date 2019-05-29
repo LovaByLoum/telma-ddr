@@ -10,8 +10,6 @@ class AxianDDRMain {
     }
 
     public function init_permission(){
-        global $axian_ddr_workflow;
-
         //add role
         add_role( DDR_ROLE_ADMINISTRATEUR_DDR, 'Administrateurs DDR');
         add_role( DDR_ROLE_MANAGER, 'Manager');
@@ -21,12 +19,14 @@ class AxianDDRMain {
         add_role( DDR_ROLE_DG, 'DG');
 
         //add capabilities
-        foreach ( $axian_ddr_workflow->etapes as $numero_etape => $data_etape ){
+        foreach ( AxianDDRWorkflow::$etapes as $numero_etape => $data_etape ){
             foreach ( $data_etape['acteur'] as $acteur ){
                 $role = get_role( $acteur['role'] );
-                $caps = $acteur['capabilities'];
-                foreach ( $caps as $cap ){
-                    $role->add_cap( $cap );
+                $caps = isset($acteur['capabilities']) ? $acteur['capabilities'] : array();
+                if ( !empty($caps) ){
+                    foreach ( $caps as $cap ){
+                        $role->add_cap( $cap );
+                    }
                 }
 
                 //additional caps
@@ -130,7 +130,7 @@ class AxianDDRMain {
         add_menu_page('Demande de recrutement', 'Demande de recrutement', DDR_CAP_CAN_LIST_DDR, 'axian-ddr-list','AxianDDR::template_list','dashicons-megaphone');
         $hook = add_submenu_page( 'axian-ddr-list', 'Toutes les demandes', 'Toutes les demandes',DDR_CAP_CAN_LIST_DDR, 'axian-ddr-list', 'AxianDDR::template_list');
         add_action( "load-{$hook}", 'AxianDDRList::load_hook' );
-        add_submenu_page( 'axian-ddr-list', 'Faire une demande', 'Faire une demande', DDR_CAP_CAN_CREATE_DDR, 'axian-ddr','AxianDDR::template_edit');
+        add_submenu_page( 'axian-ddr-list', 'Faire une demande', 'Faire une demande', DDR_CAP_CAN_VIEW_DDR, 'axian-ddr','AxianDDR::template_edit');
 
         //menu admin
         add_menu_page('DDR Administration', 'DDR Administration', DDR_CAP_CAN_ADMIN_DDR, 'axian-ddr-admin','','dashicons-networking');

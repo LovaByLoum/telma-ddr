@@ -48,7 +48,7 @@ class AxianDDRList extends WP_Filter_List_Table{
                 break;
             case 'modified':
             case 'created':
-                return axian_ddr_convert_to_human_datetime($item->$column_name);
+                return (!empty($item->$column_name) ? axian_ddr_convert_to_human_datetime($item->$column_name) : '');
                 break;
             case 'date_previsionnel':
                 return axian_ddr_convert_to_human_date($item->$column_name);
@@ -195,16 +195,24 @@ class AxianDDRList extends WP_Filter_List_Table{
     }
 
     function column_id( $item ) {
+        global $current_user;
 
-        // create a nonce
-        $delete_nonce = wp_create_nonce( 'addr_delete_term' .absint( $item->id ) );
         $title = '<strong>DDR-' . $item->id . '</strong>';
 
-        $actions = [
-			'view' => sprintf( '<a href="?page=%s&action=%s&id=%s">Afficher</a>', 'axian-ddr','view', absint( $item->id ) ),
-            'edit' => sprintf( '<a href="?page=%s&action=%s&id=%s">Editer</a>', 'axian-ddr', 'edit', absint( $item->id ) ),
-            'delete' => sprintf( '<a href="?page=%s&action=%s&id=%s&_wpnonce=%s">Supprimer</a>', 'axian-ddr', 'delete', absint( $item->id ), $delete_nonce )
-        ];
+        $actions = array();
+        if ( current_user_can(DDR_CAP_CAN_VIEW_OTHERS_DDR) || ( current_user_can(DDR_CAP_CAN_VIEW_DDR) && $item->author_id == $current_user->ID ) ){
+            $actions['view'] = sprintf( '<a href="?page=%s&action=%s&id=%s">Afficher</a>', 'axian-ddr','view', absint( $item->id ) );
+        }
+
+        if ( current_user_can(DDR_CAP_CAN_EDIT_OTHERS_DDR) || ( current_user_can(DDR_CAP_CAN_EDIT_DDR) && $item->author_id == $current_user->ID ) ){
+            $actions['edit'] = sprintf( '<a href="?page=%s&action=%s&id=%s">Editer</a>', 'axian-ddr', 'edit', absint( $item->id ) );
+        }
+
+        /*if ( current_user_can(DDR_CAP_CAN_DELETE_OTHERS_DDR) || ( current_user_can(DDR_CAP_CAN_DELETE_DDR) && $item->author_id == $current_user->ID ) ){
+            // create a nonce
+            $delete_nonce = wp_create_nonce( 'addr_delete_term' .absint( $item->id ) );
+            $actions['delete'] = sprintf( '<a href="?page=%s&action=%s&id=%s&_wpnonce=%s">Supprimer</a>', 'axian-ddr', 'delete', absint( $item->id ), $delete_nonce );
+        }*/
 
         return $title . $this->row_actions( $actions );
     }

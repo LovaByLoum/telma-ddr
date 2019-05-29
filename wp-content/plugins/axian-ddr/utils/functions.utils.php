@@ -94,7 +94,7 @@ function axian_ddr_validate_fields( $object, $post_data = null ){
         foreach ( $object->fields as $id => $field ){
             //check required
             if ( $field['required'] == true && isset($post_data[$field['name']]) && empty($post_data[$field['name']]) ){
-                $msg .= 'Le champs "' . $field['label'] . '" est requis(e)<br>';
+                $msg .= 'Le champ "' . $field['label'] . '" est requis.<br>';
             }
 
             //
