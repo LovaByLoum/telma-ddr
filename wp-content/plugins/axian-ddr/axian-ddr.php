@@ -12,6 +12,7 @@ require_once('classes/user.class.php');
 require_once('classes/main.class.php');
 require_once('classes/historique.class.php');
 require_once('classes/term.class.php');
+require_once('classes/offre.class.php');
 require_once('classes/ddr.class.php');
 require_once('classes/administration.class.php');
 require_once('classes/list/class-wp-filter-list-table.php');

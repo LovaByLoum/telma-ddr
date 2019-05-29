@@ -21,6 +21,8 @@ $msg = $axian_ddr->process_ddr($the_ddr_id);
 if ( isset($_GET['msg']) ){
     $msg = AxianDDR::manage_message($_GET['msg']);
 }
+$offre_data = null;
+$offres = new AxianDDROffre();
 ?>
 <?php if ( $msg ) : ?>
     <div class="notice <?php echo $msg['code'];?>">
@@ -153,8 +155,92 @@ if ( isset($_GET['msg']) ){
             <fieldset class="ddr-box-bordered">
                 <legend>Annonce</legend>
                 <i class="info">Une offre sera crée avec ces informations lorsque votre demande a entièrement été validé.</i>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <div class="form-field">
+                            <?php axian_ddr_render_field($offres->fields['mission'],$offre_data);?>
+                        </div>
+                        <div class="form-field">
+                            <?php axian_ddr_render_field($offres->fields['responsabilite'],$offre_data);?>
+                        </div>
+                        <div class="form-field">
+                            <?php axian_ddr_render_field($offres->fields['qualite'],$offre_data);?>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <div class="postbox col-md-6">
+                            <div class="inside">
+                                <h5>Domaine d'étude</h5>
+                                <div class="categorydiv">
 
+                                    <div class="tabs-panel">
+                                        <ul class="categorychecklist form-no-clear">
+                                            <?php foreach($offres->domaine_etudes as $value):?>
+                                                <li><label class="selectit"><input value="<?php echo $value->term_id;?>" type="checkbox" name="offres[domaine_etude][]"><?php echo $value->name;?></label></li>
+                                                <?php if(isset($value->child) && !empty($value->child)):?>
+                                                    <ul class="children">
+                                                        <?php foreach($value->child as $child):?>
+                                                            <li><label class="selectit"><input value="<?php echo $child->term_id;?>" type="checkbox" name="offres[domaine_etude][]"><?php echo $child->name;?></label></li>
+                                                        <?php endforeach ?>
+                                                    </ul>
+                                                <?php endif;?>
+                                                </li>
+                                            <?php endforeach ?>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
+                        <div class="postbox row">
+                            <div class="inside">
+                                <h5>Domaine métier</h5>
+                                <div class="categorydiv">
+
+                                    <div class="tabs-panel">
+                                        <ul class="categorychecklist form-no-clear">
+                                            <?php foreach($offres->domaine_metiers as $value):?>
+                                                <li><label class="selectit"><input value="<?php echo $value->term_id;?>" type="checkbox" name="offres[domaine_metier][]"><?php echo $value->name;?></label></li>
+                                                <?php if(isset($value->child) && !empty($value->child)):?>
+                                                    <ul class="children">
+                                                        <?php foreach($value->child as $child):?>
+                                                            <li><label class="selectit"><input value="<?php echo $child->term_id;?>" type="checkbox" name="offres[domaine_metier][]"><?php echo $child->name;?></label></li>
+                                                        <?php endforeach ?>
+                                                    </ul>
+                                                <?php endif;?>
+                                                </li>
+                                            <?php endforeach ?>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="postbox row">
+                            <div class="inside">
+                                <h5>Compétences requise</h5>
+                                <div class="categorydiv">
+
+                                    <div class="tabs-panel">
+                                        <ul class="categorychecklist form-no-clear">
+                                            <?php foreach($offres->competences as $value):?>
+                                                <li><label class="selectit"><input value="<?php echo $value->term_id;?>" type="checkbox" name="offres[competence][]"><?php echo $value->name;?></label></li>
+                                                <?php if(isset($value->child) && !empty($value->child)):?>
+                                                    <ul class="children">
+                                                        <?php foreach($value->child as $child):?>
+                                                            <li><label class="selectit"><input value="<?php echo $child->term_id;?>" type="checkbox" name="offres[competence][]"><?php echo $child->name;?></label></li>
+                                                        <?php endforeach ?>
+                                                    </ul>
+                                                <?php endif;?>
+                                                </li>
+                                            <?php endforeach ?>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </fieldset>
 
             <fieldset class="validation-box ddr-box-bordered">
@@ -238,12 +324,12 @@ if ( isset($_GET['msg']) ){
                     <?php endif; ?>
 
                     <input type="submit" name="delete-ddr" class="button" value="Supprimer"/>
-                <?php else : ?>
-                    <input type="submit" name="submit-ddr" class="button button-primary" value="Soumettre"/>
-                    <input type="submit" name="save-draft" class="button" value="Enregistrer comme brouillon"/>
-                <?php endif;?>
-                <a href="admin.php?page=axian-ddr-list" class="btn btn-sm btn-outline-danger">Annuler</a>
-            </p>
+                    <?php else : ?>
+                        <input type="submit" name="submit-ddr" class="button button-primary" value="Soumettre"/>
+                        <input type="submit" name="save-draft" class="button" value="Enregistrer comme brouillon"/>
+                    <?php endif;?>
+                    <a href="admin.php?page=axian-ddr-list" class="btn btn-sm btn-outline-danger">Annuler</a>
+                </p>
 
 
         </form>
