@@ -73,6 +73,7 @@ class AxianDDRMain {
                 `modified` datetime DEFAULT NULL,
                 `etat` varchar(50) DEFAULT NULL COMMENT 'Etat actuel du ticket',
                 `etape` varchar(50) DEFAULT NULL COMMENT 'Etape actuelle du ticket',
+                `offre_data` longtext,
                 PRIMARY KEY (`id`),
                 KEY `author_id` (`author_id`),
                 KEY `type` (`type`),

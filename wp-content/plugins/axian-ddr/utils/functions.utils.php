@@ -112,8 +112,37 @@ function axian_ddr_render_field( $field, $post_data = null, $label = true, $disp
                 <?php if ( isset($field['description']) && !empty($field['description']) ) : ?><p><?php echo $field['description'];?></p><?php endif;?>
                 <?php
                 break;
+            case 'taxonomy_checkboxes':
+                $current_value = isset($post_data[$field['taxonomy']]) ? $post_data[$field['taxonomy']] : array();
+                ?>
+                <?php if ( $label ): ?><label><?php echo $field['label'];?><?php if (  $field['required'] ) : ?>&nbsp;<span style="color:red;">*</span><?php endif;?></label><?php endif;?>
+
+                <div class="ddr-taxonomy-tree">
+                <?php
+                echo axian_ddr_taxonomy_checkboxes_tree($field['taxonomy'], 0, $field['name'], $current_value );
+                ?>
+                </div>
+                <?php if ( isset($field['description']) && !empty($field['description']) ) : ?><p><?php echo $field['description'];?></p><?php endif;?>
+                <?php
+                break;
         }
     }
+}
+
+function axian_ddr_taxonomy_checkboxes_tree( $taxonomy='', $parent = 0, $name, $current_values = array() ){
+    $args = 'hierarchical=1&taxonomy='.$taxonomy.'&hide_empty=0&orderby=id&parent=' . $parent;
+    $terms = get_terms($taxonomy, $args);
+    $output = '<ul>';
+    if(count($terms)>0){
+        foreach ($terms as $term) {
+            $output .= '<li>';
+            $output .=  '<label><input type="checkbox" name="' . $name . '[]" value="' . $term->term_id . '" ' . (in_array($term->term_id, $current_values) ? 'checked' : '' ) . '/> ' . $term->name . '</label>';
+            $output .=  axian_ddr_taxonomy_checkboxes_tree($taxonomy, $term->term_id, $name, $current_values);
+            $output .= '</li>';
+        }
+    }
+    $output .= '</ul>';
+    return $output;
 }
 
 //validate fields

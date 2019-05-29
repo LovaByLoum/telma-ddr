@@ -28,7 +28,7 @@ fieldset.ddr-box-bordered .form-group label{
 fieldset.ddr-box-bordered .form-group textarea{
     width: 100%;
 }
-fieldset.ddr-box-bordered .form-group input{
+fieldset.ddr-box-bordered .form-group input[type=text]{
     padding: 5px 10px;
     width: 100%;
 }
@@ -49,6 +49,23 @@ fieldset.ddr-box-bordered i.info{
 .ddr-summary p{
     margin: 0;
 }
+.ddr-taxonomy-tree{
+    max-height: 250px!important;
+    overflow-y: scroll;
+    width: 100%;
+    display: block;
+    border: 1px solid #e5e5e5;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+.ddr-taxonomy-tree ul{
+    margin-left: 20px;
+}
+.ddr-taxonomy-tree ul label{
+    text-align: left!important;
+}
+
 /* DDR view */
 
 .ddr-view {

@@ -10,10 +10,16 @@ $is_create = !isset($_GET['id']) && !isset($_GET['action']);
 $is_view = isset($_GET['id']) && isset($_GET['action']) && 'view' == $_GET['action'] && $_GET['id'] > 0;
 
 $the_ddr_id = null;
+$offre_data = array();
 
 if ( $is_edit || $is_view ){
     $the_ddr_id = intval($_GET['id']);
     $post_data = AxianDDR::getbyId($the_ddr_id);
+
+    if ( !empty($post_data['offre_data']) ){
+        $offre_data = unserialize($post_data['offre_data']);
+    }
+
 } elseif ( $is_create ) {
     $post_data = array(
         'author_id' => $current_user->ID,
@@ -37,7 +43,6 @@ if ( $is_edit ){
 }
 
 $historiques = AxianDDRHistorique::getByDDRId(intval($_GET['id']));
-$offre_data = null;
 $offres = new AxianDDROffre();
 ?>
 
@@ -198,90 +203,37 @@ $offres = new AxianDDROffre();
             <fieldset class="ddr-box-bordered">
                 <legend>Annonce</legend>
                 <i class="info">Une offre sera crée avec ces informations lorsque votre demande a entièrement été validé.</i>
+
                 <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <div class="form-field">
-                            <?php axian_ddr_render_field($offres->fields['mission'],$offre_data);?>
+
+                    <div class="form-group row">
+                        <div class="form-field col-md-4">
+                            <?php axian_ddr_render_field($offres->fields['mission'], $offre_data);?>
                         </div>
-                        <div class="form-field">
+                        <div class="form-field col-md-4">
                             <?php axian_ddr_render_field($offres->fields['responsabilite'],$offre_data);?>
                         </div>
-                        <div class="form-field">
+                        <div class="form-field col-md-4">
                             <?php axian_ddr_render_field($offres->fields['qualite'],$offre_data);?>
                         </div>
                     </div>
-                    <div class="form-group col-md-6">
-                        <div class="postbox col-md-6">
-                            <div class="inside">
-                                <h5>Domaine d'étude</h5>
-                                <div class="categorydiv">
-
-                                    <div class="tabs-panel">
-                                        <ul class="categorychecklist form-no-clear">
-                                            <?php foreach($offres->domaine_etudes as $value):?>
-                                                <li><label class="selectit"><input value="<?php echo $value->term_id;?>" type="checkbox" name="offres[domaine_etude][]"><?php echo $value->name;?></label></li>
-                                                <?php if(isset($value->child) && !empty($value->child)):?>
-                                                    <ul class="children">
-                                                        <?php foreach($value->child as $child):?>
-                                                            <li><label class="selectit"><input value="<?php echo $child->term_id;?>" type="checkbox" name="offres[domaine_etude][]"><?php echo $child->name;?></label></li>
-                                                        <?php endforeach ?>
-                                                    </ul>
-                                                <?php endif;?>
-                                                </li>
-                                            <?php endforeach ?>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
+                    <div class="form-group row">
+                        <div class="form-field col-md-3 ddr-box-bordered">
+                            <?php axian_ddr_render_field($offres->fields[JM_TAXONOMIE_DOMAINE_ETUDE], $offre_data);?>
+                        </div>
+                        <div class="form-field col-md-3 ddr-box-bordered">
+                            <?php axian_ddr_render_field($offres->fields[JM_TAXONOMIE_LOCALISATION], $offre_data);?>
+                        </div>
+                        <div class="form-field col-md-3 ddr-box-bordered" >
+                            <?php axian_ddr_render_field($offres->fields[JM_TAXONOMIE_TYPE_CONTRAT], $offre_data);?>
+                        </div>
+                        <div class="form-field col-md-3 ddr-box-bordered">
+                            <?php axian_ddr_render_field($offres->fields[JM_TAXONOMIE_DEPARTEMENT], $offre_data);?>
+                        </div>
+                        <div class="form-field col-md-3 ddr-box-bordered">
+                            <?php axian_ddr_render_field($offres->fields[JM_TAXONOMIE_COMPETENCE_REQUISES], $offre_data);?>
                         </div>
 
-                        <div class="postbox row">
-                            <div class="inside">
-                                <h5>Domaine métier</h5>
-                                <div class="categorydiv">
-
-                                    <div class="tabs-panel">
-                                        <ul class="categorychecklist form-no-clear">
-                                            <?php foreach($offres->domaine_metiers as $value):?>
-                                                <li><label class="selectit"><input value="<?php echo $value->term_id;?>" type="checkbox" name="offres[domaine_metier][]"><?php echo $value->name;?></label></li>
-                                                <?php if(isset($value->child) && !empty($value->child)):?>
-                                                    <ul class="children">
-                                                        <?php foreach($value->child as $child):?>
-                                                            <li><label class="selectit"><input value="<?php echo $child->term_id;?>" type="checkbox" name="offres[domaine_metier][]"><?php echo $child->name;?></label></li>
-                                                        <?php endforeach ?>
-                                                    </ul>
-                                                <?php endif;?>
-                                                </li>
-                                            <?php endforeach ?>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="postbox row">
-                            <div class="inside">
-                                <h5>Compétences requise</h5>
-                                <div class="categorydiv">
-
-                                    <div class="tabs-panel">
-                                        <ul class="categorychecklist form-no-clear">
-                                            <?php foreach($offres->competences as $value):?>
-                                                <li><label class="selectit"><input value="<?php echo $value->term_id;?>" type="checkbox" name="offres[competence][]"><?php echo $value->name;?></label></li>
-                                                <?php if(isset($value->child) && !empty($value->child)):?>
-                                                    <ul class="children">
-                                                        <?php foreach($value->child as $child):?>
-                                                            <li><label class="selectit"><input value="<?php echo $child->term_id;?>" type="checkbox" name="offres[competence][]"><?php echo $child->name;?></label></li>
-                                                        <?php endforeach ?>
-                                                    </ul>
-                                                <?php endif;?>
-                                                </li>
-                                            <?php endforeach ?>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </fieldset>
