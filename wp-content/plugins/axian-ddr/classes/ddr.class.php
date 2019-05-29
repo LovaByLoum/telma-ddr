@@ -167,6 +167,7 @@ class AxianDDR{
                 'type' => 'autocompletion',
                 'source' => 'user',
                 'name' => 'assignee_id',
+                'description' => 'Le ticket sera attribué à l\'utilisateur par défaut si ce champs n\'est pas renseingé'
             ),
 
             'candidature' => array(
@@ -374,6 +375,11 @@ class AxianDDR{
                         $post_data['etape'] = $post_data['next_etape'];
                     }
 
+                    //default attribution
+                    if ( $is_submit_ddr && empty($post_data['assignee_id']) ){
+                        $post_data['assignee_id'] = self::getDefaultValidator($post_data['next_etape']);
+                    }
+
                     //insert
                     $new_ddr_id = self::insert( $post_data );
 
@@ -407,6 +413,11 @@ class AxianDDR{
                         $post_data['etape'] = $post_data['next_etape'];
                     }
 
+                    //default attribution
+                    if ( $is_submit_ddr && empty($post_data['assignee_id']) ){
+                        $post_data['assignee_id'] = self::getDefaultValidator($post_data['next_etape']);
+                    }
+
                     self::update( $post_data );
 
                     //historique
@@ -422,7 +433,13 @@ class AxianDDR{
                     if ( $is_submit_ddr ){
                         //mail here
                     }
-                    $redirect_to = 'admin.php?page=axian-ddr&action=edit&id=' . $the_ddr_id . '&msg=' . DDR_MSG_SAVED_SUCCESSFULLY;
+
+                    if ( $is_save_draft || $is_update_ddr ){
+                        $redirect_to = 'admin.php?page=axian-ddr&action=edit&id=' . $the_ddr_id . '&msg=' . DDR_MSG_SAVED_SUCCESSFULLY;
+                    } elseif ( $is_submit_ddr ){
+                        $redirect_to = 'admin.php?page=axian-ddr&action=view&id=' . $the_ddr_id . '&msg=' . DDR_MSG_SUBMITTED_SUCCESSFULLY;
+                    }
+
                     wp_safe_redirect($redirect_to);die;
                 }
 
@@ -450,6 +467,11 @@ class AxianDDR{
                 //maj etat / etape
                 $post_data['etat'] = $post_data['next_etat'];
                 $post_data['etape'] = $post_data['next_etape'];
+
+                //default attribution
+                if ( empty($post_data['assignee_id']) ){
+                    $post_data['assignee_id'] = self::getDefaultValidator($post_data['next_etape']);
+                }
 
                 self::update( $post_data );
 
@@ -500,6 +522,11 @@ class AxianDDR{
                 //maj etat / etape
                 $post_data['etat'] = DDR_STATUS_CLOTURE;
                 $post_data['etape'] = DDR_STEP_FINISH;
+
+                //default attribution
+                if ( empty($post_data['assignee_id']) ){
+                    $post_data['assignee_id'] = self::getDefaultValidator($post_data['next_etape']);
+                }
 
                 self::update( $post_data );
 
@@ -716,6 +743,21 @@ class AxianDDR{
             'items' => $result
         );
 
+    }
+
+    public static function getDefaultValidator( $current_etape ){
+        global $axian_ddr_settings;
+        if ( is_null($axian_ddr_settings) ){
+            $axian_ddr_settings = AxianDDRAdministration::get_settings();
+        }
+
+        if ( isset($axian_ddr_settings['validation']) && !empty($axian_ddr_settings['validation']) ){
+            $validation_settings = $axian_ddr_settings['validation'];
+            if ( isset($validation_settings[$current_etape]) && !empty($validation_settings[$current_etape]) ){
+                return $validation_settings[$current_etape];
+            }
+        }
+        return false;
     }
 
 }

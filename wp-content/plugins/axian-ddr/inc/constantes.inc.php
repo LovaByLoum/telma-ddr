@@ -94,3 +94,4 @@ define('TABLE_AXIAN_DDR_HISTORIQUE', $wpdb->prefix . 'ddr_historique');
 define('TABLE_AXIAN_DDR_INTERIM', $wpdb->prefix . 'ddr_interim');
 define('TABLE_AXIAN_DDR_TERM', $wpdb->prefix . 'ddr_term');
 
+define ( 'DDR_SETTINGS_NAME', 'axian_ddr_settings');

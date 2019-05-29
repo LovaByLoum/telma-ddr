@@ -11,7 +11,9 @@
 function axian_ddr_render_field( $field, $post_data = null, $label = true, $display_value_only = false ){
     if ( is_null($post_data) ) $post_data = $_POST;
 
-    if ( preg_match('#.*?\[(.*?)\]#', $field['name'], $matches) ){
+    if ( preg_match('#.*?\[(.*?)\]\[(.*?)\]#', $field['name'], $matches) ){
+        $current_value = (isset($post_data[$matches[2]]) ? $post_data[$matches[2]] : '' );
+    }elseif ( preg_match('#.*?\[(.*?)\]#', $field['name'], $matches) ){
         $current_value = (isset($post_data[$matches[1]]) ? $post_data[$matches[1]] : '' );
     } else {
         $current_value = (isset($post_data[$field['name']]) ? $post_data[$field['name']] : '' );
@@ -65,10 +67,12 @@ function axian_ddr_render_field( $field, $post_data = null, $label = true, $disp
                 $args = 'hierarchical=1&taxonomy='.$field['taxonomy'].'&hide_empty=0&orderby=id';
                 $terms = get_terms($field['taxonomy'], $args);
                 $glue = '';
-                foreach ( $terms as $term ){
-                    if ( in_array($term->term_id, $current_value ) ){
-                        echo $glue . $term->name;
-                        $glue = ', ';
+                if ( !empty($current_value) && is_array($current_value) ){
+                    foreach ( $terms as $term ){
+                        if ( in_array($term->term_id, $current_value ) ){
+                            echo $glue . $term->name;
+                            $glue = ', ';
+                        }
                     }
                 }
                 break;

@@ -52,6 +52,10 @@ $offres = new AxianDDROffre();
 <div class="wrap nosubsub">
     <h1 class="wp-heading-inline">Demande de recrutement <?php if ($is_edit || $is_view){ echo ' / DDR-' . $the_ddr_id; } ?></h1>
 
+    <?php if ( AxianDDRWorkflow::checkActionActeurInEtape($post_data['etape'], DDR_ACTION_UPDATE ) && $is_view ): ?>
+    <a href="admin.php?page=axian-ddr&action=edit&id=<?php echo $the_ddr_id;?>" class="page-title-action">Modifier</a>
+    <?php endif;?>
+
     <?php
     if ( !is_null($ddr_process_msg) ){
         $msg = $ddr_process_msg;

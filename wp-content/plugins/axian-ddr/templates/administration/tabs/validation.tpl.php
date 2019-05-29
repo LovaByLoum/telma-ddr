@@ -1,7 +1,8 @@
 <?php
+global $axian_ddr_settings;
 global $axian_ddr_administration;
-$result = $axian_ddr_administration::submit_option();
-$post_data = $axian_ddr_administration->get_options();
+$result = AxianDDRAdministration::submit_settings();
+$active_tab = isset($_GET['tab']) ? $_GET['tab'] : 'general';
 ?>
 <?php if ( $result ) : ?>
     <div class="notice <?php echo $result['code'];?>">
@@ -15,13 +16,13 @@ $post_data = $axian_ddr_administration->get_options();
 
     <form method="post" action="">
 
-        <table class="form-table">
+        <div class="ddr-settings">
             <?php foreach ( $axian_ddr_administration->fields as $field ) :?>
-            <div class="form-field form-required term-name-wrap form-row col-md-6">
-                <?php axian_ddr_render_field($field ,$post_data);?>
-            </div>
+                <div class="form-field form-required term-name-wrap form-row col-md-6">
+                    <?php axian_ddr_render_field($field , $axian_ddr_settings[$active_tab]);?>
+                </div>
             <?php endforeach ?>
-        </table>
+        </div>
 
         <?php submit_button(); ?>
     </form>
