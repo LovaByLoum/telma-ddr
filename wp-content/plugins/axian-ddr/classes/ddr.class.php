@@ -43,6 +43,7 @@ class AxianDDR{
         DDR_STEP_VALIDATION_4 => 'Validation N4',
         DDR_STEP_PUBLISH => 'Publication',
         DDR_STEP_FINISH => 'Fini',
+        DDR_STEP_CANCEL => 'Annulation'
     );
 
     public $fields;

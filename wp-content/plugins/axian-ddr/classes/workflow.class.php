@@ -213,9 +213,11 @@ class AxianDDRWorkflow{
         global $current_user;
         $workflow_etape_info = self::getWorkflowInfoBy($current_etape);
 
-        foreach ( $workflow_etape_info['workflow_info']['acteur'] as $role => $data_acteur ){
-            if ( in_array($role, $current_user->roles) ){
-                return true;
+        if ( isset($workflow_etape_info['workflow_info']['acteur']) ){
+            foreach ( $workflow_etape_info['workflow_info']['acteur'] as $role => $data_acteur ){
+                if ( in_array($role, $current_user->roles) ){
+                    return true;
+                }
             }
         }
         return false;
@@ -224,9 +226,11 @@ class AxianDDRWorkflow{
     public static function getTypeDemandeByRole($current_etape){
         global $current_user;
         $workflow_etape_info = self::getWorkflowInfoBy($current_etape);
-        foreach ( $workflow_etape_info['workflow_info']['acteur'] as $role => $data_acteur ){
-            if ( in_array($role, $current_user->roles) ){
-                return $data_acteur['type'];
+        if ( isset($workflow_etape_info['workflow_info']['acteur']) ){
+            foreach ( $workflow_etape_info['workflow_info']['acteur'] as $role => $data_acteur ){
+                if ( in_array($role, $current_user->roles) ){
+                    return $data_acteur['type'];
+                }
             }
         }
         return false;
@@ -235,11 +239,14 @@ class AxianDDRWorkflow{
     public static function isActionInCurrentActeurActions($current_etape, $current_action){
         global $current_user;
         $workflow_etape_info = self::getWorkflowInfoBy($current_etape);
-        foreach ( $workflow_etape_info['workflow_info']['acteur'] as $role => $data_acteur ){
-            if ( in_array($role, $current_user->roles) ){
-                return in_array($current_action, $data_acteur['action']);
+        if ( isset($workflow_etape_info['workflow_info']['acteur']) ){
+            foreach ( $workflow_etape_info['workflow_info']['acteur'] as $role => $data_acteur ){
+                if ( in_array($role, $current_user->roles) ){
+                    return in_array($current_action, $data_acteur['action']);
+                }
             }
         }
+        return false;
     }
 
     public static function checkActionActeurInEtape( $current_etape, $current_action ){

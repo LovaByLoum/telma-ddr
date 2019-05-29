@@ -22,11 +22,14 @@ class AxianDDRMain {
         //add capabilities
         foreach ( AxianDDRWorkflow::$capabilities as $role_slug => $caps ){
             $role = get_role( $role_slug );
-            foreach ( $caps as $cap ){
-                $role->add_cap( $cap );
+            if ( $role ){
+                foreach ( $caps as $cap ){
+                    $role->add_cap( $cap );
+                }
+
+                //additional caps
+                $role->add_cap('read');
             }
-            //additional caps
-            $role->add_cap('read');
         }
 
     }

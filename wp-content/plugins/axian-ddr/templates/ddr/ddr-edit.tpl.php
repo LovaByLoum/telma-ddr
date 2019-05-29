@@ -29,6 +29,9 @@ if ( $is_edit || $is_view ){
 
 //permission
 if ( $is_edit ){
+    if ( !AxianDDRWorkflow::checkActionActeurInEtape($post_data['etape'], DDR_ACTION_UPDATE ) ){
+        wp_die('Action non autorisée');
+    }
     if ( !current_user_can(DDR_CAP_CAN_EDIT_OTHERS_DDR) && current_user_can(DDR_CAP_CAN_EDIT_DDR) && $current_user->ID != $post_data['author_id'] ){
         wp_die('Action non autorisée');
     }
@@ -181,6 +184,22 @@ $offres = new AxianDDROffre();
                         <div class="form-field row">
                             <?php axian_ddr_render_field($axian_ddr->fields['date'],$post_data, true, $is_view);?>
                         </div>
+                        <div class="form-field row">
+                            <?php
+                            if ( $is_create ){
+                                $type_predefini = AxianDDRWorkflow::getTypeDemandeByRole($post_data['etape']);
+                                if ( false !== $type_predefini ){
+                                    $post_data['type'] = $type_predefini;
+                                } else {
+                                    $post_data['type'] = TYPE_DEMANDE_NON_PREVU;
+                                }
+                                axian_ddr_render_field($axian_ddr->fields['type'], $post_data);
+                            }
+                            ?>
+                            <label class="col-sm-5">Type de demande:</label>
+                            <span class="col-sm-7"><?php echo AxianDDR::$types_demande[$post_data['type']] ;?></span>
+
+                        </div>
                     </div>
                 </div>
                 <hr>
@@ -270,22 +289,6 @@ $offres = new AxianDDROffre();
                         <div class="form-field">
                             <?php axian_ddr_render_field($axian_ddr->fields['attribution'],$post_data, true);?>
                         </div>
-                        <div class="form-field label-left row">
-                            <?php
-                            if ( $is_create ){
-                                $type_predefini = AxianDDRWorkflow::getTypeDemandeByRole($post_data['etape']);
-                                if ( false !== $type_predefini ){
-                                    $post_data['type'] = $type_predefini;
-                                } else {
-                                    $post_data['type'] = TYPE_DEMANDE_NON_PREVU;
-                                }
-                                axian_ddr_render_field($axian_ddr->fields['type'], $post_data);
-                            }
-                            ?>
-                            <label class="col-sm-3">Type de demande:</label>
-                            <span class="col-sm-8"><?php echo AxianDDR::$types_demande[$post_data['type']] ;?></span>
-
-                        </div>
                     </div>
                     <div class="form-group col-md-6">
                         <div class="form-field">
@@ -349,7 +352,7 @@ $offres = new AxianDDROffre();
                 <input type="hidden" name="etape" value="<?php echo $post_data['etape'];?>" />
                 <input type="hidden" name="next_etat" value="<?php echo $current_workflow_etape['next_etat'];?>" />
                 <input type="hidden" name="next_etape" value="<?php echo $current_workflow_etape['next_etape'];?>" />
-                <?php if ( $is_edit ) :?>
+                <?php if ( $is_edit || $is_view ) :?>
                     <input type="hidden" name="id" value="<?php echo $the_ddr_id;?>" />
                     <input type="hidden" name="etat" value="<?php echo $post_data['etat'];?>" />
 
@@ -397,7 +400,7 @@ $offres = new AxianDDROffre();
 
                     <?php if ( AxianDDRWorkflow::checkActionActeurInEtape($post_data['etape'], DDR_ACTION_CANCEL ) ) :?>
                         <?php if ( current_user_can(DDR_CAP_CAN_DELETE_DDR) ) : ?>
-                            <input type="submit" name="cancel-ddr" class="button" value="Annuler la demande"/>
+                            <input type="submit" name="cancel-ddr" class="button confirm-before" value="Annuler la demande"/>
                         <?php endif;?>
                     <?php endif;?>
 
