@@ -117,7 +117,7 @@ $offres = new AxianDDROffre();
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-3">Superieur immédiat&nbsp;:</label>
-                            <p class="col-sm-9">
+                            <div class="col-sm-9">
                                 <strong>
                                     <?php
                                     if ( !empty($user_demandeur->manager) ){
@@ -136,7 +136,7 @@ $offres = new AxianDDROffre();
                                     }
                                     ?>
                                 </strong>
-                            </p>
+                            </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-3">Société&nbsp;:</label>
@@ -160,21 +160,21 @@ $offres = new AxianDDROffre();
 
                 <div class="form-row">
                     <div class="form-group col-md-6">
-                        <div class="form-field">
+                        <div class="form-field row">
                             <?php axian_ddr_render_field($axian_ddr->fields['titre'],$post_data, true, $is_view);?>
                         </div>
-                        <div class="form-field">
+                        <div class="form-field row">
                             <?php axian_ddr_render_field($axian_ddr->fields['candidature'],$post_data, true, $is_view);?>
                         </div>
-                        <div class="form-field">
+                        <div class="form-field row">
                             <?php axian_ddr_render_field($axian_ddr->fields['dernier_titulaire'],$post_data, true, $is_view);?>
                         </div>
                     </div>
                     <div class="form-group col-md-6">
-                        <div class="form-field">
+                        <div class="form-field row">
                             <?php axian_ddr_render_field($axian_ddr->fields['motif'],$post_data, true, $is_view);?>
                         </div>
-                        <div class="form-field">
+                        <div class="form-field row">
                             <?php axian_ddr_render_field($axian_ddr->fields['date'],$post_data, true, $is_view);?>
                         </div>
                     </div>
@@ -182,17 +182,17 @@ $offres = new AxianDDROffre();
                 <hr>
                 <div class="form-row">
                     <div class="form-group col-md-4">
-                        <div class="form-field">
+                        <div class="form-field row">
                             <?php axian_ddr_render_field($axian_ddr->fields['direction'],$post_data, true, $is_view);?>
                         </div>
                     </div>
                     <div class="form-group col-md-4">
-                        <div class="form-field">
+                        <div class="form-field row">
                             <?php axian_ddr_render_field($axian_ddr->fields['departement'],$post_data, true, $is_view);?>
                         </div>
                     </div>
                     <div class="form-group col-md-4">
-                        <div class="form-field">
+                        <div class="form-field row">
                             <?php axian_ddr_render_field($axian_ddr->fields['lieu'],$post_data, true, $is_view);?>
                         </div>
                     </div>
@@ -203,37 +203,57 @@ $offres = new AxianDDROffre();
             <fieldset class="ddr-box-bordered">
                 <legend>Annonce</legend>
                 <i class="info">Une offre sera crée avec ces informations lorsque votre demande a entièrement été validé.</i>
-
+                <br>
+                <br>
                 <div class="form-row">
 
                     <div class="form-group row">
-                        <div class="form-field col-md-4">
-                            <?php axian_ddr_render_field($offres->fields['mission'], $offre_data);?>
+                        <div class="form-field col-md-4 row">
+                            <?php axian_ddr_render_field($offres->fields['mission'], $offre_data, true, $is_view);?>
                         </div>
-                        <div class="form-field col-md-4">
-                            <?php axian_ddr_render_field($offres->fields['responsabilite'],$offre_data);?>
+                        <div class="form-field col-md-4 row">
+                            <?php axian_ddr_render_field($offres->fields['responsabilite'],$offre_data, true, $is_view);?>
                         </div>
-                        <div class="form-field col-md-4">
-                            <?php axian_ddr_render_field($offres->fields['qualite'],$offre_data);?>
+                        <div class="form-field col-md-4 row">
+                            <?php axian_ddr_render_field($offres->fields['qualite'],$offre_data, true, $is_view);?>
                         </div>
                     </div>
+                    <hr>
                     <div class="form-group row">
-                        <div class="form-field col-md-3 ddr-box-bordered">
-                            <?php axian_ddr_render_field($offres->fields[JM_TAXONOMIE_DOMAINE_ETUDE], $offre_data);?>
+                        <div class="form-field <?php if ( $is_view ): ?>col-lg-6<?php else :?>col-lg-3<?php endif;?> col-md-6 ddr-box-bordered row">
+                            <?php axian_ddr_render_field($offres->fields[JM_TAXONOMIE_DOMAINE_ETUDE], $offre_data, true, $is_view);?>
                         </div>
-                        <div class="form-field col-md-3 ddr-box-bordered">
-                            <?php axian_ddr_render_field($offres->fields[JM_TAXONOMIE_LOCALISATION], $offre_data);?>
+                        <div class="form-field <?php if ( $is_view ): ?>col-lg-6<?php else :?>col-lg-3<?php endif;?> col-md-6 ddr-box-bordered row">
+                            <?php axian_ddr_render_field($offres->fields[JM_TAXONOMIE_LOCALISATION], $offre_data, true, $is_view);?>
                         </div>
-                        <div class="form-field col-md-3 ddr-box-bordered" >
-                            <?php axian_ddr_render_field($offres->fields[JM_TAXONOMIE_TYPE_CONTRAT], $offre_data);?>
+                        <div class="form-field <?php if ( $is_view ): ?>col-lg-6<?php else :?>col-lg-3<?php endif;?> col-md-6 ddr-box-bordered row" >
+                            <?php axian_ddr_render_field($offres->fields[JM_TAXONOMIE_TYPE_CONTRAT], $offre_data, true, $is_view);?>
                         </div>
-                        <div class="form-field col-md-3 ddr-box-bordered">
-                            <?php axian_ddr_render_field($offres->fields[JM_TAXONOMIE_DEPARTEMENT], $offre_data);?>
+                        <div class="form-field <?php if ( $is_view ): ?>col-lg-6<?php else :?>col-lg-3<?php endif;?> col-md-6 ddr-box-bordered row">
+                            <?php axian_ddr_render_field($offres->fields[JM_TAXONOMIE_DEPARTEMENT], $offre_data, true, $is_view);?>
                         </div>
-                        <div class="form-field col-md-3 ddr-box-bordered">
-                            <?php axian_ddr_render_field($offres->fields[JM_TAXONOMIE_COMPETENCE_REQUISES], $offre_data);?>
+                        <div class="form-field <?php if ( $is_view ): ?>col-lg-6<?php else :?>col-lg-3<?php endif;?> col-md-6 ddr-box-bordered row">
+                            <?php axian_ddr_render_field($offres->fields[JM_TAXONOMIE_COMPETENCE_REQUISES], $offre_data, true, $is_view);?>
                         </div>
 
+                        <div class="form-field <?php if ( $is_view ): ?>col-lg-6<?php else :?>col-lg-8<?php endif;?> col-md-6">
+                            <div class="form-field row">
+                            <?php axian_ddr_render_field($offres->fields[JM_TAXONOMIE_ANNEE_EXPERIENCE], $offre_data, true, $is_view);?>
+                            </div>
+
+                            <div class="form-field row">
+                            <?php axian_ddr_render_field($offres->fields[JM_TAXONOMIE_CRITICITE], $offre_data, true, $is_view);?>
+                            </div>
+
+                            <div class="form-field row">
+                            <?php axian_ddr_render_field($offres->fields[JM_TAXONOMIE_NIVEAU_ETUDE], $offre_data, true, $is_view);?>
+                            </div>
+
+                            <div class="form-field row">
+                            <?php axian_ddr_render_field($offres->fields[JM_POSTTYPE_SOCIETE], $offre_data, true, $is_view);?>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
             </fieldset>

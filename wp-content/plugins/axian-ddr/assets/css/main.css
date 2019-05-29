@@ -19,6 +19,11 @@ fieldset.ddr-box-bordered legend{
 fieldset.ddr-box-bordered .form-group{
     margin: 0;
     padding: 0 20px;
+    width: 100%;
+}
+fieldset.ddr-box-bordered .form-group .row{
+    margin-left: 0;
+    margin-right: 0;
 }
 fieldset.ddr-box-bordered .form-group label{
     font-weight: bold;
@@ -64,6 +69,8 @@ fieldset.ddr-box-bordered i.info{
 }
 .ddr-taxonomy-tree ul label{
     text-align: left!important;
+    font-weight: normal!important;
+    font-size: 12px!important;
 }
 
 /* DDR view */

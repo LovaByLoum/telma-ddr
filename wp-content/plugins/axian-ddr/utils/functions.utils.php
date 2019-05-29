@@ -11,13 +11,18 @@
 function axian_ddr_render_field( $field, $post_data = null, $label = true, $display_value_only = false ){
     if ( is_null($post_data) ) $post_data = $_POST;
 
-    $current_value = (isset($post_data[$field['name']]) ? $post_data[$field['name']] : '' );
+    if ( preg_match('#.*?\[(.*?)\]#', $field['name'], $matches) ){
+        $current_value = (isset($post_data[$matches[1]]) ? $post_data[$matches[1]] : '' );
+    } else {
+        $current_value = (isset($post_data[$field['name']]) ? $post_data[$field['name']] : '' );
+    }
 
     if ( $display_value_only ){
         ?>
-        <?php if ( $label ): ?><label class="col-sm-3"><?php echo $field['label'];?> :</label><?php endif;?>
+        <?php if ( $label ): ?><label class="col-sm-5"><?php echo $field['label'];?> :</label><?php endif;?>
 
         <?php
+        echo '<div class="col-sm-7">';
         switch ( $field['type'] ){
             case 'text' :
             case 'checkbox' :
@@ -31,7 +36,24 @@ function axian_ddr_render_field( $field, $post_data = null, $label = true, $disp
                 $current_value = axian_ddr_convert_to_dateformat($current_value);
                 echo $current_value;
                 break;
+            case 'post_select':
+            case 'taxonomy_select':
             case 'select':
+                if ( $field['type'] == 'post_select' ){
+                    $posts = get_posts(array('post_type' => $field['post_type']));
+                    foreach ( $posts as $p ){
+                        $field['options'][$p->ID] = $p->post_title;
+                    }
+                }
+
+                if ( $field['type'] == 'taxonomy_select' ){
+                    $args = 'hierarchical=0&taxonomy='. $field['taxonomy'] .'&hide_empty=0&orderby=id&parent=0';
+                    $terms = get_terms($field['taxonomy'], $args);
+                    foreach ( $terms as $term ){
+                        $field['options'][$term->term_id] = $term->name;
+                    }
+                }
+
                 echo $field['options'][$current_value];
                 break;
             case 'autocompletion' :
@@ -40,7 +62,19 @@ function axian_ddr_render_field( $field, $post_data = null, $label = true, $disp
                 <input type="hidden" value="<?php echo $current_value;?>" class="ddr-autocompletion-hidden"/>
                 <?php
                 break;
+            case 'taxonomy_checkboxes':
+                $args = 'hierarchical=1&taxonomy='.$field['taxonomy'].'&hide_empty=0&orderby=id';
+                $terms = get_terms($field['taxonomy'], $args);
+                $glue = '';
+                foreach ( $terms as $term ){
+                    if ( in_array($term->term_id, $current_value ) ){
+                        echo $glue . $term->name;
+                        $glue = ', ';
+                    }
+                }
+                break;
         }
+        echo '</div>';
     } else {
         switch ( $field['type'] ){
             case 'text' :
@@ -61,7 +95,27 @@ function axian_ddr_render_field( $field, $post_data = null, $label = true, $disp
                 <?php if ( isset($field['description']) && !empty($field['description']) ) : ?><p><?php echo $field['description'];?></p><?php endif;?>
                 <?php
                 break;
+            case 'post_select':
+            case 'taxonomy_select':
             case 'select':
+
+                if ( $field['type'] == 'post_select' ){
+                    $posts = get_posts(array('post_type' => $field['post_type']));
+                    foreach ( $posts as $p ){
+                        $field['options'][$p->ID] = $p->post_title;
+                    }
+                    $field['search'] = true;
+                }
+
+                if ( $field['type'] == 'taxonomy_select' ){
+                    $args = 'hierarchical=0&taxonomy='. $field['taxonomy'] .'&hide_empty=0&orderby=id&parent=0';
+                    $terms = get_terms($field['taxonomy'], $args);
+                    foreach ( $terms as $term ){
+                        $field['options'][$term->term_id] = $term->name;
+                    }
+                    $field['search'] = true;
+                }
+
                 ?>
                 <?php if ( $label ): ?><label for="<?php echo $field['name'];?>"><?php echo $field['label'];?><?php if (  $field['required'] ) : ?>&nbsp;<span style="color:red;">*</span><?php endif;?></label><?php endif;?>
                 <select name="<?php echo $field['name'];?>" id="<?php echo $field['id'];?>" class="form-control <?php if ( $field['search'] == true ) : ?>chosen-select<?php endif;?> <?php if ( $field['add'] == true ) : ?>chosen-select-add<?php endif;?> <?php echo $field['class'];?>" tabindex="2" data-placeholder=" <?php echo $field['placeholder'];?>">
@@ -118,9 +172,9 @@ function axian_ddr_render_field( $field, $post_data = null, $label = true, $disp
                 <?php if ( $label ): ?><label><?php echo $field['label'];?><?php if (  $field['required'] ) : ?>&nbsp;<span style="color:red;">*</span><?php endif;?></label><?php endif;?>
 
                 <div class="ddr-taxonomy-tree">
-                <?php
-                echo axian_ddr_taxonomy_checkboxes_tree($field['taxonomy'], 0, $field['name'], $current_value );
-                ?>
+                    <?php
+                    echo axian_ddr_taxonomy_checkboxes_tree($field['taxonomy'], 0, $field['name'], $current_value );
+                    ?>
                 </div>
                 <?php if ( isset($field['description']) && !empty($field['description']) ) : ?><p><?php echo $field['description'];?></p><?php endif;?>
                 <?php

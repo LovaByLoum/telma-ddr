@@ -197,6 +197,7 @@ class AxianDDR{
         $now = date("Y-m-d H:i:s");
 
         $args['date_previsionnel'] = axian_ddr_convert_to_mysql_date($args['date_previsionnel']);
+        $args['offre_data'] = serialize($args['offre_data']);
 
         $result = $wpdb->insert(TABLE_AXIAN_DDR, array(
             'author_id' => intval($args['author_id']),
@@ -215,6 +216,7 @@ class AxianDDR{
             'created' => $now,
             'etat' => $args['etat'],
             'etape' => $args['etape'],
+            'offre_data' => $args['offre_data'],
 
         ));
 
@@ -244,6 +246,7 @@ class AxianDDR{
             'type_candidature',
             'etat',
             'etape',
+            'offre_data',
 
         );
         $data = array();
@@ -253,6 +256,7 @@ class AxianDDR{
             }
         }
 
+        $data['offre_data'] = serialize($data['offre_data']);
         $data['date_previsionnel'] = axian_ddr_convert_to_mysql_date($data['date_previsionnel']);
         $data['modified'] = $now;
 
