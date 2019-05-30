@@ -76,6 +76,13 @@ function axian_ddr_render_field( $field, $post_data = null, $label = true, $disp
                     }
                 }
                 break;
+            case 'file':
+                ?>
+                <a href="<?php echo axian_ddr_get_file($current_value);?>" target="_blank" title="Télécharger"><i class="dashicons-before dashicons-media-document"></i> Télécharger</a>
+                <?php
+                break;
+            default:
+                echo $current_value;
         }
         echo '</div>';
     } else {
@@ -182,6 +189,24 @@ function axian_ddr_render_field( $field, $post_data = null, $label = true, $disp
                 <?php if ( isset($field['description']) && !empty($field['description']) ) : ?><p><?php echo $field['description'];?></p><?php endif;?>
                 <?php
                 break;
+            case 'file':
+                ?>
+                <?php if ( $label ): ?><label for="<?php echo $field['name'];?>"><?php echo $field['label'];?><?php if (  $field['required'] ) : ?>&nbsp;<span style="color:red;">*</span><?php endif;?></label><?php endif;?>
+                <?php if ( isset($current_value) && !empty($current_value) ) : ?>
+                    <div class="ddr-file-value-wrapper">
+                        <a href="<?php echo axian_ddr_get_file($current_value);?>" target="_blank" title="Télécharger"><i class="dashicons-before dashicons-media-document"></i> Télécharger</a>
+                        <input type="hidden" name="<?php echo $field['name'];?>" value="<?php echo $current_value;?>"/>
+                        <a class="remove-ddr-file" href="#<?php echo $field['name'];?>" title="Supprimer"><i class="dashicons-before dashicons-no"></i></a>
+                    </div>
+                    <noscript>
+                        <input name="<?php echo $field['name'];?>" type="file" id="<?php echo $field['name'];?>" class="regular-text form-control <?php echo $field['class'];?>" accept="<?php echo $field['accept'];?>"/>
+                    </noscript>
+            <?php else : ?>
+                    <input name="<?php echo $field['name'];?>" type="file" id="<?php echo $field['name'];?>" class="regular-text form-control <?php echo $field['class'];?>" accept="<?php echo $field['accept'];?>"/>
+                <?php endif;?>
+                <?php if ( isset($field['description']) && !empty($field['description']) ) : ?><p><?php echo $field['description'];?></p><?php endif;?>
+                <?php
+                break;
         }
     }
 }
@@ -213,11 +238,74 @@ function axian_ddr_validate_fields( $object, $post_data = null ){
                 $msg .= 'Le champ "' . $field['label'] . '" est requis.<br>';
             }
 
-            //
+            //file validation
+            if ( $field['type'] == 'file' ){
+                //required
+                if ( isset($field['required']) ){
+                    if( $_FILES["file"]["size"] == 0 ) {
+                        $msg .= 'Le fichier "' . $field['label'] . '" est requis.<br>';
+                    }
+                }
+
+                //extension
+                if ( isset($field['mimetype']) ){
+                    if( isset($_FILES['file']['type']) && !empty($_FILES['file']['type']) && !in_array($_FILES['file']['type'], $field['mimetype']) ) {
+                        $msg .= 'Le format du fichier "' . $field['label'] . '" est invalide.<br>';
+                    }
+                }
+
+                //size
+                if ( isset($field['max_size']) ){
+                    if ( isset($_FILES['file']['size']) && !empty($_FILES['file']['size']) && $_FILES['file']['size'] >= $field['max_size'] ) {
+                        $msg .= 'Le poid du fichier "' . $field['label'] . '" est trop gros.<br>';
+                    }
+                }
+
+            }
         }
     }
 
     return $msg;
+}
+
+function axian_ddr_process_file( $object ){
+    $upload_dir_path = wp_upload_dir();
+    $ddr_file_path = $upload_dir_path['basedir'] . DIRECTORY_SEPARATOR . 'ddr-files';
+    if ( !is_dir($ddr_file_path) ){
+        @mkdir($ddr_file_path);
+    }
+    $htaccessfilepath = $ddr_file_path . DIRECTORY_SEPARATOR . '.htaccess';
+    if ( !file_exists($htaccessfilepath) ) {
+        $htfile		 = @fopen($htaccessfilepath, 'w');
+        $htoutput	 = "deny from all";
+        @fwrite($htfile, $htoutput);
+        @fclose($htfile);
+    }
+
+    $files_path = array();
+    foreach ( $object->fields as $id => $field ){
+        if ( $field['type'] == 'file' ){
+            $post_data = isset($_FILES) && isset($_FILES[$field['name']]) ? $_FILES[$field['name']] : null;
+            $original_name = $post_data['name'];
+            $pi = pathinfo($original_name);
+            $filename = uniqid().uniqid().'.'.$pi['extension'];
+            if ( isset($post_data['tmp_name']) && !empty($post_data['tmp_name']) ){
+                $filepath = $ddr_file_path . DIRECTORY_SEPARATOR . $filename;
+                $return = move_uploaded_file($post_data['tmp_name'], $filepath );
+                if ( 0 == intval($return) ){
+                    return 'Erreur lors de l\'envoi du fichier "' . $field['label'] . '".<br>';
+                } else {
+                    $files_path[$field['name']] = $filename;
+                }
+            }
+        }
+    }
+
+    return $files_path;
+}
+
+function axian_ddr_get_file( $filename ){
+    return AXIAN_DDR_URL . 'entrypoint/download.php?file=' . base64_encode($filename);
 }
 
 function axian_ddr_convert_to_dateformat($date){

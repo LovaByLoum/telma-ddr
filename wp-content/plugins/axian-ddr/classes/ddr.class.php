@@ -178,6 +178,22 @@ class AxianDDR{
                 'required' => true,
                 'options' => self::$types_candidature,
             ),
+
+            'file' => array(
+                'label' => 'Fiche de poste',
+                'type' => 'file',
+                'name' => 'file',
+                'accept' => '.pdf,.doc,.docx',
+                'mimetype' => array(
+                    'application/pdf',
+                    'image/jpeg',
+                    'image/jpg',
+                    'image/gif',
+                    'image/png'
+                ),
+                //'required' => true,
+                'max_size' => '2097152'
+            ),
         );
 
         add_action('admin_init', array($this, 'process_ddr'));
@@ -224,7 +240,7 @@ class AxianDDR{
             'etape' => $args['etape'],
             'offre_data' => $args['offre_data'],
             'societe' => $company,
-
+            'file' => $args['file'],
         ));
 
         if ( $result ){
@@ -253,10 +269,11 @@ class AxianDDR{
             'etat',
             'etape',
             'offre_data',
+            'file',
         );
         $data = array();
         foreach ( $args as $key => $value ){
-            if ( in_array($key, $data_authorized) && !empty($value) ){
+            if ( in_array($key, $data_authorized) ){
                 $data[$key] = $value;
             }
         }
@@ -335,7 +352,6 @@ class AxianDDR{
         if ( $is_cloture_ddr && !current_user_can(DDR_CAP_CAN_CLOSE_DDR) ){
             wp_die('Action non autorisée');
         }
-
         if ( $is_save_draft || $is_submit_ddr || $is_update_ddr ){
             $msg = axian_ddr_validate_fields($this);
 
@@ -380,6 +396,14 @@ class AxianDDR{
                         $post_data['assignee_id'] = self::getDefaultValidator($post_data['next_etape']);
                     }
 
+                    //process files
+                    $file_process_return = axian_ddr_process_file($this);
+                    if ( is_string($file_process_return) ){
+                        $ddr_process_msg = self::manage_message(DDR_MSG_VALIDATE_ERROR, $file_process_return);
+                        return false;
+                    }
+                    $post_data['file'] = isset($file_process_return['file']) ? $file_process_return['file'] : '';
+
                     //insert
                     $new_ddr_id = self::insert( $post_data );
 
@@ -417,6 +441,14 @@ class AxianDDR{
                     if ( $is_submit_ddr && empty($post_data['assignee_id']) ){
                         $post_data['assignee_id'] = self::getDefaultValidator($post_data['next_etape']);
                     }
+
+                    //process files
+                    $file_process_return = axian_ddr_process_file($this);
+                    if ( is_string($file_process_return) ){
+                        $ddr_process_msg = self::manage_message(DDR_MSG_VALIDATE_ERROR, $file_process_return);
+                        return false;
+                    }
+                    $post_data['file'] = isset($file_process_return['file']) ? $file_process_return['file'] : '';
 
                     self::update( $post_data );
 

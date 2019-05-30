@@ -83,10 +83,20 @@ jQuery(function() {
         return confirm("Êtes-vous sûr de vouloir continuer ?");
     })
 
+    $('.remove-ddr-file').click(function(){
+        var _parent = $(this).parent();
+        _parent.replaceWith(_parent.next().html());
+        return false;
+    })
+
 });
 
 function addParameterToURL(param){
     _url = location.href;
     _url += (_url.split('?')[1] ? '&':'?') + param;
     location.href =  _url;
+}
+
+function edit_ddr_file_field(e){
+    $(e).parents('.ddr-file-remove-to-edit').remove();
 }

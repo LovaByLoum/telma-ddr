@@ -61,6 +61,7 @@ class AxianDDRMain {
                 `etape` varchar(50) DEFAULT NULL COMMENT 'Etape actuelle du ticket',
                 `offre_data` longtext,
                 `societe` varchar(50) DEFAULT NULL,
+                `file` varchar(255) DEFAULT NULL,
                 PRIMARY KEY (`id`),
                 KEY `author_id` (`author_id`),
                 KEY `type` (`type`),

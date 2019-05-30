@@ -57,11 +57,11 @@ $offres = new AxianDDROffre();
     <?php endif;?>
 
     <?php
-    if ( !is_null($ddr_process_msg) ){
-        $msg = $ddr_process_msg;
-    }
     if ( isset($_GET['msg']) ){
         $msg = AxianDDR::manage_message($_GET['msg']);
+    }
+    if ( !is_null($ddr_process_msg) ){
+        $msg = $ddr_process_msg;
     }
     ?>
     <?php if ( isset($msg) ) : ?>
@@ -92,7 +92,7 @@ $offres = new AxianDDROffre();
 
     <div id="col-container" class="ddr-edit wp-clearfix">
 
-        <form action="" method="post" autocomplete="off">
+        <form action="" method="post" autocomplete="off" enctype="multipart/form-data">
 
 
             <fieldset class="ddr-box-bordered">
@@ -180,6 +180,9 @@ $offres = new AxianDDROffre();
                         <div class="form-field row">
                             <?php axian_ddr_render_field($axian_ddr->fields['dernier_titulaire'],$post_data, true, $is_view);?>
                         </div>
+                        <div class="form-field row">
+                            <?php axian_ddr_render_field($axian_ddr->fields['file'],$post_data, true, $is_view);?>
+                        </div>
                     </div>
                     <div class="form-group col-md-6">
                         <div class="form-field row">
@@ -188,7 +191,7 @@ $offres = new AxianDDROffre();
                         <div class="form-field row">
                             <?php axian_ddr_render_field($axian_ddr->fields['date'],$post_data, true, $is_view);?>
                         </div>
-                        <div class="form-field row">
+                        <div class="form-field row label-left">
                             <?php
                             if ( $is_create ){
                                 $type_predefini = AxianDDRWorkflow::getTypeDemandeByRole($post_data['etape']);
@@ -394,9 +397,11 @@ $offres = new AxianDDROffre();
 
                     <?php else : ?>
 
-                        <?php if ( AxianDDRWorkflow::checkActionActeurInEtape($post_data['etape'], DDR_ACTION_UPDATE ) ) :?>
-                            <?php if ( current_user_can(DDR_CAP_CAN_EDIT_OTHERS_DDR) || ( current_user_can(DDR_CAP_CAN_EDIT_DDR) && $current_user->ID == $post_data['author_id'] ) ) : ?>
-                                <input type="submit" name="update-ddr" class="button" value="Enregistrer"/>
+                        <?php if ( $is_edit ):?>
+                            <?php if ( AxianDDRWorkflow::checkActionActeurInEtape($post_data['etape'], DDR_ACTION_UPDATE ) ) :?>
+                                <?php if ( current_user_can(DDR_CAP_CAN_EDIT_OTHERS_DDR) || ( current_user_can(DDR_CAP_CAN_EDIT_DDR) && $current_user->ID == $post_data['author_id'] ) ) : ?>
+                                    <input type="submit" name="update-ddr" class="button" value="Enregistrer"/>
+                                <?php endif;?>
                             <?php endif;?>
                         <?php endif;?>
 
