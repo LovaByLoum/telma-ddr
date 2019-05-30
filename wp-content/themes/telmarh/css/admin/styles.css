@@ -153,3 +153,13 @@ a:hover, .media-frame a:active, .media-frame a:hover {
     background: #f8093a;
     border: #d30630 solid 1px;
 }
+
+/*autocomplete, chosenselect, datepicker others plugins ... */
+.chosen-container .chosen-results li.highlighted{
+    background-color: #d30630;
+}
+.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus{
+    background: #d30630;
+    color: #fff;
+    border: 1px solid #f8093a;
+}

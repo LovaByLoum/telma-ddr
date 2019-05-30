@@ -77,7 +77,10 @@ fieldset.ddr-box-bordered i.info{
     font-weight: normal!important;
     font-size: 12px!important;
 }
-
+.ddr-autocompletion{
+    background: url(chosen-sprite.png) no-repeat 100% -21px, #fff;
+    /*background-size: 70px;*/
+}
 
 /*admin settings*/
 .ddr-settings .form-field{

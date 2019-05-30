@@ -58,6 +58,9 @@ class WP_Filter_List_Table extends WP_List_Table{
                 font-size: 13px!important;
                 margin-bottom: 5px!important;
             }
+            #advanced-filter .chosen-container{
+                width: 100%!important;
+            }
         </style>
         <?php
     }
@@ -149,35 +152,7 @@ class WP_Filter_List_Table extends WP_List_Table{
             if ( array_key_exists($column_key, $filterable_columns) ){
                 $filter_info = $filterable_columns[$column_key];
 
-                $current = isset($_REQUEST[$column_key]) && !empty($_REQUEST[$column_key]) ? $_REQUEST[$column_key] : '';
-
-                switch( $filter_info['type'] ){
-                    case 'text':
-                        $filter_input = "<input type='text' value='$current' class='filter-text' name='$column_key'>";
-                        break;
-                    case 'autocompletion':
-                        $filter_input =
-                            "<input type='text' value='' class='filter-text ddr-autocompletion' data-source='" . $filter_info['source'] . "'>
-                            <input type='hidden' value='$current' class='ddr-autocompletion-hidden' name='$column_key'>";
-                        break;
-                    case 'datepicker':
-                        $filter_input = "<input type='text' value='$current' class='filter-text datepicker' name='$column_key' readonly>";
-                        break;
-                    case 'daterangepicker':
-                        $filter_input = "<input type='text' value='$current' class='filter-text daterangepicker-input' name='$column_key' readonly>";
-                        break;
-                    case 'select':
-                        $filter_input = "<select name='$column_key' class='filter-select'>";
-                        $filter_input .= "<option value=''>Tous</option>";
-                        if ( is_array($filter_info['options']) && !empty($filter_info['options']) ){
-                            foreach( $filter_info['options'] as $value => $label ){
-                                $selected = ($current==$value) ? 'selected' : '';
-                                $filter_input .= "<option value='$value' $selected>$label</option>";
-                            }
-                        }
-                        $filter_input .= "</select>";
-                        break;
-                }
+                $filter_input = $this->render_fields($column_key, $filter_info);
 
             } else {
                 $filter_input = '';
@@ -214,35 +189,7 @@ class WP_Filter_List_Table extends WP_List_Table{
             if ( array_key_exists($column_key, $filterable_columns) ){
                 $filter_info = $filterable_columns[$column_key];
 
-                $current = isset($_REQUEST[$column_key]) && !empty($_REQUEST[$column_key]) ? $_REQUEST[$column_key] : '';
-
-                switch( $filter_info['type'] ){
-                    case 'text':
-                        $filter_input = "<input type='text' value='$current' class='filter-text' name='$column_key'>";
-                        break;
-                    case 'autocompletion':
-                        $filter_input =
-                            "<input type='text' value='' class='filter-text ddr-autocompletion' data-source='" . $filter_info['source'] . "'>
-                            <input type='hidden' value='$current' class='ddr-autocompletion-hidden' name='$column_key'>";
-                        break;
-                    case 'datepicker':
-                        $filter_input = "<input type='text' value='$current' class='filter-text datepicker' name='$column_key' readonly>";
-                        break;
-                    case 'daterangepicker':
-                        $filter_input = "<input type='text' value='$current' class='filter-text daterangepicker-input' name='$column_key' readonly>";
-                        break;
-                    case 'select':
-                        $filter_input = "<select name='$column_key' class='filter-select'>";
-                        $filter_input .= "<option value=''>Tous</option>";
-                        if ( is_array($filter_info['options']) && !empty($filter_info['options']) ){
-                            foreach( $filter_info['options'] as $value => $label ){
-                                $selected = ($current==$value) ? 'selected' : '';
-                                $filter_input .= "<option value='$value' $selected>$label</option>";
-                            }
-                        }
-                        $filter_input .= "</select>";
-                        break;
-                }
+                $filter_input = $this->render_fields($column_key, $filter_info);
 
                 echo "<div class='col col-md-3 col-sm-6 col-xs-12 col-12'>
                         <label>" . $column_display_name . "</label>
@@ -254,5 +201,38 @@ class WP_Filter_List_Table extends WP_List_Table{
         echo '</div>';
         echo "<button type='submit' class='filter-button button dashicons-before dashicons-search'>Rechercher</button>";
         echo '</div>';
+    }
+
+    public function render_fields($column_key, $filter_info){
+        $current = isset($_REQUEST[$column_key]) && !empty($_REQUEST[$column_key]) ? $_REQUEST[$column_key] : '';
+        $filter_input = '';
+        switch( $filter_info['type'] ){
+            case 'text':
+                $filter_input = "<input type='text' value='$current' class='filter-text' name='$column_key'>";
+                break;
+            case 'autocompletion':
+                $filter_input =
+                    "<input type='text' value='' class='filter-text ddr-autocompletion' data-source='" . $filter_info['source'] . "'>
+                            <input type='hidden' value='$current' class='ddr-autocompletion-hidden' name='$column_key'>";
+                break;
+            case 'datepicker':
+                $filter_input = "<input type='text' value='$current' class='filter-text datepicker' name='$column_key' readonly>";
+                break;
+            case 'daterangepicker':
+                $filter_input = "<input type='text' value='$current' class='filter-text daterangepicker-input' name='$column_key' readonly>";
+                break;
+            case 'select':
+                $filter_input = "<select name='$column_key' class='filter-select " . (isset($filter_info['search']) ? 'chosen-select':''). "' >";
+                $filter_input .= "<option value=''>Tous</option>";
+                if ( is_array($filter_info['options']) && !empty($filter_info['options']) ){
+                    foreach( $filter_info['options'] as $value => $label ){
+                        $selected = ($current==$value) ? 'selected' : '';
+                        $filter_input .= "<option value='$value' $selected>$label</option>";
+                    }
+                }
+                $filter_input .= "</select>";
+                break;
+        }
+        return $filter_input;
     }
 }

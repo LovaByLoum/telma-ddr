@@ -4,15 +4,6 @@ class AxianDDROffre{
 
     public $fields;
 
-    public $type_contrats;
-    public $localisations;
-    public $domaine_etudes;
-    public $domaine_metiers;
-    public $experiences;
-    public $competences;
-    public $criticites;
-    public $niveaux;
-
     public function __construct(){
         $this->fields = array(
             'mission' => array(

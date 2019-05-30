@@ -12,8 +12,8 @@ $active_tab = isset($_GET['tab']) ? $_GET['tab'] : 'general';
 
 <div class="wrap">
 
-    <h1>Validateur par defaut</h1>
-
+    <h1>Validateur par defaut des étapes</h1>
+    <br>
     <form method="post" action="">
 
         <div class="ddr-settings">
