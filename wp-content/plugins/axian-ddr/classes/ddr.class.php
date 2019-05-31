@@ -319,7 +319,7 @@ class AxianDDR{
     }
 
     public function process_ddr(){
-        global $ddr_process_msg;
+        global $ddr_process_msg, $current_user;
         $is_edit = isset($_GET['id']) && isset($_GET['action']) && 'edit' == $_GET['action'] && $_GET['id'] > 0;
         $is_view = isset($_GET['id']) && isset($_GET['action']) && 'view' == $_GET['action'] && $_GET['id'] > 0;
         $the_ddr_id = null;
@@ -444,7 +444,7 @@ class AxianDDR{
                     }
 
                     //default attribution
-                    if ( $is_submit_ddr && empty($post_data['assignee_id']) ){
+                    if ( $is_submit_ddr && ( empty($post_data['assignee_id']) || $post_data['assignee_id'] == $current_user->ID )  ){
                         $post_data['assignee_id'] = self::getDefaultValidator($post_data['next_etape']);
                     }
 
@@ -507,7 +507,7 @@ class AxianDDR{
                 $post_data['etape'] = $post_data['next_etape'];
 
                 //default attribution
-                if ( empty($post_data['assignee_id']) ){
+                if ( empty($post_data['assignee_id']) || $post_data['assignee_id'] == $current_user->ID  ){
                     $post_data['assignee_id'] = self::getDefaultValidator($post_data['next_etape']);
                 }
 
