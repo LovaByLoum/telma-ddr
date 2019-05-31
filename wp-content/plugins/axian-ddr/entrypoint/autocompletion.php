@@ -3,6 +3,7 @@ define( 'SHORTINIT', true );
 
 if ( preg_match('/^(.+)wp-content.*/', dirname(__FILE__), $path) ){
     include($path[1] . 'wp-load.php');
+
     global $wpdb, $current_user;
     if ( $wpdb ) {
         $source = isset($_REQUEST['source']) ? $_REQUEST['source'] : '';
@@ -14,7 +15,31 @@ if ( preg_match('/^(.+)wp-content.*/', dirname(__FILE__), $path) ){
                 $results = array();
                 switch($source){
                     case 'user':
-                        $results = $wpdb->get_results('SELECT ID as id, display_name as label FROM ' . $wpdb->users . ' WHERE display_name LIKE "%' . $term . '%"');
+                        $sql = '
+                            SELECT u.ID as id, u.display_name as label FROM ' . $wpdb->users . ' AS u
+                            INNER JOIN ' . $wpdb->usermeta . ' AS um
+                            ON  ( u.ID = um.user_id AND um.meta_key = "wp_capabilities" )
+                            WHERE u.display_name LIKE "%' . $term . '%"
+                        ';
+
+                        //user in ability group only
+                        $role_filter = array(
+                            'administrateur-ddr',
+                            'manager',
+                            'assistante-direction',
+                            'assistante-rh',
+                            'drh',
+                            'dg',
+                        );
+                        $glue = '';
+                        $sql .= ' AND (';
+                        foreach ( $role_filter as $role ){
+                            $sql .= $glue . ' um.meta_value LIKE \'%"' . $role . '"%\' ';
+                            $glue = ' OR ';
+                        }
+                        $sql .= ')';
+
+                        $results = $wpdb->get_results($sql);
                         break;
                     case 'entreprise':
                         $results = $wpdb->get_results('SELECT ID as id, post_title as label FROM ' . $wpdb->posts . ' WHERE post_title LIKE "%' . $term . '%" AND post_type = "societe"');
