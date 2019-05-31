@@ -14,10 +14,18 @@ class AxianDDRAdministration{
 
     public function __construct() {
 
-        //init admin fields
+        //fields general
+        $this->fields['general']['max_upload_size'] = array(
+            'label' => 'Max upload size',
+            'type' => 'text',
+            'name' => 'axian_ddr_settings[general][max_upload_size]',
+            'description' => 'en MegaOctet'
+        );
+
+        //fields validation
         foreach( AxianDDR::$etapes as $key => $value ){
             if ( DDR_STEP_CREATE != $key ){
-                $this->fields[$key] = array(
+                $this->fields['validation'][$key] = array(
                     'label' => $value,
                     'type' => 'autocompletion',
                     'source' => 'user',

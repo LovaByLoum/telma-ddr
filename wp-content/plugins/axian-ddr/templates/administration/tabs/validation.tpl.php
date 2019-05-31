@@ -17,7 +17,7 @@ $active_tab = isset($_GET['tab']) ? $_GET['tab'] : 'general';
     <form method="post" action="">
 
         <div class="ddr-settings">
-            <?php foreach ( $axian_ddr_administration->fields as $field ) :?>
+            <?php foreach ( $axian_ddr_administration->fields[$active_tab] as $field ) :?>
                 <div class="form-field form-required term-name-wrap form-row col-md-6">
                     <?php axian_ddr_render_field($field , $axian_ddr_settings[$active_tab]);?>
                 </div>

@@ -58,10 +58,12 @@ jQuery(function() {
                     _this.val(ui.item.label);
                 }
             }).blur(function(){
-                    if ( _this.val() == '' ){
-                        _hidden.val('');
-                    }
-                });
+                if ( _this.val() == '' ){
+                    _hidden.val('');
+                }
+            }).focus(function(){
+                $(this).select();
+            });
         }
         //preload current value
         if ( _current_val != '' ){

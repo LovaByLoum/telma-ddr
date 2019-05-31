@@ -93,5 +93,26 @@ class AxianDDROffre{
         );
     }
 
+    public static function insert($args=array(), $post_meta, $terms_to_set){
+        $id_offre = wp_insert_post(array(
+            'post_title' => $args['title'],
+            'post_name' => sanitize_title( $args['title']),
+            'post_status' => 'pending',
+            'post_type' => JM_POSTTYPE_OFFRE,
+        ));
+
+        foreach ( $post_meta as $key => $value ) {
+            add_post_meta( $id_offre, $key, $value);
+        }
+
+        foreach ( $terms_to_set as $tax => $ids ) {
+            if ( !empty($ids) ){
+                $tt_ids = wp_set_post_terms( $id_offre, $ids, $tax );
+            }
+        }
+
+        return $id_offre;
+    }
+
 
 }

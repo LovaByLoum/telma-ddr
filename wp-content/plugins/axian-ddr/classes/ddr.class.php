@@ -53,9 +53,16 @@ class AxianDDR{
     public $lieux;
 
     public function __construct(){
+        global $axian_ddr_settings;
+        if ( is_null($axian_ddr_settings) ){
+            $axian_ddr_settings = get_option( DDR_SETTINGS_NAME, array() );
+        }
+
         $this->directions = AxianDDRTerm::getby(array('type' => 'direction'), 'options' );
         $this->departements = AxianDDRTerm::getby(array('type' => 'departement') , 'options' );
         $this->lieux = AxianDDRTerm::getby(array('type' => 'lieu') , 'options' );
+
+        $max_upload_size = isset($axian_ddr_settings['general']['max_upload_size']) ? $axian_ddr_settings['general']['max_upload_size'] : 1;
 
         $this->fields = array(
             'demandeur' => array(
@@ -186,13 +193,12 @@ class AxianDDR{
                 'accept' => '.pdf,.doc,.docx',
                 'mimetype' => array(
                     'application/pdf',
-                    'image/jpeg',
-                    'image/jpg',
-                    'image/gif',
-                    'image/png'
+                    'application/msword',
+                    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
                 ),
                 //'required' => true,
-                'max_size' => '2097152'
+                'max_size' => $max_upload_size*1024*1024,
+                'description' => 'Extensions autorisées : .pdf,.doc,.docx - Taille max : ' . $max_upload_size . 'M'
             ),
         );
 
@@ -516,6 +522,32 @@ class AxianDDR{
                     'comment' => $post_data['comment'],
                 ));
 
+                //create draft offre with offre_data prefill on last validation
+                if (  $post_data['next_etat'] == DDR_STATUS_VALIDE && $post_data['next_etape'] == DDR_STEP_PUBLISH ){
+                    $offre_data = unserialize($the_ddr['offre_data']);
+                    $offre_id = AxianDDROffre::insert(
+                        array(
+                            'title' => $the_ddr['title']
+                        ),
+                        array(
+                            'missions_principales_offre' => isset($offre_data['mission']) ? $offre_data['mission'] : '',
+                            'responsabilites_offre' => isset($offre_data['responsabilite']) ? $offre_data['responsabilite'] : '',
+                            'qualites_requises_offre' => isset($offre_data['qualite']) ? $offre_data['qualite'] : '',
+                            'societe-rattache' => isset($offre_data['societe']) ? $offre_data['societe'] : '',
+                        ),
+                        array(
+                            JM_TAXONOMIE_DOMAINE_ETUDE => isset($offre_data[JM_TAXONOMIE_DOMAINE_ETUDE]) ? $offre_data[JM_TAXONOMIE_DOMAINE_ETUDE] : null,
+                            JM_TAXONOMIE_LOCALISATION => isset($offre_data[JM_TAXONOMIE_LOCALISATION]) ? $offre_data[JM_TAXONOMIE_LOCALISATION] : null,
+                            JM_TAXONOMIE_TYPE_CONTRAT => isset($offre_data[JM_TAXONOMIE_TYPE_CONTRAT]) ? $offre_data[JM_TAXONOMIE_TYPE_CONTRAT] : null,
+                            JM_TAXONOMIE_DEPARTEMENT => isset($offre_data[JM_TAXONOMIE_DEPARTEMENT]) ? $offre_data[JM_TAXONOMIE_DEPARTEMENT] : null,
+                            JM_TAXONOMIE_COMPETENCE_REQUISES => isset($offre_data[JM_TAXONOMIE_COMPETENCE_REQUISES]) ? $offre_data[JM_TAXONOMIE_COMPETENCE_REQUISES] : null,
+                            JM_TAXONOMIE_ANNEE_EXPERIENCE => isset($offre_data[JM_TAXONOMIE_ANNEE_EXPERIENCE]) ? $offre_data[JM_TAXONOMIE_ANNEE_EXPERIENCE] : null,
+                            JM_TAXONOMIE_CRITICITE => isset($offre_data[JM_TAXONOMIE_CRITICITE]) ? $offre_data[JM_TAXONOMIE_CRITICITE] : null,
+                            JM_TAXONOMIE_NIVEAU_ETUDE => isset($offre_data[JM_TAXONOMIE_NIVEAU_ETUDE]) ? $offre_data[JM_TAXONOMIE_NIVEAU_ETUDE] : null,
+                        )
+                    );
+                }
+
                 //mail here
 
                 $redirect_to = 'admin.php?page=axian-ddr&action=view&id=' . $the_ddr_id . '&msg=' . DDR_MSG_VALIDATED_SUCCESSFULLY;
@@ -561,8 +593,6 @@ class AxianDDR{
                 }
 
                 self::update( $post_data );
-
-                //create draft offre with offre_data prefill
 
                 //historique
                 AxianDDRHistorique::add($the_ddr_id, array(
