@@ -248,7 +248,7 @@ $offres = new AxianDDROffre();
                             <?php axian_ddr_render_field($offres->fields['qualite'],$offre_data, true, $is_view);?>
                         </div>
                     </div>
-                    <hr>
+                    <hr style="height: 1px;width: 95%;">
                     <div class="form-group row">
                         <div class="form-field <?php if ( $is_view ): ?>col-lg-6<?php else :?>col-lg-3<?php endif;?> col-md-6 ddr-box-bordered row">
                             <?php axian_ddr_render_field($offres->fields[JM_TAXONOMIE_DOMAINE_ETUDE], $offre_data, true, $is_view);?>
@@ -293,19 +293,35 @@ $offres = new AxianDDROffre();
 
                 <div class="form-row">
                     <div class="form-group col-md-6">
-                        <div class="form-field">
-                            <?php axian_ddr_render_field($axian_ddr->fields['attribution'],$post_data, true);?>
+                        <div class="form-field row">
+                            <?php
+                            if (
+                                AxianDDRWorkflow::checkActionActeurInEtape($post_data['etape'], DDR_ACTION_VALIDATE ) ||
+                                AxianDDRWorkflow::checkActionActeurInEtape($post_data['etape'], DDR_ACTION_SUBMIT )
+                            ) {
+                                $can_view_validation_field = true;
+                            } else {
+                                $can_view_validation_field = false;
+                            }
+                            axian_ddr_render_field($axian_ddr->fields['attribution'],$post_data, true, !$can_view_validation_field);
+                            ?>
                         </div>
                     </div>
                     <div class="form-group col-md-6">
-                        <div class="form-field">
-                            <?php axian_ddr_render_field(array(
-                                'label' => 'Commentaire',
-                                'type' => 'textarea',
-                                'name' => 'comment',
-                                'cols' => '40',
-                                'rows' => '4'
-                            ), $post_data, true);?>
+                        <div class="form-field row">
+                            <?php
+                            axian_ddr_render_field(
+                                array(
+                                    'label' => 'Commentaire',
+                                    'type' => 'textarea',
+                                    'name' => 'comment',
+                                    'cols' => '40',
+                                    'rows' => '4'
+                                ),
+                                $post_data,
+                                $can_view_validation_field,
+                                !$can_view_validation_field);
+                            ?>
                         </div>
                     </div>
                 </div>
