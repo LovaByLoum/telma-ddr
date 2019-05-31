@@ -31,6 +31,7 @@ if ( preg_match('/^(.+)wp-content.*/', dirname(__FILE__), $path) ){
                             'controleur-budgetaire',
                             'drh',
                             'dg',
+                            'responsable_rh',
                         );
                         $glue = '';
                         $sql .= ' AND (';
