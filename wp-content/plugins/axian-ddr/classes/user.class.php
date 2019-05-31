@@ -56,7 +56,7 @@ class AxianDDRUser{
         self::$_elements[$uid] = $element;
     }
 
-    private static function isADUser($userId){
+    public static function isADUser($userId){
         $samAccountName = get_user_meta($userId, NEXT_AD_INT_PREFIX . 'samaccountname', true);
         if ($samAccountName) {
             return true;
