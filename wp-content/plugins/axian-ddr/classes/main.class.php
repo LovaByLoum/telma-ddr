@@ -16,6 +16,7 @@ class AxianDDRMain {
         add_role( DDR_ROLE_MANAGER, 'Manager');
         add_role( DDR_ROLE_ASSISTANTE_DIRECTION, 'Assistante de Direction');
         add_role( DDR_ROLE_ASSISTANTE_RH, 'Assistante RH');
+        add_role( DDR_ROLE_CONTROLEUR_BUDGET, 'Contrôleurs budgétaires');
         add_role( DDR_ROLE_DRH, 'DRH');
         add_role( DDR_ROLE_DG, 'DG');
 

@@ -28,6 +28,7 @@ if ( preg_match('/^(.+)wp-content.*/', dirname(__FILE__), $path) ){
                             'manager',
                             'assistante-direction',
                             'assistante-rh',
+                            'controleur-budgetaire',
                             'drh',
                             'dg',
                         );

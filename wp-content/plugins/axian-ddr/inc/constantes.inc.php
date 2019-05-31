@@ -65,6 +65,7 @@ define('DDR_ROLE_ADMINISTRATEUR_DDR', 'administrateur-ddr');
 define('DDR_ROLE_MANAGER', 'manager');
 define('DDR_ROLE_ASSISTANTE_DIRECTION', 'assistante-direction');
 define('DDR_ROLE_ASSISTANTE_RH', 'assistante-rh');
+define('DDR_ROLE_CONTROLEUR_BUDGET', 'controleur-budgetaire');
 define('DDR_ROLE_DRH', 'drh');
 define('DDR_ROLE_DG', 'dg');
 define('DDR_ROLE_GESTIONNAIRE_TALENT', 'responsable_rh'); //même que le role qui peut gérer les offres
