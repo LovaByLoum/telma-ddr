@@ -200,11 +200,12 @@ function axian_ddr_render_field( $field, $post_data = null, $label = true, $disp
                     </div>
                     <noscript>
                         <input name="<?php echo $field['name'];?>" type="file" id="<?php echo $field['name'];?>" class="regular-text form-control <?php echo $field['class'];?>" accept="<?php echo $field['accept'];?>"/>
+                        <?php if ( isset($field['description']) && !empty($field['description']) ) : ?><p><?php echo $field['description'];?></p><?php endif;?>
                     </noscript>
-            <?php else : ?>
+                <?php else : ?>
                     <input name="<?php echo $field['name'];?>" type="file" id="<?php echo $field['name'];?>" class="regular-text form-control <?php echo $field['class'];?>" accept="<?php echo $field['accept'];?>"/>
+                    <?php if ( isset($field['description']) && !empty($field['description']) ) : ?><p><?php echo $field['description'];?></p><?php endif;?>
                 <?php endif;?>
-                <?php if ( isset($field['description']) && !empty($field['description']) ) : ?><p><?php echo $field['description'];?></p><?php endif;?>
                 <?php
                 break;
         }
