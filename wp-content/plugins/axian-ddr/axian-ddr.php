@@ -8,6 +8,7 @@ Author: Njaratiana
 
 define ( 'AXIAN_DDR_PATH', dirname(__FILE__) );
 define ( 'AXIAN_DDR_URL', plugin_dir_url(__FILE__));
+require_once('utils/functions.utils.php');
 require_once ('inc/constantes.inc.php');
 require_once('classes/user.class.php');
 require_once('classes/workflow.class.php');
@@ -20,7 +21,6 @@ require_once('classes/administration.class.php');
 require_once('classes/list/class-wp-filter-list-table.php');
 require_once('classes/list/ddr-list.class.php');
 require_once('classes/list/term-list.class.php');
-require_once('utils/functions.utils.php');
 
 register_activation_hook( __FILE__ , 'AxianDDRMain::install' );
 
