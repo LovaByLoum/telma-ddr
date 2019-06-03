@@ -47,11 +47,12 @@ jQuery(function() {
     $( ".ddr-autocompletion[data-source]").each(function(){
         var _this = $(this);
         var _source = _this.data('source');
+        var _role = _this.data('validateur');
         var _hidden = _this.next();
         var _current_val = _hidden.val();
         if ( _this.get(0).tagName == 'INPUT' ){
             _this.autocomplete({
-                source: ddr_settings.autocompletion_url + '?source=' + _source,
+                source: ddr_settings.autocompletion_url + '?source=' + _source + '&role=' + _role ,
                 minLength: 2,
                 select: function( event, ui ) {
                     _hidden.val(ui.item.id);

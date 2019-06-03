@@ -47,6 +47,10 @@ if ( $is_edit ){
 
 $historiques = AxianDDRHistorique::getByDDRId(intval($_GET['id']));
 $offres = new AxianDDROffre();
+$current_workflow_etape = AxianDDRWorkflow::getWorkflowInfoBy($post_data['etape']);
+$validateur = AxianDDRWorkflow::getValidatorByEtape($current_workflow_etape['next_etape']);
+$attributor_field = $axian_ddr->fields['attribution'];
+$attributor_field['validateur'] = $validateur;
 ?>
 
 <div class="wrap nosubsub">
@@ -303,7 +307,7 @@ $offres = new AxianDDROffre();
                             } else {
                                 $can_view_validation_field = false;
                             }
-                            axian_ddr_render_field($axian_ddr->fields['attribution'],$post_data, true, !$can_view_validation_field);
+                            axian_ddr_render_field($attributor_field,$post_data, true, !$can_view_validation_field);
                             ?>
                         </div>
                     </div>
@@ -368,9 +372,6 @@ $offres = new AxianDDROffre();
             </fieldset>
             <?php endif;?>
 
-            <?php
-            $current_workflow_etape = AxianDDRWorkflow::getWorkflowInfoBy($post_data['etape']);
-            ?>
             <p class="submit-part">
                 <input type="hidden" name="etape" value="<?php echo $post_data['etape'];?>" />
                 <input type="hidden" name="next_etat" value="<?php echo $current_workflow_etape['next_etat'];?>" />

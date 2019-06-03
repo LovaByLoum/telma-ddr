@@ -9,6 +9,7 @@ if ( preg_match('/^(.+)wp-content.*/', dirname(__FILE__), $path) ){
         $source = isset($_REQUEST['source']) ? $_REQUEST['source'] : '';
         $term = isset($_REQUEST['term']) ? $_REQUEST['term'] : '';
         $id = isset($_REQUEST['id']) ? $_REQUEST['id'] : '';
+        $role = isset($_REQUEST['role']) ? $_REQUEST['role'] : '';
         if ( !empty($source) ){
             //request an autocompletion by term
             if ( !empty($term) ){
@@ -22,24 +23,17 @@ if ( preg_match('/^(.+)wp-content.*/', dirname(__FILE__), $path) ){
                             WHERE u.display_name LIKE "%' . $term . '%"
                         ';
 
-                        //user in ability group only
-                        $role_filter = array(
-                            'administrateur-ddr',
-                            'manager',
-                            'assistante-direction',
-                            'assistante-rh',
-                            'controleur-budgetaire',
-                            'drh',
-                            'dg',
-                            'responsable_rh',
-                        );
-                        $glue = '';
-                        $sql .= ' AND (';
-                        foreach ( $role_filter as $role ){
-                            $sql .= $glue . ' um.meta_value LIKE \'%"' . $role . '"%\' ';
-                            $glue = ' OR ';
+                        if ( !empty($role) ){
+                            //user in ability group only
+                            $role_filter = explode( '|', $role);
+                            $glue = '';
+                            $sql .= ' AND (';
+                            foreach ( $role_filter as $role ){
+                                $sql .= $glue . ' um.meta_value LIKE \'%"' . $role . '"%\' ';
+                                $glue = ' OR ';
+                            }
+                            $sql .= ')';
                         }
-                        $sql .= ')';
 
                         $results = $wpdb->get_results($sql);
                         break;

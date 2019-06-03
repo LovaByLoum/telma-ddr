@@ -274,6 +274,19 @@ class AxianDDRWorkflow{
         return self::isUserInCurrentEtape($current_etape) && self::isActionInCurrentActeurActions($current_etape, $current_action);
     }
 
+    public static function getValidatorByEtape( $current_etape ){
+        $current_workflow_etape = self::getWorkflowInfoBy($current_etape);
+        $validateur = $glue = '';
+        foreach($current_workflow_etape['workflow_info']['acteur'] as $actor => $value){
+            if(DDR_ROLE_MANAGER != $actor){
+                $validateur .= $glue .$actor;
+                $glue = '|';
+            }
+        }
+
+        return $validateur;
+    }
+
 }
 global $axian_ddr_workflow;
 $axian_ddr_workflow = new AxianDDRWorkflow();

@@ -171,7 +171,7 @@ function axian_ddr_render_field( $field, $post_data = null, $label = true, $disp
             case 'autocompletion' :
                 ?>
                 <?php if ( $label ): ?><label for="<?php echo $field['name'];?>"><?php echo $field['label'];?><?php if (  $field['required'] ) : ?>&nbsp;<span style="color:red;">*</span><?php endif;?></label><?php endif;?>
-                <input type="text" id="<?php echo $field['name'];?>" value="" data-source="<?php echo $field['source'];?>" class="ddr-autocompletion regular-text form-control <?php echo $field['class'];?>"/>
+                <input type="text" id="<?php echo $field['name'];?>" value="" data-validateur="<?php echo $field['validateur']?>" data-source="<?php echo $field['source'];?>" class="ddr-autocompletion regular-text form-control <?php echo $field['class'];?>"/>
                 <input type="hidden" value="<?php echo $current_value;?>" class="ddr-autocompletion-hidden" name="<?php echo $field['name'];?>"/>
                 <?php if ( isset($field['description']) && !empty($field['description']) ) : ?><p><?php echo $field['description'];?></p><?php endif;?>
                 <?php
