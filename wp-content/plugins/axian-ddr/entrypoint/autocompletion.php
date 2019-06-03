@@ -26,14 +26,25 @@ if ( preg_match('/^(.+)wp-content.*/', dirname(__FILE__), $path) ){
                         if ( !empty($role) ){
                             //user in ability group only
                             $role_filter = explode( '|', $role);
-                            $glue = '';
-                            $sql .= ' AND (';
-                            foreach ( $role_filter as $role ){
-                                $sql .= $glue . ' um.meta_value LIKE \'%"' . $role . '"%\' ';
-                                $glue = ' OR ';
-                            }
-                            $sql .= ')';
+                        }else{
+                            $role_filter = array(
+                                'administrateur-ddr',
+                                'manager',
+                                'assistante-direction',
+                                'assistante-rh',
+                                'controleur-budgetaire',
+                                'drh',
+                                'dg',
+                                'responsable_rh',
+                            );
                         }
+                        $glue = '';
+                        $sql .= ' AND (';
+                        foreach ( $role_filter as $role ){
+                            $sql .= $glue . ' um.meta_value LIKE \'%"' . $role . '"%\' ';
+                            $glue = ' OR ';
+                        }
+                        $sql .= ')';
 
                         $results = $wpdb->get_results($sql);
                         break;

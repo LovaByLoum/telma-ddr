@@ -48,6 +48,7 @@ jQuery(function() {
         var _this = $(this);
         var _source = _this.data('source');
         var _role = _this.data('validateur');
+        if(_role == null) _role = '';
         var _hidden = _this.next();
         var _current_val = _hidden.val();
         if ( _this.get(0).tagName == 'INPUT' ){
