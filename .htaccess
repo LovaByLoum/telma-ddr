@@ -28,6 +28,7 @@ Options +FollowSymlinks
 SetEnvIf HOST "localhost" SERVER_ENV_LOCAL !SERVER_ENV_RECETTE !SERVER_ENV_PREPROD !SERVER_ENV_PROD
 SetEnvIf HOST "telma-interface-recrutement-recette[.]mg[.]netapsys[.]fr" !SERVER_ENV_LOCAL SERVER_ENV_RECETTE !SERVER_ENV_PREPROD !SERVER_ENV_PROD
 SetEnvIf HOST "telma-interface-recrutement-recette[.]netapsys[.]fr" !SERVER_ENV_LOCAL SERVER_ENV_RECETTE !SERVER_ENV_PREPROD !SERVER_ENV_PROD
+SetEnvIf HOST "recette[.]aits[.]mg" !SERVER_ENV_LOCAL SERVER_ENV_RECETTE !SERVER_ENV_PREPROD !SERVER_ENV_PROD
 SetEnvIf HOST "tsgt02lv" !SERVER_ENV_LOCAL SERVER_ENV_RECETTE !SERVER_ENV_PREPROD !SERVER_ENV_PROD
 SetEnvIf HOST "telma[.]net" !SERVER_ENV_LOCAL !SERVER_ENV_RECETTE SERVER_ENV_PREPROD !SERVER_ENV_PROD
 SetEnvIf HOST "recrutement[.]axian-group[.]com" !SERVER_ENV_LOCAL !SERVER_ENV_RECETTE !SERVER_ENV_PREPROD SERVER_ENV_PROD
@@ -37,7 +38,7 @@ SetEnvIf HOST "recrutement[.]axian-group[.]com" !SERVER_ENV_LOCAL !SERVER_ENV_RE
 Order deny,allow
 deny from all
 allow from env=SERVER_ENV_LOCAL
-allow from env=SERVER_ENV_RECETTE
+deny from env=SERVER_ENV_RECETTE
 allow from env=SERVER_ENV_PREPROD
 allow from env=SERVER_ENV_PROD
 Satisfy any
@@ -47,6 +48,7 @@ Satisfy any
 SetEnvIf HOST "localhost" PROJECT_BASE_PATH=/projets/telma-ressources-humaines/
 SetEnvIf HOST "telma-interface-recrutement-recette[.]mg[.]netapsys[.]fr" PROJECT_BASE_PATH=/
 SetEnvIf HOST "telma-interface-recrutement-recette[.]netapsys[.]fr" PROJECT_BASE_PATH=/
+SetEnvIf HOST "recette[.]aits[.]mg" PROJECT_BASE_PATH=/recrutement-axian/
 SetEnvIf HOST "tsgt02lv" PROJECT_BASE_PATH=/jobopportunity/
 SetEnvIf HOST "telma[.]net" PROJECT_BASE_PATH=/axian/
 SetEnvIf HOST "recrutement[.]axian-group[.]com" PROJECT_BASE_PATH=/axian/

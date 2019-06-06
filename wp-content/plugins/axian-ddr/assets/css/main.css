@@ -1,0 +1,97 @@
+/*DDR edit*/
+.ddr-edit{
+    margin: 20px 0;
+}
+fieldset.ddr-box-bordered{
+    border: 1px solid #e5e5e5;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+fieldset.ddr-box-bordered legend{
+    display: inline-block;
+    width: auto;
+    padding: 0 15px;
+    font-size: 18px;
+    color: #aaa;
+}
+
+fieldset.ddr-box-bordered .form-group{
+    margin: 0;
+    padding: 0 20px;
+    width: 100%;
+}
+fieldset.ddr-box-bordered .form-group .row{
+    margin-left: 0;
+    margin-right: 0;
+}
+fieldset.ddr-box-bordered .form-group label{
+    font-weight: bold;
+    font-size: 13px;
+    text-align: right;
+}
+fieldset.ddr-box-bordered .form-group textarea{
+    width: 100%;
+}
+fieldset.ddr-box-bordered .form-group input[type=text]{
+    padding: 5px 10px;
+    width: 100%;
+}
+fieldset.ddr-box-bordered .form-group .form-field.label-left label{
+    text-align: left!important;
+    padding-left: 0!important;
+    max-width: 25%;
+}
+fieldset.ddr-box-bordered .form-group .form-field{
+    margin-bottom: 20px;
+}
+fieldset.ddr-box-bordered i.info{
+    font-size: 13px;
+    color: #677070;
+}
+.validation-box{
+    background: #ededed;
+}
+.validation-box legend{
+    background: #ededed;
+    border-radius: 5px;
+}
+.ddr-summary p{
+    margin: 0;
+}
+.ddr-taxonomy-tree{
+    max-height: 250px!important;
+    overflow-y: scroll;
+    width: 100%;
+    display: block;
+    border: 1px solid #e5e5e5;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+.ddr-taxonomy-tree ul{
+    margin-left: 20px;
+}
+.ddr-taxonomy-tree ul label{
+    text-align: left!important;
+    font-weight: normal!important;
+    font-size: 12px!important;
+}
+.ddr-autocompletion{
+    background: url(chosen-sprite.png) no-repeat 100% -21px, #fff;
+    /*background-size: 70px;*/
+}
+
+/*admin settings*/
+.ddr-settings .form-field{
+    margin-bottom: 20px;
+}
+.ddr-settings .form-field label{
+    width: 30%;
+    text-align: left;
+}
+.ddr-settings .form-field input,
+.ddr-settings .form-field textarea,
+.ddr-settings .form-field select{
+    width: 70%;
+}

@@ -55,8 +55,6 @@ class CUser {
     $element->role              =   $user->roles[0];
     $element->register          =   mysql2date( get_option( 'date_format' ), $user->data->user_registered );
 	$element->phone_number      =   get_user_meta( $user->ID, "num_phone_user", true );
-
-
     //...
 
     //stocker dans le tableau statique
@@ -119,6 +117,16 @@ class CUser {
 	public static function request_user_approval_email( $userId )
 	{
 		$user = self::getById( $userId );
+
+        //if user nadi
+        if ( defined('NEXT_AD_INT_PREFIX') ){
+            $samAccountName = get_user_meta($userId, NEXT_AD_INT_PREFIX . 'samaccountname', true);
+            if ($samAccountName) {
+                return;
+            }
+        }
+
+
 		$email = $user->email;
 		/* on procède au cryptage de la variable */
 		$hash = crypt( "123456", "activate_user_" . $user->id );

@@ -1,0 +1,165 @@
+/*AXIAN THEMING FOR ADMIN SECTION*/
+
+/*
+primary color : #d30630
+secondary color : #f8093a
+third color : #8f0b28
+*/
+
+body {
+    background: #fff;
+    font-family: 'arial', sans-serif;
+}
+/*links*/
+a, .media-frame a{
+    color: #d30630
+}
+a:hover, .media-frame a:active, .media-frame a:hover {
+    color: #8f0b28;
+}
+
+/*menu admin*/
+#adminmenu, #adminmenu .wp-submenu, #adminmenuback, #adminmenuwrap{
+    background-color: #d30630;
+}
+#adminmenu a{
+    color: #fff;
+}
+#adminmenu li.menu-top:hover, #adminmenu li.opensub>a.menu-top, #adminmenu li>a.menu-top:focus {
+    background-color: #f8093a;
+    color: #fff;
+}
+#adminmenu div.wp-menu-image:before {
+    color: #fff;
+    color: rgba(240,245,250,1);
+}
+#adminmenu li a:focus div.wp-menu-image:before, #adminmenu li.opensub div.wp-menu-image:before, #adminmenu li:hover div.wp-menu-image:before{
+    color: #fff;
+    color: rgba(240,245,250,0.6);
+}
+#adminmenu .wp-submenu a:focus, #adminmenu .wp-submenu a:hover, #adminmenu a:hover, #adminmenu li.menu-top>a:focus{
+    color: #fff;
+}
+#adminmenu li.wp-has-submenu.wp-not-current-submenu.opensub:hover:after {
+    border-right-color: #d30630;
+}
+
+#adminmenu .wp-has-current-submenu .wp-submenu .wp-submenu-head, #adminmenu .wp-menu-arrow, #adminmenu .wp-menu-arrow div, #adminmenu li.current a.menu-top, #adminmenu li.wp-has-current-submenu a.wp-has-current-submenu, .folded #adminmenu li.current.menu-top, .folded #adminmenu li.wp-has-current-submenu {
+    background: #f8093a;
+    color: #fff;
+}
+#adminmenu .wp-has-current-submenu .wp-submenu, #adminmenu .wp-has-current-submenu .wp-submenu.sub-open, #adminmenu .wp-has-current-submenu.opensub .wp-submenu, #adminmenu a.wp-has-current-submenu:focus+.wp-submenu, .no-js li.wp-has-current-submenu:hover .wp-submenu {
+    background-color: #8f0b28;
+}
+#collapse-button:focus, #collapse-button:hover {
+    color: #fff;
+}
+
+/*admin bar*/
+#wpadminbar {
+    background: #d30630;
+}
+#wpadminbar .ab-top-menu>li.hover>.ab-item, #wpadminbar.nojq .quicklinks .ab-top-menu>li>.ab-item:focus, #wpadminbar:not(.mobile) .ab-top-menu>li:hover>.ab-item, #wpadminbar:not(.mobile) .ab-top-menu>li>.ab-item:focus {
+    background: #f8093a;
+    color: #fff;
+}
+#wpadminbar .quicklinks .ab-sub-wrapper .menupop.hover>a, #wpadminbar .quicklinks .menupop ul li a:focus, #wpadminbar .quicklinks .menupop ul li a:focus strong, #wpadminbar .quicklinks .menupop ul li a:hover, #wpadminbar .quicklinks .menupop ul li a:hover strong, #wpadminbar .quicklinks .menupop.hover ul li a:focus, #wpadminbar .quicklinks .menupop.hover ul li a:hover, #wpadminbar .quicklinks .menupop.hover ul li div[tabindex]:focus, #wpadminbar .quicklinks .menupop.hover ul li div[tabindex]:hover, #wpadminbar li #adminbarsearch.adminbar-focused:before, #wpadminbar li .ab-item:focus .ab-icon:before, #wpadminbar li .ab-item:focus:before, #wpadminbar li a:focus .ab-icon:before, #wpadminbar li.hover .ab-icon:before, #wpadminbar li.hover .ab-item:before, #wpadminbar li:hover #adminbarsearch:before, #wpadminbar li:hover .ab-icon:before, #wpadminbar li:hover .ab-item:before, #wpadminbar.nojs .quicklinks .menupop:hover ul li a:focus, #wpadminbar.nojs .quicklinks .menupop:hover ul li a:hover {
+    color: #fff;
+}
+#wpadminbar .menupop .ab-sub-wrapper, #wpadminbar .shortlink-input {
+    background: #d30630;
+}
+#wpadminbar .quicklinks .menupop ul.ab-sub-secondary, #wpadminbar .quicklinks .menupop ul.ab-sub-secondary .ab-submenu{
+    background: #d30630;
+}
+#wpadminbar:not(.mobile)>#wp-toolbar a:focus span.ab-label, #wpadminbar:not(.mobile)>#wp-toolbar li:hover span.ab-label, #wpadminbar>#wp-toolbar li.hover span.ab-label {
+    color: #fff;
+}
+.wp-responsive-open #wpadminbar #wp-admin-bar-menu-toggle a {
+    background: #d30630;
+}
+.wp-responsive-open #wpadminbar #wp-admin-bar-menu-toggle .ab-icon:before {
+    color: #fff;
+}
+
+/*buttons*/
+.wp-core-ui .button-primary {
+    background: #d30630;
+    border-color: #8f0b28;
+    box-shadow: 0 1px 0 #8f0b28;
+    color: #fff;
+    text-decoration: none;
+    text-shadow: 0 -1px 1px #f8093a, 1px 0 1px #f8093a, 0 1px 1px #f8093a, -1px 0 1px #f8093a;
+}
+
+.wp-core-ui .button-primary.focus, .wp-core-ui .button-primary.hover, .wp-core-ui .button-primary:focus, .wp-core-ui .button-primary:hover {
+    background: #f8093a;
+    border-color: #d30630;
+    color: #fff;
+}
+.wp-core-ui .button-primary-disabled, .wp-core-ui .button-primary.disabled, .wp-core-ui .button-primary:disabled, .wp-core-ui .button-primary[disabled] {
+    color: #ededed!important;
+    background: #8f0b28!important;
+    border-color: #8f0b28!important;
+}
+.wrap .add-new-h2, .wrap .add-new-h2:active, .wrap .page-title-action, .wrap .page-title-action:active{
+    color: #d30630;
+}
+.wrap .add-new-h2:hover, .wrap .page-title-action:hover {
+    border-color: #8f0b28;
+    background: #d30630;
+    color: #fff;
+}
+.wp-core-ui .button-link{
+    color: #d30630;
+}
+.wp-core-ui .button-link:active, .wp-core-ui .button-link:hover {
+    color: #8f0b28;
+}
+
+/*logo*/
+#wpadminbar #wp-admin-bar-wp-logo a{
+    padding: 3px 20px 0px 30px!important;
+}
+#wpadminbar #wp-admin-bar-wp-logo a .ab-icon:before{
+    display: none!important;
+}
+#wpadminbar #wp-admin-bar-wp-logo .ab-icon, #wpadminbar #wp-admin-bar-wp-logo .ab-item:before, #wpadminbar>#wp-toolbar>#wp-admin-bar-root-default #wp-admin-bar-wp-logo .ab-icon{
+    background: transparent url(logo.svg) center center no-repeat !important;
+    width: 81px;
+    background-size: contain!important;
+    height: 26px;
+    display: block;
+    padding: 0;
+    margin: 0;
+}
+
+/*pagination*/
+.tablenav .tablenav-pages a:focus, .tablenav .tablenav-pages a:hover {
+    border-color: #d30630;
+    color: #fff;
+    background: #d30630;
+}
+.tablenav-pages-navspan {
+    height: 28px;
+}
+
+/*acf button*/
+.acf-button {
+    background: #d30630;
+    border: #8f0b28 solid 1px;
+}
+.acf-button:hover{
+    background: #f8093a;
+    border: #d30630 solid 1px;
+}
+
+/*autocomplete, chosenselect, datepicker others plugins ... */
+.chosen-container .chosen-results li.highlighted{
+    background-color: #d30630;
+}
+.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus{
+    background: #d30630;
+    color: #fff;
+    border: 1px solid #f8093a;
+}
