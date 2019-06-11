@@ -207,5 +207,32 @@ class AxianDDRUser{
             }
         }
     }
+
+    public static function getUserValidator(){
+        global $wpdb;
+        $role_filter = array(
+            'administrateur-ddr',
+            'assistante-direction',
+            'assistante-rh',
+            'controleur-budgetaire',
+            'drh',
+            'dg',
+            'responsable_rh',
+        );
+
+        $glue = "";
+        $query_select = "
+                            SELECT u.ID as id FROM   ".$wpdb->users."  AS u
+                            INNER JOIN  ".$wpdb->usermeta."   AS um
+                            ON  ( u.ID = um.user_id AND um.meta_key = 'wp_capabilities' )
+                            WHERE
+                        ";
+        foreach ( $role_filter as $role ){
+            $query_select .= $glue . ' um.meta_value LIKE \'%"' . $role . '"%\' ';
+            $glue = ' OR ';
+        }
+        $results = $wpdb->get_results($query_select,ARRAY_A);
+        return $results;
+    }
 }
 new AxianDDRUser();

@@ -6,6 +6,9 @@
  * Time: 15:40
  * To change this template use File | Settings | File Templates.
  */
+if ( ! class_exists( 'AxianDDRMail' ) ) {
+    require_once( AXIAN_DDR_PATH .'/classes/mail.class.php' );
+}
 class AxianDDR{
 
     public static $types_demande = array(
@@ -412,6 +415,7 @@ class AxianDDR{
 
                     //insert
                     $new_ddr_id = self::insert( $post_data );
+                    AxianDDRMail::sendValidation($post_data['assignee_id'],self::$types_demande[$post_data['type']],$new_ddr_id);
 
                     //historique
                     AxianDDRHistorique::add($new_ddr_id, array(
@@ -469,7 +473,7 @@ class AxianDDR{
 
                     //mail here
                     if ( $is_submit_ddr ){
-                        //mail here
+                        AxianDDRMail::sendValidation($post_data['assignee_id'],self::$types_demande[$post_data['type']],$the_ddr_id);
                     }
 
                     if ( $is_save_draft || $is_update_ddr ){
@@ -512,6 +516,7 @@ class AxianDDR{
                 }
 
                 self::update( $post_data );
+                AxianDDRMail::sendValidation($post_data['assignee_id'],self::$types_demande[$the_ddr['type']],$the_ddr_id);
 
                 //historique
                 AxianDDRHistorique::add($the_ddr_id, array(
