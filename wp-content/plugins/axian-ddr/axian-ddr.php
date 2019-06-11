@@ -32,12 +32,13 @@ $axian_ddr_main = new AxianDDRMain();
 //tache cron pour envoie mail de rappel de validation
 add_filter('cron_schedules', 'axian_ddr_add_scheduled_interval');
 function axian_ddr_add_scheduled_interval($schedules) {
-    $schedules['axian-ddr-daily'] = array('interval'=>60, 'display'=>'Once 1 day');
+    $schedules['axian-ddr-daily'] = array('interval'=>60*60*5, 'display'=>'Chaque jour à 9h am');
     return $schedules;
 }
 
 if (!wp_next_scheduled('axian_ddr_daily_task')) {
-    wp_schedule_event(time(), 'axian-ddr-daily', 'axian_ddr_daily_task');
+    $time = strtotime("9:00:00");
+    wp_schedule_event($time, 'axian-ddr-daily', 'axian_ddr_daily_task');
 }
 add_action ( 'axian_ddr_daily_task', 'axian_ddr_send_rappel' );
 function axian_ddr_send_rappel(){
