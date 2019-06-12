@@ -50,6 +50,21 @@ class AxianDDRAdministration{
                 'description' => 'Vous pouvez utiliser les jettons suivants: <pre>nombre de ticket = [nb],
     lien tableau de bord = [ici]</pre>'
             ),
+            'sujet_notification_delegation' => array(
+                'label' => 'Sujet notification de delegation',
+                'type' => 'text',
+                'name' => 'axian_ddr_settings[general][sujet_notification_delegation]',
+                'description' => ''
+            ),
+            'content_notification_delegation' => array(
+                'label' => 'Contenu notification de delegation',
+                'type' => 'textarea',
+                'rows' => '8',
+                'name' => 'axian_ddr_settings[general][content_notification_delegation]',
+                'description' => 'Vous pouvez utiliser les jettons suivants: <pre>lien vers la demande = [reference],
+    commentaire = [comment]
+    attributeur = [attributor]</pre>'
+            ),
 
         );
 

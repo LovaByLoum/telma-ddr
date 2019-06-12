@@ -32,7 +32,7 @@ $axian_ddr_main = new AxianDDRMain();
 //tache cron pour envoie mail de rappel de validation
 add_filter('cron_schedules', 'axian_ddr_add_scheduled_interval');
 function axian_ddr_add_scheduled_interval($schedules) {
-    $schedules['axian-ddr-daily'] = array('interval'=>60*60*5, 'display'=>'Chaque jour à 9h am');
+    $schedules['axian-ddr-daily'] = array('interval'=>60*60*24, 'display'=>'Chaque jour à 9h am');
     return $schedules;
 }
 

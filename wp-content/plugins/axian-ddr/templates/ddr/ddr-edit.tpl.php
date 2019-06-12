@@ -2,7 +2,6 @@
 global $axian_ddr;
 global $current_user;
 global $ddr_process_msg;
-
 $user_demandeur = AxianDDRUser::getById($current_user->ID);
 
 $is_edit = isset($_GET['id']) && isset($_GET['action']) && 'edit' == $_GET['action'] && $_GET['id'] > 0;
@@ -48,9 +47,12 @@ if ( $is_edit ){
 $historiques = AxianDDRHistorique::getByDDRId(intval($_GET['id']));
 $offres = new AxianDDROffre();
 $current_workflow_etape = AxianDDRWorkflow::getWorkflowInfoBy($post_data['etape']);
-$validateur = AxianDDRWorkflow::getValidatorByEtape($current_workflow_etape['next_etape']);
+$next_validateur = AxianDDRWorkflow::getValidatorByEtape($current_workflow_etape['next_etape']);
+$validateur = AxianDDRWorkflow::getValidatorByEtape($post_data['etape']);
 $attributor_field = $axian_ddr->fields['attribution'];
-$attributor_field['validateur'] = $validateur;
+$delegator_field = $axian_ddr->fields['delegation'];
+$attributor_field['validateur'] = $next_validateur;
+$delegator_field['validateur'] = $validateur;
 ?>
 
 <div class="wrap nosubsub">
@@ -310,6 +312,18 @@ $attributor_field['validateur'] = $validateur;
                             axian_ddr_render_field($attributor_field,$post_data, true, !$can_view_validation_field);
                             ?>
                         </div>
+                            <?php
+                            if (
+                                (   AxianDDRWorkflow::checkActionActeurInEtape($post_data['etape'], DDR_ACTION_VALIDATE ) ||
+                                    AxianDDRWorkflow::checkActionActeurInEtape($post_data['etape'], DDR_ACTION_SUBMIT )) &&
+                                (   intval($post_data['assignee_id']) == $current_user->ID )
+                            ) :?>
+                        <div class="form-field row">
+                            <?php axian_ddr_render_field($delegator_field,$post_data, true, false);
+                            ?>
+                            <input type="submit" name="delegate-ddr" class="button button-primary confirm-before" value="Déleguer"/>
+                        </div>
+                            <?php endif;?>
                     </div>
                     <div class="form-group col-md-6">
                         <div class="form-field row">

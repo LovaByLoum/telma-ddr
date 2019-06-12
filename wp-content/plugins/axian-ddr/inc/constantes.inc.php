@@ -39,6 +39,7 @@ define('DDR_ACTION_VALIDATE','validate');
 define('DDR_ACTION_REFUSE','refuse');
 define('DDR_ACTION_CANCEL','cancel');
 define('DDR_ACTION_CLOSE','close');
+define('DDR_ACTION_DELEGATE','delegate');
 
 //type candidat
 define('CANDIDATURE_INTERNE','internal');

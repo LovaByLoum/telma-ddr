@@ -27,6 +27,7 @@ class AxianDDR{
         DDR_ACTION_VALIDATE => 'Valider',
         DDR_ACTION_REFUSE => 'Refuser',
         DDR_ACTION_CLOSE => 'Clôturer',
+        DDR_ACTION_DELEGATE => 'Déléguer',
     );
 
     public static $etats = array(
@@ -178,6 +179,13 @@ class AxianDDR{
                 'source' => 'user',
                 'name' => 'assignee_id',
                 'description' => 'Le ticket sera attribué à l\'utilisateur par défaut si ce champs n\'est pas renseingé'
+            ),
+
+            'delegation' => array(
+                'label' => 'Délégation',
+                'type' => 'autocompletion',
+                'source' => 'user',
+                'name' => 'delegate_id',
             ),
 
             'candidature' => array(
@@ -338,6 +346,7 @@ class AxianDDR{
         $is_refuse_ddr = isset($_POST['refuse-ddr']);
         $is_cloture_ddr = isset($_POST['cloture-ddr']);
         $is_cancel_ddr = isset($_POST['cancel-ddr']);
+        $is_delegate_ddr = isset($_POST['delegate-ddr']);
 
         //permission
         if ( $is_save_draft && !current_user_can(DDR_CAP_CAN_CREATE_DDR) ){
@@ -632,6 +641,30 @@ class AxianDDR{
                 ));
 
                 $redirect_to = 'admin.php?page=axian-ddr&action=view&id=' . $the_ddr_id . '&msg=' . DDR_MSG_CANCELED_SUCCESSFULLY;
+                wp_safe_redirect($redirect_to);die;
+            }
+        }elseif ( $is_delegate_ddr ){
+            if ( !is_null($the_ddr_id) ){
+                $post_data = $_POST;
+                $post_data['assignee_id'] = $post_data['delegate_id'];
+                $the_ddr = AxianDDR::getbyId($the_ddr_id);
+                $the_user = AxianDDRUser::getById($post_data['assignee_id']);
+
+                self::update( $post_data );
+
+                //mail
+                AxianDDRMail::sendDelegation($post_data['assignee_id'],$current_user->display_name,$post_data['comment'],$the_ddr_id);
+
+                //historique
+                AxianDDRHistorique::add($the_ddr_id, array(
+                    'action' => DDR_ACTION_DELEGATE,
+                    'etat_avant' => $the_ddr['etat'],
+                    'etat_apres' => $post_data['etat'],
+                    'etape' => $post_data['etape'],
+                    'comment' => "Délégation du ticket à {$the_user->display_name} (id: {$post_data['assignee_id']}) par {$current_user->display_name} (id: {$current_user->ID})",
+                ));
+
+                $redirect_to = 'admin.php?page=axian-ddr-list&prefilter=myvalidation';
                 wp_safe_redirect($redirect_to);die;
             }
         } else {

@@ -6,6 +6,7 @@ class AxianDDRMail {
 
     public static $validation;
     public static $rappel;
+    public static $delegation;
 
     public function __construct(){
         $settings = AxianDDRAdministration::get_settings();
@@ -13,6 +14,8 @@ class AxianDDRMail {
         self::$validation['content'] = $settings['general']['content_notification_validateur'];
         self::$rappel['sujet'] = $settings['general']['sujet_notification_rappel'];
         self::$rappel['content'] = $settings['general']['content_notification_rappel'];
+        self::$delegation['sujet'] = $settings['general']['sujet_notification_delegation'];
+        self::$delegation['content'] = $settings['general']['content_notification_delegation'];
     }
 
 
@@ -53,6 +56,15 @@ class AxianDDRMail {
             $content = str_replace('[ici]', '<a href="'.site_url().'/wp-admin/admin.php?page=axian-ddr-list&prefilter=myvalidation"> ici <a/>',$content);
             self::sendMail( $user->user_email, self::$rappel['sujet'], nl2br($content) );
         }
+    }
+
+    public static function sendDelegation($id, $attributor, $comment, $ddr_id){
+        $user = get_userdata($id);
+        $content = self::$delegation['content'];
+        $content = str_replace('[comment]',$comment,$content);
+        $content = str_replace('[attributor]',$attributor,$content);
+        $content = str_replace('[reference]', '<a href="'.site_url().'/wp-admin/admin.php?page=axian-ddr&action=view&id='.$ddr_id.'">DDR-' .$ddr_id. '<a/>',$content);
+        self::sendMail( $user->user_email, self::$delegation['sujet'], nl2br($content) );
     }
 }
 $axian_ddr_mail = new AxianDDRMail();
