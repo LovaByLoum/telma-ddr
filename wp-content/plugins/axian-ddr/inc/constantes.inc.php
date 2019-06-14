@@ -88,6 +88,7 @@ define('DDR_CAP_CAN_CLOSE_DDR', 'can-close-ddr');
 define('DDR_CAP_CAN_ADMIN_DDR', 'can-admin-ddr');
 define('DDR_CAP_CAN_EXPORT_DDR', 'can-export-ddr');
 define('DDR_CAP_CAN_EXPORT_OTHERS_DDR', 'can-export-others-ddr');
+define('DDR_CAP_CAN_ADMIN_INTERIM', 'can-admin-interim');
 
 //Table name
 global $wpdb;

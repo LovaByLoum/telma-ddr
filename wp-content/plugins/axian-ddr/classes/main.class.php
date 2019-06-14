@@ -128,7 +128,9 @@ class AxianDDRMain {
         add_submenu_page( 'axian-ddr-admin', 'Réglage général', 'Réglage général',DDR_CAP_CAN_ADMIN_DDR, 'axian-ddr-admin','AxianDDRAdministration::template');
         add_submenu_page( 'axian-ddr-admin', 'Termes de taxonomie', 'Termes de taxonomie', DDR_CAP_CAN_ADMIN_DDR, 'axian-ddr-admin&tab=term', 'AxianDDRAdministration::template');
 
-        //
+        //gestion interim
+        add_menu_page('DDR Interim', 'DDR Interim', DDR_CAP_CAN_ADMIN_INTERIM, 'axian-ddr-interim','','dashicons-businessman');
+        add_submenu_page( 'axian-ddr-interim', 'Gestion des intérims', 'Gestion des intérims',DDR_CAP_CAN_ADMIN_INTERIM, 'axian-ddr-interim','AxianDDRInterim::template');
     }
 
     public function admin_head(){
