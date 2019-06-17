@@ -6,7 +6,8 @@
  * Time: 15:40
  * To change this template use File | Settings | File Templates.
  */
-class AxianDDR{
+class AxianDDR
+{
 
     public static $types_demande = array(
         TYPE_DEMANDE_PREVU => 'Prévu',
@@ -52,15 +53,16 @@ class AxianDDR{
     public $departements;
     public $lieux;
 
-    public function __construct(){
+    public function __construct()
+    {
         global $axian_ddr_settings;
-        if ( is_null($axian_ddr_settings) ){
-            $axian_ddr_settings = get_option( DDR_SETTINGS_NAME, array() );
+        if (is_null($axian_ddr_settings)) {
+            $axian_ddr_settings = get_option(DDR_SETTINGS_NAME, array());
         }
 
-        $this->directions = AxianDDRTerm::getby(array('type' => 'direction'), 'options' );
-        $this->departements = AxianDDRTerm::getby(array('type' => 'departement') , 'options' );
-        $this->lieux = AxianDDRTerm::getby(array('type' => 'lieu') , 'options' );
+        $this->directions = AxianDDRTerm::getby(array('type' => 'direction'), 'options');
+        $this->departements = AxianDDRTerm::getby(array('type' => 'departement'), 'options');
+        $this->lieux = AxianDDRTerm::getby(array('type' => 'lieu'), 'options');
 
         $max_upload_size = isset($axian_ddr_settings['general']['max_upload_size']) ? $axian_ddr_settings['general']['max_upload_size'] : 1;
 
@@ -108,7 +110,7 @@ class AxianDDR{
                 'required' => true,
                 'search' => true,
                 'add' => true,
-                'class' =>'departement',
+                'class' => 'departement',
                 'options' => $this->departements,
                 'placeholder' => ' '
             ),
@@ -129,7 +131,7 @@ class AxianDDR{
                 'required' => true,
                 'search' => true,
                 'add' => true,
-                'class' =>'lieu_travail',
+                'class' => 'lieu_travail',
                 'options' => $this->lieux,
                 'placeholder' => ' '
             ),
@@ -142,7 +144,7 @@ class AxianDDR{
                 'required' => true,
                 'search' => true,
                 'add' => true,
-                'class' =>'',
+                'class' => '',
                 'options' => $this->lieux,
                 'placeholder' => ' '
             ),
@@ -197,7 +199,7 @@ class AxianDDR{
                     'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
                 ),
                 //'required' => true,
-                'max_size' => $max_upload_size*1024*1024,
+                'max_size' => $max_upload_size * 1024 * 1024,
                 'description' => 'Extensions autorisées : .pdf,.doc,.docx - Taille max : ' . $max_upload_size . 'M'
             ),
         );
@@ -205,25 +207,28 @@ class AxianDDR{
         add_action('admin_init', array($this, 'process_ddr'));
     }
 
-    public static function template_list(){
+    public static function template_list()
+    {
         include AXIAN_DDR_PATH . '/templates/ddr/ddr-list.tpl.php';
     }
 
-    public static function template_edit(){
-        setlocale (LC_TIME, 'fr_FR.utf8','fra');
+    public static function template_edit()
+    {
+        setlocale(LC_TIME, 'fr_FR.utf8', 'fra');
         include AXIAN_DDR_PATH . '/templates/ddr/ddr-edit.tpl.php';
     }
 
-    public static function insert($args){
+    public static function insert($args)
+    {
         global $wpdb, $current_user;
         $now = date("Y-m-d H:i:s");
 
-        $the_user= AxianDDRUser::getById($current_user->ID);
+        $the_user = AxianDDRUser::getById($current_user->ID);
         $args['date_previsionnel'] = axian_ddr_convert_to_mysql_date($args['date_previsionnel']);
         $args['offre_data'] = serialize($args['offre_data']);
 
         $company = $the_user->company;
-        if ( empty($company) ){
+        if (empty($company)) {
             //get by resaeu ldap ...
         }
 
@@ -249,14 +254,14 @@ class AxianDDR{
             'file' => $args['file'],
         ));
 
-        if ( $result ){
+        if ($result) {
             return $wpdb->insert_id;
         }
         return false;
-
     }
 
-    public static function update($args){
+    public static function update($args)
+    {
         global $wpdb;
         $now = date("Y-m-d H:i:s");
 
@@ -278,17 +283,17 @@ class AxianDDR{
             'file',
         );
         $data = array();
-        foreach ( $args as $key => $value ){
-            if ( in_array($key, $data_authorized) ){
+        foreach ($args as $key => $value) {
+            if (in_array($key, $data_authorized)) {
                 $data[$key] = $value;
             }
         }
 
-        if ( isset($data['offre_data']) && !empty($data['offre_data']) ){
+        if (isset($data['offre_data']) && !empty($data['offre_data'])) {
             $data['offre_data'] = serialize($data['offre_data']);
         }
 
-        if ( isset($data['date_previsionnel']) && !empty($data['date_previsionnel']) ){
+        if (isset($data['date_previsionnel']) && !empty($data['date_previsionnel'])) {
             $data['date_previsionnel'] = axian_ddr_convert_to_mysql_date($data['date_previsionnel']);
         }
 
@@ -297,35 +302,38 @@ class AxianDDR{
         $result = $wpdb->update(
             TABLE_AXIAN_DDR,
             $data,
-            array( 'id' => $args['id'] )
+            array('id' => $args['id'])
         );
 
         return $result;
     }
 
-    public static function delete($id, $force_delete = true){
+    public static function delete($id, $force_delete = true)
+    {
         global $wpdb;
-        $wpdb->query('DELETE FROM '. TABLE_AXIAN_DDR . ' WHERE id = '.$id);
-        if ( $force_delete ){
-            $wpdb->query('DELETE FROM '. TABLE_AXIAN_DDR_HISTORIQUE . ' WHERE ddr_id = '.$id);
+        $wpdb->query('DELETE FROM ' . TABLE_AXIAN_DDR . ' WHERE id = ' . $id);
+        if ($force_delete) {
+            $wpdb->query('DELETE FROM ' . TABLE_AXIAN_DDR_HISTORIQUE . ' WHERE ddr_id = ' . $id);
         }
     }
 
-    public static function getbyId($id){
+    public static function getbyId($id)
+    {
         global $wpdb;
-        $result = $wpdb->get_row('SELECT * FROM '. TABLE_AXIAN_DDR . ' WHERE id = '.$id , ARRAY_A);
+        $result = $wpdb->get_row('SELECT * FROM ' . TABLE_AXIAN_DDR . ' WHERE id = ' . $id, ARRAY_A);
 
         return $result;
     }
 
-    public function process_ddr(){
+    public function process_ddr()
+    {
         global $ddr_process_msg, $current_user;
         $is_edit = isset($_GET['id']) && isset($_GET['action']) && 'edit' == $_GET['action'] && $_GET['id'] > 0;
         $is_view = isset($_GET['id']) && isset($_GET['action']) && 'view' == $_GET['action'] && $_GET['id'] > 0;
         $the_ddr_id = null;
-        if ( $is_edit || $is_view ) $the_ddr_id = intval($_GET['id']);
+        if ($is_edit || $is_view) $the_ddr_id = intval($_GET['id']);
 
-        setlocale (LC_TIME, 'fr_FR.utf8','fra');
+        setlocale(LC_TIME, 'fr_FR.utf8', 'fra');
 
         $is_save_draft = isset($_POST['save-draft']);
         $is_submit_ddr = isset($_POST['submit-ddr']);
@@ -337,81 +345,81 @@ class AxianDDR{
         $is_cancel_ddr = isset($_POST['cancel-ddr']);
 
         //permission
-        if ( $is_save_draft && !current_user_can(DDR_CAP_CAN_CREATE_DDR) ){
+        if ($is_save_draft && !current_user_can(DDR_CAP_CAN_CREATE_DDR)) {
             wp_die('Action non autorisée');
         }
-        if ( $is_submit_ddr && !current_user_can(DDR_CAP_CAN_SUBMIT_DDR) ){
+        if ($is_submit_ddr && !current_user_can(DDR_CAP_CAN_SUBMIT_DDR)) {
             wp_die('Action non autorisée');
         }
-        if ( $is_update_ddr && !current_user_can(DDR_CAP_CAN_EDIT_DDR) ){
+        if ($is_update_ddr && !current_user_can(DDR_CAP_CAN_EDIT_DDR)) {
             wp_die('Action non autorisée');
         }
-        if ( ( $is_delete_ddr || $is_cancel_ddr ) && !current_user_can(DDR_CAP_CAN_DELETE_DDR) ){
+        if (($is_delete_ddr || $is_cancel_ddr) && !current_user_can(DDR_CAP_CAN_DELETE_DDR)) {
             wp_die('Action non autorisée');
         }
-        if ( $is_validate_ddr && !current_user_can(DDR_CAP_CAN_VALIDATE_DDR) ){
+        if ($is_validate_ddr && !current_user_can(DDR_CAP_CAN_VALIDATE_DDR)) {
             wp_die('Action non autorisée');
         }
-        if ( $is_refuse_ddr && !current_user_can(DDR_CAP_CAN_REFUSE_DDR) ){
+        if ($is_refuse_ddr && !current_user_can(DDR_CAP_CAN_REFUSE_DDR)) {
             wp_die('Action non autorisée');
         }
-        if ( $is_cloture_ddr && !current_user_can(DDR_CAP_CAN_CLOSE_DDR) ){
+        if ($is_cloture_ddr && !current_user_can(DDR_CAP_CAN_CLOSE_DDR)) {
             wp_die('Action non autorisée');
         }
-        if ( $is_save_draft || $is_submit_ddr || $is_update_ddr ){
+        if ($is_save_draft || $is_submit_ddr || $is_update_ddr) {
             $msg = axian_ddr_validate_fields($this);
 
             //data not valid
-            if ( !empty($msg) ){
+            if (!empty($msg)) {
                 $ddr_process_msg = self::manage_message(DDR_MSG_VALIDATE_ERROR, $msg);
                 return false;
-            //data valid
+                //data valid
             } else {
                 //process add term
                 $post_data = $_POST;
-                if ( strpos($post_data['direction'], 'new|') !== false ) {
-                    $label = str_replace( 'new|','',$post_data['direction']);
+                if (strpos($post_data['direction'], 'new|') !== false) {
+                    $label = str_replace('new|', '', $post_data['direction']);
                     $new = AxianDDRTerm::add('direction', $label);
-                    if ( $new != false ) $post_data['direction'] = $new;
+                    if ($new != false) $post_data['direction'] = $new;
                 }
 
-                if ( strpos($post_data['departement'], 'new|') !== false ) {
-                    $label = str_replace( 'new|','',$post_data['departement']);
+                if (strpos($post_data['departement'], 'new|') !== false) {
+                    $label = str_replace('new|', '', $post_data['departement']);
                     $new = AxianDDRTerm::add('departement', $label);
-                    if ( $new != false ) $post_data['departement'] = $new;
+                    if ($new != false) $post_data['departement'] = $new;
                 }
 
-                if ( strpos($post_data['lieu_travail'], 'new|') !== false ) {
-                    $label = str_replace( 'new|','',$post_data['lieu_travail']);
+                if (strpos($post_data['lieu_travail'], 'new|') !== false) {
+                    $label = str_replace('new|', '', $post_data['lieu_travail']);
                     $new = AxianDDRTerm::add('lieu', $label);
-                    if ( $new != false ) $post_data['lieu_travail'] = $new;
+                    if ($new != false) $post_data['lieu_travail'] = $new;
                 }
 
                 //creation
-                if ( is_null($the_ddr_id) ){
+                if (is_null($the_ddr_id)) {
                     //maj etat / etape
-                    if ( $is_save_draft ){
+                    if ($is_save_draft) {
                         $post_data['etat'] = DDR_STATUS_DRAFT;
-                    } elseif ( $is_submit_ddr ){
+                    } elseif ($is_submit_ddr) {
                         $post_data['etat'] = $post_data['next_etat'];
                         $post_data['etape'] = $post_data['next_etape'];
                     }
 
                     //default attribution
-                    if ( $is_submit_ddr && empty($post_data['assignee_id']) ){
+                    if ($is_submit_ddr && empty($post_data['assignee_id'])) {
                         $post_data['assignee_id'] = self::getDefaultValidator($post_data['next_etape']);
                     }
 
                     //process files
                     $file_process_return = axian_ddr_process_file($this);
-                    if ( is_string($file_process_return) ){
+                    if (is_string($file_process_return)) {
                         $ddr_process_msg = self::manage_message(DDR_MSG_VALIDATE_ERROR, $file_process_return);
                         return false;
                     }
                     $post_data['file'] = isset($file_process_return['file']) ? $file_process_return['file'] : '';
 
                     //insert
-                    $new_ddr_id = self::insert( $post_data );
+                    $new_ddr_id = self::insert($post_data);
 
                     //historique
                     AxianDDRHistorique::add($new_ddr_id, array(
@@ -422,41 +430,42 @@ class AxianDDR{
                         'comment' => $post_data['comment'],
                     ));
 
-                    if ( $is_save_draft ){
+                    if ($is_save_draft) {
                         $redirect_to = 'admin.php?page=axian-ddr&action=edit&id=' . $new_ddr_id . '&msg=' . DDR_MSG_SAVED_SUCCESSFULLY;
-                    } elseif ( $is_submit_ddr ){
+                    } elseif ($is_submit_ddr) {
                         $redirect_to = 'admin.php?page=axian-ddr&action=view&id=' . $new_ddr_id . '&msg=' . DDR_MSG_SUBMITTED_SUCCESSFULLY;
                     }
 
-                    if ( !empty($redirect_to) ){
-                        wp_safe_redirect($redirect_to);die;
+                    if (!empty($redirect_to)) {
+                        wp_safe_redirect($redirect_to);
+                        die;
                     }
 
-                //mise à jour
+                    //mise à jour
                 } else {
 
                     $the_ddr = AxianDDR::getbyId($the_ddr_id);
 
                     //maj etat / etape
-                    if ( $is_submit_ddr ){
+                    if ($is_submit_ddr) {
                         $post_data['etat'] = $post_data['next_etat'];
                         $post_data['etape'] = $post_data['next_etape'];
                     }
 
                     //default attribution
-                    if ( $is_submit_ddr && ( empty($post_data['assignee_id']) || $post_data['assignee_id'] == $current_user->ID )  ){
+                    if ($is_submit_ddr && (empty($post_data['assignee_id']) || $post_data['assignee_id'] == $current_user->ID)) {
                         $post_data['assignee_id'] = self::getDefaultValidator($post_data['next_etape']);
                     }
 
                     //process files
                     $file_process_return = axian_ddr_process_file($this);
-                    if ( is_string($file_process_return) ){
+                    if (is_string($file_process_return)) {
                         $ddr_process_msg = self::manage_message(DDR_MSG_VALIDATE_ERROR, $file_process_return);
                         return false;
                     }
                     $post_data['file'] = isset($file_process_return['file']) ? $file_process_return['file'] : '';
 
-                    self::update( $post_data );
+                    self::update($post_data);
 
                     //historique
                     AxianDDRHistorique::add($the_ddr_id, array(
@@ -468,25 +477,25 @@ class AxianDDR{
                     ));
 
                     //mail here
-                    if ( $is_submit_ddr ){
+                    if ($is_submit_ddr) {
                         //mail here
                     }
 
-                    if ( $is_save_draft || $is_update_ddr ){
+                    if ($is_save_draft || $is_update_ddr) {
                         $redirect_to = 'admin.php?page=axian-ddr&action=edit&id=' . $the_ddr_id . '&msg=' . DDR_MSG_SAVED_SUCCESSFULLY;
-                    } elseif ( $is_submit_ddr ){
+                    } elseif ($is_submit_ddr) {
                         $redirect_to = 'admin.php?page=axian-ddr&action=view&id=' . $the_ddr_id . '&msg=' . DDR_MSG_SUBMITTED_SUCCESSFULLY;
                     }
 
-                    wp_safe_redirect($redirect_to);die;
+                    wp_safe_redirect($redirect_to);
+                    die;
                 }
-
             }
-        } elseif ( $is_delete_ddr ){
-            $nonce = wp_create_nonce( 'addr_delete_term'.absint( $_GET['id'] ) );
+        } elseif ($is_delete_ddr) {
+            $nonce = wp_create_nonce('addr_delete_term' . absint($_GET['id']));
 
 
-            if ( $nonce != $_GET['_wpnonce'] ){
+            if ($nonce != $_GET['_wpnonce']) {
                 $ddr_process_msg = self::manage_message(DDR_MSG_ACTION_DENIED);
                 return false;
             } else {
@@ -494,11 +503,11 @@ class AxianDDR{
                 self::delete($the_ddr_id);
 
                 $redirect_to = 'admin.php?page=axian-ddr-list&msg=' . DDR_MSG_DELETED_SUCCESSFULLY;
-                wp_safe_redirect($redirect_to);die;
-
+                wp_safe_redirect($redirect_to);
+                die;
             }
-        } elseif ( $is_validate_ddr ){
-            if ( !is_null($the_ddr_id) ){
+        } elseif ($is_validate_ddr) {
+            if (!is_null($the_ddr_id)) {
                 $post_data = $_POST;
                 $the_ddr = AxianDDR::getbyId($the_ddr_id);
 
@@ -507,11 +516,11 @@ class AxianDDR{
                 $post_data['etape'] = $post_data['next_etape'];
 
                 //default attribution
-                if ( empty($post_data['assignee_id']) || $post_data['assignee_id'] == $current_user->ID  ){
+                if (empty($post_data['assignee_id']) || $post_data['assignee_id'] == $current_user->ID) {
                     $post_data['assignee_id'] = self::getDefaultValidator($post_data['next_etape']);
                 }
 
-                self::update( $post_data );
+                self::update($post_data);
 
                 //historique
                 AxianDDRHistorique::add($the_ddr_id, array(
@@ -523,7 +532,7 @@ class AxianDDR{
                 ));
 
                 //create draft offre with offre_data prefill on last validation
-                if (  $post_data['next_etat'] == DDR_STATUS_VALIDE && $post_data['next_etape'] == DDR_STEP_PUBLISH ){
+                if ($post_data['next_etat'] == DDR_STATUS_VALIDE && $post_data['next_etape'] == DDR_STEP_PUBLISH) {
                     $offre_data = unserialize($the_ddr['offre_data']);
                     $offre_id = AxianDDROffre::insert(
                         array(
@@ -551,10 +560,11 @@ class AxianDDR{
                 //mail here
 
                 $redirect_to = 'admin.php?page=axian-ddr&action=view&id=' . $the_ddr_id . '&msg=' . DDR_MSG_VALIDATED_SUCCESSFULLY;
-                wp_safe_redirect($redirect_to);die;
+                wp_safe_redirect($redirect_to);
+                die;
             }
-        } elseif ( $is_refuse_ddr ){
-            if ( !is_null($the_ddr_id) ){
+        } elseif ($is_refuse_ddr) {
+            if (!is_null($the_ddr_id)) {
                 $post_data = $_POST;
                 $the_ddr = AxianDDR::getbyId($the_ddr_id);
 
@@ -562,7 +572,7 @@ class AxianDDR{
                 $post_data['etat'] = DDR_STATUS_REFUSE;
                 $post_data['etape'] = DDR_STEP_REFUSE;
 
-                self::update( $post_data );
+                self::update($post_data);
 
                 //historique
                 AxianDDRHistorique::add($the_ddr_id, array(
@@ -576,10 +586,11 @@ class AxianDDR{
                 //mail here
 
                 $redirect_to = 'admin.php?page=axian-ddr&action=view&id=' . $the_ddr_id . '&msg=' . DDR_MSG_INVALIDATED_SUCCESSFULLY;
-                wp_safe_redirect($redirect_to);die;
+                wp_safe_redirect($redirect_to);
+                die;
             }
-        } elseif ( $is_cloture_ddr ){
-            if ( !is_null($the_ddr_id) ){
+        } elseif ($is_cloture_ddr) {
+            if (!is_null($the_ddr_id)) {
                 $post_data = $_POST;
                 $the_ddr = AxianDDR::getbyId($the_ddr_id);
 
@@ -588,11 +599,11 @@ class AxianDDR{
                 $post_data['etape'] = DDR_STEP_FINISH;
 
                 //default attribution
-                if ( empty($post_data['assignee_id']) ){
+                if (empty($post_data['assignee_id'])) {
                     $post_data['assignee_id'] = self::getDefaultValidator($post_data['next_etape']);
                 }
 
-                self::update( $post_data );
+                self::update($post_data);
 
                 //historique
                 AxianDDRHistorique::add($the_ddr_id, array(
@@ -604,10 +615,11 @@ class AxianDDR{
                 ));
 
                 $redirect_to = 'admin.php?page=axian-ddr&action=view&id=' . $the_ddr_id . '&msg=' . DDR_MSG_CLOSED_SUCCESSFULLY;
-                wp_safe_redirect($redirect_to);die;
+                wp_safe_redirect($redirect_to);
+                die;
             }
-        } elseif ( $is_cancel_ddr ){
-            if ( !is_null($the_ddr_id) ){
+        } elseif ($is_cancel_ddr) {
+            if (!is_null($the_ddr_id)) {
                 $post_data = $_POST;
                 $the_ddr = AxianDDR::getbyId($the_ddr_id);
 
@@ -615,7 +627,7 @@ class AxianDDR{
                 $post_data['etat'] = DDR_STATUS_ANNULE;
                 $post_data['etape'] = DDR_STEP_CANCEL;
 
-                self::update( $post_data );
+                self::update($post_data);
 
                 //historique
                 AxianDDRHistorique::add($the_ddr_id, array(
@@ -627,20 +639,21 @@ class AxianDDR{
                 ));
 
                 $redirect_to = 'admin.php?page=axian-ddr&action=view&id=' . $the_ddr_id . '&msg=' . DDR_MSG_CANCELED_SUCCESSFULLY;
-                wp_safe_redirect($redirect_to);die;
+                wp_safe_redirect($redirect_to);
+                die;
             }
         } else {
             return false;
         }
-
     }
 
-    public static function manage_message( $slug = null, $msg = '' ){
-        if ( is_null($slug) ){
+    public static function manage_message($slug = null, $msg = '')
+    {
+        if (is_null($slug)) {
             $slug = isset($_GET['msg']) ? $_GET['msg'] : '';
         }
         $return = null;
-        switch( $slug ){
+        switch ($slug) {
             case DDR_MSG_SAVED_SUCCESSFULLY:
                 $return = array(
                     'code' => 'updated',
@@ -706,29 +719,28 @@ class AxianDDR{
         return $return;
     }
 
-    public static function getby( $field_args = array(), $supp_args = array(), $predifined_filters = '' ){
+    public static function getby($field_args = array(), $supp_args = array(), $predifined_filters = '')
+    {
         global $wpdb, $current_user;
         $the_user = AxianDDRUser::getById($current_user->ID);
 
         $query_select = "SELECT SQL_CALC_FOUND_ROWS * FROM  " . TABLE_AXIAN_DDR . " WHERE 1=1 ";
 
         //predefine filter
-        if ( !empty($predifined_filters) ){
-            if ( $predifined_filters == 'myvalidation' ){
+        if (!empty($predifined_filters)) {
+            if ($predifined_filters == 'myvalidation') {
                 $field_args['assignee_id'] = $current_user->ID;
             }
 
-            if ( $predifined_filters == 'mytickets' ){
+            if ($predifined_filters == 'mytickets') {
                 $field_args['author_id'] = $current_user->ID;
             }
 
-            if ( $predifined_filters == 'alltickets' ){
-
-            }
+            if ($predifined_filters == 'alltickets') { }
         }
 
         //restriction by permission
-        if ( !current_user_can(DDR_CAP_CAN_LIST_OTHERS_DDR) && current_user_can(DDR_CAP_CAN_LIST_DDR) ){
+        if (!current_user_can(DDR_CAP_CAN_LIST_OTHERS_DDR) && current_user_can(DDR_CAP_CAN_LIST_DDR)) {
             $field_args['author_id'] = $current_user->ID;
         }
 
@@ -757,24 +769,24 @@ class AxianDDR{
             'societe',
         );
 
-        foreach ( $field_args as $field => $value ){
-            if ( !in_array($field, $data_authorized) ) continue;
-            if ( empty($value) ) continue;
+        foreach ($field_args as $field => $value) {
+            if (!in_array($field, $data_authorized)) continue;
+            if (empty($value)) continue;
 
-            switch( $field ){
+            switch ($field) {
                 case 'id':
-                    if ( preg_match('/DDR-([0-9]+)/', $value, $matches) ){
+                    if (preg_match('/DDR-([0-9]+)/', $value, $matches)) {
                         $value = $matches[1];
                     }
                     $query_select .= " AND $field = '{$value}'";
                     break;
                 case 'title':
-                case 'motif' :
+                case 'motif':
                     $query_select .= " AND $field LIKE '%{$value}%'";
                     break;
-                case 'date_previsionnel' :
-                case 'created' :
-                case 'modified' :
+                case 'date_previsionnel':
+                case 'created':
+                case 'modified':
                     list($begin, $end) = explode(':', $value);
                     list($bd, $bm, $by) = explode('/', $begin);
                     list($ed, $em, $ey) = explode('/', $end);
@@ -789,39 +801,38 @@ class AxianDDR{
 
 
         //ordre
-        if( isset($supp_args['orderby']) && isset($supp_args['order']) ){
+        if (isset($supp_args['orderby']) && isset($supp_args['order'])) {
             $query_select .= " ORDER BY {$supp_args['orderby']} {$supp_args['order']} ";
         }
 
         //limit
-        if ( isset($supp_args['limit']) && isset($supp_args['offset']) ){
+        if (isset($supp_args['limit']) && isset($supp_args['offset'])) {
             $query_select .= " LIMIT {$supp_args['offset']},{$supp_args['limit']} ";
         }
 
         $result = $wpdb->get_results($query_select);
-        $count = $wpdb->get_var( "SELECT FOUND_ROWS()" );
+        $count = $wpdb->get_var("SELECT FOUND_ROWS()");
         return array(
             'count' => $count,
             'items' => $result
         );
-
     }
 
-    public static function getDefaultValidator( $current_etape ){
+    public static function getDefaultValidator($current_etape)
+    {
         global $axian_ddr_settings;
-        if ( is_null($axian_ddr_settings) ){
+        if (is_null($axian_ddr_settings)) {
             $axian_ddr_settings = AxianDDRAdministration::get_settings();
         }
 
-        if ( isset($axian_ddr_settings['validation']) && !empty($axian_ddr_settings['validation']) ){
+        if (isset($axian_ddr_settings['validation']) && !empty($axian_ddr_settings['validation'])) {
             $validation_settings = $axian_ddr_settings['validation'];
-            if ( isset($validation_settings[$current_etape]) && !empty($validation_settings[$current_etape]) ){
+            if (isset($validation_settings[$current_etape]) && !empty($validation_settings[$current_etape])) {
                 return $validation_settings[$current_etape];
             }
         }
         return false;
     }
-
 }
 
 global $axian_ddr;
