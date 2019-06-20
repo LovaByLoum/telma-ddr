@@ -22,6 +22,7 @@ require_once('classes/ddr.class.php');
 require_once('classes/administration.class.php');
 require_once('classes/list/class-wp-filter-list-table.php');
 require_once('classes/list/ddr-list.class.php');
+require_once('classes/list/ddr-etat-list.class.php');
 require_once('classes/list/term-list.class.php');
 require_once('classes/mail.class.php');
 
@@ -31,7 +32,7 @@ global $axian_ddr_main, $axian_ddr_tasks;
 $axian_ddr_main = new AxianDDRMain();
 $axian_ddr_tasks = array(
     'daily_rappel' =>60*60*24,
-    'interim' =>60*60,
+    'interim' =>60*60*24,
 );
 
 //tache cron pour envoie mail de rappel de validation

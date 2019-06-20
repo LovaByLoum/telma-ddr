@@ -225,6 +225,10 @@ class AxianDDR{
         include AXIAN_DDR_PATH . '/templates/ddr/ddr-edit.tpl.php';
     }
 
+    public static function template_etat(){
+        include AXIAN_DDR_PATH . '/templates/ddr/ddr-etats.tpl.php';
+    }
+
     public static function insert($args){
         global $wpdb, $current_user;
         $now = date("Y-m-d H:i:s");
@@ -877,6 +881,12 @@ class AxianDDR{
         }
         return $ddrs;
 
+    }
+
+    public static function count_result(){
+        global $wpdb;
+
+        return $wpdb->get_var("SELECT COUNT(*) FROM ".TABLE_AXIAN_DDR);
     }
 }
 
