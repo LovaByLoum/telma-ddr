@@ -98,3 +98,7 @@ define('TABLE_AXIAN_DDR_INTERIM', $wpdb->prefix . 'ddr_interim');
 define('TABLE_AXIAN_DDR_TERM', $wpdb->prefix . 'ddr_term');
 
 define ( 'DDR_SETTINGS_NAME', 'axian_ddr_settings');
+
+//interim
+define('DDR_INTERIM_EN_COURS','in_progress');
+define('DDR_INTERIM_FINI','finished');

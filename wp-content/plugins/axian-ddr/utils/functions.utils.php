@@ -59,7 +59,7 @@ function axian_ddr_render_field( $field, $post_data = null, $label = true, $disp
                 break;
             case 'autocompletion' :
                 ?>
-                <span data-source="<?php echo $field['source'];?>" class="ddr-autocompletion"></span>
+                <span data-source="<?php echo $field['source'];?>" class="ddr-autocompletion" style="background: none !important;"></span>
                 <input type="hidden" value="<?php echo $current_value;?>" class="ddr-autocompletion-hidden"/>
                 <?php
                 break;
@@ -80,6 +80,10 @@ function axian_ddr_render_field( $field, $post_data = null, $label = true, $disp
                 ?>
                 <a href="<?php echo axian_ddr_get_file($current_value);?>" target="_blank" title="Télécharger"><i class="dashicons-before dashicons-media-document"></i> Télécharger</a>
                 <?php
+                break;
+            case 'daterangepicker' :
+                list($begin,$end) = explode(':',$current_value);
+                echo $begin .'  au  ' .$end;
                 break;
             default:
                 echo $current_value;
@@ -141,6 +145,13 @@ function axian_ddr_render_field( $field, $post_data = null, $label = true, $disp
                 ?>
                 <?php if ( $label ): ?><label for="<?php echo $field['name'];?>"><?php echo $field['label'];?><?php if (  $field['required'] ) : ?>&nbsp;<span style="color:red;">*</span><?php endif;?></label><?php endif;?>
                 <input name="<?php echo $field['name'];?>" type="text" id="<?php echo $field['name'];?>" value="<?php echo $current_value;?>" class="regular-text datepicker <?php echo $field['class'];?>" placeholder="DD/MM/YYYY" readonly/>
+                <?php if ( isset($field['description']) && !empty($field['description']) ) : ?><p><?php echo $field['description'];?></p><?php endif;?>
+                <?php
+                break;
+            case 'daterangepicker' :
+                ?>
+                <?php if ( $label ): ?><label for="<?php echo $field['name'];?>"><?php echo $field['label'];?><?php if (  $field['required'] ) : ?>&nbsp;<span style="color:red;">*</span><?php endif;?></label><?php endif;?>
+                <input name="<?php echo $field['name'];?>" type="text" id="<?php echo $field['name'];?>" value="<?php echo $current_value;?>" class="filter-text daterangepicker-input <?php echo $field['class'];?>" placeholder="DD/MM/YYYY" readonly/>
                 <?php if ( isset($field['description']) && !empty($field['description']) ) : ?><p><?php echo $field['description'];?></p><?php endif;?>
                 <?php
                 break;
@@ -262,6 +273,19 @@ function axian_ddr_validate_fields( $object, $post_data = null ){
                     }
                 }
 
+            }
+
+            //daterange validation
+            if ( $field['type'] == 'daterangepicker'){
+                if ( isset($_POST['date_interim']) && !empty($_POST['date_interim']) ){
+                    $tomorrow = date_create("tomorrow");
+                    list($begin) = explode(':', $_POST['date_interim']);
+                    list($bd, $bm, $by) = explode('/', $begin);
+                    $mysql_begin = date_create($by . '-' . $bm . '-' . $bd );
+                    if( $tomorrow > $mysql_begin){
+                        $msg .= 'L\'enregistrement d\'un intérim doit se faire 24h à l\'avance.<br>';
+                    }
+                }
             }
         }
     }
