@@ -186,6 +186,7 @@ class WP_Filter_List_Table extends WP_List_Table{
         echo '<div style="text-align: right;clear: both!important;padding: 20px;margin-top: 20px;">
                 <div style="display: inline-block;">
                     <input type="submit" name="export-csv" class="button-primary" value="Exporter en .csv">
+                    <input type="hidden" name="export-class" value="' . get_class($this) . '">
                     <!--input type="submit" name="export-xls" class="button-primary" value="Exporter en .xls" -->
                 </div>
                 <select name="type-export">
@@ -261,7 +262,8 @@ class WP_Filter_List_Table extends WP_List_Table{
         @session_start();
         if( isset($_GET) && isset($_GET['export-csv']) ){
             ini_set("memory_limit","512M");
-            if( isset($_SESSION) && isset($_SESSION['query_export']) && !empty($_SESSION['query_export']) ){
+            $class_name = isset($_GET['export-class']) ? $_GET['export-class'] : null;
+            if( isset($_SESSION) && isset($_SESSION['query_export']) && !empty($_SESSION['query_export']) && $class_name ){
                 $query = $_SESSION['query_export'];
                 $reg_limit = "/LIMIT(.*?)$/";
                 $type = isset($_GET['type-export']) ? $_GET['type-export'] : 1;
@@ -274,15 +276,15 @@ class WP_Filter_List_Table extends WP_List_Table{
                 $results = $wpdb->get_results($query,ARRAY_A);
                 $filename = 'export-' . date('Y-m-d_His') . '.csv';
 
-                self::create_csv( $results, $filename );
+                self::create_csv( $results, $filename, $class_name );
             }
         }
 
     }
 
-    public static function create_csv( $txtDataArray, $filename ){
+    public static function create_csv( $txtDataArray, $filename, $class_name ){
 
-        $tmp_list = new AxianDDRList();
+        $tmp_list = new $class_name();
         $list_infos = $tmp_list;
 
         $txtDataHead = $list_infos->get_columns();
