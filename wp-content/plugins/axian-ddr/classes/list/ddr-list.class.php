@@ -10,6 +10,8 @@ class AxianDDRList extends WP_Filter_List_Table{
 
         $this->filter_position = 'top';
         //$this->filter_position = 'table';
+
+        $this->enable_export = true;
     }
 
 
@@ -31,6 +33,9 @@ class AxianDDRList extends WP_Filter_List_Table{
         _e( 'Aucun résultat.' );
     }
 
+    function column_export_id( $item ){
+        return 'DDR-' . $item->id;
+    }
     /**
      * Fonction qui gère les valeurs qui doivent être affichées pour chaque colonne.
      */
@@ -194,6 +199,7 @@ class AxianDDRList extends WP_Filter_List_Table{
             'per_page'    => $per_page
         ));
 
+        $this->query_export = $resultats["query_export"];
         $this->items = $resultats["items"];
     }
 

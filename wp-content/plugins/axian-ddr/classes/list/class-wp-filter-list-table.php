@@ -4,6 +4,7 @@ if( ! class_exists( 'WP_List_Table' ) ) {
 }
 class WP_Filter_List_Table extends WP_List_Table{
     public $filter_position = 'top';
+    public $query_export = '';
     function __construct( $args = array() ){
         parent::__construct($args);
     }
@@ -76,6 +77,12 @@ class WP_Filter_List_Table extends WP_List_Table{
         $this->display_scripts();
         if ( $this->filter_position == 'top' ){
             $this->print_filter_headers();
+        }
+
+        if ( !empty($this->query_export) ){
+            @session_start();
+            $_SESSION['query_export'] = $this->query_export;
+            $this->print_export_headers();
         }
 
         $this->display_tablenav('bottom');
@@ -175,6 +182,19 @@ class WP_Filter_List_Table extends WP_List_Table{
         }
     }
 
+    public function print_export_headers(){
+        echo '<div style="text-align: right;clear: both!important;padding: 20px;margin-top: 20px;">
+                <div style="display: inline-block;">
+                    <input type="submit" name="export-csv" class="button-primary" value="Exporter en .csv">
+                    <!--input type="submit" name="export-xls" class="button-primary" value="Exporter en .xls" -->
+                </div>
+                <select name="type-export">
+                    <option value="1">Résultats de la recherche (Toutes les pages)</option>
+                    <option value="2">Résultats de la recherche (La page courante)</option>
+                </select>
+            </div>';
+    }
+
     public function print_filter_headers() {
         $filterable_columns = $this->get_filterable_columns();
         if ( empty($filterable_columns) ) return;
@@ -235,4 +255,75 @@ class WP_Filter_List_Table extends WP_List_Table{
         }
         return $filter_input;
     }
+
+    public static function export_list(){
+        global $wpdb;
+        @session_start();
+        if( isset($_GET) && isset($_GET['export-csv']) ){
+            ini_set("memory_limit","512M");
+            if( isset($_SESSION) && isset($_SESSION['query_export']) && !empty($_SESSION['query_export']) ){
+                $query = $_SESSION['query_export'];
+                $reg_limit = "/LIMIT(.*?)$/";
+                $type = isset($_GET['type-export']) ? $_GET['type-export'] : 1;
+                switch ( $type ){
+                    case 1:
+                        $query = preg_replace($reg_limit, '', $query);
+                        break;
+                    default:
+                }
+                $results = $wpdb->get_results($query,ARRAY_A);
+                $filename = 'export-' . date('Y-m-d_His') . '.csv';
+
+                self::create_csv( $results, $filename );
+            }
+        }
+
+    }
+
+    public static function create_csv( $txtDataArray, $filename ){
+
+        $tmp_list = new AxianDDRList();
+        $list_infos = $tmp_list;
+
+        $txtDataHead = $list_infos->get_columns();
+
+        header('Content-Type: application/csv;charset=UTF-8');
+        header('Content-Disposition: attachement; filename="'.$filename.'";');
+        $f = fopen('php://output', 'w');
+
+        if(count($txtDataHead) >=1 ){
+            $header = array_map('utf8_decode',$txtDataHead);
+            fputcsv($f, $header, ";");
+        }
+
+        if(!empty($txtDataArray)){
+            foreach ($txtDataArray as $rowdata) {
+                $rowdata_to_display = array();
+                foreach ( $txtDataHead as $column_name => $v ){
+                    $item = (object)$rowdata;
+                    if ( method_exists( $list_infos, 'column_export_' . $column_name ) ) {
+                        $value = call_user_func( array( $list_infos, 'column_export_' . $column_name ), $item );
+                    } elseif ( method_exists( $list_infos, 'column_' . $column_name ) ) {
+                        $value = call_user_func( array( $list_infos, 'column_' . $column_name ), $item );
+                    } elseif ( method_exists( $list_infos, 'column_default' ) ) {
+                        $value = $list_infos->column_default( $item, $column_name );
+                    } else {
+                        $value = $rowdata[$column_name];
+                    }
+                    $rowdata_to_display[] = $value;
+                }
+                $rowdata_to_display = array_map('utf8_decode', $rowdata_to_display);
+                fputcsv($f, $rowdata_to_display, ";");
+            }
+        }else{
+            fputcsv($f, 'Aucun résultat', ";");
+        }
+
+        fclose($f);
+        die();
+    }
+
 }
+
+//for export
+add_action('admin_init', 'WP_Filter_List_Table::export_list');

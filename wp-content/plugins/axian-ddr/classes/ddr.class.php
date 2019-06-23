@@ -840,7 +840,8 @@ class AxianDDR{
         $count = $wpdb->get_var( "SELECT FOUND_ROWS()" );
         return array(
             'count' => $count,
-            'items' => $result
+            'items' => $result,
+            'query_export' => $query_select
         );
 
     }
