@@ -21,6 +21,7 @@ require_once('classes/ddr.class.php');
 require_once('classes/administration.class.php');
 require_once('classes/list/class-wp-filter-list-table.php');
 require_once('classes/list/ddr-list.class.php');
+require_once('classes/list/historique-list.class.php');
 require_once('classes/list/term-list.class.php');
 require_once('classes/mail.class.php');
 

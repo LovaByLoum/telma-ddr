@@ -87,7 +87,7 @@ define('DDR_CAP_CAN_REFUSE_DDR', 'can-refuse-ddr');
 define('DDR_CAP_CAN_CLOSE_DDR', 'can-close-ddr');
 define('DDR_CAP_CAN_ADMIN_DDR', 'can-admin-ddr');
 define('DDR_CAP_CAN_EXPORT_DDR', 'can-export-ddr');
-define('DDR_CAP_CAN_EXPORT_OTHERS_DDR', 'can-export-others-ddr');
+define('DDR_CAP_CAN_VIEW_MENU_HISTORIQUE_DDR', 'can-view-menu-historique-ddr');
 
 //Table name
 global $wpdb;

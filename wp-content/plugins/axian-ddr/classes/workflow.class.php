@@ -23,7 +23,7 @@ class AxianDDRWorkflow{
                 DDR_CAP_CAN_CLOSE_DDR,
                 DDR_CAP_CAN_ADMIN_DDR,
                 DDR_CAP_CAN_EXPORT_DDR,
-                DDR_CAP_CAN_EXPORT_OTHERS_DDR,
+                DDR_CAP_CAN_VIEW_MENU_HISTORIQUE_DDR
             ),
 
             DDR_ROLE_MANAGER => array(

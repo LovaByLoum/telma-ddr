@@ -21,12 +21,18 @@ class AxianDDRMain {
         add_role( DDR_ROLE_DRH, 'DRH');
         add_role( DDR_ROLE_DG, 'DG');
 
+        //add superadmin to all roles
+        $role_superadmin = get_role( 'administrator' );
+
         //add capabilities
         foreach ( AxianDDRWorkflow::$capabilities as $role_slug => $caps ){
             $role = get_role( $role_slug );
             if ( $role ){
                 foreach ( $caps as $cap ){
                     $role->add_cap( $cap );
+
+                    //add superadmin caps
+                    $role_superadmin->add_cap( $cap );
                 }
 
                 //additional caps
@@ -122,6 +128,10 @@ class AxianDDRMain {
         $hook = add_submenu_page( 'axian-ddr-list', 'Toutes les demandes', 'Toutes les demandes',DDR_CAP_CAN_LIST_DDR, 'axian-ddr-list', 'AxianDDR::template_list');
         add_action( "load-{$hook}", 'AxianDDRList::load_hook' );
         add_submenu_page( 'axian-ddr-list', 'Faire une demande', 'Faire une demande', DDR_CAP_CAN_VIEW_DDR, 'axian-ddr','AxianDDR::template_edit');
+
+        //menu Historique DDR
+        $hook = add_menu_page('Traitement des tickets', 'Traitement des tickets', DDR_CAP_CAN_VIEW_MENU_HISTORIQUE_DDR, 'axian-historique-list', 'AxianDDRHistorique::template_list', 'dashicons-clock');
+        add_action( "load-{$hook}", 'AxianDDRHistoriqueList::load_hook' );
 
         //menu admin
         add_menu_page('DDR Administration', 'DDR Administration', DDR_CAP_CAN_ADMIN_DDR, 'axian-ddr-admin','','dashicons-networking');

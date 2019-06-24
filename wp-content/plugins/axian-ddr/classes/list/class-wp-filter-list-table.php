@@ -274,7 +274,7 @@ class WP_Filter_List_Table extends WP_List_Table{
                     default:
                 }
                 $results = $wpdb->get_results($query,ARRAY_A);
-                $filename = 'export-' . date('Y-m-d_His') . '.csv';
+                $filename = 'export-' . sanitize_title($class_name) . "-" . date('Y-m-d_His') . '.csv';
 
                 self::create_csv( $results, $filename, $class_name );
             }

@@ -1,10 +1,10 @@
 <?php
-class AxianDDRList extends WP_Filter_List_Table{
+class AxianDDRHistoriqueList extends WP_Filter_List_Table{
 
     function __construct(){
         parent::__construct( array(
-            'singular'  => 'Liste des demandes',
-            'plural'    => 'Liste des demandes',
+            'singular'  => 'Liste des historiques DDR',
+            'plural'    => 'Liste des historiques DDR',
             'ajax'      =>  false
         ) );
 
@@ -15,17 +15,17 @@ class AxianDDRList extends WP_Filter_List_Table{
 
 
     public static function load_hook(){
-        global $DDRListTable;
+        global $DDRHistoriqueListTable;
 
         $option = 'per_page';
         $args = array(
-            'label' => 'DDR',
+            'label' => 'Historique DDR',
             'default' => 20,
-            'option' => 'ddr_per_page'
+            'option' => 'ddr_historique_per_page'
         );
         add_screen_option( $option, $args );
 
-        $DDRListTable = new AxianDDRList();
+        $DDRHistoriqueListTable = new AxianDDRHistoriqueList();
     }
 
     function no_items() {
@@ -77,6 +77,9 @@ class AxianDDRList extends WP_Filter_List_Table{
             case 'etape':
                 return AxianDDR::$etapes[$item->$column_name];
                 break;
+            case 'traitement':
+                return AxianDDRHistorique::getDelaiEtape($item->id, DDR_STEP_VALIDATION_1, DDR_STEP_PUBLISH);
+                break;
             default:
                 return $item->$column_name ;
         }
@@ -90,17 +93,9 @@ class AxianDDRList extends WP_Filter_List_Table{
             'id' => array('id',false),
             'title' => array('title',false),
             'type' => array('type',false),
-            'author_id' => array('author_id',false),
-            'assignee_id' => array('assignee_id',false),
             'etat' => array('etat',false),
             'etape' => array('etape',false),
-            'direction' => array('direction',false),
-            'departement' => array('departement',false),
-            'lieu_travail' => array('lieu_travail',false),
-            'type_candidature' => array('type_candidature',false),
-            'date_previsionnel' => array('date_previsionnel',false),
             'created' => array('created',false),
-            'modified' => array('modified',false),
             'societe' => array('societe',false),
         );
 
@@ -113,18 +108,9 @@ class AxianDDRList extends WP_Filter_List_Table{
             'id' => array('type' => 'text'),
             'title' => array('type' => 'text'),
             'type' => array('type' => 'select', 'options' => AxianDDR::$types_demande),
-            'type_candidature' => array('type' => 'select', 'options' => AxianDDR::$types_candidature),
-            'author_id' => array('type' => 'autocompletion', 'source' => 'user'),
-            'assignee_id' => array('type' => 'autocompletion', 'source' => 'user'),
             'etat' => array('type' => 'select', 'options' => AxianDDR::$etats),
             'etape' => array('type' => 'select', 'options' => AxianDDR::$etapes),
-            'direction' => array('type' => 'select', 'options' => $axian_ddr->directions, 'search' => true),
-            'departement' => array('type' => 'select', 'options' => $axian_ddr->departements, 'search' => true),
-            'lieu_travail' => array('type' => 'select', 'options' => $axian_ddr->lieux, 'search' => true),
-            //'motif' => array('type' => 'text'),
-            'date_previsionnel' => array('type' => 'daterangepicker'),
             'created' => array('type' => 'daterangepicker'),
-            'modified' => array('type' => 'daterangepicker'),
             'societe' => array('type' => 'autocompletion', 'source' => 'entreprise'),
         );
 
@@ -144,19 +130,11 @@ class AxianDDRList extends WP_Filter_List_Table{
             'id' => 'Numéro du ticket',
             'title' => 'Titre de la demande',
             'type' => 'Type de la demande',
-            'author_id' => 'Créateur',
-            'assignee_id' => 'Attribution',
             'etat' => 'Etat',
             'etape' => 'Etape',
-            'direction' => 'Direction',
-            'departement' => 'Département',
-            'lieu_travail' => 'Lieu',
-            'type_candidature' => 'Type de candidature',
-            //'motif' => 'Motif',
-            'date_previsionnel' => 'Date prévisionnelle',
             'created' => 'Date de création',
-            'modified' => 'Date de modification',
             'societe' => 'Société',
+            'traitement' => 'Temps de traitement total',
         );
 
         return $columns;
@@ -171,7 +149,7 @@ class AxianDDRList extends WP_Filter_List_Table{
 
         $this->_column_headers = $this->get_column_info();
 
-        $per_page = $this->get_items_per_page('ddr_per_page', 20);
+        $per_page = $this->get_items_per_page('ddr_historique_per_page', 20);
         $current_page = $this->get_pagenum();
         $offset = ($current_page -1 ) * $per_page;
 
@@ -180,7 +158,6 @@ class AxianDDRList extends WP_Filter_List_Table{
         unset($get_data['paged']);
         unset($get_data['orderby']);
         unset($get_data['order']);
-        unset($get_data['prefilter']);
 
         $args_supp = array(
             'offset' => $offset,
@@ -189,9 +166,7 @@ class AxianDDRList extends WP_Filter_List_Table{
             'order' => isset($_GET['order']) ? $_GET['order'] : 'ASC',
         );
 
-        $predifined_filters = isset($_GET['prefilter']) ? $_GET['prefilter'] : '';
-
-        $resultats = AxianDDR::getby($get_data, $args_supp, $predifined_filters);
+        $resultats = AxianDDRHistorique::getby($get_data, $args_supp);
 
         $this->set_pagination_args( array(
             'total_items' => $resultats['count'],
