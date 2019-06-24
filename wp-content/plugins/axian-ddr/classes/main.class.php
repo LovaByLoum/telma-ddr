@@ -115,6 +115,25 @@ class AxianDDRMain
                 PRIMARY KEY (`id`,`type`,`label`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8"
         );
+
+        // create table ddr workflow
+        $wpdb->query(
+            "CREATE TABLE IF NOT EXISTS " . TABLE_AXIAN_DDR_WORKFLOW . "(
+                id` bigint(20) NOT NULL AUTO_INCREMENT,
+                `nom` varchar(50) NOT NULL,
+                `date_creation` datetime NOT NULL COMMENT 'date de création',
+                `createur` bigint(20) NOT NULL,
+                `date_modification` datetime NOT NULL,
+                `societe` bigint(20) NOT NULL COMMENT 'société ',
+                `statut` varchar(50) NOT NULL,
+                `etape` varchar(50) NOT NULL COMMENT 'Etape du workflow',
+                `etat` varchar(50) NOT NULL,
+                `role` varchar(50) NOT NULL,
+                `type_ticket` varchar(50) NOT NULL,
+                `action` varchar(255) NOT NULL,
+                UNIQUE KEY `id` (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8"
+        );
     }
 
     public function admin_menu()
@@ -162,6 +181,7 @@ public function admin_enqueue_scripts()
     wp_enqueue_script('axian-ddr-date', AXIANDDR_PLUGIN_URL . '/assets/js/jquery.ui.datepicker.js');
     wp_enqueue_script('axian-ddr-date-fr', AXIANDDR_PLUGIN_URL . '/assets/js/jquery.ui.datepicker-fr.js');
     wp_enqueue_script('axian-ddr-bootstrap-js', AXIANDDR_PLUGIN_URL . '/assets/js/bootstrap.min.js');
+    wp_enqueue_script('axian-ddr-bootstrap-js', AXIANDDR_PLUGIN_URL . '/assets/js/bootstrap-select.js');
     wp_enqueue_script('axian-ddr-moment', AXIANDDR_PLUGIN_URL . '/assets/js/moment.min.js');
     wp_enqueue_script('axian-ddr-daterangepicker', AXIANDDR_PLUGIN_URL . '/assets/js/daterangepicker.min.js');
     wp_enqueue_script('axian-ddr-workflow', AXIANDDR_PLUGIN_URL . '/assets/js/workflow.js');

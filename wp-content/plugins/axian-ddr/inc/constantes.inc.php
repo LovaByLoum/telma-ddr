@@ -9,44 +9,44 @@
  */
 
 //url
-define ( 'AXIANDDR_PLUGIN_URL' , plugins_url(basename(dirname(dirname(__FILE__)))) );
+define('AXIANDDR_PLUGIN_URL', plugins_url(basename(dirname(dirname(__FILE__)))));
 
 //etat
-define('DDR_STATUS_DRAFT','draft');
-define('DDR_STATUS_VALIDE','valid');
-define('DDR_STATUS_EN_COURS','in_progress');
-define('DDR_STATUS_REFUSE','denied');
-define('DDR_STATUS_ANNULE','canceled');
-define('DDR_STATUS_CLOTURE','finished');
+define('DDR_STATUS_DRAFT', 'draft');
+define('DDR_STATUS_VALIDE', 'valid');
+define('DDR_STATUS_EN_COURS', 'in_progress');
+define('DDR_STATUS_REFUSE', 'denied');
+define('DDR_STATUS_ANNULE', 'canceled');
+define('DDR_STATUS_CLOTURE', 'finished');
 
 //etape
-define('DDR_STEP_CREATE','create');
-define('DDR_STEP_VALIDATION_1','validation1');
-define('DDR_STEP_VALIDATION_2','validation2');
-define('DDR_STEP_VALIDATION_3','validation3');
-define('DDR_STEP_VALIDATION_4','validation4');
-define('DDR_STEP_PUBLISH','publish');
-define('DDR_STEP_FINISH','finish');
-define('DDR_STEP_REFUSE','refuse');
-define('DDR_STEP_CANCEL','annulation');
+define('DDR_STEP_CREATE', 'create');
+define('DDR_STEP_VALIDATION_1', 'validation1');
+define('DDR_STEP_VALIDATION_2', 'validation2');
+define('DDR_STEP_VALIDATION_3', 'validation3');
+define('DDR_STEP_VALIDATION_4', 'validation4');
+define('DDR_STEP_PUBLISH', 'publish');
+define('DDR_STEP_FINISH', 'finish');
+define('DDR_STEP_REFUSE', 'refuse');
+define('DDR_STEP_CANCEL', 'annulation');
 
 //action
-define('DDR_ACTION_CREATE','create');
-define('DDR_ACTION_UPDATE','update');
-define('DDR_ACTION_DELETE','delete');
-define('DDR_ACTION_SUBMIT','submit');
-define('DDR_ACTION_VALIDATE','validate');
-define('DDR_ACTION_REFUSE','refuse');
-define('DDR_ACTION_CANCEL','cancel');
-define('DDR_ACTION_CLOSE','close');
+define('DDR_ACTION_CREATE', 'create');
+define('DDR_ACTION_UPDATE', 'update');
+define('DDR_ACTION_DELETE', 'delete');
+define('DDR_ACTION_SUBMIT', 'submit');
+define('DDR_ACTION_VALIDATE', 'validate');
+define('DDR_ACTION_REFUSE', 'refuse');
+define('DDR_ACTION_CANCEL', 'cancel');
+define('DDR_ACTION_CLOSE', 'close');
 
 //type candidat
-define('CANDIDATURE_INTERNE','internal');
-define('CANDIDATURE_EXTERNE','external');
+define('CANDIDATURE_INTERNE', 'internal');
+define('CANDIDATURE_EXTERNE', 'external');
 
 //type demande
-define('TYPE_DEMANDE_PREVU','planned');
-define('TYPE_DEMANDE_NON_PREVU','not_planned');
+define('TYPE_DEMANDE_PREVU', 'planned');
+define('TYPE_DEMANDE_NON_PREVU', 'not_planned');
 
 //msg
 define('DDR_MSG_SAVED_SUCCESSFULLY', 'saved-successfully');
@@ -94,5 +94,6 @@ define('TABLE_AXIAN_DDR', $wpdb->prefix . 'ddr');
 define('TABLE_AXIAN_DDR_HISTORIQUE', $wpdb->prefix . 'ddr_historique');
 define('TABLE_AXIAN_DDR_INTERIM', $wpdb->prefix . 'ddr_interim');
 define('TABLE_AXIAN_DDR_TERM', $wpdb->prefix . 'ddr_term');
+define('TABLE_AXIAN_DDR_WORKFLOW', $wpdb->prefix . 'ddr_workflow');
 
-define ( 'DDR_SETTINGS_NAME', 'axian_ddr_settings');
+define('DDR_SETTINGS_NAME', 'axian_ddr_settings');

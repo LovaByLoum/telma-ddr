@@ -1,19 +1,22 @@
 <?php
-class AxianDDRList extends WP_Filter_List_Table{
+class AxianDDRList extends WP_Filter_List_Table
+{
 
-    function __construct(){
-        parent::__construct( array(
+    function __construct()
+    {
+        parent::__construct(array(
             'singular'  => 'Liste des demandes',
             'plural'    => 'Liste des demandes',
             'ajax'      =>  false
-        ) );
+        ));
 
-        $this->filter_position = 'top';
-        //$this->filter_position = 'table';
+        //$this->filter_position = 'top';
+        $this->filter_position = 'table';
     }
 
 
-    public static function load_hook(){
+    public static function load_hook()
+    {
         global $DDRListTable;
 
         $option = 'per_page';
@@ -22,21 +25,23 @@ class AxianDDRList extends WP_Filter_List_Table{
             'default' => 20,
             'option' => 'ddr_per_page'
         );
-        add_screen_option( $option, $args );
+        add_screen_option($option, $args);
 
         $DDRListTable = new AxianDDRList();
     }
 
-    function no_items() {
-        _e( 'Aucun résultat.' );
+    function no_items()
+    {
+        _e('Aucun résultat.');
     }
 
     /**
      * Fonction qui gère les valeurs qui doivent être affichées pour chaque colonne.
      */
-    function column_default( $item, $column_name ) {
-        setlocale (LC_TIME, 'fr_FR.utf8','fra');
-        switch( $column_name ) {
+    function column_default($item, $column_name)
+    {
+        setlocale(LC_TIME, 'fr_FR.utf8', 'fra');
+        switch ($column_name) {
             case 'id':
                 return $item->id;
                 break;
@@ -74,36 +79,38 @@ class AxianDDRList extends WP_Filter_List_Table{
                 return AxianDDR::$etapes[$item->$column_name];
                 break;
             default:
-                return $item->$column_name ;
+                return $item->$column_name;
         }
     }
 
     /**
      * Fonction qui gère les colonnes qui sont sortable.
      */
-    function get_sortable_columns() {
+    function get_sortable_columns()
+    {
         $sortable_columns = array(
-            'id' => array('id',false),
-            'title' => array('title',false),
-            'type' => array('type',false),
-            'author_id' => array('author_id',false),
-            'assignee_id' => array('assignee_id',false),
-            'etat' => array('etat',false),
-            'etape' => array('etape',false),
-            'direction' => array('direction',false),
-            'departement' => array('departement',false),
-            'lieu_travail' => array('lieu_travail',false),
-            'type_candidature' => array('type_candidature',false),
-            'date_previsionnel' => array('date_previsionnel',false),
-            'created' => array('created',false),
-            'modified' => array('modified',false),
-            'societe' => array('societe',false),
+            'id' => array('id', false),
+            'title' => array('title', false),
+            'type' => array('type', false),
+            'author_id' => array('author_id', false),
+            'assignee_id' => array('assignee_id', false),
+            'etat' => array('etat', false),
+            'etape' => array('etape', false),
+            'direction' => array('direction', false),
+            'departement' => array('departement', false),
+            'lieu_travail' => array('lieu_travail', false),
+            'type_candidature' => array('type_candidature', false),
+            'date_previsionnel' => array('date_previsionnel', false),
+            'created' => array('created', false),
+            'modified' => array('modified', false),
+            'societe' => array('societe', false),
         );
 
         return $sortable_columns;
     }
 
-    function get_filterable_columns() {
+    function get_filterable_columns()
+    {
         global $axian_ddr;
         $filterable_columns = array(
             'id' => array('type' => 'text'),
@@ -127,14 +134,14 @@ class AxianDDRList extends WP_Filter_List_Table{
         return $filterable_columns;
     }
 
-    function extra_tablenav( $which ) {
-
-    }
+    function extra_tablenav($which)
+    { }
 
     /**
      * Fonction qui gère les colonnes à utiliser.
      */
-    function get_columns(){
+    function get_columns()
+    {
 
         $columns = array(
             'id' => 'Numéro du ticket',
@@ -163,13 +170,14 @@ class AxianDDRList extends WP_Filter_List_Table{
     /**
      * Fonction qui gère les données à afficher
      */
-    function prepare_items() {
+    function prepare_items()
+    {
 
         $this->_column_headers = $this->get_column_info();
 
         $per_page = $this->get_items_per_page('ddr_per_page', 20);
         $current_page = $this->get_pagenum();
-        $offset = ($current_page -1 ) * $per_page;
+        $offset = ($current_page - 1) * $per_page;
 
         $get_data = $_GET;
         unset($get_data['page']);
@@ -189,7 +197,7 @@ class AxianDDRList extends WP_Filter_List_Table{
 
         $resultats = AxianDDR::getby($get_data, $args_supp, $predifined_filters);
 
-        $this->set_pagination_args( array(
+        $this->set_pagination_args(array(
             'total_items' => $resultats['count'],
             'per_page'    => $per_page
         ));
@@ -197,24 +205,24 @@ class AxianDDRList extends WP_Filter_List_Table{
         $this->items = $resultats["items"];
     }
 
-    function column_id( $item ) {
+    function column_id($item)
+    {
         global $current_user;
 
         $title = '<strong>DDR-' . $item->id . '</strong>';
 
         $actions = array();
-        if ( current_user_can(DDR_CAP_CAN_VIEW_OTHERS_DDR) || ( current_user_can(DDR_CAP_CAN_VIEW_DDR) && $item->author_id == $current_user->ID ) ){
-            $actions['view'] = sprintf( '<a href="?page=%s&action=%s&id=%s">Afficher</a>', 'axian-ddr','view', absint( $item->id ) );
+        if (current_user_can(DDR_CAP_CAN_VIEW_OTHERS_DDR) || (current_user_can(DDR_CAP_CAN_VIEW_DDR) && $item->author_id == $current_user->ID)) {
+            $actions['view'] = sprintf('<a href="?page=%s&action=%s&id=%s">Afficher</a>', 'axian-ddr', 'view', absint($item->id));
         }
 
-        if ( current_user_can(DDR_CAP_CAN_EDIT_OTHERS_DDR) || ( current_user_can(DDR_CAP_CAN_EDIT_DDR) && $item->author_id == $current_user->ID ) ){
+        if (current_user_can(DDR_CAP_CAN_EDIT_OTHERS_DDR) || (current_user_can(DDR_CAP_CAN_EDIT_DDR) && $item->author_id == $current_user->ID)) {
             $post_data = AxianDDR::getbyId($item->id);
-            if ( AxianDDRWorkflow::checkActionActeurInEtape($post_data['etape'], DDR_ACTION_UPDATE ) ){
-                $actions['edit'] = sprintf( '<a href="?page=%s&action=%s&id=%s">Modifier</a>', 'axian-ddr', 'edit', absint( $item->id ) );
+            if (AxianDDRWorkflow::checkActionActeurInEtape($post_data['etape'], DDR_ACTION_UPDATE)) {
+                $actions['edit'] = sprintf('<a href="?page=%s&action=%s&id=%s">Modifier</a>', 'axian-ddr', 'edit', absint($item->id));
             }
         }
 
-        return $title . $this->row_actions( $actions );
+        return $title . $this->row_actions($actions);
     }
-
 }

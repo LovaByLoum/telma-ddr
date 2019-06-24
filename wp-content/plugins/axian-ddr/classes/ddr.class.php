@@ -335,6 +335,7 @@ class AxianDDR
 
         setlocale(LC_TIME, 'fr_FR.utf8', 'fra');
 
+
         $is_save_draft = isset($_POST['save-draft']);
         $is_submit_ddr = isset($_POST['submit-ddr']);
         $is_update_ddr = isset($_POST['update-ddr']);

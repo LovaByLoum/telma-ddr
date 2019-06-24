@@ -1,0 +1,33 @@
+
+div#bloc-etape {
+    margin-top: 25px;
+    background: beige;
+}
+div.champ {
+    padding-left: 37px;
+
+}
+#par_defaut {
+    margin-left: 16px;
+}
+
+div.chosen-container.chosen-container-single  {
+    width: 198px !important;
+    margin-left: 32px;
+}
+
+#ajout_role {
+    width: 40%;
+    margin-left: 30%;
+    margin-right: 30%
+}
+#ajout_etape {
+    margin-top: 15px;margin-left: 96px;
+}
+#select_etape {
+    margin-right: 84px;
+}
+
+.close-bloc{
+    float: right;
+}

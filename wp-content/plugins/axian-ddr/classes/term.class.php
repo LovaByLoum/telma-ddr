@@ -7,7 +7,8 @@
  * To change this template use File | Settings | File Templates.
  */
 
-class AxianDDRTerm{
+class AxianDDRTerm
+{
 
     public static $types = array(
         'direction' => 'Direction',
@@ -17,7 +18,8 @@ class AxianDDRTerm{
 
     public $fields;
 
-    public function __construct(){
+    public function __construct()
+    {
 
         //init admin fields
         $this->fields = array(
@@ -41,11 +43,12 @@ class AxianDDRTerm{
         );
     }
 
-    public function submit_term(){
-        if ( isset($_POST['submit-term']) ){
+    public function submit_term()
+    {
+        if (isset($_POST['submit-term'])) {
             $msg = axian_ddr_validate_fields($this);
 
-            if ( !empty($msg) ){
+            if (!empty($msg)) {
                 return array(
                     'code' => 'error',
                     'msg' => $msg,
@@ -59,12 +62,12 @@ class AxianDDRTerm{
                 );
 
                 //test si echec
-                if ( !$return_add ){
+                if (!$return_add) {
                     return array(
                         'code' => 'error',
                         'msg' => 'Erreur inconnu',
                     );
-                }  else {
+                } else {
                     //unset post
                     unset($_POST['type']);
                     unset($_POST['label']);
@@ -73,12 +76,11 @@ class AxianDDRTerm{
                         'msg' => 'Enregistrement effectué avec succés.',
                     );
                 }
-
             }
-        } elseif ( isset($_POST['update-term']) ){
+        } elseif (isset($_POST['update-term'])) {
             $msg = axian_ddr_validate_fields($this);
 
-            if ( !empty($msg) ){
+            if (!empty($msg)) {
                 return array(
                     'code' => 'error',
                     'msg' => $msg,
@@ -92,7 +94,7 @@ class AxianDDRTerm{
                     $post_data['label']
                 );
 
-                if ( $return_update ){
+                if ($return_update) {
                     //unset post
                     unset($_POST['id']);
                     unset($_POST['type']);
@@ -103,28 +105,27 @@ class AxianDDRTerm{
                         'code' => 'updated',
                         'msg' => 'Enregistrement effectué avec succés.',
                     );
-                }  else {
+                } else {
                     return array(
                         'code' => 'error',
                         'msg' => 'Erreur inconnu',
                     );
                 }
-
             }
-        }elseif ( ( $_GET['action'] == "delete" ) && !empty( $_GET['_wpnonce'] ) && !empty( $_GET['id'] )){
-            $nonce = wp_create_nonce( 'addr_delete_term'.absint( $_GET['id'] ) );
+        } elseif (($_GET['action'] == "delete") && !empty($_GET['_wpnonce']) && !empty($_GET['id'])) {
+            $nonce = wp_create_nonce('addr_delete_term' . absint($_GET['id']));
 
 
-            if ( $nonce != $_GET['_wpnonce'] ){
+            if ($nonce != $_GET['_wpnonce']) {
                 return array(
                     'code' => 'error',
                     'msg' => 'Action denied',
                 );
             } else {
                 //process delete term
-                $return_update = self::delete(absint( $_GET['id'] ));
+                $return_update = self::delete(absint($_GET['id']));
 
-                if ( $return_update ){
+                if ($return_update) {
                     //unset post
                     unset($_POST['id']);
                     unset($_POST['type']);
@@ -136,26 +137,27 @@ class AxianDDRTerm{
                         'msg' => 'Suppresion effectué avec succés.',
                     );
                 }
-
             }
-        }else {
+        } else {
             return false;
         }
     }
 
-    public static function add( $type, $label ){
+    public static function add($type, $label)
+    {
         global $wpdb;
         $result = $wpdb->insert(TABLE_AXIAN_DDR_TERM, array(
             'type' => $type,
             'label' => $label
         ));
-        if ( $result ) {
+        if ($result) {
             $term_id = $wpdb->insert_id;
             return $term_id;
-        }else return $result;
+        } else return $result;
     }
 
-    public static function update($id, $type, $label){
+    public static function update($id, $type, $label)
+    {
         global $wpdb;
 
         return $wpdb->update(
@@ -164,19 +166,20 @@ class AxianDDRTerm{
                 'type' => $type,
                 'label' => $label,
             ),
-            array( 'id' => $id )
+            array('id' => $id)
         );
     }
 
-    public static function delete($id){
+    public static function delete($id)
+    {
         global $wpdb;
-        $result = $wpdb->delete(TABLE_AXIAN_DDR_TERM, array( 'id' => $id));
+        $result = $wpdb->delete(TABLE_AXIAN_DDR_TERM, array('id' => $id));
 
         return $result;
-
     }
 
-    public static function getby( $args = array(), $format = null ){
+    public static function getby($args = array(), $format = null)
+    {
         $default_args = array(
             'offset' => 0,
             'limit' => 0,
@@ -189,10 +192,10 @@ class AxianDDRTerm{
         extract($args);
 
         global $wpdb;
-        $query_select = "SELECT SQL_CALC_FOUND_ROWS * FROM  " . TABLE_AXIAN_DDR_TERM ;
+        $query_select = "SELECT SQL_CALC_FOUND_ROWS * FROM  " . TABLE_AXIAN_DDR_TERM;
 
         //type
-        if ( $type != 'tous' ){
+        if ($type != 'tous') {
             $query_select .= " WHERE type='{$type}'";
         }
 
@@ -200,14 +203,14 @@ class AxianDDRTerm{
         $query_select .= " ORDER BY {$orderby} {$order} ";
 
         //limit
-        if( $offset && $limit ){
+        if ($offset && $limit) {
             $query_select .= " LIMIT {$offset},{$limit} ";
         }
 
         $result = $wpdb->get_results($query_select);
-        if ( $format == 'options' ){
+        if ($format == 'options') {
             $options = array();
-            foreach ( $result as $obj ){
+            foreach ($result as $obj) {
                 $options[$obj->id] = $obj->label;
             }
             return $options;
@@ -217,28 +220,27 @@ class AxianDDRTerm{
             'count' => sizeof($result),
             'items' => $result
         );
-
     }
 
-    public static function getby_id($id){
+    public static function getby_id($id)
+    {
         global $wpdb;
-        $result = $wpdb->get_row('SELECT * FROM '. TABLE_AXIAN_DDR_TERM . ' WHERE id = '.$id ,ARRAY_A);
+        $result = $wpdb->get_row('SELECT * FROM ' . TABLE_AXIAN_DDR_TERM . ' WHERE id = ' . $id, ARRAY_A);
 
         return $result;
-
     }
 
-    public function count_result(){
+    public function count_result()
+    {
         global $wpdb;
         $results = [];
-        foreach(self::$types as $type => $value){
-            $results[$type] = intval($wpdb->get_var("SELECT COUNT(*) FROM ".TABLE_AXIAN_DDR_TERM." WHERE type='".$type."'"));
+        foreach (self::$types as $type => $value) {
+            $results[$type] = intval($wpdb->get_var("SELECT COUNT(*) FROM " . TABLE_AXIAN_DDR_TERM . " WHERE type='" . $type . "'"));
         }
         $results['tous'] = array_sum($results);
 
         return $results;
     }
-
 }
 global $axian_ddr_term;
 $axian_ddr_term = new AxianDDRTerm();
