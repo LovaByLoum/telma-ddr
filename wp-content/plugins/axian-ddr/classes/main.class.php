@@ -124,7 +124,6 @@ class AxianDDRMain {
         $hook = add_submenu_page( 'axian-ddr-list', 'Toutes les demandes', 'Toutes les demandes',DDR_CAP_CAN_LIST_DDR, 'axian-ddr-list', 'AxianDDR::template_list');
         add_action( "load-{$hook}", 'AxianDDRList::load_hook' );
         add_submenu_page( 'axian-ddr-list', 'Faire une demande', 'Faire une demande', DDR_CAP_CAN_VIEW_DDR, 'axian-ddr','AxianDDR::template_edit');
-        add_submenu_page( 'axian-ddr-list', 'Etats des tickets', 'Etats des tickets', DDR_CAP_CAN_VIEW_DDR, 'axian-ddr-etat','AxianDDR::template_etat');
 
         //menu admin
         add_menu_page('DDR Administration', 'DDR Administration', DDR_CAP_CAN_ADMIN_DDR, 'axian-ddr-admin','','dashicons-networking');
@@ -134,6 +133,10 @@ class AxianDDRMain {
         //gestion interim
         add_menu_page('DDR Interim', 'DDR Interim', DDR_CAP_CAN_ADMIN_INTERIM, 'axian-ddr-interim','','dashicons-businessman');
         add_submenu_page( 'axian-ddr-interim', 'Gestion des intérims', 'Gestion des intérims',DDR_CAP_CAN_ADMIN_INTERIM, 'axian-ddr-interim','AxianDDRInterim::template');
+
+        //Suivi ticket
+        add_menu_page( 'Etats des tickets', 'Etats des tickets', DDR_CAP_CAN_VIEW_DDR, 'axian-ddr-etat','AxianDDR::template_etat');
+
     }
 
     public function admin_head(){
