@@ -5,7 +5,7 @@ class AxianDDRInterim{
     public $fields;
 
     public static $status = array(
-        DDR_INTERIM_EN_COURS => 'En cour',
+        DDR_INTERIM_EN_COURS => 'En cours',
         DDR_INTERIM_FINI => 'Terminé',
     );
 
@@ -102,7 +102,7 @@ class AxianDDRInterim{
         if ($is_delete_interim){
             self::delete($id);
             $redirect_to = 'admin.php?page=axian-ddr-interim&msg=' . DDR_MSG_DELETED_SUCCESSFULLY;
-        } else if ( $is_submit_interim || $is_update_interim ){
+        } elseif ( $is_submit_interim || $is_update_interim ){
             $msg = axian_ddr_validate_fields($this);
             //data not valid
             if ( !empty($msg) ){
@@ -215,10 +215,10 @@ class AxianDDRInterim{
             switch( $field ){
 
                 case 'date_debut' :
-                    $query_select .= " AND $field >= '{$value}'";
+                    $query_select .= " AND $field >= '" . axian_ddr_convert_to_mysql_date($value) . "'";
                     break;
                 case 'date_fin' :
-                    $query_select .= " AND $field <= '{$value}'";
+                    $query_select .= " AND $field <= '" . axian_ddr_convert_to_mysql_date($value) . "'";
                     break;
                 default:
                     $query_select .= " AND $field = '{$value}'";
@@ -245,34 +245,39 @@ class AxianDDRInterim{
     }
 
     public static function manageInterim(){
-        $today = date_create("today");
+        global $wpdb;
+        $today = date("Y-m-d");
         $interims = self::getBy(array('status'=>DDR_INTERIM_EN_COURS));
         if ( $interims['count'] > 0 ) foreach($interims['items'] as $interim){
-            $user_meta=get_userdata($interim->collaborator_id);
-            $collaborator_interim_roles= $user_meta->roles;
-            $collaborator_interim = new WP_User($interim->collaborator_interim_id);
-            list($begin,$end) = explode(':', $interim->date_interim);
-            list($bd, $bm, $by) = explode('/', $begin);
-            list($ed, $em, $ey) = explode('/', $end);
-            $mysql_end = date_create($ey . '-' . $em . '-' . $ed );
-            $collaborator_interim_default_roles = unserialize($interim->collaborator_roles);
-            if( $mysql_end >= $today){
-                foreach($collaborator_interim_roles as $role){
-                    if( !in_array($role,$collaborator_interim_default_roles)){
-                        $collaborator_interim->add_role($role);
+            $user_collaborator = new WP_User($interim->collaborator_id);
+            $user_interim = new WP_User($interim->interim_id);
+
+            $date_debut = $interim->date_debut;
+            $date_fin = $interim->date_fin;
+
+            //si on est dans la période de l'interim
+            if( $date_debut <= $today && $today <= $date_fin ){
+                foreach($user_collaborator->roles as $role){
+                    if( !in_array($role, $user_interim->roles)){
+                        $user_interim->add_role($role);
                     }
                 }
-                AxianDDR::substitutionDDR($interim->collaborator_id,$interim->collaborator_interim_id);
-            }else{
-
-                foreach($collaborator_interim_roles as $role){
-                    if( !in_array($role,$collaborator_interim_default_roles)) $collaborator_interim->remove_role($role);
+                AxianDDR::substitutionDDR($interim->collaborator_id, $interim->interim_id);
+            }elseif ( $date_fin < $today ) {
+                $original_interim_roles = unserialize($interim->interim_roles);
+                foreach($user_interim->roles as $role){
+                    $user_interim->remove_role($role);
                 }
-                AxianDDR::substitutionDDR($interim->collaborator_interim_id, $interim->collaborator_id);
-                self::update(array(
-                    'id' => $interim->id,
-                    'status' =>DDR_INTERIM_FINI,
-                ));
+                foreach($original_interim_roles as $role){
+                    $user_interim->add_role($role);
+                }
+                AxianDDR::substitutionDDR($interim->interim_id, $interim->collaborator_id, unserialize($interim->collaborator_tickets));
+                $wpdb->update(
+                    TABLE_AXIAN_DDR_INTERIM,
+                    array('status'=> DDR_INTERIM_FINI ),
+                    array('id' => $interim->id)
+                );
+
             }
         }
     }

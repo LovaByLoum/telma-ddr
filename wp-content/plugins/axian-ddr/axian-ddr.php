@@ -57,14 +57,12 @@ foreach ( $axian_ddr_tasks as $schedule => $value ){
 
     if ( !wp_next_scheduled( $funcname, array('schedule' => $schedule) ) ) {
 
-        if($schedule =='axian_ddr_daily_rappel') {
+        if($schedule == 'axian_ddr_daily_rappel') {
             $time = strtotime("9:00:00");
         }
         else{
             $time = time();
         }
-
-
         wp_schedule_event( $time, $schedule, $funcname, array('schedule' => $schedule) );
     }
     add_action( $funcname, 'axian_ddr_cron_callback' );

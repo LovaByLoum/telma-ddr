@@ -873,18 +873,16 @@ class AxianDDR{
         return false;
     }
 
-    public static function substitutionDDR( $id_default, $id_interim){
+    public static function substitutionDDR( $id_source, $id_dest, $include = array()){
         global $wpdb;
-        $ddrs = self::getby(array('assignee_id'=>$id_default),array(),'',true);
-        if ( !empty($ddrs['items']) ) foreach($ddrs['items'] as $ddr ){
+        $ddrs = self::getByAssigneeId($id_source, $include);
+        if ( !empty($ddrs) ) foreach($ddrs as $ddr_id ){
             $wpdb->update(
                 TABLE_AXIAN_DDR,
-                array('assignee_id'=>$id_interim ),
-                array('id' => $ddr->id)
+                array('assignee_id'=> $id_dest ),
+                array('id' => $ddr_id)
             );
         }
-        return $ddrs;
-
     }
 
     public static function count_result(){
@@ -893,9 +891,14 @@ class AxianDDR{
         return $wpdb->get_var("SELECT COUNT(*) FROM ".TABLE_AXIAN_DDR);
     }
 
-    public static function getByAssigneeId( $assignee_id ){
+    public static function getByAssigneeId( $assignee_id, $include = array() ){
         global $wpdb;
-        return $wpdb->get_col( "SELECT id FROM " . TABLE_AXIAN_DDR . " WHERE assignee_id = " . $assignee_id );
+        $sql = "SELECT id FROM " . TABLE_AXIAN_DDR . " WHERE assignee_id = " . $assignee_id;
+
+        if ( !empty($include) ){
+            $sql .= " AND id IN ( " . implode(',', $include). " )";
+        }
+        return $wpdb->get_col( $sql );
     }
 
 }
