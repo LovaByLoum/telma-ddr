@@ -197,39 +197,56 @@ class AxianDDRHistoriqueList extends WP_Filter_List_Table{
         return $title . $this->row_actions( $actions );
     }
 
-    function getAllDelai( $ddr_id ){
+    function column_export_traitement($item){
+        return AxianDDRHistorique::getDelaiEtape($item->id, DDR_STEP_VALIDATION_1, DDR_STEP_PUBLISH);
+        //return AxianDDRHistorique::getDelaiEtape($item->id, DDR_STEP_VALIDATION_1, DDR_STEP_PUBLISH) . " (Details : " . AxianDDRHistoriqueList::getAllDelai($item->id, 'string');
+    }
+
+    function getAllDelai( $ddr_id, $format = 'html' ){
         $etapes = AxianDDRWorkflow::$etapes;
-        ob_start();
-        ?>
-        <fieldset class="ddr-histrotique-delai-box">
-            <a href="javascript:;" class="close-details-delai" style="float:right;">x Fermer</a>
-            <table class="table table-striped table-bordered">
-                <thead>
-                <tr>
-                    <th class="libelle">Etape</th>
-                    <th class="libelle">Temps de traitement</th>
-                </tr>
-                </thead>
-                <tbody>
-                <?php foreach($etapes as $etape_numero => $step_object):
-                    if ( isset($etapes[$etape_numero-1]) ) :
-                        $step_avant = $etapes[$etape_numero-1];
-                        $step_current = $step_object;
-                        ?>
-                        <tr class=" <?php echo ($etape_numero % 2 == 0) ? 'odd' : 'even';?> ">
-                            <td valign="top">
-                                <?php echo AxianDDR::$etapes[$step_current['etape']];?>
-                            </td>
-                            <td>
-                                <?php echo AxianDDRHistorique::getDelaiEtape($ddr_id, $step_avant['etape'], $step_current['etape'] );?>
-                            </td>
-                        </tr>
-                    <?php endif;?>
-                <?php endforeach;?>
-                </tbody>
-            </table>
-        </fieldset>
-        <?php
-        return ob_get_clean();
+        if ( $format == 'html' ):
+            ob_start();
+            ?>
+            <fieldset class="ddr-histrotique-delai-box">
+                <a href="javascript:;" class="close-details-delai" style="float:right;">x Fermer</a>
+                <table class="table table-striped table-bordered">
+                    <thead>
+                    <tr>
+                        <th class="libelle">Etape</th>
+                        <th class="libelle">Temps de traitement</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php foreach($etapes as $etape_numero => $step_object):
+                        if ( isset($etapes[$etape_numero-1]) ) :
+                            $step_avant = $etapes[$etape_numero-1];
+                            $step_current = $step_object;
+                            ?>
+                            <tr class=" <?php echo ($etape_numero % 2 == 0) ? 'odd' : 'even';?> ">
+                                <td valign="top">
+                                    <?php echo AxianDDR::$etapes[$step_current['etape']];?>
+                                </td>
+                                <td>
+                                    <?php echo AxianDDRHistorique::getDelaiEtape($ddr_id, $step_avant['etape'], $step_current['etape'] );?>
+                                </td>
+                            </tr>
+                        <?php endif;?>
+                    <?php endforeach;?>
+                    </tbody>
+                </table>
+            </fieldset>
+            <?php
+            return ob_get_clean();
+        elseif ( $format == 'string' ) :
+            $str = '';
+            foreach($etapes as $etape_numero => $step_object):
+                if ( isset($etapes[$etape_numero-1]) ) :
+                    $step_avant = $etapes[$etape_numero-1];
+                    $step_current = $step_object;
+                    $str.= AxianDDR::$etapes[$step_current['etape']] . ' en ' . AxianDDRHistorique::getDelaiEtape($ddr_id, $step_avant['etape'], $step_current['etape'] ) . ", ";
+                endif;
+            endforeach;
+            return $str;
+        endif;
     }
 }
