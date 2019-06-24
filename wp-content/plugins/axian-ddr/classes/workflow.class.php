@@ -23,8 +23,9 @@ class AxianDDRWorkflow{
                 DDR_CAP_CAN_CLOSE_DDR,
                 DDR_CAP_CAN_ADMIN_DDR,
                 DDR_CAP_CAN_EXPORT_DDR,
-                DDR_CAP_CAN_VIEW_MENU_HISTORIQUE_DDR
-                DDR_CAP_CAN_ADMIN_INTERIM
+                DDR_CAP_CAN_VIEW_MENU_HISTORIQUE_DDR,
+                DDR_CAP_CAN_ADMIN_INTERIM,
+                DDR_CAP_CAN_VIEW_ETAT_TICKETS
             ),
 
             DDR_ROLE_MANAGER => array(
@@ -67,7 +68,6 @@ class AxianDDRWorkflow{
                 DDR_CAP_CAN_VIEW_DDR,
                 DDR_CAP_CAN_VIEW_OTHERS_DDR,
                 DDR_CAP_CAN_EXPORT_DDR,
-                DDR_CAP_CAN_EXPORT_OTHERS_DDR,
                 DDR_CAP_CAN_VALIDATE_DDR,
                 DDR_CAP_CAN_REFUSE_DDR,
             ),
@@ -80,7 +80,6 @@ class AxianDDRWorkflow{
                 DDR_CAP_CAN_VALIDATE_DDR,
                 DDR_CAP_CAN_REFUSE_DDR,
                 DDR_CAP_CAN_EXPORT_DDR,
-                DDR_CAP_CAN_EXPORT_OTHERS_DDR,
             ),
 
             DDR_ROLE_DG => array(
@@ -91,7 +90,6 @@ class AxianDDRWorkflow{
                 DDR_CAP_CAN_VALIDATE_DDR,
                 DDR_CAP_CAN_REFUSE_DDR,
                 DDR_CAP_CAN_EXPORT_DDR,
-                DDR_CAP_CAN_EXPORT_OTHERS_DDR,
             ),
 
             DDR_ROLE_GESTIONNAIRE_TALENT => array(
@@ -101,7 +99,6 @@ class AxianDDRWorkflow{
                 DDR_CAP_CAN_VIEW_OTHERS_DDR,
                 DDR_CAP_CAN_CLOSE_DDR,
                 DDR_CAP_CAN_EXPORT_DDR,
-                DDR_CAP_CAN_EXPORT_OTHERS_DDR,
             )
 
         );

@@ -145,7 +145,7 @@ class AxianDDRMain {
         add_submenu_page( 'axian-ddr-interim', 'Gestion des intérims', 'Gestion des intérims',DDR_CAP_CAN_ADMIN_INTERIM, 'axian-ddr-interim','AxianDDRInterim::template');
 
         //Suivi ticket
-        add_menu_page( 'Etats des tickets', 'Etats des tickets', DDR_CAP_CAN_VIEW_DDR, 'axian-ddr-etat','AxianDDR::template_etat');
+        add_menu_page( 'Etats des tickets', 'Etats des tickets', DDR_CAP_CAN_VIEW_ETAT_TICKETS, 'axian-ddr-etat','AxianDDR::template_etat', 'dashicons-dashboard');
 
     }
 

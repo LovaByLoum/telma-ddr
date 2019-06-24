@@ -89,6 +89,7 @@ define('DDR_CAP_CAN_ADMIN_DDR', 'can-admin-ddr');
 define('DDR_CAP_CAN_EXPORT_DDR', 'can-export-ddr');
 define('DDR_CAP_CAN_VIEW_MENU_HISTORIQUE_DDR', 'can-view-menu-historique-ddr');
 define('DDR_CAP_CAN_ADMIN_INTERIM', 'can-admin-interim');
+define('DDR_CAP_CAN_VIEW_ETAT_TICKETS', 'can-view-etat-ddr');
 
 //Table name
 global $wpdb;
