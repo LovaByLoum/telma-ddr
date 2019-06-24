@@ -51,6 +51,35 @@ if ( preg_match('/^(.+)wp-content.*/', dirname(__FILE__), $path) ){
                     case 'entreprise':
                         $results = $wpdb->get_results('SELECT ID as id, post_title as label FROM ' . $wpdb->posts . ' WHERE post_title LIKE "%' . $term . '%" AND post_type = "societe"');
                         break;
+                    case 'interim':
+                        $sql = '
+                            SELECT u.ID as id, u.display_name as label FROM ' . $wpdb->users . ' AS u
+                            INNER JOIN ' . $wpdb->usermeta . ' AS um
+                            ON  ( u.ID = um.user_id AND um.meta_key = "wp_capabilities" )
+                            WHERE u.display_name LIKE "%' . $term . '%"
+                        ';
+
+                        $role_filter = array(
+                            'administrateur-ddr',
+                            'manager',
+                            'assistante-direction',
+                            'assistante-rh',
+                            'controleur-budgetaire',
+                            'drh',
+                            'dg',
+                            'responsable_rh',
+                            'subscriber'
+                        );
+                        $glue = '';
+                        $sql .= ' AND (';
+                        foreach ( $role_filter as $role ){
+                            $sql .= $glue . ' um.meta_value LIKE \'%"' . $role . '"%\' ';
+                            $glue = ' OR ';
+                        }
+                        $sql .= ')';
+
+                        $results = $wpdb->get_results($sql);
+                        break;
                     default:
                         die('invalid source');
                 }
@@ -67,6 +96,9 @@ if ( preg_match('/^(.+)wp-content.*/', dirname(__FILE__), $path) ){
                         break;
                     case 'entreprise':
                         $result = $wpdb->get_var('SELECT post_title as label FROM ' . $wpdb->posts . ' WHERE ID =' . $id );
+                        break;
+                    case 'interim':
+                        $result = $wpdb->get_var('SELECT display_name as label FROM ' . $wpdb->users . ' WHERE ID =' . $id );
                         break;
                     default:
                         die('invalid source');

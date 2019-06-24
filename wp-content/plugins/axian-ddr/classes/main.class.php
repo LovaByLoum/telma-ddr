@@ -102,10 +102,12 @@ class AxianDDRMain {
         $wpdb->query(
             "CREATE TABLE IF NOT EXISTS " . TABLE_AXIAN_DDR_INTERIM ." (
                 `id` bigint(20) NOT NULL AUTO_INCREMENT,
+                `creator_id` bigint(20) NOT NULL,
                 `collaborator_id` bigint(20) NOT NULL,
                 `collaborator_interim_id` bigint(20) NOT NULL,
-                `date_debut` datetime DEFAULT NULL,
-                `date_fin` datetime DEFAULT NULL,
+                `date_interim` varchar(50) NOT NULL,
+                `collaborator_roles` longtext NOT NULL,
+                `status` varchar(50),
                 PRIMARY KEY (`id`,`collaborator_id`,`collaborator_interim_id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8"
         );
@@ -138,7 +140,13 @@ class AxianDDRMain {
         add_submenu_page( 'axian-ddr-admin', 'Réglage général', 'Réglage général',DDR_CAP_CAN_ADMIN_DDR, 'axian-ddr-admin','AxianDDRAdministration::template');
         add_submenu_page( 'axian-ddr-admin', 'Termes de taxonomie', 'Termes de taxonomie', DDR_CAP_CAN_ADMIN_DDR, 'axian-ddr-admin&tab=term', 'AxianDDRAdministration::template');
 
-        //
+        //gestion interim
+        add_menu_page('DDR Interim', 'DDR Interim', DDR_CAP_CAN_ADMIN_INTERIM, 'axian-ddr-interim','','dashicons-businessman');
+        add_submenu_page( 'axian-ddr-interim', 'Gestion des intérims', 'Gestion des intérims',DDR_CAP_CAN_ADMIN_INTERIM, 'axian-ddr-interim','AxianDDRInterim::template');
+
+        //Suivi ticket
+        add_menu_page( 'Etats des tickets', 'Etats des tickets', DDR_CAP_CAN_VIEW_DDR, 'axian-ddr-etat','AxianDDR::template_etat');
+
     }
 
     public function admin_head(){

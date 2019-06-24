@@ -226,6 +226,10 @@ class AxianDDR{
         include AXIAN_DDR_PATH . '/templates/ddr/ddr-edit.tpl.php';
     }
 
+    public static function template_etat(){
+        include AXIAN_DDR_PATH . '/templates/ddr/ddr-etats.tpl.php';
+    }
+
     public static function insert($args){
         global $wpdb, $current_user;
         $now = date("Y-m-d H:i:s");
@@ -745,7 +749,7 @@ class AxianDDR{
         return $return;
     }
 
-    public static function getby( $field_args = array(), $supp_args = array(), $predifined_filters = '' ){
+    public static function getby( $field_args = array(), $supp_args = array(), $predifined_filters = '', $in_validation = false ){
         global $wpdb, $current_user;
         $the_user = AxianDDRUser::getById($current_user->ID);
 
@@ -826,6 +830,11 @@ class AxianDDR{
             }
         }
 
+        //in validation
+        if ($in_validation){
+            $validations = "'".DDR_STEP_VALIDATION_1."','".DDR_STEP_VALIDATION_2."','".DDR_STEP_VALIDATION_3."','".DDR_STEP_VALIDATION_4."'";
+            $query_select .= " AND etape IN ({$validations})";
+        }
 
         //ordre
         if( isset($supp_args['orderby']) && isset($supp_args['order']) ){
@@ -862,6 +871,25 @@ class AxianDDR{
         return false;
     }
 
+    public static function substitutionDDR( $id_default, $id_interim){
+        global $wpdb;
+        $ddrs = self::getby(array('assignee_id'=>$id_default),array(),'',true);
+        if ( !empty($ddrs['items']) ) foreach($ddrs['items'] as $ddr ){
+            $wpdb->update(
+                TABLE_AXIAN_DDR,
+                array('assignee_id'=>$id_interim ),
+                array('id' => $ddr->id)
+            );
+        }
+        return $ddrs;
+
+    }
+
+    public static function count_result(){
+        global $wpdb;
+
+        return $wpdb->get_var("SELECT COUNT(*) FROM ".TABLE_AXIAN_DDR);
+    }
 }
 
 global $axian_ddr;

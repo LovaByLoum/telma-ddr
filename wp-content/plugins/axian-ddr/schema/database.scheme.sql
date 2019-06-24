@@ -48,10 +48,13 @@ CREATE TABLE `wp_ddr_historique` (
 
 CREATE TABLE IF NOT EXISTS `wp_ddr_interim` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `creator_id` bigint(20) NOT NULL,
   `collaborator_id` bigint(20) NOT NULL,
   `collaborator_interim_id` bigint(20) NOT NULL,
-  `date_debut` datetime DEFAULT NULL,
-  `date_fin` datetime DEFAULT NULL,
+  `date_interim` varchar(50) NOT NULL,
+  `collaborator_roles` longtext NOT NULL,
+  `status` varchar(50),
+
   PRIMARY KEY (`id`,`collaborator_id`,`collaborator_interim_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8
 

@@ -88,6 +88,7 @@ define('DDR_CAP_CAN_CLOSE_DDR', 'can-close-ddr');
 define('DDR_CAP_CAN_ADMIN_DDR', 'can-admin-ddr');
 define('DDR_CAP_CAN_EXPORT_DDR', 'can-export-ddr');
 define('DDR_CAP_CAN_VIEW_MENU_HISTORIQUE_DDR', 'can-view-menu-historique-ddr');
+define('DDR_CAP_CAN_ADMIN_INTERIM', 'can-admin-interim');
 
 //Table name
 global $wpdb;
@@ -97,3 +98,7 @@ define('TABLE_AXIAN_DDR_INTERIM', $wpdb->prefix . 'ddr_interim');
 define('TABLE_AXIAN_DDR_TERM', $wpdb->prefix . 'ddr_term');
 
 define ( 'DDR_SETTINGS_NAME', 'axian_ddr_settings');
+
+//interim
+define('DDR_INTERIM_EN_COURS','in_progress');
+define('DDR_INTERIM_FINI','finished');

@@ -24,6 +24,7 @@ class AxianDDRWorkflow{
                 DDR_CAP_CAN_ADMIN_DDR,
                 DDR_CAP_CAN_EXPORT_DDR,
                 DDR_CAP_CAN_VIEW_MENU_HISTORIQUE_DDR
+                DDR_CAP_CAN_ADMIN_INTERIM
             ),
 
             DDR_ROLE_MANAGER => array(
