@@ -776,7 +776,9 @@ class AxianDDR{
         }
 
         //restriction by societe
-        //$field_args['societe'] = $the_user->company;
+        if( isset($the_user->company) && !empty($the_user->company) ){
+            $field_args['societe'] = $the_user->company;
+        }
 
         $data_authorized = array(
             'id',
@@ -890,6 +892,12 @@ class AxianDDR{
 
         return $wpdb->get_var("SELECT COUNT(*) FROM ".TABLE_AXIAN_DDR);
     }
+
+    public static function getByAssigneeId( $assignee_id ){
+        global $wpdb;
+        return $wpdb->get_col( "SELECT id FROM " . TABLE_AXIAN_DDR . " WHERE assignee_id = " . $assignee_id );
+    }
+
 }
 
 global $axian_ddr;

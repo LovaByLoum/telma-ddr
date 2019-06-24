@@ -98,21 +98,23 @@ class AxianDDRMain {
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8"
         );
 
-        // create table ddr historique
+        // create table ddr interim
         $wpdb->query(
             "CREATE TABLE IF NOT EXISTS " . TABLE_AXIAN_DDR_INTERIM ." (
                 `id` bigint(20) NOT NULL AUTO_INCREMENT,
                 `creator_id` bigint(20) NOT NULL,
                 `collaborator_id` bigint(20) NOT NULL,
-                `collaborator_interim_id` bigint(20) NOT NULL,
-                `date_interim` varchar(50) NOT NULL,
-                `collaborator_roles` longtext NOT NULL,
-                `status` varchar(50),
-                PRIMARY KEY (`id`,`collaborator_id`,`collaborator_interim_id`)
+                `interim_id` bigint(20) NOT NULL,
+                `date_debut` date NOT NULL,
+                `date_fin` date NOT NULL,
+                `interim_roles` longtext NOT NULL,
+                `collaborator_tickets` longtext,
+                `status` varchar(50) DEFAULT NULL,
+                PRIMARY KEY (`id`,`collaborator_id`,`interim_id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8"
         );
 
-        // create table ddr historique
+        // create table ddr term
         $wpdb->query(
             "CREATE TABLE IF NOT EXISTS " . TABLE_AXIAN_DDR_TERM ." (
                 `id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -138,6 +140,7 @@ class AxianDDRMain {
         //menu admin
         add_menu_page('DDR Administration', 'DDR Administration', DDR_CAP_CAN_ADMIN_DDR, 'axian-ddr-admin','','dashicons-networking');
         add_submenu_page( 'axian-ddr-admin', 'Réglage général', 'Réglage général',DDR_CAP_CAN_ADMIN_DDR, 'axian-ddr-admin','AxianDDRAdministration::template');
+        add_submenu_page( 'axian-ddr-admin', 'Termes de taxonomie', 'Termes de taxonomie', DDR_CAP_CAN_ADMIN_DDR, 'axian-ddr-admin&tab=term', 'AxianDDRAdministration::template');
         add_submenu_page( 'axian-ddr-admin', 'Termes de taxonomie', 'Termes de taxonomie', DDR_CAP_CAN_ADMIN_DDR, 'axian-ddr-admin&tab=term', 'AxianDDRAdministration::template');
 
         //gestion interim

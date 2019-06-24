@@ -68,7 +68,6 @@ if ( preg_match('/^(.+)wp-content.*/', dirname(__FILE__), $path) ){
                             'drh',
                             'dg',
                             'responsable_rh',
-                            'subscriber'
                         );
                         $glue = '';
                         $sql .= ' AND (';

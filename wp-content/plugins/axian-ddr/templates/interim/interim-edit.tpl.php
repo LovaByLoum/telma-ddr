@@ -8,6 +8,7 @@ $is_view = isset($_GET['id']) && isset($_GET['action']) && 'view' == $_GET['acti
 
 if( $is_edit || $is_view ){
     $post_data = AxianDDRInterim::getById(intval($_GET['id']));
+    $post_data['date_interim'] = axian_ddr_convert_to_normal_date($post_data['date_debut']) . ':' . axian_ddr_convert_to_normal_date($post_data['date_fin']);
 }else $post_data = null;
 ?>
 <?php

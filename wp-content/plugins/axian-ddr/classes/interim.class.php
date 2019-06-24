@@ -18,11 +18,11 @@ class AxianDDRInterim{
                 'name' => 'collaborator_id',
                 'required' => true,
             ),
-            'collaborator_interim_id' => array(
+            'interim_id' => array(
                 'label' => 'Intérim',
                 'type' => 'autocompletion',
                 'source' => 'interim',
-                'name' => 'collaborator_interim_id',
+                'name' => 'interim_id',
                 'required' => true,
             ),
             'date_interim' => array(
@@ -39,15 +39,18 @@ class AxianDDRInterim{
     public static function add($args){
         global $wpdb, $current_user;
 
-        $result = $wpdb->insert(TABLE_AXIAN_DDR_INTERIM, array(
+        $data = array(
             'creator_id' => $current_user->ID,
             'collaborator_id' => intval($args['collaborator_id']),
-            'collaborator_interim_id' => intval($args['collaborator_interim_id']),
-            'date_interim' => $args['date_interim'],
-            'collaborator_roles' => $args['collaborator_roles'],
+            'interim_id' => intval($args['interim_id']),
+            'date_debut' => $args['date_debut'],
+            'date_fin' => $args['date_fin'],
+            'interim_roles' => maybe_serialize($args['interim_roles']) ,
+            'collaborator_tickets' => maybe_serialize($args['collaborator_tickets']),
             'status' => DDR_INTERIM_EN_COURS,
+        );
 
-        ));
+        $result = $wpdb->insert(TABLE_AXIAN_DDR_INTERIM, $data);
 
         if ( $result ){
             return $wpdb->insert_id;
@@ -57,20 +60,15 @@ class AxianDDRInterim{
 
     public static function update($args){
         global $wpdb;
-        $data_authorized = array(
-            'collaborator_id',
-            'collaborator_interim_id',
-            'date_interim',
-            'collaborator_roles',
-            'status',
+        $data = array(
+            'collaborator_id' => intval($args['collaborator_id']),
+            'interim_id' => intval($args['interim_id']),
+            'date_debut' => $args['date_debut'],
+            'date_fin' => $args['date_fin'],
+            'interim_roles' => maybe_serialize($args['interim_roles']) ,
+            'collaborator_tickets' => maybe_serialize($args['collaborator_tickets']),
+            'status' => DDR_INTERIM_EN_COURS,
         );
-        $data = array();
-        foreach ( $args as $key => $value ){
-            if ( in_array($key, $data_authorized) ){
-                $data[$key] = $value;
-            }
-        }
-
 
         $result = $wpdb->update(
             TABLE_AXIAN_DDR_INTERIM,
@@ -82,7 +80,11 @@ class AxianDDRInterim{
     }
 
     public static function delete($id){
-
+        global $wpdb;
+        $wpdb->delete(
+            TABLE_AXIAN_DDR_INTERIM,
+            array('id' => $id)
+        );
     }
 
     public static function template(){
@@ -91,12 +93,10 @@ class AxianDDRInterim{
 
     public function process(){
         global $interim_process_msg;
-        $user = new Wp_User(1486);
-        //var_dump($user);die;
         $is_submit_interim = isset($_POST['submit-interim']);
         $is_update_interim = isset($_POST['update-interim']);
         $is_delete_interim = isset($_POST['delete-interim']);
-        $the_interim_id = ( isset($_GET['id']) && !empty($_GET['id']) ) ? intval($_GET['id']) : null;
+        $id = ( isset($_GET['id']) && !empty($_GET['id']) ) ? intval($_GET['id']) : null;
         $msg = axian_ddr_validate_fields($this);
 
         //data not valid
@@ -105,22 +105,35 @@ class AxianDDRInterim{
             return false;
             //data valid
         } else {
-            //process add term
+            //process add interim
             $post_data = $_POST;
             $collaborator_id = intval( $post_data['collaborator_id'] );
-            $user_meta = get_userdata($collaborator_id);
+            $interim_id = intval( $post_data['interim_id'] );
+
+            //save interim role
+            $user_meta = get_userdata($interim_id);
             $user_roles = $user_meta->roles;
-            $post_data['collaborator_roles'] = serialize($user_roles);
+            $post_data['interim_roles'] = $user_roles;
+
+            //Date
+            list($date_debut, $date_fin) = explode(':', $post_data['date_interim']);
+            $post_data['date_debut'] = axian_ddr_convert_to_mysql_date($date_debut);
+            $post_data['date_fin'] = axian_ddr_convert_to_mysql_date($date_fin);
+            unset($post_data['date_interim']);
+
+            //collaborator tickets
+            $post_data['collaborator_tickets'] = AxianDDR::getByAssigneeId($collaborator_id);
+
             if ( $is_submit_interim ){
                 //insert
-                $the_new_interim_id = self::add($post_data);
-                $redirect_to = 'admin.php?page=axian-ddr-interim&action=view&id=' . $the_new_interim_id . '&msg=' . DDR_MSG_SUBMITTED_SUCCESSFULLY;
+                $id = self::add($post_data);
+                $redirect_to = 'admin.php?page=axian-ddr-interim&action=view&id=' . $id . '&msg=' . DDR_MSG_SUBMITTED_SUCCESSFULLY;
             }elseif ($is_update_interim){
                 self::update($post_data);
-                $redirect_to = 'admin.php?page=axian-ddr-interim&action=view&id=' . $the_interim_id . '&msg=' . DDR_MSG_SAVED_SUCCESSFULLY;
+                $redirect_to = 'admin.php?page=axian-ddr-interim&action=view&id=' . $id . '&msg=' . DDR_MSG_SAVED_SUCCESSFULLY;
             }elseif ($is_delete_interim){
-                self::delete($the_interim_id);
-                //$redirect_to = 'admin.php?page=axian-ddr-interim-list&msg=' . DDR_MSG_DELETED_SUCCESSFULLY;
+                self::delete($id);
+                $redirect_to = 'admin.php?page=axian-ddr-interim&msg=' . DDR_MSG_DELETED_SUCCESSFULLY;
             }
 
             if ( !empty($redirect_to) ){
@@ -146,6 +159,12 @@ class AxianDDRInterim{
                 $return = array(
                     'code' => 'updated',
                     'msg' => 'Soumission effectuée avec succés.'
+                );
+                break;
+            case DDR_MSG_DELETED_SUCCESSFULLY:
+                $return = array(
+                    'code' => 'updated',
+                    'msg' => 'Suppression effectuée avec succés.'
                 );
                 break;
             case DDR_MSG_VALIDATE_ERROR:
@@ -243,7 +262,7 @@ class AxianDDRInterim{
         if ( $interims['count'] > 0 ) foreach($interims['items'] as $interim){
             $user_meta=get_userdata($interim->collaborator_id);
             $collaborator_interim_roles= $user_meta->roles;
-            $collaborator_interim = new Wp_User($interim->collaborator_interim_id);
+            $collaborator_interim = new WP_User($interim->collaborator_interim_id);
             list($begin,$end) = explode(':', $interim->date_interim);
             list($bd, $bm, $by) = explode('/', $begin);
             list($ed, $em, $ey) = explode('/', $end);
@@ -251,7 +270,9 @@ class AxianDDRInterim{
             $collaborator_interim_default_roles = unserialize($interim->collaborator_roles);
             if( $mysql_end >= $today){
                 foreach($collaborator_interim_roles as $role){
-                    if( !in_array($role,$collaborator_interim_default_roles)) $collaborator_interim->add_role($role); $collaborator_interim->add_role($role);
+                    if( !in_array($role,$collaborator_interim_default_roles)){
+                        $collaborator_interim->add_role($role);
+                    }
                 }
                 AxianDDR::substitutionDDR($interim->collaborator_id,$interim->collaborator_interim_id);
             }else{

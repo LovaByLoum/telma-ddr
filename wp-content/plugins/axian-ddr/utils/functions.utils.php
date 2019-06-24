@@ -77,9 +77,10 @@ function axian_ddr_render_field( $field, $post_data = null, $label = true, $disp
                 }
                 break;
             case 'file':
-                ?>
-                <a href="<?php echo axian_ddr_get_file($current_value);?>" target="_blank" title="Télécharger"><i class="dashicons-before dashicons-media-document"></i> Télécharger</a>
-                <?php
+                $file_url = axian_ddr_get_file($current_value);
+                if ( !empty($current_value) ) : ?>
+                <a href="<?php echo $file_url;?>" target="_blank" title="Télécharger"><i class="dashicons-before dashicons-media-document"></i> Télécharger</a>
+                <?php endif;
                 break;
             case 'daterangepicker' :
                 list($begin,$end) = explode(':',$current_value);
@@ -345,6 +346,13 @@ function axian_ddr_convert_to_mysql_date($date){
         $date = $matches[3] . '-' . $matches[2] . '-' . $matches[1];
     }
     return $date;
+}
+
+function axian_ddr_convert_to_normal_date($mysldate){
+    if ( preg_match('#([0-9]{4})-([0-9]{2})-([0-9]{2})#', $mysldate, $matches) ){
+        $mysldate = $matches[3] . '/' . $matches[2] . '/' . $matches[1];
+    }
+    return $mysldate;
 }
 
 function axian_ddr_convert_to_human_datetime($datetime){

@@ -50,12 +50,13 @@ CREATE TABLE IF NOT EXISTS `wp_ddr_interim` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `creator_id` bigint(20) NOT NULL,
   `collaborator_id` bigint(20) NOT NULL,
-  `collaborator_interim_id` bigint(20) NOT NULL,
-  `date_interim` varchar(50) NOT NULL,
-  `collaborator_roles` longtext NOT NULL,
-  `status` varchar(50),
-
-  PRIMARY KEY (`id`,`collaborator_id`,`collaborator_interim_id`)
+  `interim_id` bigint(20) NOT NULL,
+  `date_debut` date NOT NULL,
+  `date_fin` date NOT NULL,
+  `interim_roles` longtext NOT NULL,
+  `collaborator_tickets` longtext,
+  `status` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`,`collaborator_id`,`interim_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8
 
 
