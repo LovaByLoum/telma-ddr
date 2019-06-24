@@ -95,3 +95,8 @@ fieldset.ddr-box-bordered i.info{
 .ddr-settings .form-field select{
     width: 70%;
 }
+
+/*historique*/
+.ddr-histrotique-delai-box{
+    display: none;
+}

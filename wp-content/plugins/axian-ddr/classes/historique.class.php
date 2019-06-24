@@ -142,7 +142,7 @@ class AxianDDRHistorique{
             $interval = $date1->diff($date2);
             return $interval->d . " jours " . $interval->i . " mn " . $interval->s . " sec" ;
         } else {
-            return 'Traitement en cours';
+            return '-';
         }
     }
 

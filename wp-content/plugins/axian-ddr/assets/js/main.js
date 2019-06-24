@@ -93,6 +93,30 @@ jQuery(function() {
         return false;
     })
 
+    $('.listedeshistoriquesddr').on('click','.open-details-delai',  function(){
+        _link = $(this);
+        _details = _link.next();
+        _tr = $(this).parents('tr');
+        if ( _tr.hasClass('detail-opened') ){
+            _tr.removeClass('detail-opened');
+            _tr.next().remove();
+            _link.text('+ détails');
+        } else {
+            _tr.addClass('detail-opened');
+            $('<tr><td colspan="' + _tr.find('>td').length + '">' + _details.html() + '</td></tr>').insertAfter(_tr);
+            _link.text('- détails');
+        }
+    })
+    $('.listedeshistoriquesddr').on('click', '.close-details-delai', function(){
+        _link = $(this);
+        _tr_details = $(this).parents('tr');
+        _tr = _tr_details.prev();
+        _details_link = _tr.find('.open-details-delai');
+        _tr.removeClass('detail-opened');
+        _tr_details.remove();
+        _details_link.text('+ détails');
+    })
+
 });
 
 function addParameterToURL(param){
