@@ -56,6 +56,7 @@ CREATE TABLE IF NOT EXISTS `wp_ddr_interim` (
   `interim_roles` longtext NOT NULL,
   `collaborator_tickets` longtext,
   `status` varchar(50) DEFAULT NULL,
+  `created` datetime NOT NULL,
   PRIMARY KEY (`id`,`collaborator_id`,`interim_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8
 

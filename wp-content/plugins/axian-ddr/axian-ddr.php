@@ -26,6 +26,7 @@ require_once('classes/list/ddr-list.class.php');
 require_once('classes/list/ddr-etat-list.class.php');
 require_once('classes/list/historique-list.class.php');
 require_once('classes/list/term-list.class.php');
+require_once('classes/list/interim-list.class.php');
 require_once('classes/mail.class.php');
 
 register_activation_hook( __FILE__ , 'AxianDDRMain::install' );

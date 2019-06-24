@@ -48,6 +48,7 @@ class AxianDDRInterim{
             'interim_roles' => maybe_serialize($args['interim_roles']) ,
             'collaborator_tickets' => maybe_serialize($args['collaborator_tickets']),
             'status' => DDR_INTERIM_EN_COURS,
+            'created' => date('Y-m-d H:i:s'),
         );
 
         $result = $wpdb->insert(TABLE_AXIAN_DDR_INTERIM, $data);
@@ -95,51 +96,52 @@ class AxianDDRInterim{
         global $interim_process_msg;
         $is_submit_interim = isset($_POST['submit-interim']);
         $is_update_interim = isset($_POST['update-interim']);
-        $is_delete_interim = isset($_POST['delete-interim']);
+        $is_delete_interim = (isset($_GET['action']) && 'delete' == $_GET['action']);
         $id = ( isset($_GET['id']) && !empty($_GET['id']) ) ? intval($_GET['id']) : null;
-        $msg = axian_ddr_validate_fields($this);
 
-        //data not valid
-        if ( !empty($msg) ){
-            $interim_process_msg = self::manage_message(DDR_MSG_VALIDATE_ERROR, $msg);
-            return false;
-            //data valid
-        } else {
-            //process add interim
-            $post_data = $_POST;
-            $collaborator_id = intval( $post_data['collaborator_id'] );
-            $interim_id = intval( $post_data['interim_id'] );
+        if ($is_delete_interim){
+            self::delete($id);
+            $redirect_to = 'admin.php?page=axian-ddr-interim&msg=' . DDR_MSG_DELETED_SUCCESSFULLY;
+        } else if ( $is_submit_interim || $is_update_interim ){
+            $msg = axian_ddr_validate_fields($this);
+            //data not valid
+            if ( !empty($msg) ){
+                $interim_process_msg = self::manage_message(DDR_MSG_VALIDATE_ERROR, $msg);
+                return false;
+                //data valid
+            } else {
+                //process add interim
+                $post_data = $_POST;
+                $collaborator_id = intval( $post_data['collaborator_id'] );
+                $interim_id = intval( $post_data['interim_id'] );
 
-            //save interim role
-            $user_meta = get_userdata($interim_id);
-            $user_roles = $user_meta->roles;
-            $post_data['interim_roles'] = $user_roles;
+                //save interim role
+                $user_meta = get_userdata($interim_id);
+                $user_roles = $user_meta->roles;
+                $post_data['interim_roles'] = $user_roles;
 
-            //Date
-            list($date_debut, $date_fin) = explode(':', $post_data['date_interim']);
-            $post_data['date_debut'] = axian_ddr_convert_to_mysql_date($date_debut);
-            $post_data['date_fin'] = axian_ddr_convert_to_mysql_date($date_fin);
-            unset($post_data['date_interim']);
+                //Date
+                list($date_debut, $date_fin) = explode(':', $post_data['date_interim']);
+                $post_data['date_debut'] = axian_ddr_convert_to_mysql_date($date_debut);
+                $post_data['date_fin'] = axian_ddr_convert_to_mysql_date($date_fin);
+                unset($post_data['date_interim']);
 
-            //collaborator tickets
-            $post_data['collaborator_tickets'] = AxianDDR::getByAssigneeId($collaborator_id);
+                //collaborator tickets
+                $post_data['collaborator_tickets'] = AxianDDR::getByAssigneeId($collaborator_id);
 
-            if ( $is_submit_interim ){
-                //insert
-                $id = self::add($post_data);
-                $redirect_to = 'admin.php?page=axian-ddr-interim&action=view&id=' . $id . '&msg=' . DDR_MSG_SUBMITTED_SUCCESSFULLY;
-            }elseif ($is_update_interim){
-                self::update($post_data);
-                $redirect_to = 'admin.php?page=axian-ddr-interim&action=view&id=' . $id . '&msg=' . DDR_MSG_SAVED_SUCCESSFULLY;
-            }elseif ($is_delete_interim){
-                self::delete($id);
-                $redirect_to = 'admin.php?page=axian-ddr-interim&msg=' . DDR_MSG_DELETED_SUCCESSFULLY;
+                if ( $is_submit_interim ){
+                    //insert
+                    $id = self::add($post_data);
+                    $redirect_to = 'admin.php?page=axian-ddr-interim&msg=' . DDR_MSG_SUBMITTED_SUCCESSFULLY;
+                }elseif ($is_update_interim){
+                    self::update($post_data);
+                    $redirect_to = 'admin.php?page=axian-ddr-interim&action=edit&id=' . $id . '&msg=' . DDR_MSG_SAVED_SUCCESSFULLY;
+                }
             }
+        }
 
-            if ( !empty($redirect_to) ){
-                wp_safe_redirect($redirect_to);die;
-            }
-
+        if ( !empty($redirect_to) ){
+            wp_safe_redirect($redirect_to);die;
         }
     }
 
@@ -191,31 +193,19 @@ class AxianDDRInterim{
         return $result;
     }
 
-    public static function getBy($field_args = array(), $supp_args = array(), $predifined_filters =''){
+    public static function getBy($field_args = array(), $supp_args = array()){
         global $wpdb;
 
         $query_select = "SELECT SQL_CALC_FOUND_ROWS * FROM  " . TABLE_AXIAN_DDR_INTERIM . " WHERE 1=1 ";
 
-        //predefine filter
-        /*if ( !empty($predifined_filters) ){
-            if ( $predifined_filters == 'myvalidation' ){
-                $field_args['assignee_id'] = $current_user->ID;
-            }
-
-            if ( $predifined_filters == 'mytickets' ){
-                $field_args['author_id'] = $current_user->ID;
-            }
-
-            if ( $predifined_filters == 'alltickets' ){
-
-            }
-        }*/
-
         $data_authorized = array(
+            'creator_id',
             'collaborator_id',
-            'collaborator_interim_id',
-            'date_interim',
-            'status',
+            'interim_id',
+            'date_fin',
+            'date_debut',
+            'date_debut',
+            'created',
         );
 
         foreach ( $field_args as $field => $value ){
@@ -224,13 +214,11 @@ class AxianDDRInterim{
 
             switch( $field ){
 
-                case 'date_interim' :
-                    list($begin, $end) = explode(':', $value);
-                    list($bd, $bm, $by) = explode('/', $begin);
-                    list($ed, $em, $ey) = explode('/', $end);
-                    $mysql_begin = $by . '-' . $bm . '-' . $bd . ' 00:00:00';
-                    $mysql_end = $ey . '-' . $em . '-' . $ed . ' 23:59:59';
-                    //$query_select .= " AND $field >= '{$mysql_begin}' AND $field < '{$mysql_end}' ";
+                case 'date_debut' :
+                    $query_select .= " AND $field >= '{$value}'";
+                    break;
+                case 'date_fin' :
+                    $query_select .= " AND $field <= '{$value}'";
                     break;
                 default:
                     $query_select .= " AND $field = '{$value}'";
