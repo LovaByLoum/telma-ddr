@@ -47,113 +47,128 @@ $isNew = isset($_GET['add']) ? true : false;
     </div><!-- .wrap -->
 <?php else : ?>
     <div class="wrap nosubsub">
-        <h1 class="wp-heading-inline">Administration des workflows</h1>
-        <div id="col-container" class="container">
-            <div class="row" id="bloc_principale">
-                <div class="col-xs-6">
-                    <form action="" method="post" autocomplete="off" enctype="multipart/form-data">
-                        <div class="form-group row">
-                            <label for="label_workflow" class="col-sm-2 col-form-label">Nom</label>
-                            <div class="col-sm-8 champ">
-                                <input type="text" class="form-control" name="nom_workflow" id="label_workflow" placeholder="Nom du workflow">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="form-field form-required term-name-wrap" style="margin-left: 15px;">
-                                <?php axian_ddr_render_field($axian_ddr_workflow->fields['societe'], $post_data); ?>
-                            </div>
 
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <label class="form-check-label" for="defaultCheck1">
-                                Par défaut
-                            </label>
-                            <input class="form-check-input" type="checkbox" value="1" name="par_defaut" id="par_defaut">
-                        </div><br>
-                        <button type="button" class="btn btn-secondary" id="ajout_etape" style="margin-top: 15px;">Ajouter une étape</button>
-                        <div class="container " id="principale">
-                            <div id="bloc-etape" class="container bloc_etape">
-                                <button type="button" class="close-bloc" aria-label="Close" data-dismiss="bloc_etape">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                                <div class="form-group row">
-                                    <label for="label_workflow" class="col-sm-2 col-form-label">Etat</label>
-                                    <div class="col-sm-8 champ">
-                                        <select id="select_etat" name="etat[]" class="custom-select">
-                                            <option value="brouillon" name="brouillon">Brouillon</option>
-                                            <option value="valide" name="etat_valide">Validé</option>
-                                            <option value="en_cours" name="en_cours">En cours</option>
-                                            <option value="refuse" name="etat_refuse">Refusé</option>
-                                            <option value="annule" name="etat_annule">Annulé</option>
-                                            <option value="cloture" name="etat_cloture">Clôturé</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="label_workflow" class="col-sm-2 col-form-label">Etape</label>
-                                    <div class="col-sm-8 champ">
-                                        <select id="select_etape" name="etape[]" class="custom-select">
-                                            <option value="creation" name="creation">Création</option>
-                                            <option value="validation1" name="validation1">Validation N1</option>
-                                            <option value="validation2" name="validation2">Validation N2</option>
-                                            <option value="validation3" name="validation3">Validation N3</option>
-                                            <option value="validation3" name="validation4">Validation N4</option>
-                                            <option value="publication" name="publication">Publication</option>
-                                            <option value="fini" name="fini">Fini</option>
-                                            <option value="annulation" name="annulation">Annulation</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <button type="button" class="btn btn-secondary btn-sm" id="ajout_role" style="margin-top: 15px;">Ajouter rôles</button>
-                                </div>
-                                <div class="container" id="bloc-roles">
-                                    <div class="form-group row">
-                                        <label for="label_workflow" class="col-sm-2 col-form-label">Role</label>
-                                        <div class="col-sm-8 champ">
-                                            <select id="select_etape" name="role[]" class="custom-select">
-                                                <option value="manager" name="manager">Manager</option>
-                                                <option value="assistante_direction" name="assistante_direction">Assistante de direction</option>
-                                                <option value="assistante_rh" name="assistante_rh">Assistante RH</option>
-                                                <option value="controleur_budget" name="controleur_budget">Controleur Budget</option>
-                                                <option value="drh" name="drh">DRH</option>
-                                                <option value="dg" name="dg">DG</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="label_workflow" class="col-sm-2 col-form-label">Type</label>
-                                        <div class="col-sm-8 champ">
-                                            <select id="select_etape" name="type[]" class="custom-select">
-                                                <option value="prevu" name="prevu">Prévu</option>
-                                                <option value="non_prevu" name="non_prevu">Non prévu</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="label_workflow" class="col-sm-2 col-form-label">Actions</label>
-                                        <div class="col-sm-8 champ">
-                                            <select id="select_etape" name="action[]" class="custom-select" multiple>
-                                                <option value="creer" name="creer">Créer</option>
-                                                <option value="soumettre" name="soumettre">Soumettre</option>
-                                                <option value="valider" name="valider">Valider</option>
-                                                <option value="refuser" name="refuser">Refuser</option>
-                                                <option value="cloturer" name="cloturer">Clôturer</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
 
-                        <p class="submit">
-                            <input type="submit" name="submit-workflow" id="submit-workflow" class="button button-primary" value="Créer le workflow">
-                        </p>
-                    </form>
+        <div class="wrap">
+            <h1 class="wp-heading-inline">Administration des workflows</h1>
+
+            <form id="form-workflow-edit" action="" method="post" autocomplete="off">
+                <div class="form-field-wrapper">
+                    <label class="form-label">Nom</label>
+                    <div class="form-field">
+                        <input type="text" class="form-control" name="nom_workflow" id="label_workflow" placeholder="Nom du workflow">
+                    </div>
                 </div>
 
-            </div>
+                <div class="form-field-wrapper">
+                    <label class="form-label">Société</label>
+                    <div class="form-field">
+                        <?php axian_ddr_render_field($axian_ddr_workflow->fields['societe'], $post_data, false); ?>
+                    </div>
+                </div>
+
+                <div class="form-field-wrapper">
+                    <label class="form-label">Par défaut</label>
+                    <div class="form-field">
+                        <input class="form-check-input" type="checkbox" value="1" name="par_defaut" id="par_defaut">
+                    </div>
+                </div>
+
+                <div class="wrapper-etape-workflow">
+                    <button type="button" class="btn btn-secondary ajout_etape">Ajouter une étape</button>
+
+                    <div class="wrapper-etape row">
+                        <input type="hidden" class="bloc_etape_number" value="0" />
+
+                        <div class="bloc_etape item clone col-md-3 col-sm-4 col-xs-12">
+                            <div style="float:right;">
+                                <button type="button" class="close-bloc btn btn-default" style="height:30px;width:30px; float:right; background: tomato;">
+                                    <span aria-hidden="true" style="text-align: center;"> &times;&nbsp;&nbsp;</span>
+                                </button>
+                            </div>
+
+                            <div class="form-group form-field-wrapper">
+                                <label class="form-label">Etat</label>
+                                <div class="form-field">
+                                    <select name="workflow[etat][_row_index_etape]" class="custom-select">
+                                        <?php foreach (AxianDDR::$etats as $etat => $label) : ?>
+                                            <option value="<?php echo $etat; ?>"><?php echo $label; ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group form-field-wrapper">
+                                <label class="form-label">Etape</label>
+                                <div class="form-field">
+                                    <select name="workflow[etape][_row_index_etape]" class="custom-select">
+                                        <?php foreach (AxianDDR::$etapes as $etape => $label) : ?>
+                                            <option value="<?php echo $etape; ?>"><?php echo $label; ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="roles-fields-wrapper">
+                                <button type="button" class="btn btn-secondary btn-sm ajout_role">Ajouter rôles</button>
+
+                                <div class="roles-wrapper">
+                                    <input type="hidden" class="bloc_role_number" value="0" />
+                                    <div class="bloc_role item clone">
+
+                                        <div class="form-group form-field-wrapper">
+                                            <label class="form-label">Rôle</label>
+                                            <div class="form-field">
+                                                <select name="workflow[roles][_row_index_etape][role][_row_index_role]" class="custom-select">
+                                                    <?php foreach (AxianDDRWorkflow::$acteurs as $role => $label) : ?>
+                                                        <option value="<?php echo $role; ?>"><?php echo $label; ?></option>
+                                                    <?php endforeach; ?>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group form-field-wrapper">
+                                            <label class="form-label">Type de demande</label>
+                                            <div class="form-field">
+                                                <select name="workflow[roles][_row_index_etape][type][_row_index_role]" class="custom-select">
+                                                    <?php foreach (AxianDDRWorkflow::$types_demande as $type => $label) : ?>
+                                                        <option value="<?php echo $type; ?>"><?php echo $label; ?></option>
+                                                    <?php endforeach; ?>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group form-field-wrapper">
+                                            <label class="form-label">Actions</label>
+                                            <div class="form-field">
+                                                <select multiple name="workflow[roles][_row_index_etape][actions][_row_index_role][]" class="custom-select">
+                                                    <?php foreach (AxianDDRWorkflow::$actions as $action => $label) : ?>
+                                                        <option value="<?php echo $action; ?>"><?php echo $label; ?></option>
+                                                    <?php endforeach; ?>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+                <p class="submit">
+                    <input type="submit" name="submit-workflow" id="submit-workflow" class="button button-primary" value="Créer le workflow">
+                </p>
+            </form>
         </div>
+
+
     </div>
 
 <?php endif; ?>

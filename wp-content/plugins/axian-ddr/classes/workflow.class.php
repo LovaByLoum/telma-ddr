@@ -462,7 +462,8 @@ class AxianDDRWorkflow
 
             $the_user = AxianDDRUser::getById($current_user->ID);
             $post_data = $_POST;
-
+            mp($post_data);
+            die;
             //$company = $the_user->company;
             $now = date("Y-m-d H:i:s");
             $nom = $post_data['nom_workflow'];

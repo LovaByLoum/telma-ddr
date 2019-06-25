@@ -1,25 +1,43 @@
 jQuery(document).ready(function () {
 
-	// tester si au moins un div est affiché
-
+	jQuery('.wrapper-etape-workflow .ajout_etape').click(function(){
+		_etape_wrapper = jQuery('.wrapper-etape');
+		_clone_etape = _etape_wrapper.find('.bloc_etape.item.clone');
+		_etape_number_field = _etape_wrapper.find('.bloc_etape_number');
+		_etape_number = _etape_number_field.val();
+		_etape_number++;
+		_the_clone = _clone_etape.clone();
+		_the_clone.find('[name]').each(function(){
+			var _name = jQuery(this).attr('name');
+			_name = _name.replace('_row_index_etape', _etape_number);
+			jQuery(this).attr('name', _name);
+		});
+		_the_clone.removeClass('clone');
+		_etape_wrapper.append(_the_clone);
+		_etape_number_field.val(_etape_number);
+	})
 	
-	// cloner une étape
-	jQuery('#ajout_etape').on('click', function () {
-		// jQuery('div#bloc-etape').show();
-		jQuery('div#bloc-etape').clone().appendTo("div#principale");
-		var numItems = $('.clone_etapes').length;
-				
-	});
-
-	// cloner les rôles
-
-	jQuery('#ajout_role').on('click', function () {
-		jQuery('div#bloc-roles').clone().appendTo('div#bloc-roles')
-	});
+	jQuery('.wrapper-etape-workflow').on('click', '.ajout_role', function(){
+		_parent_wrapper = jQuery(this).parents('.roles-fields-wrapper');
+		_role_wrapper = jQuery('.roles-wrapper', _parent_wrapper);
+		_clone_role = _role_wrapper.find('.bloc_role.item.clone');
+		_role_number_field = _role_wrapper.find('.bloc_role_number');
+		_role_number = _role_number_field.val();
+		_role_number++;
+		_the_clone = _clone_role.clone();
+		_the_clone.find('[name]').each(function(){
+			var _name = jQuery(this).attr('name');
+			_name = _name.replace('_row_index_role', _role_number);
+			jQuery(this).attr('name', _name);
+		});
+		_the_clone.removeClass('clone');
+		_role_wrapper.append(_the_clone);
+		_role_number_field.val(_role_number);
+	})
 
 	// masquer le bouton ajouter actions
 
-	jQuery('#ajout_action').hide();
+	/*jQuery('#ajout_action').hide();
 
 	// afficher le bloc rôle
 	jQuery('#ajout_role').on('click', function(){
@@ -31,31 +49,56 @@ jQuery(document).ready(function () {
 		jQuery('.clone_actions').removeClass('hidden');
 	});
 
-	//active les selects dans les blocs
-
-	jQuery("#chosen-select").chosen();
-
-	// Ajax pour l'envoi post du formulaire
-	jQuery.post(
-		ajaxurl,
-		{
-			'action': 'mon_action',
-			'param' : 'coucou'
-		},
-		function(response) {
-			console.log(response);
-		}
-	);
-
-	// fermer un bloc
-
-	jQuery('.close-bloc').on('click', function(c){
-		jQuery(this).parent().fadeOut('slow', function(c){
-		});
-	});	
-
-
 	
+	//fonction cloner et remove
+	var regex = /^(.+?)(\d+)$/i;
+	var cloneIndex = jQuery('.bloc_etape').length;
+	//var cloneIndexRole = jQuery('.bloc-roles').length;
+
+	function clone() {
+		jQuery('div#bloc_etape').clone()
+		.appendTo('.bloc_etape')
+		.attr('id', 'bloc_etape' + "["+ cloneIndex + "]")
+		.each(function () {
+			var id = this.id || "";
+			var match = id.match(regex) || []; 
+			if (match.length == 3) {
+				this.id = match[1] + (cloneIndex);
+			}
+		})
+		.on('click', 'button#ajout_etape', clone)
+		.on('click', '.close-bloc', remove);
+	}
+
+	function remove() {
+		jQuery(this).parents('.bloc_etape').remove();
+	}
+
+	jQuery('button#ajout_etape').on('click', clone);
+	jQuery('.close-bloc').on('click', remove);
+	
+
+	// cloner les rôles
+
+		function cloneRole() {
+		jQuery('div#bloc-roles').clone()
+		.appendTo('div#bloc-roles')
+		.attr('id', 'bloc-roles', +'['+ cloneIndexRole + ']')
+		.each(function () {
+			var id = this.id || "";
+			var match = id.match(regex) || [];
+			if (match.length == 3) {
+				this.id = match[1] + (cloneIndexRole);
+			}
+		})
+		.on('click', 'button#ajout_role', cloneRole);
+	}
+
+	jQuery('button#ajout_role').on('click', cloneRole);
+	*/
+
+
+
 
 });
 
