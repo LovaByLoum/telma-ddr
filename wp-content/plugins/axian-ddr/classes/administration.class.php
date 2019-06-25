@@ -11,66 +11,24 @@ global $axian_ddr_settings;
 class AxianDDRAdministration{
 
     public $fields;
+    public static $list_tabs = array(
+        'general' => 'Configuration générale',
+        'term' => 'Termes de taxonomie',
+        'validation' => 'Validation',
+        'mail' => 'Mail',
+    );
 
     public function __construct() {
 
         //fields general
-        $field_general = array(
+        $this->fields['general'] = array(
             'max_upload_size' => array(
                 'label' => 'Max upload size',
                 'type' => 'text',
                 'name' => 'axian_ddr_settings[general][max_upload_size]',
                 'description' => 'en MegaOctet'
             ),
-            'sujet_notification_validateur' => array(
-                'label' => 'Sujet notification mail pour validateur',
-                'type' => 'text',
-                'name' => 'axian_ddr_settings[general][sujet_notification_validateur]',
-                'description' => ''
-            ),
-            'content_notification_validateur' => array(
-                'label' => 'Contenu notification mail pour validateur',
-                'type' => 'textarea',
-                'rows' => '8',
-                'name' => 'axian_ddr_settings[general][content_notification_validateur]',
-                'description' => 'Vous pouvez utiliser les jettons suivants: <pre>type de demande = [type de demande],
-    lien vers la demande = [reference]</pre>'
-            ),
-            'sujet_notification_rappel' => array(
-                'label' => 'Sujet notification de rappel',
-                'type' => 'text',
-                'name' => 'axian_ddr_settings[general][sujet_notification_rappel]',
-                'description' => ''
-            ),
-            'content_notification_rappel' => array(
-                'label' => 'Contenu notification de rappel',
-                'type' => 'textarea',
-                'rows' => '8',
-                'name' => 'axian_ddr_settings[general][content_notification_rappel]',
-                'description' => 'Vous pouvez utiliser les jettons suivants: <pre>nombre de ticket = [nb],
-    lien tableau de bord = [ici]</pre>'
-            ),
-            'sujet_notification_delegation' => array(
-                'label' => 'Sujet notification de delegation',
-                'type' => 'text',
-                'name' => 'axian_ddr_settings[general][sujet_notification_delegation]',
-                'description' => ''
-            ),
-            'content_notification_delegation' => array(
-                'label' => 'Contenu notification de delegation',
-                'type' => 'textarea',
-                'rows' => '8',
-                'name' => 'axian_ddr_settings[general][content_notification_delegation]',
-                'description' => 'Vous pouvez utiliser les jettons suivants: <pre>lien vers la demande = [reference],
-    commentaire = [comment]
-    attributeur = [attributor]</pre>'
-            ),
-
         );
-
-        foreach($field_general as $field => $content){
-            $this->fields['general'][$field] = $content;
-        }
 
         //fields validation
         foreach( AxianDDR::$etapes as $key => $value ){
@@ -83,6 +41,56 @@ class AxianDDRAdministration{
                 );
             }
         }
+
+        //fields mail
+        $this->fields['mail'] = array(
+            'sujet_notification_validateur' => array(
+                'label' => 'Sujet notification mail pour validateur',
+                'type' => 'text',
+                'name' => 'axian_ddr_settings[mail][sujet_notification_validateur]',
+                'description' => ''
+            ),
+            'content_notification_validateur' => array(
+                'label' => 'Contenu notification mail pour validateur',
+                'type' => 'textarea',
+                'rows' => '8',
+                'name' => 'axian_ddr_settings[mail][content_notification_validateur]',
+                'description' => 'Vous pouvez utiliser les jettons suivants: <pre>type de demande = [type de demande],
+    lien vers la demande = [reference]</pre>'
+            ),
+            'sujet_notification_rappel' => array(
+                'label' => 'Sujet notification de rappel',
+                'type' => 'text',
+                'name' => 'axian_ddr_settings[mail][sujet_notification_rappel]',
+                'description' => ''
+            ),
+            'content_notification_rappel' => array(
+                'label' => 'Contenu notification de rappel',
+                'type' => 'textarea',
+                'rows' => '8',
+                'name' => 'axian_ddr_settings[mail][content_notification_rappel]',
+                'description' => 'Vous pouvez utiliser les jettons suivants: <pre>nombre de ticket = [nb],
+    lien tableau de bord = [ici]</pre>'
+            ),
+            'sujet_notification_delegation' => array(
+                'label' => 'Sujet notification de delegation',
+                'type' => 'text',
+                'name' => 'axian_ddr_settings[mail][sujet_notification_delegation]',
+                'description' => ''
+            ),
+            'content_notification_delegation' => array(
+                'label' => 'Contenu notification de delegation',
+                'type' => 'textarea',
+                'rows' => '8',
+                'name' => 'axian_ddr_settings[mail][content_notification_delegation]',
+                'description' => 'Vous pouvez utiliser les jettons suivants: <pre>lien vers la demande = [reference],
+    commentaire = [comment]
+    attributeur = [attributor]</pre>'
+            ),
+        );
+
+
+
     }
 
     public static function template(){

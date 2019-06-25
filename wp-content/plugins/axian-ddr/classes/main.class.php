@@ -140,12 +140,12 @@ class AxianDDRMain {
 
         //menu admin
         add_menu_page('DDR Administration', 'DDR Administration', DDR_CAP_CAN_ADMIN_DDR, 'axian-ddr-admin','','dashicons-networking');
-        add_submenu_page( 'axian-ddr-admin', 'Réglage général', 'Réglage général',DDR_CAP_CAN_ADMIN_DDR, 'axian-ddr-admin','AxianDDRAdministration::template');
-        add_submenu_page( 'axian-ddr-admin', 'Termes de taxonomie', 'Termes de taxonomie', DDR_CAP_CAN_ADMIN_DDR, 'axian-ddr-admin&tab=term', 'AxianDDRAdministration::template');
-        add_submenu_page( 'axian-ddr-admin', 'Termes de taxonomie', 'Termes de taxonomie', DDR_CAP_CAN_ADMIN_DDR, 'axian-ddr-admin&tab=term', 'AxianDDRAdministration::template');
+        foreach ( AxianDDRAdministration::$list_tabs as $tab => $label ){
+            add_submenu_page( 'axian-ddr-admin', $label, $label, DDR_CAP_CAN_ADMIN_DDR, 'axian-ddr-admin' . ( $tab != array_keys(AxianDDRAdministration::$list_tabs)[0] ? '&tab=' . $tab : ''),'AxianDDRAdministration::template');
+        }
 
         //gestion interim
-        add_menu_page('DDR Interim', 'DDR Interim', DDR_CAP_CAN_ADMIN_INTERIM, 'axian-ddr-interim','','dashicons-businessman');
+        add_menu_page('Gestion des intérims', 'Gestion des intérims', DDR_CAP_CAN_ADMIN_INTERIM, 'axian-ddr-interim','','dashicons-businessman');
         add_submenu_page( 'axian-ddr-interim', 'Gestion des intérims', 'Gestion des intérims',DDR_CAP_CAN_ADMIN_INTERIM, 'axian-ddr-interim','AxianDDRInterim::template');
 
         //Suivi ticket

@@ -100,9 +100,16 @@ class AxianDDRInterim{
         $id = ( isset($_GET['id']) && !empty($_GET['id']) ) ? intval($_GET['id']) : null;
 
         if ($is_delete_interim){
+            if ( !current_user_can(DDR_CAP_CAN_ADMIN_INTERIM) ){
+                wp_die('Action non autorisée');
+            }
             self::delete($id);
             $redirect_to = 'admin.php?page=axian-ddr-interim&msg=' . DDR_MSG_DELETED_SUCCESSFULLY;
+            wp_safe_redirect($redirect_to);die;
         } elseif ( $is_submit_interim || $is_update_interim ){
+            if ( !current_user_can(DDR_CAP_CAN_ADMIN_INTERIM) ){
+                wp_die('Action non autorisée');
+            }
             $msg = axian_ddr_validate_fields($this);
             //data not valid
             if ( !empty($msg) ){
@@ -137,11 +144,10 @@ class AxianDDRInterim{
                     self::update($post_data);
                     $redirect_to = 'admin.php?page=axian-ddr-interim&action=edit&id=' . $id . '&msg=' . DDR_MSG_SAVED_SUCCESSFULLY;
                 }
+                if ( !empty($redirect_to) ){
+                    wp_safe_redirect($redirect_to);die;
+                }
             }
-        }
-
-        if ( !empty($redirect_to) ){
-            wp_safe_redirect($redirect_to);die;
         }
     }
 
@@ -280,6 +286,17 @@ class AxianDDRInterim{
 
             }
         }
+    }
+
+    public static function getMyInterim($user_id){
+        global $wpdb;
+        $today = date('Y-m-d');
+        return $wpdb->get_var(
+            "SELECT interim_id FROM " . TABLE_AXIAN_DDR_INTERIM .
+            " WHERE collaborator_id = " . $user_id .
+            " AND date_debut <= '" . $today . "' AND '" . $today . "' <= date_fin
+            LIMIT 1"
+        );
     }
 }
 

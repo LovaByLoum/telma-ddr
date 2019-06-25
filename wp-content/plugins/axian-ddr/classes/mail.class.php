@@ -10,12 +10,12 @@ class AxianDDRMail {
 
     public function __construct(){
         $settings = AxianDDRAdministration::get_settings();
-        self::$validation['sujet'] = $settings['general']['sujet_notification_validateur'];
-        self::$validation['content'] = $settings['general']['content_notification_validateur'];
-        self::$rappel['sujet'] = $settings['general']['sujet_notification_rappel'];
-        self::$rappel['content'] = $settings['general']['content_notification_rappel'];
-        self::$delegation['sujet'] = $settings['general']['sujet_notification_delegation'];
-        self::$delegation['content'] = $settings['general']['content_notification_delegation'];
+        self::$validation['sujet'] = $settings['mail']['sujet_notification_validateur'];
+        self::$validation['content'] = $settings['mail']['content_notification_validateur'];
+        self::$rappel['sujet'] = $settings['mail']['sujet_notification_rappel'];
+        self::$rappel['content'] = $settings['mail']['content_notification_rappel'];
+        self::$delegation['sujet'] = $settings['mail']['sujet_notification_delegation'];
+        self::$delegation['content'] = $settings['mail']['content_notification_delegation'];
     }
 
 

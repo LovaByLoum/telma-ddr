@@ -4,11 +4,9 @@
     $active_tab = isset($_GET['tab']) ? $_GET['tab'] : 'general';
     ?>
     <h2 class="nav-tab-wrapper">
-
-        <a href="?page=axian-ddr-admin&amp;tab=general" class="nav-tab ">Configuration générale</a>
-        <a href="?page=axian-ddr-admin&amp;tab=term" class="nav-tab <?php echo $active_tab == 'term' ? 'nav-tab-active' : ''; ?>">Termes de taxonomie</a>
-        <a href="?page=axian-ddr-admin&amp;tab=validation" class="nav-tab <?php echo $active_tab == 'validation' ? 'nav-tab-active' : ''; ?>">Validation</a>
-
+        <?php  foreach ( AxianDDRAdministration::$list_tabs as $tab => $label ) : ?>
+            <a href="?page=axian-ddr-admin&amp;tab=<?php echo $tab;?>" class="nav-tab <?php echo $active_tab == $tab ? 'nav-tab-active' : ''; ?>"><?php echo $label;?></a>
+        <?php endforeach; ?>
     </h2>
 </div>
 <?php

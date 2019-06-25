@@ -235,7 +235,9 @@ class AxianDDR{
         $now = date("Y-m-d H:i:s");
 
         $the_user= AxianDDRUser::getById($current_user->ID);
-        $args['date_previsionnel'] = axian_ddr_convert_to_mysql_date($args['date_previsionnel']);
+        if ( isset($args['date_previsionnel']) && !empty($args['date_previsionnel']) ){
+            $args['date_previsionnel'] = axian_ddr_convert_to_mysql_date($args['date_previsionnel']);
+        }
         $args['offre_data'] = serialize($args['offre_data']);
 
         $company = $the_user->company;
@@ -417,6 +419,9 @@ class AxianDDR{
                     //default attribution
                     if ( $is_submit_ddr && empty($post_data['assignee_id']) ){
                         $post_data['assignee_id'] = self::getDefaultValidator($post_data['next_etape']);
+
+                        //si existe un interim
+
                     }
 
                     //process files
