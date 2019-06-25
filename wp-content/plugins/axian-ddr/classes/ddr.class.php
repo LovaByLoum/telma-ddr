@@ -419,9 +419,14 @@ class AxianDDR{
                     //default attribution
                     if ( $is_submit_ddr && empty($post_data['assignee_id']) ){
                         $post_data['assignee_id'] = self::getDefaultValidator($post_data['next_etape']);
+                    }
 
-                        //si existe un interim
-
+                    //si  existe un interim
+                    if ( $is_submit_ddr ){
+                        $interim = AxianDDRInterim::getCurrentInterim($post_data['assignee_id']);
+                        if ( isset($interim->interim_id) && $interim->interim_id > 0 ){
+                            $post_data['assignee_id'] = $interim->interim_id;
+                        }
                     }
 
                     //process files
@@ -435,6 +440,17 @@ class AxianDDR{
                     //insert
                     $new_ddr_id = self::insert( $post_data );
                     AxianDDRMail::sendValidation($post_data['assignee_id'],self::$types_demande[$post_data['type']],$new_ddr_id);
+
+                    //maj original ticket attributor
+                    if ( isset($interim) ){
+                        $collaborator_tickets = maybe_unserialize($interim->collaborator_tickets);
+                        $collaborator_tickets[] = $new_ddr_id;
+                        $collaborator_tickets = array_unique($collaborator_tickets);
+                        AxianDDRInterim::update(array(
+                            'id' => $interim->id,
+                            'collaborator_tickets'=> $collaborator_tickets
+                        ));
+                    }
 
                     //historique
                     AxianDDRHistorique::add($new_ddr_id, array(
@@ -466,11 +482,6 @@ class AxianDDR{
                         $post_data['etape'] = $post_data['next_etape'];
                     }
 
-                    //default attribution
-                    if ( $is_submit_ddr && ( empty($post_data['assignee_id']) || $post_data['assignee_id'] == $current_user->ID )  ){
-                        $post_data['assignee_id'] = self::getDefaultValidator($post_data['next_etape']);
-                    }
-
                     //process files
                     $file_process_return = axian_ddr_process_file($this);
                     if ( is_string($file_process_return) ){
@@ -478,6 +489,30 @@ class AxianDDR{
                         return false;
                     }
                     $post_data['file'] = isset($file_process_return['file']) ? $file_process_return['file'] : '';
+
+
+                    //default attribution
+                    if ( $is_submit_ddr && ( empty($post_data['assignee_id']) || $post_data['assignee_id'] == $current_user->ID )  ){
+                        $post_data['assignee_id'] = self::getDefaultValidator($post_data['next_etape']);
+                    }
+
+                    //si  existe un interim
+                    if ( $is_submit_ddr ){
+                        $interim = AxianDDRInterim::getCurrentInterim($post_data['assignee_id']);
+                        if ( isset($interim->interim_id) && $interim->interim_id > 0 ){
+                            $post_data['assignee_id'] = $interim->interim_id;
+
+                            //maj original ticket attributor
+                            $collaborator_tickets = maybe_unserialize($interim->collaborator_tickets);
+                            $collaborator_tickets[] = $the_ddr_id;
+                            $collaborator_tickets = array_unique($collaborator_tickets);
+                            AxianDDRInterim::update(array(
+                                'id' => $interim->id,
+                                'collaborator_tickets'=> $collaborator_tickets
+                            ));
+                        }
+                    }
+
 
                     self::update( $post_data );
 
@@ -532,6 +567,21 @@ class AxianDDR{
                 //default attribution
                 if ( empty($post_data['assignee_id']) || $post_data['assignee_id'] == $current_user->ID  ){
                     $post_data['assignee_id'] = self::getDefaultValidator($post_data['next_etape']);
+                }
+
+                //si  existe un interim
+                $interim = AxianDDRInterim::getCurrentInterim($post_data['assignee_id']);
+                if ( isset($interim->interim_id) && $interim->interim_id > 0 ){
+                    $post_data['assignee_id'] = $interim->interim_id;
+
+                    //maj original ticket attributor
+                    $collaborator_tickets = maybe_unserialize($interim->collaborator_tickets);
+                    $collaborator_tickets[] = $the_ddr_id;
+                    $collaborator_tickets = array_unique($collaborator_tickets);
+                    AxianDDRInterim::update(array(
+                        'id' => $interim->id,
+                        'collaborator_tickets'=> $collaborator_tickets
+                    ));
                 }
 
                 self::update( $post_data );
@@ -657,6 +707,22 @@ class AxianDDR{
             if ( !is_null($the_ddr_id) ){
                 $post_data = $_POST;
                 $post_data['assignee_id'] = $post_data['delegate_id'];
+
+                //si exist un interim
+                $interim = AxianDDRInterim::getCurrentInterim($post_data['assignee_id']);
+                if ( isset($interim->interim_id) && $interim->interim_id > 0 ){
+                    $post_data['assignee_id'] = $interim->interim_id;
+
+                    //maj original ticket attributor
+                    $collaborator_tickets = maybe_unserialize($interim->collaborator_tickets);
+                    $collaborator_tickets[] = $the_ddr_id;
+                    $collaborator_tickets = array_unique($collaborator_tickets);
+                    AxianDDRInterim::update(array(
+                        'id' => $interim->id,
+                        'collaborator_tickets'=> $collaborator_tickets
+                    ));
+                }
+
                 $the_ddr = AxianDDR::getbyId($the_ddr_id);
                 $the_user = AxianDDRUser::getById($post_data['assignee_id']);
 
@@ -880,7 +946,7 @@ class AxianDDR{
 
     public static function substitutionDDR( $id_source, $id_dest, $include = array()){
         global $wpdb;
-        $ddrs = self::getByAssigneeId($id_source, $include);
+        $ddrs = self::getByAssigneeId($id_source, array(DDR_STATUS_EN_COURS), $include);
         if ( !empty($ddrs) ) foreach($ddrs as $ddr_id ){
             $wpdb->update(
                 TABLE_AXIAN_DDR,
@@ -888,6 +954,7 @@ class AxianDDR{
                 array('id' => $ddr_id)
             );
         }
+        return $ddrs;
     }
 
     public static function count_result(){
@@ -896,9 +963,13 @@ class AxianDDR{
         return $wpdb->get_var("SELECT COUNT(*) FROM ".TABLE_AXIAN_DDR);
     }
 
-    public static function getByAssigneeId( $assignee_id, $include = array() ){
+    public static function getByAssigneeId( $assignee_id, $status = array(), $include = array() ){
         global $wpdb;
         $sql = "SELECT id FROM " . TABLE_AXIAN_DDR . " WHERE assignee_id = " . $assignee_id;
+
+        if ( !empty($status) ){
+            $sql .= " AND etat IN ( '" . implode("','", $status). "' )";
+        }
 
         if ( !empty($include) ){
             $sql .= " AND id IN ( " . implode(',', $include). " )";

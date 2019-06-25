@@ -34,6 +34,7 @@ class AxianDDRInterimList extends WP_Filter_List_Table{
                 return (!empty($item->$column_name) ? axian_ddr_convert_to_human_date($item->$column_name) : '');
                 break;
             case 'created':
+            case 'modified':
                 return (!empty($item->$column_name) ? axian_ddr_convert_to_human_datetime($item->$column_name) : '');
                 break;
             default:
@@ -52,6 +53,7 @@ class AxianDDRInterimList extends WP_Filter_List_Table{
             'date_debut' => array('date_debut',false),
             'date_fin' => array('date_fin',false),
             'created' => array('created',false),
+            'modified' => array('created',false),
         );
 
         return $sortable_columns;
@@ -85,6 +87,7 @@ class AxianDDRInterimList extends WP_Filter_List_Table{
             'date_fin' => 'Date de fin',
             'creator_id' => 'Créateur',
             'created' => 'Date de création',
+            'modified' => 'Date de modification',
         );
 
         return $columns;

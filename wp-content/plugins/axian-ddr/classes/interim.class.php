@@ -61,15 +61,34 @@ class AxianDDRInterim{
 
     public static function update($args){
         global $wpdb;
-        $data = array(
-            'collaborator_id' => intval($args['collaborator_id']),
-            'interim_id' => intval($args['interim_id']),
-            'date_debut' => $args['date_debut'],
-            'date_fin' => $args['date_fin'],
-            'interim_roles' => maybe_serialize($args['interim_roles']) ,
-            'collaborator_tickets' => maybe_serialize($args['collaborator_tickets']),
-            'status' => DDR_INTERIM_EN_COURS,
+
+        $data_authorized = array(
+            'creator_id',
+            'collaborator_id',
+            'interim_id',
+            'date_debut',
+            'date_fin',
+            'interim_roles',
+            'collaborator_tickets',
+            'status',
+            'created',
         );
+        $data = array();
+        foreach ( $args as $key => $value ){
+            if ( in_array($key, $data_authorized) ){
+                $data[$key] = $value;
+            }
+        }
+
+        if ( isset($data['interim_roles']) && !empty($data['interim_roles']) ){
+            $data['interim_roles'] = maybe_serialize($data['interim_roles']);
+        }
+
+        if ( isset($data['collaborator_tickets']) && !empty($data['collaborator_tickets']) ){
+            $data['collaborator_tickets'] = maybe_serialize($data['collaborator_tickets']);
+        }
+
+        $data['modified'] = date('Y-m-d H:i:s');
 
         $result = $wpdb->update(
             TABLE_AXIAN_DDR_INTERIM,
@@ -134,13 +153,16 @@ class AxianDDRInterim{
                 unset($post_data['date_interim']);
 
                 //collaborator tickets
-                $post_data['collaborator_tickets'] = AxianDDR::getByAssigneeId($collaborator_id);
+                $post_data['collaborator_tickets'] = AxianDDR::getByAssigneeId($collaborator_id, array(DDR_STATUS_EN_COURS));
 
                 if ( $is_submit_interim ){
                     //insert
                     $id = self::add($post_data);
                     $redirect_to = 'admin.php?page=axian-ddr-interim&msg=' . DDR_MSG_SUBMITTED_SUCCESSFULLY;
                 }elseif ($is_update_interim){
+
+                    //reactivate interim for cron
+                    $post_data['status'] = DDR_INTERIM_EN_COURS;
                     self::update($post_data);
                     $redirect_to = 'admin.php?page=axian-ddr-interim&action=edit&id=' . $id . '&msg=' . DDR_MSG_SAVED_SUCCESSFULLY;
                 }
@@ -251,7 +273,6 @@ class AxianDDRInterim{
     }
 
     public static function manageInterim(){
-        global $wpdb;
         $today = date("Y-m-d");
         $interims = self::getBy(array('status'=>DDR_INTERIM_EN_COURS));
         if ( $interims['count'] > 0 ) foreach($interims['items'] as $interim){
@@ -268,7 +289,14 @@ class AxianDDRInterim{
                         $user_interim->add_role($role);
                     }
                 }
-                AxianDDR::substitutionDDR($interim->collaborator_id, $interim->interim_id);
+                $new_ddrs = AxianDDR::substitutionDDR($interim->collaborator_id, $interim->interim_id);
+
+                $collaborator_tickets = maybe_unserialize($interim->collaborator_tickets);
+                $collaborator_tickets = array_unique(array_merge($collaborator_tickets, $new_ddrs));
+                self::update(array(
+                    'id' => $interim->id,
+                    'collaborator_tickets'=> $collaborator_tickets
+                ));
             }elseif ( $date_fin < $today ) {
                 $original_interim_roles = unserialize($interim->interim_roles);
                 foreach($user_interim->roles as $role){
@@ -278,21 +306,19 @@ class AxianDDRInterim{
                     $user_interim->add_role($role);
                 }
                 AxianDDR::substitutionDDR($interim->interim_id, $interim->collaborator_id, unserialize($interim->collaborator_tickets));
-                $wpdb->update(
-                    TABLE_AXIAN_DDR_INTERIM,
-                    array('status'=> DDR_INTERIM_FINI ),
-                    array('id' => $interim->id)
-                );
-
+                self::update(array(
+                    'id' => $interim->id,
+                    'status'=> DDR_INTERIM_FINI
+                ));
             }
         }
     }
 
-    public static function getMyInterim($user_id){
+    public static function getCurrentInterim($user_id){
         global $wpdb;
         $today = date('Y-m-d');
-        return $wpdb->get_var(
-            "SELECT interim_id FROM " . TABLE_AXIAN_DDR_INTERIM .
+        return $wpdb->get_row(
+            "SELECT * FROM " . TABLE_AXIAN_DDR_INTERIM .
             " WHERE collaborator_id = " . $user_id .
             " AND date_debut <= '" . $today . "' AND '" . $today . "' <= date_fin
             LIMIT 1"

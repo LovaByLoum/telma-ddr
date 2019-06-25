@@ -16,6 +16,7 @@ class AxianDDRAdministration{
         'term' => 'Termes de taxonomie',
         'validation' => 'Validation',
         'mail' => 'Mail',
+        'cron' => 'Tâches périodiques',
     );
 
     public function __construct() {
@@ -89,7 +90,21 @@ class AxianDDRAdministration{
             ),
         );
 
-
+        //fields cron
+        $this->fields['cron'] = array(
+            'interim_cron_freq' => array(
+                'label' => 'Fréquence cron Intérim',
+                'type' => 'text',
+                'name' => 'axian_ddr_settings[cron][interim_cron_freq]',
+                'description' => 'en seconde'
+            ),
+            'rappel_validation_cron_freq' => array(
+                'label' => 'Fréquence cron Rappel validation',
+                'type' => 'text',
+                'name' => 'axian_ddr_settings[cron][rappel_validation_cron_freq]',
+                'description' => 'en seconde'
+            ),
+        );
 
     }
 

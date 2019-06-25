@@ -31,11 +31,12 @@ require_once('classes/mail.class.php');
 
 register_activation_hook( __FILE__ , 'AxianDDRMain::install' );
 
-global $axian_ddr_main, $axian_ddr_tasks;
+global $axian_ddr_main, $axian_ddr_tasks, $axian_ddr_settings;;
 $axian_ddr_main = new AxianDDRMain();
+
 $axian_ddr_tasks = array(
-    'daily_rappel' =>60*60*24,
-    'interim' =>60*60*24,
+    'daily_rappel' => isset($axian_ddr_settings['cron']['rappel_validation_cron_freq']) ? $axian_ddr_settings['cron']['rappel_validation_cron_freq'] : 60*60*24,
+    'interim' => isset($axian_ddr_settings['cron']['interim_cron_freq']) ? $axian_ddr_settings['cron']['interim_cron_freq'] : 60*60*24,
 );
 
 //tache cron pour envoie mail de rappel de validation
@@ -83,4 +84,21 @@ function axian_ddr_cron_callback($current_schedule){
         AxianDDRInterim::manageInterim();
     }
 
+}
+
+add_action('admin_init', 'axian_ddr_force_run_cron');
+function axian_ddr_force_run_cron(){
+    if ( isset($_GET['forceruncron']) && $_GET['forceruncron'] == 'interim' && current_user_can(DDR_CAP_CAN_ADMIN_INTERIM) ){
+        AxianDDRInterim::manageInterim();
+        wp_safe_redirect('admin.php?page=axian-ddr-admin&tab=cron&msg=cron-forced');die;
+    }
+    if ( isset($_GET['forceruncron']) && $_GET['forceruncron'] == 'daily_rappel' && current_user_can(DDR_CAP_CAN_ADMIN_DDR) ){
+        $validators = AxianDDRUser::getUserValidator();
+        if( !empty($validators) ){
+            foreach($validators as $value){
+                AxianDDRMail::sendRappel($value['id']);
+            }
+        }
+        wp_safe_redirect('admin.php?page=axian-ddr-admin&tab=cron&msg=cron-forced');die;
+    }
 }

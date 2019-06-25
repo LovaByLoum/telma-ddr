@@ -43,12 +43,15 @@ if ( !is_null($interim_process_msg) ){
         <?php else : ?>
             <input type=hidden name='id' value="<?php echo $_GET['id'];?>">
             <input type=submit name='update-interim' class="button button-primary confirm-before" value="Enregistrer">
+            <a href="admin.php?page=axian-ddr-interim" class="btn btn-sm btn-outline-danger confirm-before">Retour</a>
         <?php endif;?>
     </form>
 
 </div><!-- .wrap -->
 
 <div class="wrap list-table-interim">
+    <hr>
+    <h4>Liste des intérims</h4>
     <form method="get" action="">
         <input type="hidden" name="page" value="axian-ddr-interim">
         <?php
