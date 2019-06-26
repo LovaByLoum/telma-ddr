@@ -100,3 +100,25 @@ fieldset.ddr-box-bordered i.info{
 .ddr-histrotique-delai-box{
     display: none;
 }
+
+.ddr-per-status-wrapper{
+    transition: all .5s ease-in-out;
+    column-gap: 30px;
+    column-fill: initial;
+    column-count: 2;
+    margin: 20px 20px 20px 0;
+}
+
+.ddr-per-status-wrapper .ddr-per-status-bloc{
+    margin-bottom: 30px;
+    display: inline-block;
+    vertical-align: top;
+    border: 1px #ededed dashed;
+    padding: 10px 10px 25px;
+    width: 100%;
+}
+@media only screen and (max-width: 992px) {
+    .ddr-per-status-wrapper{
+        column-count: 1;
+    }
+}

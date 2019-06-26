@@ -2,6 +2,7 @@
 class AxianDDREtatList extends WP_List_Table{
 
     public $etat;
+    public $total_items;
     function __construct( $etat ){
         parent::__construct( array(
             'singular'  => 'Liste des demandes par état',
@@ -95,9 +96,9 @@ class AxianDDREtatList extends WP_List_Table{
             'title' => 'Titre de la demande',
             'author_id' => 'Créateur',
             'assignee_id' => 'Attribution',
-            'etat' => 'Etat',
+            //'etat' => 'Etat',
             'etape' => 'Etape',
-            'created' => 'Date de création',
+            //'created' => 'Date de création',
             'societe' => 'Société',
         );
 
@@ -117,7 +118,7 @@ class AxianDDREtatList extends WP_List_Table{
         $this->_column_headers = array( $columns, $hidden, $sortable );
         //var_dump($sortable);die;
 
-        $per_page = 10;
+        $per_page = 5;
         $current_page = $this->get_pagenum();
         $offset = ($current_page -1 ) * $per_page;
 
@@ -126,13 +127,12 @@ class AxianDDREtatList extends WP_List_Table{
         unset($get_data['paged']);
         unset($get_data['orderby']);
         unset($get_data['order']);
-        unset($get_data['prefilter']);
 
         $args_supp = array(
             'offset' => $offset,
             'limit' => $per_page,
             'orderby' => isset($_GET['orderby']) ? $_GET['orderby'] : 'id',
-            'order' => isset($_GET[$this->etat.'order']) ? $_GET[$this->etat.'order'] : 'ASC',
+            'order' => isset($_GET['order']) ? $_GET['order'] : 'ASC',
         );
 
         //filter by etat
@@ -148,6 +148,7 @@ class AxianDDREtatList extends WP_List_Table{
         ));
 
         $this->items = $resultats["items"];
+        $this->total_items = $total_items;
     }
 
     function column_id( $item ) {

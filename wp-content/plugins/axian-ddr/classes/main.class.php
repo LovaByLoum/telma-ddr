@@ -176,6 +176,7 @@ class AxianDDRMain {
         wp_enqueue_style('axian-ddr-main', AXIANDDR_PLUGIN_URL . '/assets/css/main.css');
 
         //scripts
+        wp_enqueue_script('axian-ddr-chart', AXIANDDR_PLUGIN_URL.'/assets/js/jquery.chart.min.js');
         wp_enqueue_script('axian-ddr-chosen', AXIANDDR_PLUGIN_URL.'/assets/js/chosen.jquery.js');
         wp_enqueue_script('axian-ddr-date', AXIANDDR_PLUGIN_URL.'/assets/js/jquery.ui.datepicker.js');
         wp_enqueue_script('axian-ddr-date-fr', AXIANDDR_PLUGIN_URL.'/assets/js/jquery.ui.datepicker-fr.js');
