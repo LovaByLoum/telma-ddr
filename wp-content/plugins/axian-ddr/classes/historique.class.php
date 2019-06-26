@@ -140,9 +140,17 @@ class AxianDDRHistorique{
             $date1 = new DateTime($date_debut);
             $date2 = new DateTime($date_fin);
             $interval = $date1->diff($date2);
-            return $interval->d . " jours " . $interval->i . " mn " . $interval->s . " sec" ;
+            return array(
+                'temps' => $interval->d . " jours " . $interval->i . " mn " . $interval->s . " sec",
+                'debut' => $date_debut,
+                'fin' => $date_fin
+            );
         } else {
-            return '-';
+            return array(
+                'temps' => '-',
+                'debut' => '-',
+                'fin' => '-'
+            );
         }
     }
 

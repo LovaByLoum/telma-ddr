@@ -78,7 +78,8 @@ class AxianDDRHistoriqueList extends WP_Filter_List_Table{
                 return AxianDDR::$etapes[$item->$column_name];
                 break;
             case 'traitement':
-                return AxianDDRHistorique::getDelaiEtape($item->id, DDR_STEP_VALIDATION_1, DDR_STEP_PUBLISH) . '<br><a href="javascript:;" class="open-details-delai">+ détails</a>' . AxianDDRHistoriqueList::getAllDelai($item->id);
+                $delai = AxianDDRHistorique::getDelaiEtape($item->id, DDR_STEP_VALIDATION_1, DDR_STEP_PUBLISH);
+                return  $delai['temps'] . '<br><a href="javascript:;" class="open-details-delai">+ détails</a>' . AxianDDRHistoriqueList::getAllDelai($item->id);
                 break;
             default:
                 return $item->$column_name ;
@@ -198,7 +199,8 @@ class AxianDDRHistoriqueList extends WP_Filter_List_Table{
     }
 
     function column_export_traitement($item){
-        return AxianDDRHistorique::getDelaiEtape($item->id, DDR_STEP_VALIDATION_1, DDR_STEP_PUBLISH);
+        $delai = AxianDDRHistorique::getDelaiEtape($item->id, DDR_STEP_VALIDATION_1, DDR_STEP_PUBLISH);
+        return $delai['temps'];
         //return AxianDDRHistorique::getDelaiEtape($item->id, DDR_STEP_VALIDATION_1, DDR_STEP_PUBLISH) . " (Details : " . AxianDDRHistoriqueList::getAllDelai($item->id, 'string');
     }
 
@@ -214,6 +216,8 @@ class AxianDDRHistoriqueList extends WP_Filter_List_Table{
                     <tr>
                         <th class="libelle">Etape</th>
                         <th class="libelle">Temps de traitement</th>
+                        <th class="libelle">Date de début</th>
+                        <th class="libelle">Date de fin</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -227,8 +231,11 @@ class AxianDDRHistoriqueList extends WP_Filter_List_Table{
                                     <?php echo AxianDDR::$etapes[$step_current['etape']];?>
                                 </td>
                                 <td>
-                                    <?php echo AxianDDRHistorique::getDelaiEtape($ddr_id, $step_avant['etape'], $step_current['etape'] );?>
+                                    <?php $delai = AxianDDRHistorique::getDelaiEtape($ddr_id, $step_avant['etape'], $step_current['etape'] );?>
+                                    <?php echo $delai['temps'];?>
                                 </td>
+                                <td><?php echo $delai['debut'];?></td>
+                                <td><?php echo $delai['fin'];?></td>
                             </tr>
                         <?php endif;?>
                     <?php endforeach;?>
@@ -243,7 +250,8 @@ class AxianDDRHistoriqueList extends WP_Filter_List_Table{
                 if ( isset($etapes[$etape_numero-1]) ) :
                     $step_avant = $etapes[$etape_numero-1];
                     $step_current = $step_object;
-                    $str.= AxianDDR::$etapes[$step_current['etape']] . ' en ' . AxianDDRHistorique::getDelaiEtape($ddr_id, $step_avant['etape'], $step_current['etape'] ) . ", ";
+                    $delai = AxianDDRHistorique::getDelaiEtape($ddr_id, $step_avant['etape'], $step_current['etape'] );
+                    $str.= AxianDDR::$etapes[$step_current['etape']] . ' en ' . $delai['temps'] . ", ";
                 endif;
             endforeach;
             return $str;
