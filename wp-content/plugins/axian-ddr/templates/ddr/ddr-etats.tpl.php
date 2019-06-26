@@ -53,34 +53,46 @@ foreach(AxianDDR::$etats as $etat=>$label){
         var chart = new Chart(ctx, config);
     }
 </script>
-<div class="ddr-per-status-wrapper">
-    <div class="ddr-per-status-bloc">
-        <div class="" id="heading-chart">
-            <h5 class="mb-0">
-                <button class="btn btn-danger btn-block" data-toggle="collapse" data-target="#collapse-chart" aria-expanded="false" aria-controls="collapse-chart">
-                    Tickets par état
-                </button>
-            </h5>
-        </div>
-
-        <div id="collapse-chart" class="collapse show" aria-labelledby="heading-chart" data-parent="#third-col" style="min-height: 400px;position: relative;">
-            <canvas id="chart-area"></canvas>
-        </div>
-    </div>
-    <?php foreach(AxianDDR::$etats as $etat=>$label):?>
+<div class="ddr-per-status-wrapper row">
+    <div class="col-md-6 col-sm-12">
         <div class="ddr-per-status-bloc">
-            <div class="" id="heading<?php echo $etat;?>">
+            <div class="" id="heading-chart">
                 <h5 class="mb-0">
-                    <button class="btn btn-danger btn-block" data-toggle="collapse" data-target="#collapse<?php echo $etat;?>" aria-expanded="false" aria-controls="collapse<?php echo $etat;?>">
-                        <?php echo $label;?>
+                    <button class="btn btn-danger btn-block" data-toggle="collapse" data-target="#collapse-chart" aria-expanded="false" aria-controls="collapse-chart">
+                        Tickets par état
                     </button>
                 </h5>
             </div>
 
-            <div id="collapse<?php echo $etat;?>" class="collapse show" aria-labelledby="heading<?php echo $etat;?>" data-parent="#third-col">
-                <?php $array_list[$etat]['list']->display(); ?>
+            <div id="collapse-chart" class="collapse show" aria-labelledby="heading-chart" data-parent="#third-col" style="min-height: 400px;position: relative;">
+                <canvas id="chart-area"></canvas>
             </div>
         </div>
-    <?php endforeach;?>
+        <?php
+        $count = 1;
+        foreach(AxianDDR::$etats as $etat=>$label):?>
+
+            <?php if ( $count == intval(sizeof(AxianDDR::$etats)/2)+1 ) :?>
+                </div>
+                <div class="col-md-6 col-sm-12">
+            <?php endif;?>
+
+            <div class="ddr-per-status-bloc">
+                <div class="" id="heading<?php echo $etat;?>">
+                    <h5 class="mb-0">
+                        <button class="btn btn-danger btn-block" data-toggle="collapse" data-target="#collapse<?php echo $etat;?>" aria-expanded="false" aria-controls="collapse<?php echo $etat;?>">
+                            <?php echo $label;?>
+                        </button>
+                    </h5>
+                </div>
+
+                <div id="collapse<?php echo $etat;?>" class="collapse show" aria-labelledby="heading<?php echo $etat;?>" data-parent="#third-col">
+                    <?php $array_list[$etat]['list']->display(); ?>
+                </div>
+            </div>
+        <?php
+        $count++;
+        endforeach;?>
+    </div>
 </div>
 
