@@ -167,7 +167,7 @@ class AxianDDRUser{
     }
 
     public function edit_user_profile( $user ) {
-        $post_data = [];
+        $post_data = array();
         foreach ( $this->fields as $key => $value ){
             $post_data[$key] = get_the_author_meta( $key, $user->ID );
         }
@@ -184,7 +184,7 @@ class AxianDDRUser{
     }
 
     public function show_user_profile( $user ) {
-        $post_data = [];
+        $post_data = array();
         foreach ( $this->fields as $key => $value ){
             $post_data[$key] = get_the_author_meta( $key, $user->ID );
         }

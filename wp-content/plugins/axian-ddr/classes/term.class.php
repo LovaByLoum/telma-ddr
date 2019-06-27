@@ -230,7 +230,7 @@ class AxianDDRTerm{
 
     public function count_result(){
         global $wpdb;
-        $results = [];
+        $results = array();
         foreach(self::$types as $type => $value){
             $results[$type] = intval($wpdb->get_var("SELECT COUNT(*) FROM ".TABLE_AXIAN_DDR_TERM." WHERE type='".$type."'"));
         }
