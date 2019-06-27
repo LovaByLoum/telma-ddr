@@ -125,7 +125,7 @@ a:hover, .media-frame a:active, .media-frame a:hover {
     display: none!important;
 }
 #wpadminbar #wp-admin-bar-wp-logo .ab-icon, #wpadminbar #wp-admin-bar-wp-logo .ab-item:before, #wpadminbar>#wp-toolbar>#wp-admin-bar-root-default #wp-admin-bar-wp-logo .ab-icon{
-    background: transparent url(logo.svg) center center no-repeat !important;
+    background: transparent url(logo.png) center center no-repeat !important;
     width: 81px;
     background-size: contain!important;
     height: 26px;
