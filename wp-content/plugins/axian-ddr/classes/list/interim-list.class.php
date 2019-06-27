@@ -136,10 +136,10 @@ class AxianDDRInterimList extends WP_Filter_List_Table{
 
         $title = '<strong>' . $user->display_name . '</strong>';
 
-        $actions = [
+        $actions = array(
             'edit' => sprintf( '<a href="?page=%s&action=%s&id=%s">Modifier</a>', esc_attr( $_REQUEST['page'] ), 'edit', absint( $item->id ) ),
             'delete' => sprintf( '<a href="?page=%s&action=%s&id=%s" class="confirm-before">Supprimer</a>', esc_attr( $_REQUEST['page'] ), 'delete', absint( $item->id ) )
-        ];
+        );
 
         return $title . $this->row_actions( $actions );
     }
