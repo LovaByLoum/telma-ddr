@@ -141,8 +141,10 @@ class AxianDDRMain {
 
         //menu admin
         add_menu_page('DDR Administration', 'DDR Administration', DDR_CAP_CAN_ADMIN_DDR, 'axian-ddr-admin','','dashicons-networking');
+        $all_tab = array_keys(AxianDDRAdministration::$list_tabs);
         foreach ( AxianDDRAdministration::$list_tabs as $tab => $label ){
-            add_submenu_page( 'axian-ddr-admin', $label, $label, DDR_CAP_CAN_ADMIN_DDR, 'axian-ddr-admin' . ( $tab != array_keys(AxianDDRAdministration::$list_tabs)[0] ? '&tab=' . $tab : ''),'AxianDDRAdministration::template');
+            $first_tab = $all_tab[0];
+            add_submenu_page( 'axian-ddr-admin', $label, $label, DDR_CAP_CAN_ADMIN_DDR, 'axian-ddr-admin' . ( $tab != $first_tab  ? '&tab=' . $tab : ''),'AxianDDRAdministration::template');
         }
 
         //gestion interim
