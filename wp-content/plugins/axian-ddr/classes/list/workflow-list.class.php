@@ -52,21 +52,6 @@ class AxianDDRWorkflowList extends WP_Filter_List_Table
             case 'date_creation':
                 return $item->date_creation;
                 break;
-            case 'date_modification':
-                return $item->date_modification;
-                break;
-            case 'type_ticket':
-                return $item->type_ticket;
-                break;
-            case 'etat':
-                return $item->etat;
-                break;
-            case 'etape':
-                return $item->etape;
-                break;
-            case 'role':
-                return $item->role;
-                break;
             default:
                 return print_r($item, true);
         }
@@ -83,11 +68,6 @@ class AxianDDRWorkflowList extends WP_Filter_List_Table
             'societe' => array('type' => 'autocompletion', 'source' => 'entreprise'),
             'statut' => array('statut', false),
             'date_creation' => array('date_creation', false),
-            'date_modification' => array('date_modification', false),
-            'type_ticket' => array('type_ticket', false),
-            'etat' => array('etat', false),
-            'etape' => array('etape', false),
-            'role' => array('role', false),
         );
 
         return $sortable_columns;
@@ -108,11 +88,6 @@ class AxianDDRWorkflowList extends WP_Filter_List_Table
             'societe' => 'Société',
             'statut' => 'Statut',
             'date_creation' => 'Date de création',
-            'date_modification' => 'Date de modification',
-            'type_ticket' => 'Type de ticket',
-            'etat' => 'Etat',
-            'etape' => 'Etape',
-            'role' => 'role',
         );
 
         return $columns;
@@ -158,7 +133,7 @@ class AxianDDRWorkflowList extends WP_Filter_List_Table
         $title = '<strong>' . $item->nom . '</strong>';
 
         $actions = [
-            'edit' => sprintf('<a href="?page=%s&tab=term&action=%s&id=%s">Modifier</a>', esc_attr($_REQUEST['page']), 'edit', absint($item->id)),
+            'edit' => sprintf('<a href="?page=%s&tab=workflow&action=%s&id=%s">Modifier</a>', esc_attr($_REQUEST['page']), 'edit', absint($item->id)),
             'delete' => sprintf('<a href="?page=%s&tab=workflow&action=%s&id=%s&_wpnonce=%s">Supprimer</a>', esc_attr($_REQUEST['page']), 'delete', absint($item->id), $delete_nonce)
         ];
 

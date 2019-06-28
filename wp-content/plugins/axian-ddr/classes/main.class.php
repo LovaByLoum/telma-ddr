@@ -123,14 +123,10 @@ class AxianDDRMain
                 `nom` varchar(50) NOT NULL,
                 `date_creation` datetime NOT NULL COMMENT 'date de création',
                 `createur` bigint(20) NOT NULL,
-                `date_modification` datetime NOT NULL,
-                `societe` bigint(20) NOT NULL COMMENT 'société ',
+                `date_modification` datetime DEFAULT NULL,
+                `societe` text NOT NULL COMMENT 'société ',
                 `statut` varchar(50) NOT NULL,
-                `etape` varchar(50) NOT NULL COMMENT 'Etape du workflow',
-                `etat` varchar(50) NOT NULL,
-                `role` varchar(50) NOT NULL,
-                `type_ticket` varchar(50) NOT NULL,
-                `action` varchar(255) NOT NULL,
+                `etape` longtext NOT NULL COMMENT 'Etape du workflow',
                 UNIQUE KEY `id` (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8"
         );

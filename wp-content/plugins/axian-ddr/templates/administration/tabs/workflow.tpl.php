@@ -6,11 +6,17 @@ $result = AxianDDRWorkflow::submit_workflow();
 $active_tab = isset($_GET['tab']) ? $_GET['tab'] : 'workflow';
 $user_demandeur = AxianDDRUser::getById($current_user->ID); // user connécté
 
-$post_data = null;
+if (($_GET['action'] == 'edit') && (isset($_GET['id']) && !empty($_GET['id']))) {
+    $post_data = $axian_ddr_workflow->getby_id(intval($_GET['id']));
+    $coche = isset($post_data['statut']) ? true : false;
+    $etape = unserialize($post_data['etape']);
+} else $post_data = null;
 
+
+$is_edit = isset($_GET['id']) && isset($_GET['action']) && 'edit' == $_GET['action'] && $_GET['id'] > 0;
 $isNew = isset($_GET['add']) ? true : false;
 ?>
-<?php if (!$isNew) : ?>
+<?php if (!$isNew && (!($is_edit))) : ?>
     <?php if ($result) : ?>
         <div class="notice <?php echo $result['code']; ?>">
             <p><?php echo $result['msg']; ?></p>
@@ -45,7 +51,7 @@ $isNew = isset($_GET['add']) ? true : false;
 
 
     </div><!-- .wrap -->
-<?php else : ?>
+<?php elseif ($isNew) : ?>
     <div class="wrap nosubsub">
 
 
@@ -56,7 +62,7 @@ $isNew = isset($_GET['add']) ? true : false;
                 <div class="form-field-wrapper">
                     <label class="form-label">Nom</label>
                     <div class="form-field">
-                        <input type="text" class="form-control" name="nom_workflow" id="label_workflow" placeholder="Nom du workflow">
+                        <input type="text" class="form-control" name="nom_workflow" id="label_workflow" placeholder="Nom du workflow" style="width: 199px;">
                     </div>
                 </div>
 
@@ -81,17 +87,140 @@ $isNew = isset($_GET['add']) ? true : false;
                         <input type="hidden" class="bloc_etape_number" value="0" />
 
                         <div class="bloc_etape item clone col-md-3 col-sm-4 col-xs-12">
-                            <div style="float:right;">
-                                <button type="button" class="close-bloc btn btn-default" style="height:30px;width:30px; float:right; background: tomato;">
-                                    <span aria-hidden="true" style="text-align: center;"> &times;&nbsp;&nbsp;</span>
-                                </button>
+                            <button type='button' class='remove-bloc' style="float: right;">x</button>
+
+                            <div class="form-group form-field-wrapper">
+                                <label class="form-label">Etat</label>
+                                <div class="form-field">
+                                    <select name="workflow[etat][_row_index_etape]" class="custom-select etat">
+                                        <?php foreach (AxianDDR::$etats as $etat => $label) : ?>
+                                            <option value="<?php echo $etat; ?>"><?php echo $label; ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
                             </div>
+
+                            <div class="form-group form-field-wrapper">
+                                <label class="form-label">Etape</label>
+                                <div class="form-field">
+                                    <select name="workflow[etape][_row_index_etape]" class="custom-select etape">
+                                        <?php foreach (AxianDDR::$etapes as $etape => $label) : ?>
+                                            <option value="<?php echo $etape; ?>"><?php echo $label; ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="roles-fields-wrapper">
+                                <button type="button" class="btn btn-secondary btn-sm ajout_role">Ajouter rôles</button>
+
+                                <div class="roles-wrapper">
+
+                                    <input type="hidden" class="bloc_role_number" value="0" />
+                                    <div class="bloc_role item clone">
+
+                                        <button type='button' class='remove-bloc-role' style="float: right;">x</button>
+
+                                        <div class="form-group form-field-wrapper">
+                                            <label class="form-label">Rôle</label>
+                                            <div class="form-field">
+                                                <select name="workflow[roles][_row_index_etape][role][_row_index_role]" class="custom-select role">
+                                                    <?php foreach (AxianDDRWorkflow::$acteurs as $role => $label) : ?>
+                                                        <option value="<?php echo $role; ?>"><?php echo $label; ?></option>
+                                                    <?php endforeach; ?>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group form-field-wrapper">
+                                            <label class="form-label">Type</label>
+                                            <div class="form-field">
+                                                <select name="workflow[roles][_row_index_etape][type][_row_index_role]" class="custom-select type">
+                                                    <?php foreach (AxianDDRWorkflow::$types_demande as $type => $label) : ?>
+                                                        <option value="<?php echo $type; ?>"><?php echo $label; ?></option>
+                                                    <?php endforeach; ?>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group form-field-wrapper">
+                                            <label class="form-label">Actions</label>
+                                            <div class="form-field">
+                                                <select multiple name="workflow[roles][_row_index_etape][actions][_row_index_role][]" class="custom-select actions">
+                                                    <?php foreach (AxianDDRWorkflow::$actions as $action => $label) : ?>
+                                                        <option value="<?php echo $action; ?>"><?php echo $label; ?></option>
+                                                    <?php endforeach; ?>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+                <p class="submit">
+                    <input type="submit" name="submit-workflow" id="submit-workflow" class="button button-primary" value="Créer le workflow">
+                </p>
+            </form>
+        </div>
+
+
+    </div>
+
+    <!-- edit page -->
+<?php elseif ($is_edit) : ?>
+
+    <div class="wrap nosubsub">
+
+
+        <div class="wrap">
+            <h1 class="wp-heading-inline">Administration des workflows</h1>
+
+            <form id="form-workflow-edit" action="" method="post" autocomplete="off">
+                <div class="form-field-wrapper">
+                    <label class="form-label">Nom</label>
+                    <div class="form-field">
+                        <input type="text" class="form-control" name="nom_workflow" id="label_workflow" placeholder="Nom du workflow" style="width: 199px;" value="<?php echo $post_data['nom'] ?>">
+                    </div>
+                </div>
+
+                <div class="form-field-wrapper">
+                    <!-- <label class="form-label">Société</label> -->
+                    <div class="form-field">
+                        <?php axian_ddr_render_field($axian_ddr_workflow->fields['societe'], $post_data); ?>
+                    </div>
+                </div>
+
+                <div class="form-field-wrapper">
+                    <label class="form-label">Par défaut</label>
+                    <div class="form-field">
+                        <input class="form-check-input" type="checkbox" value="" <?php if ($coche) ?> checked name="par_defaut" id="par_defaut">
+                    </div>
+                </div>
+
+                <div class="wrapper-etape-workflow">
+                    <button type="button" class="btn btn-secondary ajout_etape">Ajouter une étape</button>
+
+                    <div class="wrapper-etape row">
+                        <input type="hidden" class="bloc_etape_number" value="0" />
+
+                        <div class="bloc_etape item clone col-md-3 col-sm-4 col-xs-12">
+                            <button type='button' id='remove-bloc' style="float: right;">x</button>
 
                             <div class="form-group form-field-wrapper">
                                 <label class="form-label">Etat</label>
                                 <div class="form-field">
                                     <select name="workflow[etat][_row_index_etape]" class="custom-select">
-                                        <?php foreach (AxianDDR::$etats as $etat => $label) : ?>
+                                    <?php foreach (AxianDDR::$etats as $etat => $label) : ?>
                                             <option value="<?php echo $etat; ?>"><?php echo $label; ?></option>
                                         <?php endforeach; ?>
                                     </select>
@@ -113,8 +242,11 @@ $isNew = isset($_GET['add']) ? true : false;
                                 <button type="button" class="btn btn-secondary btn-sm ajout_role">Ajouter rôles</button>
 
                                 <div class="roles-wrapper">
+
                                     <input type="hidden" class="bloc_role_number" value="0" />
                                     <div class="bloc_role item clone">
+
+                                        <button type='button' id='remove-bloc' style="float: right;">x</button>
 
                                         <div class="form-group form-field-wrapper">
                                             <label class="form-label">Rôle</label>
@@ -128,7 +260,7 @@ $isNew = isset($_GET['add']) ? true : false;
                                         </div>
 
                                         <div class="form-group form-field-wrapper">
-                                            <label class="form-label">Type de demande</label>
+                                            <label class="form-label">Type</label>
                                             <div class="form-field">
                                                 <select name="workflow[roles][_row_index_etape][type][_row_index_role]" class="custom-select">
                                                     <?php foreach (AxianDDRWorkflow::$types_demande as $type => $label) : ?>
@@ -163,12 +295,11 @@ $isNew = isset($_GET['add']) ? true : false;
                 </div>
 
                 <p class="submit">
-                    <input type="submit" name="submit-workflow" id="submit-workflow" class="button button-primary" value="Créer le workflow">
+                    <input type="submit" name="update-workflow" id="submit-workflow" class="button button-primary" value="Mettre à jour le workflow">
                 </p>
             </form>
         </div>
 
 
     </div>
-
 <?php endif; ?>

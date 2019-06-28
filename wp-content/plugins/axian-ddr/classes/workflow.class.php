@@ -21,6 +21,7 @@ class AxianDDRWorkflow
         DDR_ACTION_VALIDATE => 'Valider',
         DDR_ACTION_REFUSE => 'Refuser',
         DDR_ACTION_CLOSE => 'Clôturer',
+        DDR_ACTION_UPDATE => 'Modifier',
     );
 
     public static $etats = array(
@@ -156,6 +157,10 @@ class AxianDDRWorkflow
 
         );
 
+        //workflow dynamique
+
+
+
         //workflow statique
         self::$etapes = array(
             //etape 1
@@ -278,43 +283,6 @@ class AxianDDRWorkflow
                 'options' => AxianDDRUser::$company_list,
                 'placeholder' => 'Choisir la société'
             ),
-            /**'statut' => array(
-                'type' => 'checkbox',
-                'options' => array(
-                    'name' => 'Statut',
-                    'label' => 'statut_workflow',
-                ),
-            ),
-            'etape' => array(
-                'label' => 'Etape',
-                'type' => 'select',
-                'name' => 'etape_workflow',
-                'options' => $this::$steps,
-            ),
-            'role' => array(
-                'label' => 'Rôle',
-                'type' => 'select multiple',
-                'name' => 'role_workflow',
-                'options' => $this::$acteurs
-            ),
-            'etat' => array(
-                'label' => 'Etat',
-                'type' => 'select',
-                'name' => 'etat_workflow',
-                'options' => $this::$etats
-            ),
-            'type_ticket' => array(
-                'label' => 'Type de ticket',
-                'type' => 'select',
-                'name' => 'type_ticket_workflow',
-                'options' => $this::$types_demande
-            ),
-            'action' => array(
-                'label' => 'Action',
-                'type' => 'select',
-                'name' => 'type_ticket_workflow',
-                'options' => $this::$actions
-            ),**/
         );
     }
 
@@ -425,19 +393,6 @@ class AxianDDRWorkflow
         global $wpdb;
         $query_select = "SELECT SQL_CALC_FOUND_ROWS * FROM  " . TABLE_AXIAN_DDR_WORKFLOW;
 
-        //type
-        if ($type != 'tous') {
-            $query_select .= " WHERE type='{$type}'";
-        }
-
-        //ordre
-        $query_select .= " ORDER BY {$orderby} {$order} ";
-
-        //limit
-        if ($offset && $limit) {
-            $query_select .= " LIMIT {$offset},{$limit} ";
-        }
-
         $result = $wpdb->get_results($query_select);
         if ($format == 'options') {
             $options = array();
@@ -462,31 +417,45 @@ class AxianDDRWorkflow
 
             $the_user = AxianDDRUser::getById($current_user->ID);
             $post_data = $_POST;
-            mp($post_data);
-            die;
-            //$company = $the_user->company;
+
             $now = date("Y-m-d H:i:s");
             $nom = $post_data['nom_workflow'];
-            $societe = $post_data['societe'];
-            $par_defaut = $post_data['par_defaut'];
-            foreach ($post_data['etat'] as $key => $value) {
-                $etat = $value;
+            $societe = $post_data['societe_workflow'];
+            $par_defaut   = isset($post_data['par_defaut'])    ? 'par_defaut'    : null;
+
+            $workflow_data = $post_data['workflow'];
+
+            $workflow = array();
+            foreach ( $workflow_data['etat'] as $key => $etat  ){
+                if ( $key != '_row_index_etape' ){
+                    $workflow[$key] = array(
+                        'etat' => $etat,
+                        'etape' => $workflow_data['etape'][$key]
+                    );
+                }
             }
-            foreach ($post_data['etape'] as $key => $value) {
-                $etape = $value;
+
+            foreach ( $workflow_data['roles']  as $key_etape => $roles ){
+                if ( $key_etape != '_row_index_etape' ){
+                    $workflow[$key_etape]['acteur'] = array();
+                    foreach ( $roles['role'] as $key_role_index => $role ){
+                        if ( $key_role_index != '_row_index_role' ){
+                            $role_data = array(
+                                'type' => $roles['type'][$key_role_index],
+                                'action' => $roles['actions'][$key_role_index],
+                            );
+                            $workflow[$key_etape]['acteur'][$role] = $role_data;
+                        }
+                    }
+                }
+
             }
-            foreach ($post_data['role'] as $key => $value) {
-                $role = $value;
-            }
-            foreach ($post_data['type'] as $key => $value) {
-                $type = $value;
-            }
-            //$action = $post_data['action'];
-            $action = '';
-            $createur = $the_user->ID;
+
+            $etape = serialize($workflow);
+
+            $createur = $current_user->ID;
             $date_creation = $now;
             $date_modification = '';
-
             if (!empty($msg)) {
                 return array(
                     'code' => 'error',
@@ -495,7 +464,7 @@ class AxianDDRWorkflow
             } else {
                 //process add workflow
 
-                $return_add = self::add($nom, $societe, $createur, $par_defaut, $etat, $etape, $role, $type, $action, $date_creation, $date_modification);
+                $return_add = self::add($nom, $date_creation, $createur, $date_modification, $societe, $par_defaut, $etape);
             }
             if (!$return_add) {
                 return array(
@@ -507,23 +476,59 @@ class AxianDDRWorkflow
                 unset($nom);
                 unset($societe);
                 unset($par_defaut);
-                unset($etat);
                 unset($etape);
-                unset($role);
-                unset($type);
-                unset($action);
                 unset($createur);
                 unset($date_creation);
                 unset($date_modification);
+
                 return array(
                     'code' => 'updated',
                     'msg' => 'Enregistrement effectué avec succés.',
                 );
             }
 
+
+
             // suppresion d'un workflow 
 
-        } elseif (($_GET['action'] == "delete") && !empty($_GET['_wpnonce']) && !empty($_GET['id'])) {
+        }
+        elseif (isset($_POST['update-workflow'])){
+            $msg = axian_ddr_validate_fields($this);
+
+            if (!empty($msg)) {
+                return array(
+                    'code' => 'error',
+                    'msg' => $msg,
+                );
+            } else {
+                //process update term
+                $post_data = $_POST;
+                $return_update = self::update(
+                    $post_data['id'],
+                    $post_data['type'],
+                    $post_data['label']
+                );
+
+                if ($return_update) {
+                    //unset post
+                    unset($_POST['id']);
+                    unset($_POST['type']);
+                    unset($_POST['label']);
+                    unset($_GET['id']);
+
+                    return array(
+                        'code' => 'updated',
+                        'msg' => 'Enregistrement effectué avec succés.',
+                    );
+                } else {
+                    return array(
+                        'code' => 'error',
+                        'msg' => 'Erreur inconnu',
+                    );
+                }
+            }
+        }
+        elseif (($_GET['action'] == "delete") && !empty($_GET['_wpnonce']) && !empty($_GET['id'])) {
             $nonce = wp_create_nonce('addr_delete_workflow' . absint($_GET['id']));
 
 
@@ -546,10 +551,6 @@ class AxianDDRWorkflow
                     unset($_GET['societe']);
                     unset($_GET['statut']);
                     unset($_GET['etape']);
-                    unset($_GET['etat']);
-                    unset($_GET['role']);
-                    unset($_GET['type_ticket']);
-                    unset($_GET['action']);
 
                     return array(
                         'code' => 'updated',
@@ -560,26 +561,25 @@ class AxianDDRWorkflow
         } else {
             return false;
         }
+
+
     }
 
     // sauvegarde db
 
-    public static function add($nom, $date_creation, $createur,  $societe, $statut, $etape, $etat, $role, $type_ticket, $action, $date_modification)
+    public static function add($nom, $date_creation, $createur, $date_modification, $societe, $par_defaut, $etape)
     {
+
         global $wpdb;
 
         $result = $wpdb->insert(TABLE_AXIAN_DDR_WORKFLOW, array(
             'nom' => $nom,
             'date_creation' => $date_creation,
             'createur' => $createur,
+            'date_modification' => $date_modification,
             'societe' => $societe,
-            'statut' => $statut,
+            'statut' => $par_defaut,
             'etape' => $etape,
-            'etat' => $etat,
-            'role' => $role,
-            'type' => $type_ticket,
-            'action' => $action,
-            'date_modification' => $date_modification
         ));
         if ($result) {
             $workflow_id = $wpdb->insert_id;
@@ -593,6 +593,28 @@ class AxianDDRWorkflow
         $result = $wpdb->delete(TABLE_AXIAN_DDR_WORKFLOW, array('id' => $id));
 
         return $result;
+    }
+
+    // update workflow
+
+    public static function update($id, $nom, $date_creation, $createur, $date_modification, $societe, $statut, $etape)
+    {
+        global $wpdb;
+
+        return $wpdb->update(
+            TABLE_AXIAN_DDR_TERM,
+            array(
+                'nom' => $nom,
+                'date_creation' => $date_creation,
+                'date_creation' => $date_creation,
+                'createur' => $createur,
+                'date_modification' => $date_modification,
+                'societe' => $societe,
+                'statut' => $statut,
+                'etape' => $etape,
+            ),
+            array('id' => $id)
+        );
     }
 }
 global $axian_ddr_workflow;
