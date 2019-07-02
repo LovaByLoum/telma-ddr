@@ -7,9 +7,12 @@ $active_tab = isset($_GET['tab']) ? $_GET['tab'] : 'workflow';
 $user_demandeur = AxianDDRUser::getById($current_user->ID); // user connécté
 
 if (($_GET['action'] == 'edit') && (isset($_GET['id']) && !empty($_GET['id']))) {
-    $post_data = $axian_ddr_workflow->getby_id(intval($_GET['id']));
+	$post_data = $axian_ddr_workflow->getById(intval($_GET['id']));
     $coche = isset($post_data['statut']) ? true : false;
-    $etape = unserialize($post_data['etape']);
+    $etapes = unserialize($post_data['etape']);
+
+
+	//echo '<pre>' . print_r( $etapes, true ) . '</pre>'; die;
 } else $post_data = null;
 
 
@@ -194,9 +197,9 @@ $isNew = isset($_GET['add']) ? true : false;
                 </div>
 
                 <div class="form-field-wrapper">
-                    <!-- <label class="form-label">Société</label> -->
+                    <label class="form-label">Société</label>
                     <div class="form-field">
-                        <?php axian_ddr_render_field($axian_ddr_workflow->fields['societe'], $post_data); ?>
+			            <?php axian_ddr_render_field($axian_ddr_workflow->fields['societe'], $post_data, false); ?>
                     </div>
                 </div>
 
@@ -220,7 +223,7 @@ $isNew = isset($_GET['add']) ? true : false;
                                 <label class="form-label">Etat</label>
                                 <div class="form-field">
                                     <select name="workflow[etat][_row_index_etape]" class="custom-select">
-                                    <?php foreach (AxianDDR::$etats as $etat => $label) : ?>
+                                    <?php foreach ($etapes as $etape => $label) : ?>
                                             <option value="<?php echo $etat; ?>"><?php echo $label; ?></option>
                                         <?php endforeach; ?>
                                     </select>
@@ -289,7 +292,129 @@ $isNew = isset($_GET['add']) ? true : false;
 
                         </div>
 
+                        <!--Début mode modification-->
 
+                        <?php
+                        foreach ($etapes as $key => $etats){
+                            foreach ($etats as $k => $etat) {
+                                if (!is_array($etat)) {
+	                                echo
+                                    '
+                                     <div class="bloc_etape item  col-md-3 col-sm-4 col-xs-12">
+                                        <button type=\'button\' id=\'remove-bloc\' style="float: right;">x</button>    
+                                            <div class="form-group form-field-wrapper">
+                                                <label class="form-label">'. $k . '</label>
+                                                <div class="form-field">
+                                                    <select name="workflow[etat]['.$key. ']" class="custom-select" >
+                                                        <option value="'.$k. '">'.$etat .'</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                          
+                                            
+	                                ';
+
+                                    /*foreach ($etat as $role => $roles) {
+                                        echo $role .'=>'.$roles .'<br>';
+                                        foreach ($roles as $key_act => $action) {
+	                                        echo $key_act .' =>'. $action .'<br>';
+                                            if (is_array($action)){
+                                                foreach ($action as $key_acteur => $acteur) {
+                                                    echo $key_acteur .'=>'. $acteur.'<br>';
+                                                    if (is_array($acteur)) {
+                                                        foreach ($acteur as $cle => $act) {
+                                                            echo $cle .'=> '. $act.'<br>';
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }*/
+                                } else {
+	                                echo $k.'=>'.  $etat .'<br>';
+                                }
+                            }
+                            echo '</div>';
+                        }
+                        ?>
+
+                        <div class="bloc_etape item  col-md-3 col-sm-4 col-xs-12">
+                            <button type='button' id='remove-bloc' style="float: right;">x</button>
+
+                            <div class="form-group form-field-wrapper">
+                                <label class="form-label">Etat</label>
+                                <div class="form-field">
+                                    <select name="workflow[etat][_row_index_etape]" class="custom-select">
+					                    <?php foreach ($etapes as $etape => $label) : ?>
+                                            <option value="<?php echo $etat; ?>"><?php echo $label; ?></option>
+					                    <?php endforeach; ?>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group form-field-wrapper">
+                                <label class="form-label">Etape</label>
+                                <div class="form-field">
+                                    <select name="workflow[etape][_row_index_etape]" class="custom-select">
+					                    <?php foreach (AxianDDR::$etapes as $etape => $label) : ?>
+                                            <option value="<?php echo $etape; ?>"><?php echo $label; ?></option>
+					                    <?php endforeach; ?>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="roles-fields-wrapper">
+                                <button type="button" class="btn btn-secondary btn-sm ajout_role">Ajouter rôles</button>
+
+                                <div class="roles-wrapper">
+
+                                    <input type="hidden" class="bloc_role_number" value="0" />
+                                    <div class="bloc_role item ">
+
+                                        <button type='button' id='remove-bloc' style="float: right;">x</button>
+
+                                        <div class="form-group form-field-wrapper">
+                                            <label class="form-label">Rôle</label>
+                                            <div class="form-field">
+                                                <select name="workflow[roles][_row_index_etape][role][_row_index_role]" class="custom-select">
+								                    <?php foreach (AxianDDRWorkflow::$acteurs as $role => $label) : ?>
+                                                        <option value="<?php echo $role; ?>"><?php echo $label; ?></option>
+								                    <?php endforeach; ?>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group form-field-wrapper">
+                                            <label class="form-label">Type</label>
+                                            <div class="form-field">
+                                                <select name="workflow[roles][_row_index_etape][type][_row_index_role]" class="custom-select">
+								                    <?php foreach (AxianDDRWorkflow::$types_demande as $type => $label) : ?>
+                                                        <option value="<?php echo $type; ?>"><?php echo $label; ?></option>
+								                    <?php endforeach; ?>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group form-field-wrapper">
+                                            <label class="form-label">Actions</label>
+                                            <div class="form-field">
+                                                <select multiple name="workflow[roles][_row_index_etape][actions][_row_index_role][]" class="custom-select">
+								                    <?php foreach (AxianDDRWorkflow::$actions as $action => $label) : ?>
+                                                        <option value="<?php echo $action; ?>"><?php echo $label; ?></option>
+								                    <?php endforeach; ?>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+                        <!--Fin du mode modification-->
                     </div>
 
                 </div>

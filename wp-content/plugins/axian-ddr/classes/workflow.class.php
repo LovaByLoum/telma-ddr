@@ -277,7 +277,7 @@ class AxianDDRWorkflow
             'societe' => array(
                 'label' => 'Société',
                 'type' => 'select',
-                'name' => 'societe_workflow',
+                'name' => 'societe',
                 'size' => '50',
                 'search' => true,
                 'options' => AxianDDRUser::$company_list,
@@ -465,6 +465,10 @@ class AxianDDRWorkflow
                 //process add workflow
 
                 $return_add = self::add($nom, $date_creation, $createur, $date_modification, $societe, $par_defaut, $etape);
+	            $redirect_to = 'admin.php?page=axian-ddr-admin&tab=workflow';
+
+	            wp_safe_redirect($redirect_to);
+	            die;
             }
             if (!$return_add) {
                 return array(
@@ -481,10 +485,9 @@ class AxianDDRWorkflow
                 unset($date_creation);
                 unset($date_modification);
 
-                return array(
-                    'code' => 'updated',
-                    'msg' => 'Enregistrement effectué avec succés.',
-                );
+
+	            
+                
             }
 
 
@@ -616,6 +619,18 @@ class AxianDDRWorkflow
             array('id' => $id)
         );
     }
+
+    public static function getById($id) {
+
+	    global $wpdb;
+	    $result = $wpdb->get_row('SELECT * FROM ' . TABLE_AXIAN_DDR_WORKFLOW . ' WHERE id = ' . $id, ARRAY_A);
+
+	    return $result;
+    }
+
+
+
+
 }
 global $axian_ddr_workflow;
 $axian_ddr_workflow = new AxianDDRWorkflow();
