@@ -6,10 +6,10 @@ Version: 1.0
 Author: Njaratiana
 */
 
-define ( 'AXIAN_DDR_PATH', dirname(__FILE__) );
-define ( 'AXIAN_DDR_URL', plugin_dir_url(__FILE__));
+define('AXIAN_DDR_PATH', dirname(__FILE__));
+define('AXIAN_DDR_URL', plugin_dir_url(__FILE__));
 require_once('utils/functions.utils.php');
-require_once ('inc/constantes.inc.php');
+require_once('inc/constantes.inc.php');
 require_once('classes/term.class.php');
 require_once('classes/user.class.php');
 require_once('classes/workflow.class.php');
@@ -28,8 +28,9 @@ require_once('classes/list/historique-list.class.php');
 require_once('classes/list/term-list.class.php');
 require_once('classes/list/interim-list.class.php');
 require_once('classes/mail.class.php');
+require_once('classes/list/workflow-list.class.php');
 
-register_activation_hook( __FILE__ , 'AxianDDRMain::install' );
+register_activation_hook(__FILE__, 'AxianDDRMain::install');
 
 global $axian_ddr_main, $axian_ddr_tasks, $axian_ddr_settings;;
 $axian_ddr_main = new AxianDDRMain();

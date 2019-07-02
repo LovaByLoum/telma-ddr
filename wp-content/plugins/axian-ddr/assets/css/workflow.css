@@ -1,0 +1,73 @@
+
+div.bloc_etape {
+    margin-top: 25px;
+    background: beige;
+    border-radius: 10px;
+}
+div.champ {
+    padding-left: 37px;
+
+}
+#par_defaut {
+    margin-top: -16px;
+}
+
+div.chosen-container.chosen-container-single  {
+    width: 198px !important;
+    margin-left: 32px;
+}
+
+#ajout_role {
+    width: 40%;
+    margin-left: 30%;
+    margin-right: 30%
+}
+#ajout_etape {
+    margin-top: 15px;margin-left: 96px;
+}
+#select_etape {
+    margin-right: 84px;
+}
+
+#form-workflow-edit .form-field-wrapper{
+    display: block;
+    width: 100%;
+    margin: 20px 0;
+}
+
+#form-workflow-edit .form-field-wrapper .form-label{
+    display: inline-block;
+    width: 20%;
+
+}
+#form-workflow-edit .form-field-wrapper .form-field .chosen-container.chosen-container-single{
+    margin: 0;
+}
+#form-workflow-edit .form-field-wrapper .form-field{
+    display: inline-block;
+    width: 60%;
+}
+.wrapper-etape-workflow{
+    display: block;
+    width: 100%;
+}
+.wrapper-etape-workflow .bloc_etape{
+    display: block;
+    width: 100%;
+    margin: 10px;
+
+}
+.wrapper-etape-workflow .bloc_etape.clone{
+    display: none!important;
+}
+
+.wrapper-etape-workflow .roles-wrapper .bloc_role.clone{
+    display: none!important;
+}
+
+.wrapper-etape-workflow .roles-wrapper .bloc_role{
+    border: 1px  #ededed solid;
+    background: #efefef;
+    border-radius: 5px;
+    margin: 10px;
+}

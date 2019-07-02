@@ -128,3 +128,4 @@ function addParameterToURL(param){
 function edit_ddr_file_field(e){
     $(e).parents('.ddr-file-remove-to-edit').remove();
 }
+
