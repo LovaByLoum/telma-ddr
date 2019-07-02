@@ -18,6 +18,7 @@ class AxianDDRAdministration
         'validation' => 'Validation',
         'mail' => 'Mail',
         'cron' => 'Tâches périodiques',
+        'workflow' => 'WorkFlow',
     );
 
     public function __construct()

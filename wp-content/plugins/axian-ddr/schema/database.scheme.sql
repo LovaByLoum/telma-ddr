@@ -70,3 +70,15 @@ CREATE TABLE IF NOT EXISTS `wp_ddr_label` (
   `description` text,
   PRIMARY KEY (`id`,`type`,`label`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8
+
+CREATE TABLE IF NOT EXISTS `wp_ddr_workflow`(
+    `id` bigint(20) NOT NULL AUTO_INCREMENT,
+    `nom` varchar(50) NOT NULL,
+    `date_creation` datetime NOT NULL COMMENT 'date de création',
+    `createur` bigint(20) NOT NULL,
+    `date_modification` datetime DEFAULT NULL,
+    `societe` text NOT NULL COMMENT 'société ',
+    `statut` varchar(50) NOT NULL,
+    `etape` longtext NOT NULL COMMENT 'Etape du workflow',
+    UNIQUE KEY `id` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8

@@ -131,12 +131,12 @@ class AxianDDRMain
         // create table ddr workflow
         $wpdb->query(
             "CREATE TABLE IF NOT EXISTS " . TABLE_AXIAN_DDR_WORKFLOW . "(
-                id` bigint(20) NOT NULL AUTO_INCREMENT,
+                `id` bigint(20) NOT NULL AUTO_INCREMENT,
                 `nom` varchar(50) NOT NULL,
                 `date_creation` datetime NOT NULL COMMENT 'date de création',
                 `createur` bigint(20) NOT NULL,
                 `date_modification` datetime DEFAULT NULL,
-                `societe` text NOT NULL COMMENT 'société ',
+                `societe` text NOT NULL COMMENT 'société',
                 `statut` varchar(50) NOT NULL,
                 `etape` longtext NOT NULL COMMENT 'Etape du workflow',
                 UNIQUE KEY `id` (`id`)
