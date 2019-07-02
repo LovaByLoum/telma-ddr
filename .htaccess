@@ -46,6 +46,7 @@ Satisfy any
 # Repertoire virtuel de Base differente par environnement pour la reecriture d'URL
 
 SetEnvIf HOST "localhost" PROJECT_BASE_PATH=/projets/axian-recrutement/srcs/
+#SetEnvIf HOST "localhost" PROJECT_BASE_PATH=/projets/telma-ressources-humaines/
 SetEnvIf HOST "telma-interface-recrutement-recette[.]mg[.]netapsys[.]fr" PROJECT_BASE_PATH=/
 SetEnvIf HOST "telma-interface-recrutement-recette[.]netapsys[.]fr" PROJECT_BASE_PATH=/
 SetEnvIf HOST "recette[.]aits[.]mg" PROJECT_BASE_PATH=/recrutement-axian/

@@ -56,6 +56,9 @@ class AxianDDRWorkflow
 
     public function __construct()
     {
+
+        add_action('admin_init', array($this, 'admin_init'));
+
         //capabilities statiques
         self::$capabilities = array(
 
@@ -284,6 +287,10 @@ class AxianDDRWorkflow
         );
     }
 
+    public function admin_init(){
+        self::submit_workflow();
+    }
+
     public static function getWorkflowInfoBy($current_etape)
     {
         $workflow_etape_info = null;
@@ -408,19 +415,26 @@ class AxianDDRWorkflow
 
     public function submit_workflow()
     {
-        global $wpdb, $current_user;
-        if (isset($_POST['submit-workflow'])) {
+        global $ddr_workflow_process_msg;
+        if ( isset($_POST['submit-workflow']) && isset($_GET['page']) && $_GET['page'] == 'axian-ddr-admin' ) {
+
+            $is_edit = isset($_GET['id']) && isset($_GET['action']) && 'edit' == $_GET['action'] && $_GET['id'] > 0;
+            $is_new = isset($_GET['add']) ? true : false;
+
+            $post_data = $_POST;
 
             $msg = axian_ddr_validate_fields($this);
 
-            $the_user = AxianDDRUser::getById($current_user->ID);
-            $post_data = $_POST;
+            if ( isset($post_data['nom']) && empty($post_data['nom']) ){
+                $msg .= 'Le champ "Nom" est requis.<br>';
+            }
+            if ( isset($post_data['workflow']) && count($post_data['workflow']['etape'])<2 ){
+                $msg .= 'Veuillez ajouter au moins une étape.<br>';
+            }
 
-            $now = date("Y-m-d H:i:s");
-            $nom = $post_data['nom_workflow'];
-            $societe = $post_data['societe_workflow'];
-            $par_defaut   = isset($post_data['par_defaut'])    ? 'par_defaut'    : null;
-
+            $nom = $post_data['nom'];
+            $societe = $post_data['societe'];
+            $par_defaut   = isset($post_data['statut'])    ? 'par_defaut'    : null;
             $workflow_data = $post_data['workflow'];
 
             $workflow = array();
@@ -432,7 +446,6 @@ class AxianDDRWorkflow
                     );
                 }
             }
-
             foreach ( $workflow_data['roles']  as $key_etape => $roles ){
                 if ( $key_etape != '_row_index_etape' ){
                     $workflow[$key_etape]['acteur'] = array();
@@ -451,133 +464,68 @@ class AxianDDRWorkflow
 
             $etape = serialize($workflow);
 
-            $createur = $current_user->ID;
-            $date_creation = $now;
-            $date_modification = '';
             if (!empty($msg)) {
-                return array(
-                    'code' => 'error',
-                    'msg' => $msg,
-                );
+                $ddr_workflow_process_msg = AxianDDR::manage_message(DDR_MSG_VALIDATE_ERROR, $msg);
+                return false;
             } else {
                 //process add workflow
 
-                $return_add = self::add($nom, $date_creation, $createur, $date_modification, $societe, $par_defaut, $etape);
-	            $redirect_to = 'admin.php?page=axian-ddr-admin&tab=workflow';
+                if ( $is_new ){
+                    $wid = self::add($nom, $societe, $par_defaut, $etape);
+                    if ( $wid > 0 ){
+                        $redirect_to = 'admin.php?page=axian-ddr-admin&tab=workflow&msg=' . DDR_MSG_SAVED_SUCCESSFULLY;
+                        wp_safe_redirect($redirect_to); die;
+                    } else {
+                        $redirect_to = 'admin.php?page=axian-ddr-admin&tab=workflow&add=new&msg=' . DDR_MSG_UNKNOWN_ERROR;
+                        wp_safe_redirect($redirect_to); die;
+                    }
 
-	            wp_safe_redirect($redirect_to);
-	            die;
+                } elseif ( $is_edit ){
+                    $the_wid = $_GET['id'];
+                    $bool = self::update($the_wid, $nom, $societe, $par_defaut, $etape);
+                    if ( $bool ){
+                        $redirect_to = 'admin.php?page=axian-ddr-admin&tab=workflow&action=edit&id=' . $the_wid . '&msg='. DDR_MSG_SAVED_SUCCESSFULLY;
+                        wp_safe_redirect($redirect_to); die;
+                    } else {
+                        $redirect_to = 'admin.php?page=axian-ddr-admin&tab=workflow&action=edit&id=' . $the_wid . '&msg='. DDR_MSG_UNKNOWN_ERROR;
+                        wp_safe_redirect($redirect_to); die;
+                    }
+                }
             }
-            if (!$return_add) {
-                return array(
-                    'code' => 'error',
-                    'msg' => 'Erreur inconnu',
-                );
-            } else {
-                //unset post
-                unset($nom);
-                unset($societe);
-                unset($par_defaut);
-                unset($etape);
-                unset($createur);
-                unset($date_creation);
-                unset($date_modification);
-
-
-	            
-                
-            }
-
-
 
             // suppresion d'un workflow 
 
-        }
-        elseif (isset($_POST['update-workflow'])){
-            $msg = axian_ddr_validate_fields($this);
+        } elseif ( isset($_GET['page']) && $_GET['page'] == 'axian-ddr-admin'  && isset($_GET['action']) && $_GET['action'] == "delete" && isset($_GET['_wpnonce']) && !empty($_GET['_wpnonce']) && isset($_GET['id']) && !empty($_GET['id']) ) {
 
-            if (!empty($msg)) {
-                return array(
-                    'code' => 'error',
-                    'msg' => $msg,
-                );
-            } else {
-                //process update term
-                $post_data = $_POST;
-                $return_update = self::update(
-                    $post_data['id'],
-                    $post_data['type'],
-                    $post_data['label']
-                );
-
-                if ($return_update) {
-                    //unset post
-                    unset($_POST['id']);
-                    unset($_POST['type']);
-                    unset($_POST['label']);
-                    unset($_GET['id']);
-
-                    return array(
-                        'code' => 'updated',
-                        'msg' => 'Enregistrement effectué avec succés.',
-                    );
-                } else {
-                    return array(
-                        'code' => 'error',
-                        'msg' => 'Erreur inconnu',
-                    );
-                }
-            }
-        }
-        elseif (($_GET['action'] == "delete") && !empty($_GET['_wpnonce']) && !empty($_GET['id'])) {
             $nonce = wp_create_nonce('addr_delete_workflow' . absint($_GET['id']));
 
-
-            if ($nonce != $_GET['_wpnonce']) {
-                return array(
-                    'code' => 'error',
-                    'msg' => 'Action denied',
-                );
+            if ( $nonce != $_GET['_wpnonce'] || !current_user_can(DDR_CAP_CAN_ADMIN_DDR) ) {
+                $redirect_to = 'admin.php?page=axian-ddr-admin&tab=workflow&msg='. DDR_MSG_ACTION_DENIED;
+                wp_safe_redirect($redirect_to); die;
             } else {
                 //process delete term
                 $return_update = self::delete(absint($_GET['id']));
 
                 if ($return_update) {
-                    //unset post
-                    unset($_POST['id']);
-                    unset($_POST['nom']);
-                    unset($_POST['date_creation']);
-                    unset($_GET['createur']);
-                    unset($_GET['date_modification']);
-                    unset($_GET['societe']);
-                    unset($_GET['statut']);
-                    unset($_GET['etape']);
-
-                    return array(
-                        'code' => 'updated',
-                        'msg' => 'Suppresion effectué avec succés.',
-                    );
+                    $redirect_to = 'admin.php?page=axian-ddr-admin&tab=workflow&msg='. DDR_MSG_DELETED_SUCCESSFULLY;
+                    wp_safe_redirect($redirect_to); die;
                 }
             }
-        } else {
-            return false;
         }
-
 
     }
 
     // sauvegarde db
 
-    public static function add($nom, $date_creation, $createur, $date_modification, $societe, $par_defaut, $etape)
+    public static function add($nom, $societe, $par_defaut, $etape)
     {
 
-        global $wpdb;
-
+        global $wpdb, $current_user;
+        $now = date("Y-m-d H:i:s");
         $result = $wpdb->insert(TABLE_AXIAN_DDR_WORKFLOW, array(
             'nom' => $nom,
-            'date_creation' => $date_creation,
-            'createur' => $createur,
-            'date_modification' => $date_modification,
+            'date_creation' => $now,
+            'createur' => $current_user->ID,
             'societe' => $societe,
             'statut' => $par_defaut,
             'etape' => $etape,
@@ -598,18 +546,15 @@ class AxianDDRWorkflow
 
     // update workflow
 
-    public static function update($id, $nom, $date_creation, $createur, $date_modification, $societe, $statut, $etape)
+    public static function update($id, $nom, $societe, $statut, $etape)
     {
         global $wpdb;
-
+        $now = date("Y-m-d H:i:s");
         return $wpdb->update(
-            TABLE_AXIAN_DDR_TERM,
+            TABLE_AXIAN_DDR_WORKFLOW,
             array(
                 'nom' => $nom,
-                'date_creation' => $date_creation,
-                'date_creation' => $date_creation,
-                'createur' => $createur,
-                'date_modification' => $date_modification,
+                'date_modification' => $now,
                 'societe' => $societe,
                 'statut' => $statut,
                 'etape' => $etape,
@@ -625,7 +570,6 @@ class AxianDDRWorkflow
 
 	    return $result;
     }
-
 
 
 
